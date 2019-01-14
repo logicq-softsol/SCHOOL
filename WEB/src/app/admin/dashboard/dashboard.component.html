@@ -1,0 +1,275 @@
+<hr style="height:5px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+<mat-card>
+  <mat-toolbar>
+    <h2>
+      <strong>Class Management</strong>
+    </h2>
+    <span class="example-spacer"></span>
+    <button mat-raised-button color="primary" (click)="ClassSetupDialog()">
+                                  <mat-icon>group_add</mat-icon> Setup New Class</button>
+  </mat-toolbar>
+
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Class">
+  </mat-form-field>
+  <div class="example-container">
+    <!-- <mat-table #table [dataSource]="classDetailList"> -->
+    <table mat-table [dataSource]="classDetailList" matSort>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <strong>Name</strong>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <strong>Type</strong>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="enrollmentCount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <strong>Enrollment Count</strong>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.enrollmentCount}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <strong>About class</strong>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="edit_delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="ClassSetupDialog()" matTooltip="Edit Chapter">
+                                      <mat-icon>edit</mat-icon>
+                                    </button>
+          <button mat-icon-button color="warn" (click)="ClassSetupDialog()" matTooltip="Delete Chapter">
+                                      <mat-icon>delete</mat-icon>
+                                    </button>
+        </td>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</mat-card>
+<hr style="height:5px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+
+<mat-card>
+  <mat-toolbar>
+    <h2>
+      <strong>Subject And Chapter Details</strong>
+    </h2>
+    <span class="example-spacer"></span>
+    <button mat-raised-button color="primary" (click)="setupSubjectDialog()">
+                                  <mat-icon>group_add</mat-icon> Setup Subject and Section</button>
+  </mat-toolbar>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Subject 1
+      </mat-panel-title>
+      <mat-panel-description> 
+       Total Chapters 10 ||
+       TimeRequired 20 HRS
+      
+      </mat-panel-description>
+      <button mat-icon-button color="primary" matTooltip="Add Chapter">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <div class="col-md-3">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+          <video controls width="260">
+              <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+            </video>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+          bred for hunting.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-icon-button color="primary" (click)="chapterEditDialog()" matTooltip="Edit Chapter">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="chapterDeleteDialog()" matTooltip="Delete Chapter">
+              <mat-icon>delete</mat-icon>
+            </button>
+      </mat-card-actions>
+    </mat-card>
+    </div>
+    <div class="col-md-3">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+          <video controls width="260">
+              <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+            </video>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+          bred for hunting.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-icon-button color="primary" (click)="chapterEditDialog()" matTooltip="Edit Chapter">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="chapterDeleteDialog()" matTooltip="Delete Chapter">
+              <mat-icon>delete</mat-icon>
+            </button>
+      </mat-card-actions>
+    </mat-card>
+</div>
+<div class="col-md-3">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+          <video controls width="260">
+              <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+            </video>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+          bred for hunting.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-icon-button color="primary" (click)="chapterEditDialog()" matTooltip="Edit Chapter">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="chapterDeleteDialog()" matTooltip="Delete Chapter">
+              <mat-icon>delete</mat-icon>
+            </button>
+      </mat-card-actions>
+    </mat-card>
+</div>
+<div class="col-md-3">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+          <video controls width="260">
+              <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+            </video>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+          bred for hunting.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-icon-button color="primary" (click)="chapterEditDialog()" matTooltip="Edit Chapter">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="chapterDeleteDialog()" matTooltip="Delete Chapter">
+              <mat-icon>delete</mat-icon>
+            </button>
+      </mat-card-actions>
+    </mat-card>
+    </div>
+</div>
+
+
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+         Subject 2
+      </mat-panel-title>
+      <mat-panel-description>
+          Total Chapters 10 ||
+          TimeRequired 20 HRS
+      </mat-panel-description>
+      <button mat-icon-button color="primary" matTooltip="Add Chapter">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+         Subject 3
+      </mat-panel-title>
+      <mat-panel-description>
+          Total Chapters 10 ||
+          TimeRequired 20 HRS
+      </mat-panel-description>
+      <button mat-icon-button color="primary" matTooltip="Add Chapter">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+         Subject 4
+      </mat-panel-title>
+      <mat-panel-description>
+          Total Chapters 10 ||
+          TimeRequired 20 HRS
+      </mat-panel-description>
+      <button mat-icon-button color="primary" matTooltip="Add Chapter">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+         Subject 5
+      </mat-panel-title>
+      <mat-panel-description>
+          Total Chapters 10 ||
+          TimeRequired 20 HRS
+      </mat-panel-description>
+      <button mat-icon-button color="primary" matTooltip="Add Chapter">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+         Subject 6
+      </mat-panel-title>
+      <mat-panel-description>
+          Total Chapters 10 ||
+          TimeRequired 20 HRS
+      </mat-panel-description>
+      <button mat-icon-button color="primary" matTooltip="Add Chapter">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</mat-accordion>
+</mat-card>

@@ -1,0 +1,32 @@
+<h2 class="host-table-header" mat-dialog-title>
+        <strong>Chapter Setup</strong>
+    </h2>
+         <mat-form-field>
+            <input matInput placeholder="Class Name" value="STANDARD-I" required disabled>
+          </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Subject Name" value="Subject 1" required disabled>
+        </mat-form-field>
+        <mat-form-field>
+                <input matInput placeholder="Subject Image URL" required>
+         </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Content Video URL" required>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <input matInput placeholder="Content Time" required>
+        </mat-form-field>
+  
+        <mat-form-field>
+            <textarea matInput row="10" placeholder="Content Descrption" required></textarea>
+        </mat-form-field>
+
+    
+    
+    <div mat-dialog-actions class="host-table-header">
+        <button mat-raised-button color="primary" (click)="addNewContent()">Confirm</button>
+        <div class="divider"></div>
+        <button mat-raised-button (click)="onNoClick()">NO Thanks</button>
+    </div>

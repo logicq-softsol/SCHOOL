@@ -1,0 +1,748 @@
+<hr style="height:5px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+<div class="row">
+<div class="col-md-4">
+    <mat-card>
+      <mat-card-title>Classes Details</mat-card-title>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <button mat-icon-button disabled></button>
+          <button mat-button color="primary" (click)="viewNodeDetails(node)"><strong> {{node.item}}</strong></button>
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <button mat-icon-button
+                  [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <button mat-button color="primary" (click)="viewNodeDetails(node)"><strong> {{node.item}}</strong></button>
+          <mat-progress-bar *ngIf="node.isLoading"
+                            mode="indeterminate"
+                            class="example-tree-progress-bar"></mat-progress-bar>
+        </mat-tree-node>
+</mat-tree>
+</mat-card>
+</div>
+<div class="col-md-8" *ngIf="classdisplay">
+    <mat-card>
+            <mat-card-title>Classes Details
+            <button mat-icon-button color="primary" matTooltip="Add Class"><mat-icon>add_box</mat-icon></button>
+          </mat-card-title>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-card class="example-card">
+                <mat-card-header>
+                  <div mat-card-avatar class="example-header-image"></div>
+                  <mat-card-title>STANDARD-I</mat-card-title>
+                  <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    Description of class , type of age student allows , subject it has.
+                  </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                </mat-card-actions>
+              </mat-card>
+            </div>
+            <div class="col-md-4">
+                    <mat-card class="example-card">
+                            <mat-card-header>
+                              <div mat-card-avatar class="example-header-image"></div>
+                              <mat-card-title>STANDARD-II</mat-card-title>
+                              <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                              <p>
+                                Description of class , type of age student allows , subject it has.
+                              </p>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                    <mat-icon>edit</mat-icon>
+                                  </button>
+                                  <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                    <mat-icon>delete</mat-icon>
+                                  </button>
+                            </mat-card-actions>
+                          </mat-card>
+                        </div>
+                <div class="col-md-4">
+                        <mat-card class="example-card">
+                                <mat-card-header>
+                                  <div mat-card-avatar class="example-header-image"></div>
+                                  <mat-card-title>STANDARD-III</mat-card-title>
+                                  <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                </mat-card-header>
+                                <mat-card-content>
+                                  <p>
+                                    Description of class , type of age student allows , subject it has.
+                                  </p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                        <mat-icon>edit</mat-icon>
+                                      </button>
+                                      <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                        <mat-icon>delete</mat-icon>
+                                      </button>
+                                </mat-card-actions>
+                              </mat-card>
+                    </div>
+                    </div>
+                    <hr style="height:2px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+                    <div class="row">
+                    <div class="col-md-4">
+                            <mat-card class="example-card">
+                                    <mat-card-header>
+                                      <div mat-card-avatar class="example-header-image"></div>
+                                      <mat-card-title>STANDARD-IV</mat-card-title>
+                                      <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                      <p>
+                                        Description of class , type of age student allows , subject it has.
+                                      </p>
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                            <mat-icon>edit</mat-icon>
+                                          </button>
+                                          <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                            <mat-icon>delete</mat-icon>
+                                          </button>
+                                    </mat-card-actions>
+                                  </mat-card>
+                    </div>
+                    <div class="col-md-4">
+                            <mat-card class="example-card">
+                                    <mat-card-header>
+                                      <div mat-card-avatar class="example-header-image"></div>
+                                      <mat-card-title>STANDARD-V</mat-card-title>
+                                      <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                      <p>
+                                        Description of class , type of age student allows , subject it has.
+                                      </p>
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                            <mat-icon>edit</mat-icon>
+                                          </button>
+                                          <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                            <mat-icon>delete</mat-icon>
+                                          </button>
+                                    </mat-card-actions>
+                                  </mat-card>
+                        </div>
+                            <div class="col-md-4">
+                                    <mat-card class="example-card">
+                                            <mat-card-header>
+                                              <div mat-card-avatar class="example-header-image"></div>
+                                              <mat-card-title>STANDARD-VI</mat-card-title>
+                                              <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                              <p>
+                                                Description of class , type of age student allows , subject it has.
+                                              </p>
+                                            </mat-card-content>
+                                            <mat-card-actions>
+                                                <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                    <mat-icon>edit</mat-icon>
+                                                  </button>
+                                                  <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                    <mat-icon>delete</mat-icon>
+                                                  </button>
+                                            </mat-card-actions>
+                                          </mat-card>
+                               </div>
+                               </div>
+                               <hr style="height:2px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+                               <div class="row">
+                               <div class="col-md-4">
+                                    <mat-card class="example-card">
+                                            <mat-card-header>
+                                              <div mat-card-avatar class="example-header-image"></div>
+                                              <mat-card-title>STANDARD-VII</mat-card-title>
+                                              <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                              <p>
+                                                Description of class , type of age student allows , subject it has.
+                                              </p>
+                                            </mat-card-content>
+                                            <mat-card-actions>
+                                                <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                    <mat-icon>edit</mat-icon>
+                                                  </button>
+                                                  <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                    <mat-icon>delete</mat-icon>
+                                                  </button>
+                                            </mat-card-actions>
+                                          </mat-card>
+                                   </div>
+                                   <div class="col-md-4">
+                                        <mat-card class="example-card">
+                                                <mat-card-header>
+                                                  <div mat-card-avatar class="example-header-image"></div>
+                                                  <mat-card-title>STANDARD-VIII</mat-card-title>
+                                                  <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                  <p>
+                                                    Description of class , type of age student allows , subject it has.
+                                                  </p>
+                                                </mat-card-content>
+                                                <mat-card-actions>
+                                                    <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                        <mat-icon>edit</mat-icon>
+                                                      </button>
+                                                      <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                        <mat-icon>delete</mat-icon>
+                                                      </button>
+                                                </mat-card-actions>
+                                              </mat-card>
+                                        </div>
+                                 
+                                        <div class="col-md-4">
+                                                <mat-card class="example-card">
+                                                        <mat-card-header>
+                                                          <div mat-card-avatar class="example-header-image"></div>
+                                                          <mat-card-title>STANDARD-IX</mat-card-title>
+                                                          <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                        </mat-card-header>
+                                                        <mat-card-content>
+                                                          <p>
+                                                            Description of class , type of age student allows , subject it has.
+                                                          </p>
+                                                        </mat-card-content>
+                                                        <mat-card-actions>
+                                                            <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                                <mat-icon>edit</mat-icon>
+                                                              </button>
+                                                              <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                                <mat-icon>delete</mat-icon>
+                                                              </button>
+                                                        </mat-card-actions>
+                                                      </mat-card>
+                                            </div>
+                                            </div>
+                                            <hr style="height:2px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+                                            <div class="row">
+                                            <div class="col-md-4">
+                                                    <mat-card class="example-card">
+                                                            <mat-card-header>
+                                                              <div mat-card-avatar class="example-header-image"></div>
+                                                              <mat-card-title>STANDARD-X</mat-card-title>
+                                                              <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                            </mat-card-header>
+                                                            <mat-card-content>
+                                                              <p>
+                                                                Description of class , type of age student allows , subject it has.
+                                                              </p>
+                                                            </mat-card-content>
+                                                            <mat-card-actions>
+                                                                <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                                    <mat-icon>edit</mat-icon>
+                                                                  </button>
+                                                                  <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                                    <mat-icon>delete</mat-icon>
+                                                                  </button>
+                                                            </mat-card-actions>
+                                                          </mat-card>
+                                                </div>
+                                                <div class="col-md-4">
+                                                        <mat-card class="example-card">
+                                                                <mat-card-header>
+                                                                  <div mat-card-avatar class="example-header-image"></div>
+                                                                  <mat-card-title>STANDARD-XI</mat-card-title>
+                                                                  <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                                </mat-card-header>
+                                                                <mat-card-content>
+                                                                  <p>
+                                                                    Description of class , type of age student allows , subject it has.
+                                                                  </p>
+                                                                </mat-card-content>
+                                                                <mat-card-actions>
+                                                                    <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                                        <mat-icon>edit</mat-icon>
+                                                                      </button>
+                                                                      <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                                        <mat-icon>delete</mat-icon>
+                                                                      </button>
+                                                                </mat-card-actions>
+                                                              </mat-card>
+                                                    </div>
+                                                    </div>
+                                                </mat-card>
+</div>
+
+
+<div class="col-md-8" *ngIf="subjectdisplay">
+        <mat-card>
+                <mat-card-title>Subejct Details
+                    <button mat-icon-button color="primary"><mat-icon>add_box</mat-icon></button>
+                </mat-card-title>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                      <div mat-card-avatar class="example-header-image"></div>
+                      <mat-card-title>SUBJECT1</mat-card-title>
+                      <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                      <p>
+                        Description of class , type of age student allows , subject it has.
+                      </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                          <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                    </mat-card-actions>
+                  </mat-card>
+                </div>
+                <div class="col-md-4">
+                        <mat-card class="example-card">
+                                <mat-card-header>
+                                  <div mat-card-avatar class="example-header-image"></div>
+                                  <mat-card-title>SUBJECT2</mat-card-title>
+                                  <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                </mat-card-header>
+                                <mat-card-content>
+                                  <p>
+                                    Description of class , type of age student allows , subject it has.
+                                  </p>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                        <mat-icon>edit</mat-icon>
+                                      </button>
+                                      <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                        <mat-icon>delete</mat-icon>
+                                      </button>
+                                </mat-card-actions>
+                              </mat-card>
+                            </div>
+                    <div class="col-md-4">
+                            <mat-card class="example-card">
+                                    <mat-card-header>
+                                      <div mat-card-avatar class="example-header-image"></div>
+                                      <mat-card-title>SUBJECT3</mat-card-title>
+                                      <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                      <p>
+                                        Description of class , type of age student allows , subject it has.
+                                      </p>
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                            <mat-icon>edit</mat-icon>
+                                          </button>
+                                          <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                            <mat-icon>delete</mat-icon>
+                                          </button>
+                                    </mat-card-actions>
+                                  </mat-card>
+                        </div>
+                        </div>
+                        <hr style="height:2px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+                        <div class="row">
+                        <div class="col-md-4">
+                                <mat-card class="example-card">
+                                        <mat-card-header>
+                                          <div mat-card-avatar class="example-header-image"></div>
+                                          <mat-card-title>SUBJECT4</mat-card-title>
+                                          <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                        </mat-card-header>
+                                        <mat-card-content>
+                                          <p>
+                                            Description of class , type of age student allows , subject it has.
+                                          </p>
+                                        </mat-card-content>
+                                        <mat-card-actions>
+                                            <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                <mat-icon>edit</mat-icon>
+                                              </button>
+                                              <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                <mat-icon>delete</mat-icon>
+                                              </button>
+                                        </mat-card-actions>
+                                      </mat-card>
+                        </div>
+                        <div class="col-md-4">
+                                <mat-card class="example-card">
+                                        <mat-card-header>
+                                          <div mat-card-avatar class="example-header-image"></div>
+                                          <mat-card-title>SUBJECT5</mat-card-title>
+                                          <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                        </mat-card-header>
+                                        <mat-card-content>
+                                          <p>
+                                            Description of class , type of age student allows , subject it has.
+                                          </p>
+                                        </mat-card-content>
+                                        <mat-card-actions>
+                                            <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                <mat-icon>edit</mat-icon>
+                                              </button>
+                                              <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                <mat-icon>delete</mat-icon>
+                                              </button>
+                                        </mat-card-actions>
+                                      </mat-card>
+                            </div>
+                                <div class="col-md-4">
+                                        <mat-card class="example-card">
+                                                <mat-card-header>
+                                                  <div mat-card-avatar class="example-header-image"></div>
+                                                  <mat-card-title>SUBJECT6</mat-card-title>
+                                                  <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                  <p>
+                                                    Description of class , type of age student allows , subject it has.
+                                                  </p>
+                                                </mat-card-content>
+                                                <mat-card-actions>
+                                                    <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                        <mat-icon>edit</mat-icon>
+                                                      </button>
+                                                      <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                        <mat-icon>delete</mat-icon>
+                                                      </button>
+                                                </mat-card-actions>
+                                              </mat-card>
+                                   </div>
+                                   </div>
+                                   <hr style="height:2px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+                                   <div class="row">
+                                   <div class="col-md-4">
+                                        <mat-card class="example-card">
+                                                <mat-card-header>
+                                                  <div mat-card-avatar class="example-header-image"></div>
+                                                  <mat-card-title>SUBJECT7</mat-card-title>
+                                                  <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                  <p>
+                                                    Description of class , type of age student allows , subject it has.
+                                                  </p>
+                                                </mat-card-content>
+                                                <mat-card-actions>
+                                                    <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                        <mat-icon>edit</mat-icon>
+                                                      </button>
+                                                      <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                        <mat-icon>delete</mat-icon>
+                                                      </button>
+                                                </mat-card-actions>
+                                              </mat-card>
+                                       </div>
+                                       <div class="col-md-4">
+                                            <mat-card class="example-card">
+                                                    <mat-card-header>
+                                                      <div mat-card-avatar class="example-header-image"></div>
+                                                      <mat-card-title>SUBJECT8</mat-card-title>
+                                                      <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                    </mat-card-header>
+                                                    <mat-card-content>
+                                                      <p>
+                                                        Description of class , type of age student allows , subject it has.
+                                                      </p>
+                                                    </mat-card-content>
+                                                    <mat-card-actions>
+                                                        <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                            <mat-icon>edit</mat-icon>
+                                                          </button>
+                                                          <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                            <mat-icon>delete</mat-icon>
+                                                          </button>
+                                                    </mat-card-actions>
+                                                  </mat-card>
+                                            </div>
+                                     
+                                            <div class="col-md-4">
+                                                    <mat-card class="example-card">
+                                                            <mat-card-header>
+                                                              <div mat-card-avatar class="example-header-image"></div>
+                                                              <mat-card-title>SUBJECT9</mat-card-title>
+                                                              <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                            </mat-card-header>
+                                                            <mat-card-content>
+                                                              <p>
+                                                                Description of class , type of age student allows , subject it has.
+                                                              </p>
+                                                            </mat-card-content>
+                                                            <mat-card-actions>
+                                                                <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                                    <mat-icon>edit</mat-icon>
+                                                                  </button>
+                                                                  <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                                    <mat-icon>delete</mat-icon>
+                                                                  </button>
+                                                            </mat-card-actions>
+                                                          </mat-card>
+                                                </div>
+                                                </div>
+                                                    </mat-card>
+    </div>
+    
+
+
+    <div class="col-md-8" *ngIf="chapterdisplay">
+      <mat-card>
+              <mat-card-title>Chapter Details
+                  <button mat-icon-button color="primary"><mat-icon>add_box</mat-icon></button>
+              </mat-card-title>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-card class="example-card">
+                  <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>CHAPTER 1</mat-card-title>
+                    <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                      <video controls width="210">
+                          <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                        </video>
+                    <p>
+                      Description of class , type of age student allows , subject it has.
+                    </p>
+                  </mat-card-content>
+                  <mat-card-actions>
+                      <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+              <div class="col-md-4">
+                      <mat-card class="example-card">
+                              <mat-card-header>
+                                <div mat-card-avatar class="example-header-image"></div>
+                                <mat-card-title>CHAPTER 2</mat-card-title>
+                                <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                              </mat-card-header>
+                              <mat-card-content>
+                                  <video controls width="210">
+                                      <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                                    </video>
+                                <p>
+                                  Description of class , type of age student allows , subject it has.
+                                </p>
+                              </mat-card-content>
+                              <mat-card-actions>
+                                  <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                      <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                      <mat-icon>delete</mat-icon>
+                                    </button>
+                              </mat-card-actions>
+                            </mat-card>
+                          </div>
+                  <div class="col-md-4">
+                          <mat-card class="example-card">
+                                  <mat-card-header>
+                                    <div mat-card-avatar class="example-header-image"></div>
+                                    <mat-card-title>CHAPTER 3</mat-card-title>
+                                    <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                  </mat-card-header>
+                                  <mat-card-content>
+                                      <video controls width="210">
+                                          <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                                        </video>
+                                    <p>
+                                      Description of class , type of age student allows , subject it has.
+                                    </p>
+                                  </mat-card-content>
+                                  <mat-card-actions>
+                                      <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                          <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                          <mat-icon>delete</mat-icon>
+                                        </button>
+                                  </mat-card-actions>
+                                </mat-card>
+                      </div>
+                      </div>
+                      <hr style="height:2px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+                      <div class="row">
+                      <div class="col-md-4">
+                              <mat-card class="example-card">
+                                      <mat-card-header>
+                                        <div mat-card-avatar class="example-header-image"></div>
+                                        <mat-card-title>CHAPTER 4</mat-card-title>
+                                        <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                      </mat-card-header>
+                                      <mat-card-content>
+                                          <video controls width="210">
+                                              <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                                            </video>
+                                        <p>
+                                          Description of class , type of age student allows , subject it has.
+                                        </p>
+                                      </mat-card-content>
+                                      <mat-card-actions>
+                                          <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                              <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                              <mat-icon>delete</mat-icon>
+                                            </button>
+                                      </mat-card-actions>
+                                    </mat-card>
+                      </div>
+                      <div class="col-md-4">
+                              <mat-card class="example-card">
+                                      <mat-card-header>
+                                        <div mat-card-avatar class="example-header-image"></div>
+                                        <mat-card-title>CHAPTER 5</mat-card-title>
+                                        <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                      </mat-card-header>
+                                      <mat-card-content>
+                                          <video controls width="210">
+                                              <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                                            </video>
+                                        <p>
+                                          Description of class , type of age student allows , subject it has.
+                                        </p>
+                                      </mat-card-content>
+                                      <mat-card-actions>
+                                          <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                              <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                              <mat-icon>delete</mat-icon>
+                                            </button>
+                                      </mat-card-actions>
+                                    </mat-card>
+                          </div>
+                              <div class="col-md-4">
+                                      <mat-card class="example-card">
+                                              <mat-card-header>
+                                                <div mat-card-avatar class="example-header-image"></div>
+                                                <mat-card-title>CHAPTER 6</mat-card-title>
+                                                <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                              </mat-card-header>
+                                              <mat-card-content>
+                                                  <video controls width="210">
+                                                      <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                                                    </video>
+                                                <p>
+                                                  Description of class , type of age student allows , subject it has.
+                                                </p>
+                                              </mat-card-content>
+                                              <mat-card-actions>
+                                                  <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                      <mat-icon>edit</mat-icon>
+                                                    </button>
+                                                    <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                      <mat-icon>delete</mat-icon>
+                                                    </button>
+                                              </mat-card-actions>
+                                            </mat-card>
+                                 </div>
+                                 </div>
+                                 <hr style="height:2px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+                                 <div class="row">
+                                 <div class="col-md-4">
+                                      <mat-card class="example-card">
+                                              <mat-card-header>
+                                                <div mat-card-avatar class="example-header-image"></div>
+                                                <mat-card-title>CHAPTER 7</mat-card-title>
+                                                <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                              </mat-card-header>
+                                              <mat-card-content>
+                                                  <video controls width="210">
+                                                      <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                                                    </video>
+                                                <p>
+                                                  Description of class , type of age student allows , subject it has.
+                                                </p>
+                                              </mat-card-content>
+                                              <mat-card-actions>
+                                                  <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                      <mat-icon>edit</mat-icon>
+                                                    </button>
+                                                    <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                      <mat-icon>delete</mat-icon>
+                                                    </button>
+                                              </mat-card-actions>
+                                            </mat-card>
+                                     </div>
+                                     <div class="col-md-4">
+                                          <mat-card class="example-card">
+                                                  <mat-card-header>
+                                                    <div mat-card-avatar class="example-header-image"></div>
+                                                    <mat-card-title>CHAPTER 8</mat-card-title>
+                                                    <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                  </mat-card-header>
+                                                  <mat-card-content>
+                                                      <video controls width="210">
+                                                          <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                                                        </video>
+                                                    <p>
+                                                      Description of class , type of age student allows , subject it has.
+                                                    </p>
+                                                  </mat-card-content>
+                                                  <mat-card-actions>
+                                                      <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                          <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                          <mat-icon>delete</mat-icon>
+                                                        </button>
+                                                  </mat-card-actions>
+                                                </mat-card>
+                                          </div>
+                                   
+                                          <div class="col-md-4">
+                                                  <mat-card class="example-card">
+                                                          <mat-card-header>
+                                                            <div mat-card-avatar class="example-header-image"></div>
+                                                            <mat-card-title>CHAPTER 9</mat-card-title>
+                                                            <mat-card-subtitle>Any name specifice to school</mat-card-subtitle>
+                                                          </mat-card-header>
+                                                          <mat-card-content>
+                                                              <video controls width="210">
+                                                                  <source src="https://www.youtube.com/watch?v=9xwazD5SyVg" type="video/mp4">
+                                                                </video>
+                                                            <p>
+                                                              Description of class , type of age student allows , subject it has.
+                                                            </p>
+                                                          </mat-card-content>
+                                                          <mat-card-actions>
+                                                              <button mat-icon-button color="primary"  matTooltip="Edit Chapter">
+                                                                  <mat-icon>edit</mat-icon>
+                                                                </button>
+                                                                <button mat-icon-button color="warn" matTooltip="Delete Chapter">
+                                                                  <mat-icon>delete</mat-icon>
+                                                                </button>
+                                                          </mat-card-actions>
+                                                        </mat-card>
+                                              </div>
+                                              </div>
+                                                  </mat-card>
+  </div>
+
+</div>

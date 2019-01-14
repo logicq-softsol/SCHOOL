@@ -1,0 +1,38 @@
+<h2 class="host-table-header" mat-dialog-title>
+        <strong>Setup Subject</strong>
+    </h2>
+    <mat-form-field>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="option1"> STANDARD-I</mat-option>
+              <mat-option value="option2">STANDARD-II</mat-option>
+              <mat-option value="option3"> STANDARD-III</mat-option>
+              <mat-option value="option3"> STANDARD-IV</mat-option>
+              <mat-option value="option3"> STANDARD-V</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Subject Name" required>
+        </mat-form-field>
+       
+   
+        <mat-form-field>
+            <input matInput placeholder="Total Chapter" required>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <input matInput placeholder="Total Time Required" required>
+        </mat-form-field>
+  
+        <mat-form-field>
+            <textarea matInput row="5" placeholder="Subject Descrption" required></textarea>
+        </mat-form-field>
+
+    
+    
+    <div mat-dialog-actions class="host-table-header">
+        <button mat-raised-button color="primary" (click)="addNewSubject()">Confirm</button>
+        <div class="divider"></div>
+        <button mat-raised-button (click)="onNoClick()">NO Thanks</button>
+    </div>

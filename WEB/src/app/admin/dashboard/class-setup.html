@@ -1,0 +1,35 @@
+<h2 class="host-table-header" mat-dialog-title>
+    <strong>NEW CLASS</strong>
+</h2>
+
+<div class="col-md-8">
+        <div class="example-container">
+    <mat-form-field>
+        <input matInput placeholder="Class Name" required>
+    </mat-form-field>
+    </div>
+</div>
+<div class="col-md-8">
+        <div class="example-container">
+    <mat-form-field>
+        <input matInput placeholder="Class Type" required>
+    </mat-form-field>
+    </div>
+</div>    
+<div class="col-md-8">
+    <mat-form-field>
+        <input matInput placeholder="Enrollment Count" required>
+    </mat-form-field>
+</div>    
+<div class="col-md-8">
+    <mat-form-field>
+        <textarea matInput row="5" placeholder="About Class" required></textarea>
+    </mat-form-field>
+</div>    
+
+
+<div mat-dialog-actions class="host-table-header">
+    <button mat-raised-button color="primary" (click)="addNewClass()">Confirm</button>
+    <div class="divider"></div>
+    <button mat-raised-button (click)="onNoClick()">NO Thanks</button>
+</div>

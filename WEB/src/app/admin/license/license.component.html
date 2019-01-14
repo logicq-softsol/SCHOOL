@@ -1,0 +1,114 @@
+<hr style="height:5px;border:none;color:#ffffff0f;background-color:#ffffff0f;">
+<div class="row">
+<div class="col-md-4">
+        <mat-card>
+<div class="example-container">
+        <mat-form-field>
+             <input matInput placeholder="License Key" disabled>
+        </mat-form-field>
+      
+        <mat-form-field>
+                <mat-select placeholder="School Name">
+                  <mat-option value="option">ABC</mat-option>
+                  <mat-option value="option">XYZ</mat-option>
+                  <mat-option value="option">PQR</mat-option>
+                  <mat-option value="option">LMP</mat-option>
+                </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+                <mat-select placeholder="Class Name">
+                  <mat-option value="option">STD-1</mat-option>
+                  <mat-option value="option">STD-2</mat-option>
+                  <mat-option value="option">STD-3</mat-option>
+                  <mat-option value="option">STD-4</mat-option>
+                </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+                <mat-select placeholder="School Type">
+                  <mat-option value="option">CBSE</mat-option>
+                  <mat-option value="option">ICSE</mat-option>
+                  <mat-option value="option">HSC</mat-option>
+                  <mat-option value="option">OTHERS</mat-option>
+                </mat-select>
+        </mat-form-field>
+     <mat-form-field>
+                        <input matInput [matDatepicker]="creationDate" placeholder="License Creation Date">
+                        <mat-datepicker-toggle matSuffix [for]="creationDate"></mat-datepicker-toggle>
+                        <mat-datepicker #creationDate></mat-datepicker>
+         </mat-form-field>
+
+    <mat-form-field>
+                        <input matInput [matDatepicker]="expiryDate" placeholder="License Expiry Date">
+                        <mat-datepicker-toggle matSuffix [for]="expiryDate"></mat-datepicker-toggle>
+                        <mat-datepicker #expiryDate></mat-datepicker>
+      </mat-form-field>
+     
+        <mat-form-field>
+                <mat-select placeholder="License Purpose">
+                  <mat-option value="option">Demo</mat-option>
+                  <mat-option value="option">Live</mat-option>
+                </mat-select>
+         </mat-form-field>
+         <div class="button-row">
+                <button  mat-raised-button color="primary">Generate License</button>
+           
+         </div>
+</div>
+</mat-card>
+</div>
+<div class="col-md-8">
+        <mat-card>
+            <mat-toolbar>
+              <h2>
+                <strong>License Acitvity Details</strong>
+              </h2>
+            </mat-toolbar>
+          
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Activites">
+            </mat-form-field>
+            <div class="example-container">
+              <!-- <mat-table #table [dataSource]="classDetailList"> -->
+              <table mat-table [dataSource]="licenseDetailList" matSort>
+          
+                <ng-container matColumnDef="schoolname">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <strong>School Name</strong>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.schoolname}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="classname">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <strong>CLass Name</strong>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.classname}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="creationdate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <strong>Creation Date</strong>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.creationdate}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="expirydate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <strong>Expiry Date</strong>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.expirydate}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="currentStatus">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      <strong>Status</strong>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.currentStatus}} </mat-cell>
+                  </ng-container>
+                <mat-header-row *matHeaderRowDef="licenseColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: licenseColumns;"></mat-row>
+          
+              </table>
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+          </mat-card>
+        
+
+</div>
+</div>

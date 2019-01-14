@@ -1,0 +1,42 @@
+<mat-toolbar color="primary">
+        <mat-toolbar-row>
+          <span>
+            <img src="./assets/logo/eazdine.jpg">
+          </span>
+          <span class="example-fill-remaining-space"></span>
+          <span class="example-spacer"></span>
+  
+          <button mat-icon-button (click)="sidenav.open()">
+            <mat-icon matBadge="5" matBadgeColor="warn">
+              <i class="material-icons" >notification_important</i>
+            </mat-icon>
+          </button>
+          <button mat-icon-button [matMenuTriggerFor]="profile">
+            <mat-icon>
+              <i class="material-icons">account_circle</i>
+            </mat-icon>
+          </button>
+          <mat-menu #profile="matMenu">
+            <button mat-menu-item  (click)="teacherDashBoard()">
+              <mat-icon>dashboard</mat-icon>
+              <span>Dashboard</span>
+            </button>
+  
+            <button mat-menu-item (click)="teacherProfile()">
+              <mat-icon>account_circle</mat-icon>
+              <span>Proifle</span>
+            </button>
+  
+            <button mat-menu-item (click)="teacherFavorites()">
+              <mat-icon>favorite</mat-icon>
+              <span>Favorites</span>
+            </button>
+            <button mat-menu-item (click)="logOut()">
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Log Out</span>
+              </button>
+            
+          </mat-menu>
+        </mat-toolbar-row>
+      </mat-toolbar>
+<router-outlet></router-outlet>
