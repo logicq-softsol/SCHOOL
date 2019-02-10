@@ -2,7 +2,6 @@ package com.logicq.school.vo;
 
 public class UserVO {
 
-	private String userName;
 	private String firstname;
 	private String lastname;
 	private String address;
@@ -11,15 +10,8 @@ public class UserVO {
 	private String postalcode;
 	private String mobileno;
 	private String email;
-	private String password;
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+	private String role;
 
 	public String getFirstname() {
 		return firstname;
@@ -85,12 +77,12 @@ public class UserVO {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getRole() {
+		return role;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

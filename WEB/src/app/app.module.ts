@@ -1,25 +1,38 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LicenseComponent } from './license/license.component';
-import { AppRoutingModule } from './core/app.routing.module';
+import { LoginComponent } from './public/login/login.component';
+import { RegisterComponent } from './public/register/register.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { LogicQIntercept } from './core/logicqInterceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMaterialModule } from './core/material.module';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { TokenStorage } from './core/token.storage';
+import { HomeComponent } from './home/home.component';
+import { HomeModule } from './home/home.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    LicenseComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
-    BrowserModule,AppRoutingModule,CustomMaterialModule,FormsModule, BrowserAnimationsModule
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    CustomMaterialModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: LogicQIntercept,
+    multi: true
+  },TokenStorage,HomeModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

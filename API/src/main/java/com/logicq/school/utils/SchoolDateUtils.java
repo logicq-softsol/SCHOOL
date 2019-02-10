@@ -20,30 +20,30 @@ public class SchoolDateUtils {
 	static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
 	public Date findTodayStartDate() {
-		LocalDateTime startDate = LocalDateTime.now(ZoneId.of(env.getProperty("reckon.date.zoneid"))).with(LocalTime.MIN);
-		return Date.from(startDate.atZone(ZoneId.of(env.getProperty("reckon.date.zoneid"))).toInstant());
+		LocalDateTime startDate = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid"))).with(LocalTime.MIN);
+		return Date.from(startDate.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());
 
 	}
 
 	public Date find2mrEndDate() {
-		LocalDateTime endDateTime = LocalDateTime.now(ZoneId.of(env.getProperty("reckon.date.zoneid"))).plusDays(1)
+		LocalDateTime endDateTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid"))).plusDays(1)
 				.with(LocalTime.MAX);
-		return Date.from(endDateTime.atZone(ZoneId.of(env.getProperty("reckon.date.zoneid"))).toInstant());
+		return Date.from(endDateTime.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());
 
 	}
 
 	public Date currentDate() {
-		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("reckon.date.zoneid")));
-		return Date.from(currentTime.atZone(ZoneId.of(env.getProperty("reckon.date.zoneid"))).toInstant());
+		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid")));
+		return Date.from(currentTime.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());
 	}
 
 	public String currentDateWithString() {
-		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("reckon.date.zoneid")));
+		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid")));
 		return dtf.format(currentTime);
 	}
 	
 	public String getTodayDay() {
-		return LocalDate.now(ZoneId.of(env.getProperty("reckon.date.zoneid"))).getDayOfWeek().name();
+		return LocalDate.now(ZoneId.of(env.getProperty("school.date.zoneid"))).getDayOfWeek().name();
 	}
 
 

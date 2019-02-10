@@ -11,6 +11,7 @@ public class ActivationVO {
 	private Date expiryDate;
 	private String license;
 	private UserVO user;
+	private LoginVO login;
 
 	public String getProductName() {
 		return productName;
@@ -67,8 +68,13 @@ public class ActivationVO {
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-	
-	
-	
+
+	public LoginVO getLogin() {
+		return login;
+	}
+
+	public void setLogin(LoginVO login) {
+		this.login = login;
+	}
 
 }

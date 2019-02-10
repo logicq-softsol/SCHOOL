@@ -38,6 +38,7 @@ public class LoginDetails implements Serializable {
 
 	@Column(name = "PASSWORD")
 	private String password;
+	
 
 	public Long getId() {
 		return id;

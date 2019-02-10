@@ -1,7 +1,7 @@
 package com.logicq.school;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.Filter;
@@ -13,20 +13,23 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order
 public class CORSFilter implements Filter {
 
-	private final List<String> allowedOrigins = Arrays.asList("http://127.0.0.1:4200", "http://localhost:4200","http://localhost:8080","http://127.0.0.1:8080");
+	private static List<String> allowedOrigins = new ArrayList<>();
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -40,6 +43,7 @@ public class CORSFilter implements Filter {
 
 			// Access-Control-Allow-Origin
 			String origin = request.getHeader("Origin");
+			checkAllowOrigins(origin, allowedOrigins);
 			response.setHeader("Access-Control-Allow-Origin", allowedOrigins.contains(origin) ? origin : "");
 			response.setHeader("Vary", "Origin");
 
@@ -55,15 +59,14 @@ public class CORSFilter implements Filter {
 			// Access-Control-Allow-Headers
 			response.setHeader("Access-Control-Allow-Headers",
 					"Origin, X-Requested-With, Content-Type, Accept, " + "Authorization");
-		chain.doFilter(req, res);
+			chain.doFilter(req, res);
 		}
 
 	}
 
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-
+	private void checkAllowOrigins(String uri, List<String> allowedOrigins) {
+		if (!allowedOrigins.contains(uri))
+			allowedOrigins.add(uri);
 	}
 
 }

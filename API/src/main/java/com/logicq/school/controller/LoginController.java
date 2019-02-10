@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,13 +30,14 @@ import com.logicq.school.repository.LoginDetailsRepo;
 import com.logicq.school.repository.ProductActivationRepo;
 import com.logicq.school.repository.UserDetailsRepo;
 import com.logicq.school.security.JwtTokenProvider;
+import com.logicq.school.security.UserPrincipal;
 import com.logicq.school.utils.SchoolDateUtils;
 import com.logicq.school.vo.ActivationVO;
 import com.logicq.school.vo.RecoverVO;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/api/patner")
+@RequestMapping("/api")
 public class LoginController {
 
 	@Autowired
@@ -74,13 +76,19 @@ public class LoginController {
 
 		if (activationList.size() == 1) {
 			return new ResponseEntity<SucessMessage>(
-					new SucessMessage(schoolDateUtils.currentDate(), "Product Register", "SUCESS"), HttpStatus.OK);
+					new SucessMessage(schoolDateUtils.currentDate(), "Product Already Register", "ERROR"),
+					HttpStatus.BAD_REQUEST);
 		}
 
 		if (activationList.isEmpty() && !StringUtils.isEmpty(activateDetails.getLicense())
-				&& !StringUtils.isEmpty(activateDetails.getUser().getUserName())) {
+				&& !StringUtils.isEmpty(activateDetails.getLogin().getUserName())) {
 			ActivationDetails activationDetails = new ActivationDetails();
-			activationDetails.setActivationDate(schoolDateUtils.currentDate());
+			if (null == activateDetails.getActivationDate()) {
+				activationDetails.setActivationDate(schoolDateUtils.currentDate());
+			} else {
+				activationDetails.setActivationDate(activateDetails.getActivationDate());
+			}
+
 			activationDetails.setActivationKey(passwordEncoder.encode(activateDetails.getLicense()));
 			activationDetails.setLicenseKey(activateDetails.getLicense());
 			activationDetails.setExpiryDate(activateDetails.getExpiryDate());
@@ -89,7 +97,6 @@ public class LoginController {
 			activationDetails.setProductVersion(activateDetails.getProductVersion());
 
 			User userDetails = new User();
-			userDetails.setUserName(activateDetails.getUser().getUserName());
 			userDetails.setAddress(activateDetails.getUser().getAddress());
 			userDetails.setCity(activateDetails.getUser().getCity());
 			userDetails.setCountry(activateDetails.getUser().getCountry());
@@ -98,12 +105,13 @@ public class LoginController {
 			userDetails.setLastname(activateDetails.getUser().getLastname());
 			userDetails.setMobileno(activateDetails.getUser().getMobileno());
 			userDetails.setPostalcode(activateDetails.getUser().getPostalcode());
-			userDetails.setActivationKey(activationDetails.getActivationKey());
+			userDetails.setUserName(activateDetails.getLogin().getUserName());
+			userDetails.setRole(activateDetails.getUser().getRole());
 
 			LoginDetails loginDetails = new LoginDetails();
 			loginDetails.setLoginStatus("IN_ACTIVE");
-			loginDetails.setUserName(activateDetails.getUser().getUserName());
-			loginDetails.setPassword(passwordEncoder.encode(activateDetails.getUser().getPassword()));
+			loginDetails.setUserName(activateDetails.getLogin().getUserName());
+			loginDetails.setPassword(passwordEncoder.encode(activateDetails.getLogin().getPassword()));
 
 			productActivationRepo.save(activationDetails);
 			userDetailsRepo.save(userDetails);
@@ -122,22 +130,26 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> login(@RequestBody LoginDetails login) throws Exception {
 		if (!StringUtils.isEmpty(login.getUserName())) {
-			Authentication authentication = authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(login.getUserName(), login.getPassword()));
+			LoginDetails loginDetails = loginDetailsRepo.findByUserName(login.getUserName());
+			if (null != loginDetails) {
+				User userDetails = userDetailsRepo.findByUserName(login.getUserName());
+				UserPrincipal usrPrincipal = UserPrincipal.create(userDetails, loginDetails);
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+						usrPrincipal, null, usrPrincipal.getAuthorities());
 
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-			if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-				String jwt = tokenProvider.generateToken(authentication);
-				LoginDetails loginDetails = loginDetailsRepo.findByUserName(login.getUserName());
-				if (null != loginDetails) {
-					loginDetails.setLoginTime(schoolDateUtils.currentDate());
-					loginDetails.setLoginStatus("ACTIVE");
-					loginDetailsRepo.save(loginDetails);
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+				if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+					String jwt = tokenProvider.generateToken(authentication);
+					if (null != loginDetails) {
+						loginDetails.setLoginTime(schoolDateUtils.currentDate());
+						loginDetails.setLoginStatus("ACTIVE");
+						loginDetailsRepo.save(loginDetails);
+					}
+					return new ResponseEntity<SucessMessage>(
+							new SucessMessage(schoolDateUtils.currentDate(), jwt, "acess_token"), HttpStatus.OK);
+				} else {
+					throw new ValidationException("ERROR-LOGIN");
 				}
-				return new ResponseEntity<SucessMessage>(
-						new SucessMessage(schoolDateUtils.currentDate(), jwt, "acess_token"), HttpStatus.OK);
-			} else {
-				throw new ValidationException("ERROR-LOGIN");
 			}
 		}
 		return new ResponseEntity<SucessMessage>(
@@ -166,8 +178,7 @@ public class LoginController {
 				.findByActivationKey(passwordEncoder.encode(recover.getLicenseKey()));
 		if (null != activationDetail) {
 			if (passwordEncoder.matches(recover.getLicenseKey(), activationDetail.getActivationKey())) {
-				User user = userDetailsRepo.findByActivationKeyAndUserName(activationDetail.getActivationKey(),
-						recover.getUserName());
+				User user = userDetailsRepo.findByUserName(recover.getUserName());
 				if (null != user) {
 					LoginDetails loginDetails = loginDetailsRepo.findByUserName(user.getUserName());
 					loginDetails.setPassword(passwordEncoder.encode(recover.getNewPassword()));

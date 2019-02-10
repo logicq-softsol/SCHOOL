@@ -1,0 +1,44 @@
+<mat-toolbar>CONTENT</mat-toolbar>
+<div class="row">
+  <div class="col-md-4">
+    <mat-list>
+      <h3 mat-subheader>Classes</h3>
+      <mat-list-item *ngFor="let class of classList">
+        <a (click)="showSubjectList(class)">
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <h4 mat-line>{{class.displayName}}</h4>
+        <p mat-line> {{class.description}} </p>
+        </a>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="col-md-8">
+    <div class="col-md-4" *ngFor="let subj of subjectList">
+        <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{subj.displayName}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                  {{subj.description}}
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-icon-button color="primary"  matTooltip="Edit"  (click)="markFavoriteSubject(subj)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="primary"  matTooltip="Edit"  (click)="getWorkSpaceDetails(subj)">
+                     <b>Work Space</b>
+                    </button>
+                <button mat-icon-button color="primary"  matTooltip="Edit"  (click)="editSubject(subj)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteSubject(subj)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+            </mat-card-actions>
+          </mat-card>
+    </div>
+  </div>
+</div>
