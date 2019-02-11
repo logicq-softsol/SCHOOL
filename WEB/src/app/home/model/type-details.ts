@@ -5,6 +5,7 @@ export class TypeDetails {
     public type: string;
     public icon: string;
     public description: string;
+    public isFavorite:false;
     public list:TypeDetails[]=[];
 
 }
