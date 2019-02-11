@@ -9,12 +9,14 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService,private router: Router) { }
+  constructor(private authService: AuthenticationService,private router: Router) {
+    if (this.authService.isAuthenticate) {
+      this.router.navigate(['/home/contentmgmnt']);
+    }
+   }
 
   ngOnInit() {
-    if (this.authService.isAuthenticate) {
-      this.router.navigate(['/contentmgmnt']);
-    }
+    
   }
 
 }

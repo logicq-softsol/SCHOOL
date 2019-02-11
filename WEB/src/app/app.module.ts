@@ -32,7 +32,7 @@ import { HomeModule } from './home/home.module';
     provide: HTTP_INTERCEPTORS,
     useClass: LogicQIntercept,
     multi: true
-  },TokenStorage,HomeModule],
+  },TokenStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

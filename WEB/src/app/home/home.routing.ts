@@ -6,7 +6,7 @@ import { ContentMgmntComponent } from './content-mgmnt/content-mgmnt.component';
 
 export const homeRoutes: Routes = [
   {
-    path: 'home', component: HomeComponent,
+    path: '', component: HomeComponent,
     children: [{ path: 'contentmgmnt', component: ContentMgmntComponent }]
   }
 ];

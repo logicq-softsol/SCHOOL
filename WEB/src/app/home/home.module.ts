@@ -10,7 +10,7 @@ import { CustomMaterialModule } from '../core/material.module';
 
 @NgModule({
   imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule],
-  declarations: [ContentMgmntComponent],
+  declarations: [ContentMgmntComponent,HomeComponent],
   entryComponents: [],
   providers: [
     homeRoutingProviders,
