@@ -1,49 +1,88 @@
-<ul class="breadcrumb">
-  <li>
-    <a (click)="navigateToHome()">HOME</a>/
-  </li>
-  <li>CONTENT</li>
-</ul>
-<div class="row">
-  <div class="col-md-4">
-    <mat-list>
-      <h3 mat-subheader>Classes</h3>
-      <mat-list-item *ngFor="let class of classList">
-        <a (click)="showSubjectList(class)">
-        <mat-icon mat-list-icon>folder</mat-icon>
-        <h4 mat-line>{{class.displayName}}</h4>
-        <p mat-line> {{class.description}} </p>
-        </a>
-      </mat-list-item>
-    </mat-list>
-  </div>
-  <div class="col-md-8">
-    <div class="col-md-4" *ngFor="let subj of subjectList">
-        <mat-card class="example-card">
-            <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title>{{subj.displayName}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p>
-                  {{subj.description}}
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-icon-button color="primary"  matTooltip="Edit"  (click)="markFavoriteSubject(subj)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="primary"  matTooltip="Edit"  (click)="getWorkSpaceDetails(subj)">
-                     <b>Work Space</b>
-                    </button>
-                <button mat-icon-button color="primary"  matTooltip="Edit"  (click)="editSubject(subj)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteSubject(subj)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-            </mat-card-actions>
-          </mat-card>
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li>
+      <a (click)="navigateToHome()">Home</a>/
+    </li>
+    <li>MyProfile</li>
+  </ul>
+  <div class="container-fluid padd-15">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="book-tables wh-bg">
+          <div class="media">
+            <div class="media-body">
+              <p>Welcome</p>
+              <h4 class="media-heading">
+                <strong>{{user.firstname}} {{user.lastname}}</strong>
+              </h4>
+            <P> <strong>{{user.email}}</strong></P>
+            <p> <strong>{{user.mobileno}}</strong></p>
+            <p>ROLE : <strong>{{user.role}}</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <mat-expansion-panel *ngFor="let class of classList">
+          <mat-expansion-panel-header>
+              <a (click)="showClassSubjectDetails(class)">
+            <mat-panel-title>
+              <i class="material-icons">folder</i>
+              {{class.displayName}}
+            </mat-panel-title>
+          </a>
+          </mat-expansion-panel-header>
+          <ul class="listItems">
+            <li *ngFor="let subj of class.list">
+              <a (click)="showSubjectDetails(subj,class)">
+                {{subj.displayName}}
+              </a>
+            </li>
+          </ul>
+        </mat-expansion-panel>
+      </div>
+      <div class="col-md-9">
+        <div class="book-tables wh-bg history">
+          <h4 class="media-heading"><strong>Details About Class </strong></h4>
+          <div class="media">
+            <div class="media-body">
+              <div class="order-history">
+                <div class="history-head">
+                  <span>{{class.displayName}}</span>
+                  <div class="pull-right hostOrderLink">
+                    <a (click)="confirmOpenDialog()">WORK-SPACE</a>
+                  </div>
+                </div>
+                <div class="history-body">
+                  <div class="media-left">
+                    <div class="media-left">
+                      <span> Subject List , Current Subject </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="order-history" *ngFor="let subject of subjectList">
+                <div class="history-head">
+                  <span>{{subject.displayName}}</span>
+                  <div class="pull-right hostOrderLink">
+                    <a (click)="confirmOpenDialog(hostHistory)">WORK-SPACE</a>
+                  </div>
+                </div>
+                <div class="history-body">
+                  <div class="media-left">
+                    <div class="media-left">
+                      <span> Subject List , Current Subject </span>
+                    </div>
+                  </div>
+                  <div class="media-body"></div>
+
+                </div>
+                <div class="history-foot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>

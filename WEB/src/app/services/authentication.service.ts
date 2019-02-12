@@ -5,7 +5,8 @@ import { environment } from "../../environments/environment";
 import { TokenStorage } from '../core/token.storage';
 import { Activation } from '../public/model/product-detail';
 import { LoginDetail } from '../public/model/login-detail';
-
+import { UserDetail } from '../public/model/user-detail';
+import { ReplaySubject } from 'rxjs';
 
 
 @Injectable({
@@ -14,8 +15,19 @@ import { LoginDetail } from '../public/model/login-detail';
 export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(false);
+  public userDetail = new ReplaySubject<UserDetail>(1);
 
   constructor(private http: HttpClient) { }
+
+
+  
+  getUserDetail() {
+    return this.userDetail.asObservable();
+  }
+
+  public changeUserDetail(userDetail: UserDetail) {
+    this.userDetail.next(userDetail);
+  }
 
 
   login(loginDetail: LoginDetail) {
@@ -51,6 +63,7 @@ export class AuthenticationService {
   }
 
   loadUser() {
-
+    return this.http.get(environment.baseUrl + 'api/load');
   }
+
 }

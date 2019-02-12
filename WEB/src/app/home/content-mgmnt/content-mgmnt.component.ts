@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../service/home.service';
 import { TypeDetails } from '../model/type-details';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserDetail } from 'src/app/public/model/user-detail';
 
 @Component({
   selector: 'app-content-mgmnt',
@@ -8,31 +10,39 @@ import { TypeDetails } from '../model/type-details';
   styleUrls: ['./content-mgmnt.component.scss']
 })
 export class ContentMgmntComponent implements OnInit {
-  
-  classList:TypeDetails[]=[];
-  subjectList:TypeDetails[]=[];  
 
-  constructor(private homeService:HomeService) { }
+  classList: TypeDetails[] = [];
+  subjectList: TypeDetails[] = [];
+  user: UserDetail=new UserDetail();
+  constructor(private homeService: HomeService, private authService: AuthenticationService) { }
 
   ngOnInit() {
-   
-     this.homeService.getClassDetails().subscribe((data:TypeDetails[])=>{
-       this.classList=data;
-     });
+
+    this.authService.getUserDetail().subscribe((user: UserDetail) => {
+      this.user = user;
+    });
+
+    this.homeService.getClassDetails().subscribe((data: TypeDetails[]) => {
+      this.classList = data;
+    });
   }
 
 
-  showSubjectList(typeDet:TypeDetails){
-   this.subjectList=typeDet.list;
+  showSubjectList(typeDet: TypeDetails) {
+    this.subjectList = typeDet.list;
   }
 
-  editSubject(subj){}
+  showSubjectDetails(subj:any,classdetails:any) {
 
-  deleteSubject(subj){}
+  }
 
-  markFavoriteSubject(subj){}
+  editSubject(subj) { }
 
-  getWorkSpaceDetails(subj){
+  deleteSubject(subj) { }
+
+  markFavoriteSubject(subj) { }
+
+  getWorkSpaceDetails(subj) {
 
   }
 

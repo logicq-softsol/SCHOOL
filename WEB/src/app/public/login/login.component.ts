@@ -3,6 +3,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TokenStorage } from 'src/app/core/token.storage';
 import { Router } from '@angular/router';
 import { LoginDetail } from '../model/login-detail';
+import { UserDetail } from '../model/user-detail';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthenticationService, private storage: TokenStorage, private router: Router) { }
 
   ngOnInit() {
-    this.authService.checkValidateProduct().subscribe((data:any)=>{
-      if(data.messageCode=="NO_LICENSE"){
+    this.authService.checkValidateProduct().subscribe((data: any) => {
+      if (data.messageCode == "NO_LICENSE") {
         this.router.navigate(['/register']);
       }
     });
@@ -26,13 +27,15 @@ export class LoginComponent implements OnInit {
 
   login() {
     let loginDetail: LoginDetail = new LoginDetail();
-    loginDetail.userName=this.username;
-    loginDetail.password=this.password;
+    loginDetail.userName = this.username;
+    loginDetail.password = this.password;
     this.authService.login(loginDetail).subscribe((res: any) => {
       this.storage.saveToken(res.message);
       this.authService.authenticationState.next(true);
       if (this.authService.isAuthenticate) {
-
+        this.authService.loadUser().subscribe((user: UserDetail) => {
+          this.authService.changeUserDetail(user);
+        });
         this.router.navigate(['/home']);
       }
     });

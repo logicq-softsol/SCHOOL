@@ -9,4 +9,5 @@ export class UserDetail {
     public mobileno: string;
     public email: string;
     public role: string;
+    public profileImage:string;
 }
