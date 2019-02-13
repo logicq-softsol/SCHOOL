@@ -14,21 +14,21 @@
               <h4 class="media-heading">
                 <strong>{{user.firstname}} {{user.lastname}}</strong>
               </h4>
-            <P> <strong>{{user.email}}</strong></P>
-            <p> <strong>{{user.mobileno}}</strong></p>
-            <p>ROLE : <strong>{{user.role}}</strong></p>
+              <P> <strong>{{user.email}}</strong></P>
+              <p> <strong>{{user.mobileno}}</strong></p>
+              <p>ROLE : <strong>{{user.role}}</strong></p>
             </div>
           </div>
         </div>
 
         <mat-expansion-panel *ngFor="let class of classList">
           <mat-expansion-panel-header>
-              <a (click)="showClassSubjectDetails(class)">
-            <mat-panel-title>
-              <i class="material-icons">folder</i>
-              {{class.displayName}}
-            </mat-panel-title>
-          </a>
+            <a (click)="showClassSubjectDetails(class)">
+              <mat-panel-title>
+                <i class="material-icons">folder</i>
+                {{class.displayName}}
+              </mat-panel-title>
+            </a>
           </mat-expansion-panel-header>
           <ul class="listItems">
             <li *ngFor="let subj of class.list">
@@ -43,6 +43,12 @@
         <div class="book-tables wh-bg history">
           <h4 class="media-heading"><strong>Details About Class </strong></h4>
           <div class="media">
+            <div class="pull-right">
+              <a class="action-link" (click)="addClassDetails()">
+                <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                <span class="txt">Add Class</span>
+              </a>
+            </div>
             <div class="media-body">
               <div class="order-history">
                 <div class="history-head">
