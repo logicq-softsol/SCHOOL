@@ -62,6 +62,11 @@ public class AdminController {
 		return new ResponseEntity<List<SubjectDetails>>(subjectDetailsRepo.findAll(), HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/subjects/{classId}", method = RequestMethod.GET)
+	public ResponseEntity<List<SubjectDetails>> getSubjectDetailsForClasses(@PathVariable Long classId) {
+		return new ResponseEntity<List<SubjectDetails>>(subjectDetailsRepo.findByClassId(classId), HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/subjects", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SubjectDetails> addSubjectDetails(@RequestBody SubjectDetails subject) throws Exception {
 		subjectDetailsRepo.save(subject);

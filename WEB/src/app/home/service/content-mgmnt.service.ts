@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import "rxjs";
 import { environment } from "../../../environments/environment";
-import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
-import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
-import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
+import { ClassSetupDetail } from '../../public/model/class-setup-detail';
+import { SubjectSetupDetail } from '../../public/model/subject-setup-detail';
+import { ChapterSetupDetail } from '../../public/model/chapter-setup-detail';
 
 
 @Injectable({
@@ -22,7 +22,7 @@ export class ContentMgmntService {
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
-    return this.http.post(environment.baseUrl + 'api/login', classDetails, httpOptions);
+    return this.http.post(environment.baseUrl + 'api/admin/classes', classDetails, httpOptions);
   }
 
 
@@ -31,7 +31,7 @@ export class ContentMgmntService {
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
-    return this.http.post(environment.baseUrl + 'api/login', subjectDetails, httpOptions);
+    return this.http.post(environment.baseUrl + 'api/admin/classes', subjectDetails, httpOptions);
   }
 
 
@@ -40,21 +40,21 @@ export class ContentMgmntService {
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
-    return this.http.post(environment.baseUrl + 'api/login', chapterDetail, httpOptions);
+    return this.http.post(environment.baseUrl + 'api/admin/classes', chapterDetail, httpOptions);
   }
 
   getClassDetailList() {
-    return this.http.get(environment.baseUrl + 'api/login');
+    return this.http.get(environment.baseUrl + 'api/admin/classes');
   }
 
 
   getSubjectListForClass(classId: number) {
-    return this.http.get(environment.baseUrl + 'api/login');
+    return this.http.get(environment.baseUrl + 'api/admin/subjects/' + classId);
   }
 
 
   getChapterListForSubjectListForClass(classId: number, subjectId: number) {
-    return this.http.get(environment.baseUrl + 'api/login');
+    return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 import "rxjs";
 import { environment } from "../../../environments/environment";
@@ -14,8 +14,19 @@ export class HomeService {
 
 
 
-  getClassDetails() {
-    return this.http.get("assets/data/class-details.json");
+
+  uploadProfileImage(imageData: File) {
+    let headers = new HttpHeaders();
+    headers.append("Content-Type", undefined);
+    headers.append("Access-Control-Allow-Origin", "*");
+    let httpOptions = { headers: headers };
+    const file: FormData = new FormData();
+    file.append("file", imageData, imageData.name);
+    return this.http.post(
+      environment.baseUrl + "api/uploadFile",
+      file,
+      httpOptions
+    );
   }
 
 }
