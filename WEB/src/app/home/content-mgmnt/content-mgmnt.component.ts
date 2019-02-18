@@ -105,11 +105,13 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
-
   onChangeImageUpload() {
-    const dialogRef = this.dialogProfileImage.open(ProfileImageDialog, {
-      width: "600px"
-    });
+    const dialogRef = this.dialogProfileImage.open(
+      ProfileImageDialog,
+      {
+        width: "600px"
+      }
+    );
     dialogRef.componentInstance.uploadImageEmmiter.subscribe(data => {
       this.selectImage = data;
       this.homeService
@@ -121,6 +123,9 @@ export class ContentMgmntComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => { });
   }
+
+
+
 
 
   openErrorSnackBar(message: string, action: string) {

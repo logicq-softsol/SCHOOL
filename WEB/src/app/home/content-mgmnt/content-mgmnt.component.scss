@@ -557,3 +557,19 @@
     border: 0;
   }
   
+/* Open Table */
+
+.action-link {
+  display: inline-block;
+  padding: 6px 15px 5px;
+  background: #fff;
+  margin-left: 10px;
+  border: 1px solid #aaaaaa;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.action-link .txt {
+  padding-left: 5px;
+}
+
