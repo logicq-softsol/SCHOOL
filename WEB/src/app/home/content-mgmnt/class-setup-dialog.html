@@ -1,39 +1,22 @@
-<div class="container">
-
-    <div>
-        <h2 mat-dialog-title>
-            <strong>Class Details</strong>
-        </h2>
-    </div>
-
-    <div class="row">
-        <div class="media-left">
-            <img class="person-card-avatar bigPicture" src="{{classSetup.icon}}">
-            <a id="photoSelector" mat-icon-button (click)='onChangeImageUpload()'>
-                <mat-icon>photo_camera</mat-icon> Edit image
-            </a>
-        </div>
-        <div class="col-md-6">
-            <div class="example-container">
-                <mat-form-field>
-                    <input class="element" name="displayName" [(ngModel)]="classSetup.displayName" matInput placeholder="Class Name">
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="example-container">
-                <mat-form-field>
-                    <textarea matInput name="description" placeholder="Description" [(ngModel)]="classSetup.description"></textarea>
-                </mat-form-field>
-            </div>
-        </div>
-
-
+<div>
+    <h2 mat-dialog-title>
+        <strong>Class Details</strong>
+    </h2>
+</div>
+<div class="example-card">
+    <form class="example-form">
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Class Name</mat-label>
+            <input matInput placeholder="Class Name" [(ngModel)]="classSetup.displayName" name="displayName" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Description" [(ngModel)]="classSetup.description" name="description" required></textarea>
+        </mat-form-field>
         <div mat-dialog-actions class="host-table-header">
-            <button id="updateBtn" mat-raised-button color="primary" (click)="updateUserDetail()">SAVE</button>
+            <button id="updateBtn" mat-raised-button color="primary" (click)="addClass()">SAVE</button>
             <div class="divider"></div>
             <button class="noThanksBtn" mat-raised-button (click)="onNoClick()">NO Thanks</button>
         </div>
-
-    </div>
+    </form>
+</div>

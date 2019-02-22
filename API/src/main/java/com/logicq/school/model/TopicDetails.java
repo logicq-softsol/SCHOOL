@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "SUB_CHAPTER_DETAIL")
-public class SubChapterDetails extends AttributeDetails {
+@Table(name = "TOPIC_DETAIL")
+public class TopicDetails extends AttributeDetails {
 
 	/**
 	 * 

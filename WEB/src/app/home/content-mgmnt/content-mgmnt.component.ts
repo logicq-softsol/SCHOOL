@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Inject } from '@angular/core';
 import { HomeService } from '../service/home.service';
-import { TypeDetails } from '../model/type-details';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserDetail } from 'src/app/public/model/user-detail';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -96,6 +95,7 @@ export class ContentMgmntComponent implements OnInit {
 
     dialogRef.componentInstance.classesEmmiter.subscribe((classDetails: ClassSetupDetail) => {
       classDetails.icon = this.imageUrl;
+      classDetails.type="CLASS"
       this.contentMgmntService.setupClassDetails(classDetails).subscribe((classDetails: ClassSetupDetail) => {
         this.snackBar.open(" Class Added Sucessfully. ", "CLOSE");
         this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
@@ -203,6 +203,9 @@ export class ClassSetupDialog {
   }
 
   addClass() {
+    if(this.classSetup.name==null){
+      this.classSetup.name=this.classSetup.displayName.replace(/\s/g, "");
+    }
     this.classesEmmiter.emit(this.classSetup);
     this.onNoClick();
   }

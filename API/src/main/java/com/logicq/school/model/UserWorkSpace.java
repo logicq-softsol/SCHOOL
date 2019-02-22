@@ -32,8 +32,8 @@ public class UserWorkSpace extends AttributeDetails {
 	@Column(name = "CHAPTER_ID")
 	private Long chapterId;
 
-	@Column(name = "SUB_CHAPTER_ID")
-	private Long subChapterId;
+	@Column(name = "TOPIC_ID")
+	private Long topicId;
 
 	@Column(name = "USER_ID")
 	private Long userId;
@@ -82,14 +82,6 @@ public class UserWorkSpace extends AttributeDetails {
 		this.chapterId = chapterId;
 	}
 
-	public Long getSubChapterId() {
-		return subChapterId;
-	}
-
-	public void setSubChapterId(Long subChapterId) {
-		this.subChapterId = subChapterId;
-	}
-
 	public String getText() {
 		return text;
 	}
@@ -128,6 +120,14 @@ public class UserWorkSpace extends AttributeDetails {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public Long getTopicId() {
+		return topicId;
+	}
+
+	public void setTopicId(Long topicId) {
+		this.topicId = topicId;
 	}
 
 }
