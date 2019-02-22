@@ -8,6 +8,7 @@ import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 import { ContentMgmntService } from 'src/app/home/service/content-mgmnt.service';
 import { MatSnackBar } from "@angular/material";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-content-mgmnt',
@@ -26,8 +27,6 @@ export class ContentMgmntComponent implements OnInit {
   chapterDetails: ChapterSetupDetail = new ChapterSetupDetail();
 
   user: UserDetail = new UserDetail();
-
-  enableClass: boolean = true;
   selectImage: File;
   imageUrl: string;
 
@@ -36,7 +35,7 @@ export class ContentMgmntComponent implements OnInit {
     private authService: AuthenticationService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,private router: Router) { }
 
   ngOnInit() {
 
@@ -49,8 +48,9 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
-  viewYourWorkSpace(classSetup: ClassSetupDetail) {
-
+  viewSubjectList(classSetup: ClassSetupDetail) {
+    this.contentMgmntService.changeClassSetupDetail(classSetup);
+    this.router.navigate(['/home/contentmgmnt/subject']);
   }
 
 
@@ -64,8 +64,13 @@ export class ContentMgmntComponent implements OnInit {
       }
     });
 
-    dialogRef.componentInstance.classesEmmiter.subscribe((menu) => {
-      // this.snackMessage = 'ADDED SUCCESSFULLY!!!';
+    dialogRef.componentInstance.classesEmmiter.subscribe((classDetails: ClassSetupDetail) => {
+      this.contentMgmntService.editClassDetails(classDetails).subscribe((classDetails: ClassSetupDetail) => {
+        this.snackBar.open(" Class Edited Sucessfully. ", "CLOSE");
+        this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
+          this.classList = data;
+        });
+      });
     });
   }
 
@@ -78,8 +83,13 @@ export class ContentMgmntComponent implements OnInit {
       }
     });
 
-    dialogRef.componentInstance.classesEmmiter.subscribe((menu) => {
-      // this.snackMessage = 'ADDED SUCCESSFULLY!!!';
+    dialogRef.componentInstance.classesEmmiter.subscribe((classDetails: ClassSetupDetail) => {
+      this.contentMgmntService.deleteClassDetails(classDetails).subscribe((classDetails: ClassSetupDetail) => {
+        this.snackBar.open(" Class Delete Sucessfully. ", "CLOSE");
+        this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
+          this.classList = data;
+        });
+      });
     });
   }
 
@@ -95,7 +105,7 @@ export class ContentMgmntComponent implements OnInit {
 
     dialogRef.componentInstance.classesEmmiter.subscribe((classDetails: ClassSetupDetail) => {
       classDetails.icon = this.imageUrl;
-      classDetails.type="CLASS"
+      classDetails.type = "CLASS"
       this.contentMgmntService.setupClassDetails(classDetails).subscribe((classDetails: ClassSetupDetail) => {
         this.snackBar.open(" Class Added Sucessfully. ", "CLOSE");
         this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
@@ -181,30 +191,27 @@ export class ProfileImageDialog {
   styleUrls: ['./content-mgmnt.component.scss']
 })
 export class ClassSetupDialog {
-  classSetup: ClassSetupDetail;
+  classSetup: ClassSetupDetail = new ClassSetupDetail();
   classesEmmiter = new EventEmitter();
-
+  operationType: string="SAVE";
   constructor(public dialogRef: MatDialogRef<ClassSetupDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
+    this.operationType = data.type;
     if ("ADD" == data.type) {
       this.classSetup = new ClassSetupDetail();
+    } else {
+      this.classSetup = data.classDetail;
     }
-    if ("EDIT" == data.type) {
-      this.classSetup = data.classSetup;
-    }
-    if ("DELETE" == data.type) {
-      this.classSetup = data.classSetup;
-    }
-
-
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  addClass() {
-    if(this.classSetup.name==null){
-      this.classSetup.name=this.classSetup.displayName.replace(/\s/g, "");
+  saveClassChange() {
+    if ("ADD" == this.operationType) {
+      if (this.classSetup.name == null) {
+        this.classSetup.name = this.classSetup.displayName.replace(/\s/g, "");
+      }
     }
     this.classesEmmiter.emit(this.classSetup);
     this.onNoClick();
@@ -214,38 +221,4 @@ export class ClassSetupDialog {
 
 
 
-
-@Component({
-  selector: 'subject-setup-dialog',
-  templateUrl: 'subject-setup-dialog.html',
-  styleUrls: ['./content-mgmnt.component.scss']
-})
-export class SubjectSetupDialog {
-  subjectSetup: SubjectSetupDetail;
-  subjectEmmiter = new EventEmitter();
-
-  constructor(public dialogRef: MatDialogRef<SubjectSetupDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
-    if ("ADD" == data.type) {
-      this.subjectSetup = new SubjectSetupDetail();
-    }
-    if ("EDIT" == data.type) {
-      this.subjectSetup = data.subjectSetup;
-    }
-    if ("DELETE" == data.type) {
-      this.subjectSetup = data.subjectSetup;
-    }
-
-
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  addClass() {
-    this.subjectEmmiter.emit(this.subjectSetup);
-    this.onNoClick();
-  }
-
-}
 

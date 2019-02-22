@@ -1,17 +1,17 @@
 <div>
     <h2 mat-dialog-title>
-        <strong>{{operationType}} Class Details</strong>
+        <strong>{{operationType}} Subject Details</strong>
     </h2>
 </div>
 <div class="example-card">
     <form class="example-form">
         <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Class Name</mat-label>
-            <input matInput placeholder="Class Name" [(ngModel)]="classSetup.displayName" name="displayName" required>
+            <mat-label>Subject Name</mat-label>
+            <input matInput placeholder="Class Name" [(ngModel)]="subjectSetup.displayName" name="displayName" required>
         </mat-form-field>
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" [(ngModel)]="classSetup.description" name="description" required></textarea>
+            <textarea matInput placeholder="Description" [(ngModel)]="subjectSetup.description" name="description" required></textarea>
         </mat-form-field>
         <div mat-dialog-actions class="host-table-header">
             <button id="updateBtn" mat-raised-button color="primary" (click)="saveClassChange()">SAVE</button>

@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { HomeModule } from './home/home.module';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,7 @@ import { HomeModule } from './home/home.module';
     provide: HTTP_INTERCEPTORS,
     useClass: LogicQIntercept,
     multi: true
-  },TokenStorage],
+  }, TokenStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

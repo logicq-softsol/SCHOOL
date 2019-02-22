@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <ul class="breadcrumb">
     <li>
-      <a (click)="navigateToHome()">Home</a>/
-    </li>
-    <li>Dashboard</li>
+      <a (click)="navigateToHome()">Home</a>/</li>
+    <li>Dashboard/</li>
+    <li>Subjects</li>
   </ul>
   <div class="container-fluid padd-15">
     <div class="row">
@@ -47,41 +47,54 @@
       </div>
 
       <div class="col-md-9">
+        <div class="media-body">
+          <div class="order-history">
+            <div class="history-head">
+              <span>{{classDetail.displayName}}</span>
+            </div>
+            <div class="history-body">
+              <div class="media-left">
+                <span>{{classDetail.description}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="book-tables wh-bg history">
           <h4 class="media-heading">
-            <strong>Details About Classes</strong>
+            <strong>Details About Subjects</strong>
           </h4>
           <div class="media">
             <div class="pull-right">
-              <a class="action-link" (click)="addClassDetails()">
+              <a class="action-link" (click)="addSubjectDetails()">
                 <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                <span class="txt">Add Class</span>
+                <span class="txt">Add Subject</span>
               </a>
             </div>
             <div class="media-body">
-              <div class="order-history" *ngFor="let class of classList">
+              <div class="order-history" *ngFor="let subject of subjectList">
                 <div class="history-head">
-                  <span>{{class.displayName}}</span>
+                  <span>{{subject.displayName}}</span>
                   <!--div class="pull-right hostOrderLink">
-                    <a (click)="viewYourWorkSpace(class)">WORK-SPACE</a>
-                  </div-->
+                      <a (click)="viewYourWorkSpace(class)">WORK-SPACE</a>
+                    </div-->
                 </div>
                 <div class="history-body">
                   <div class="media-left">
-                    <span>{{class.description}}</span>
+                    <span>{{subject.description}}</span>
                   </div>
                 </div>
                 <div class="history-foot">
                   <div class="pull-right">
-                    <a class="action-link" (click)="viewSubjectList(class)">
+                    <a class="action-link" (click)="viewChapterList(subject)">
                       <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                      <span class="txt">Subjects</span>
+                      <span class="txt">Chapters</span>
                     </a>
-                    <a class="action-link" (click)="editClassDetails(class)">
+                    <a class="action-link" (click)="editSubjectDetail(subject)">
                       <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                       <span class="txt">EDIT</span>
                     </a>
-                    <a class="action-link" (click)="deleteClassDetails(class)">
+                    <a class="action-link" (click)="deleteSubjectDetail(subject)">
                       <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                       <span class="txt">DELETE</span>
                     </a>
