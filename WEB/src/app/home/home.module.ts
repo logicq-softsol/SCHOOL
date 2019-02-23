@@ -9,11 +9,12 @@ import { ContentMgmntComponent, ClassSetupDialog, ProfileImageDialog } from './c
 import { CustomMaterialModule } from '../core/material.module';
 import { ImageCropperModule } from "ngx-image-cropper";
 import { ContentSubjectComponent, SubjectDetailDialog } from '../home/content-mgmnt/content-subject/content-subject.component';
+import { ContentChapterComponent, ChapterDetailDialog } from './content-mgmnt/content-subject/content-chapter/content-chapter.component';
 
 @NgModule({
   imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule,ImageCropperModule],
-  declarations: [ContentMgmntComponent,HomeComponent,ContentSubjectComponent,ClassSetupDialog,ProfileImageDialog,SubjectDetailDialog],
-  entryComponents: [ClassSetupDialog,ProfileImageDialog,SubjectDetailDialog],
+  declarations: [ContentMgmntComponent,HomeComponent,ContentSubjectComponent,ContentChapterComponent,ClassSetupDialog,ProfileImageDialog,SubjectDetailDialog,ChapterDetailDialog],
+  entryComponents: [ClassSetupDialog,ProfileImageDialog,SubjectDetailDialog,ChapterDetailDialog],
   providers: [
     homeRoutingProviders,
     {

@@ -91,7 +91,36 @@ export class ContentMgmntService {
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
-    return this.http.delete(environment.baseUrl + 'api/admin/subjects/'+subjectDetail.classId +"/"+subjectDetail.id, httpOptions);
+    return this.http.delete(environment.baseUrl + 'api/admin/subjects/' + subjectDetail.classId + "/" + subjectDetail.id, httpOptions);
+  }
+
+
+
+  setupChapterDetails(chapterDetail: ChapterSetupDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.post(environment.baseUrl + 'api/admin/chapterDetail', chapterDetail, httpOptions);
+  }
+
+
+
+  editChapterDetails(chapterDetail: ChapterSetupDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.put(environment.baseUrl + 'api/admin/chapters', chapterDetail, httpOptions);
+  }
+
+
+  deleteChapterDetails(chapterDetail: ChapterSetupDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.delete(environment.baseUrl + 'api/admin/chapters/' + chapterDetail.classId + "/" + chapterDetail.subjectId + "/" + chapterDetail.id, httpOptions);
   }
 
 
@@ -106,7 +135,7 @@ export class ContentMgmntService {
   }
 
 
-  getChapterListForSubjectListForClass(classId: number, subjectId: number) {
+  getChapterListForSubjectAndClass(classId: number, subjectId: number) {
     return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId);
   }
 

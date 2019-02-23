@@ -117,4 +117,12 @@ public class AdminController {
 		return new ResponseEntity<ChapterDetails>(chapter, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/chapters/{classId}/{subjectId}/{chapterId}", method = RequestMethod.DELETE)
+	public ResponseEntity<ChapterDetails> deleteChapter(@PathVariable Long classId, @PathVariable Long subjectId,
+			@PathVariable Long chapterId) throws Exception {
+		ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId);
+		chapterDetailsRepo.delete(chapter);
+		return new ResponseEntity<ChapterDetails>(chapter, HttpStatus.OK);
+	}
+
 }

@@ -20,7 +20,7 @@ export class ContentMgmntComponent implements OnInit {
   classList: ClassSetupDetail[] = [];
   classSetup: ClassSetupDetail = new ClassSetupDetail();
 
-  subjectList: SubjectSetupDetail[] = [];
+  classSubjectList: SubjectSetupDetail[] = [];
   subjectSetup: SubjectSetupDetail = new SubjectSetupDetail();
 
   chapterList: ChapterSetupDetail[] = [];
@@ -53,6 +53,17 @@ export class ContentMgmntComponent implements OnInit {
     this.router.navigate(['/home/contentmgmnt/subject']);
   }
 
+  showClassSubjectList(classSetup: ClassSetupDetail){
+    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
+      this.classSubjectList = subjectList;
+    });
+  }
+
+  showChapterList(classSetup: ClassSetupDetail,subject:SubjectSetupDetail){
+    this.contentMgmntService.changeClassSetupDetail(classSetup);
+    this.contentMgmntService.changeSubjectDetail(subject);
+    this.router.navigate(['/home/contentmgmnt/subject/chapter']);
+  }
 
 
   editClassDetails(classSetup: ClassSetupDetail) {

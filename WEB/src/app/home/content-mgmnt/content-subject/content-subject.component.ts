@@ -6,7 +6,7 @@ import { MatSnackBar } from "@angular/material";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UserDetail } from '../../../public/model/user-detail';
 import { AuthenticationService } from '../../../services/authentication.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-content-subject',
@@ -23,16 +23,16 @@ export class ContentSubjectComponent implements OnInit {
 
   user: UserDetail = new UserDetail();
 
-  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, public dialog: MatDialog, public snackBar: MatSnackBar) {
+  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, public dialog: MatDialog, public snackBar: MatSnackBar,private router: Router) {
 
+  }
 
+  ngOnInit() {
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
     });
-
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
       this.classList = data;
-
     });
 
     this.contentMgmntService.getClassSetupDetail().subscribe((classDetail: ClassSetupDetail) => {
@@ -42,10 +42,19 @@ export class ContentSubjectComponent implements OnInit {
       });
     });
 
-
   }
 
-  ngOnInit() {
+  showChapterList(classDet: ClassSetupDetail, subjectDe: SubjectSetupDetail) {
+    this.contentMgmntService.changeClassSetupDetail(classDet);
+    this.contentMgmntService.changeSubjectDetail(subjectDe);
+    this.router.navigate(['/home/contentmgmnt/subject/chapter']);
+  }
+
+
+  showClassSubjectList(classSetup: ClassSetupDetail){
+    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
+      this.subjectList = subjectList;
+    });
   }
 
 
@@ -75,7 +84,7 @@ export class ContentSubjectComponent implements OnInit {
     const dialogRef = this.dialog.open(SubjectDetailDialog, {
       width: '600px',
       data: {
-        type: "ADD",
+        type: "EDIT",
         subjectDetail: subject
       }
     });
@@ -98,7 +107,7 @@ export class ContentSubjectComponent implements OnInit {
     const dialogRef = this.dialog.open(SubjectDetailDialog, {
       width: '600px',
       data: {
-        type: "ADD",
+        type: "DELETE",
         subjectDetail: subject
       }
     });
