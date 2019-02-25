@@ -447,6 +447,7 @@
   .history-foot {
     border-top: 1px solid lightgray;
     padding: 5px 15px;
+    height: 50px;
   }
   
   .history-foot span {
@@ -579,4 +580,7 @@
   min-width: 150px;
   max-width: 500px;
   width: 100%;
+}
+.right-btn {
+  padding: 5px;
 }

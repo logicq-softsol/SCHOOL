@@ -447,6 +447,7 @@
   .history-foot {
     border-top: 1px solid lightgray;
     padding: 5px 15px;
+    height: 50px;
   }
   
   .history-foot span {
@@ -579,4 +580,120 @@
   min-width: 150px;
   max-width: 500px;
   width: 100%;
+}
+.right-btn {
+  padding: 5px;
+}
+.wh-bg {
+  background: #fff;
+}
+
+.margin-padding {
+  margin: 20px 50px;
+  padding: 15px;
+}
+
+.nav-tabs {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.div:empty{
+  display: none
+}
+
+.nav-tabs>li>a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-radius: 0;
+  padding: 10px 30px;
+  color: #999;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+  border: 0;
+  border-bottom: 3px solid #f7941d;
+  color: #333;
+}
+
+.nav-tabs>li>a h3.mat-line {
+  font-size: 18px;
+}
+
+.nav-tabs>li>a span.mat-line {
+  font-size: 12px;
+}
+
+.mat-raised-button.mat-primary {
+  border: 1px solid #f7941d;
+  color: #ffffff;
+  padding: 0 10px;
+  line-height: 36px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.search-input {
+  width: 401px;
+  height: 35px;
+  padding: 5px 35px 5px 15px;
+  border-radius: 2px;
+  border: 1px solid lightgray;
+  background: gainsboro;
+}
+
+.search-box i {
+  position: relative;
+  right: 30px;
+  top: 8px;
+  color: gray;
+}
+
+.cancelBtn {
+  border: 1px solid;
+  border-radius: 3px;
+}
+
+.doneBtn {
+  margin-left: 10px;
+  color: #fff;
+  background: #f7941d;
+  border: 1px solid #f7941d;
+  border-radius: 3px;
+}
+
+.inviteBtn {
+  color: #82ca24;
+  border: 1px solid #a7a1a1;
+}
+
+.reinviteBtn {
+  color: #fff;
+  background: #82ca24;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+.table-cell {
+  display: table-cell;
+}
+
+.user-box {
+  border: 1px solid lightgray;
+  padding: 15px;
+  border-radius: 2px;
+  margin-bottom: 15px;
+}
+
+.checkIcon {
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.default-txt {
+  text-align: center;
+  padding: 30px;
 }

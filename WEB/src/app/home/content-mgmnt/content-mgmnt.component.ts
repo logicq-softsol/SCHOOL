@@ -9,6 +9,7 @@ import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 import { ContentMgmntService } from 'src/app/home/service/content-mgmnt.service';
 import { MatSnackBar } from "@angular/material";
 import { Router } from '@angular/router';
+import { ImageUploadDialog } from './upload-file/upload-image';
 
 @Component({
   selector: 'app-content-mgmnt',
@@ -35,7 +36,7 @@ export class ContentMgmntComponent implements OnInit {
     private authService: AuthenticationService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar,private router: Router) { }
+    public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
 
@@ -53,13 +54,13 @@ export class ContentMgmntComponent implements OnInit {
     this.router.navigate(['/home/contentmgmnt/subject']);
   }
 
-  showClassSubjectList(classSetup: ClassSetupDetail){
+  showClassSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.classSubjectList = subjectList;
     });
   }
 
-  showChapterList(classSetup: ClassSetupDetail,subject:SubjectSetupDetail){
+  showChapterList(classSetup: ClassSetupDetail, subject: SubjectSetupDetail) {
     this.contentMgmntService.changeClassSetupDetail(classSetup);
     this.contentMgmntService.changeSubjectDetail(subject);
     this.router.navigate(['/home/contentmgmnt/subject/chapter']);
@@ -126,9 +127,9 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
-  onChangeImageUpload() {
+  onChangeImage(classDet:ClassSetupDetail) {
     const dialogRef = this.dialogProfileImage.open(
-      ProfileImageDialog,
+      ImageUploadDialog,
       {
         width: "600px"
       }
@@ -136,7 +137,7 @@ export class ContentMgmntComponent implements OnInit {
     dialogRef.componentInstance.uploadImageEmmiter.subscribe(data => {
       this.selectImage = data;
       this.homeService
-        .uploadProfileImage(this.selectImage)
+        .uploadImages(this.selectImage,classDet.id,'CLASS')
         .subscribe((data: any) => {
           this.imageUrl = data.fileDownloadUri;
         });
@@ -158,43 +159,6 @@ export class ContentMgmntComponent implements OnInit {
 
 
 
-@Component({
-  selector: "profile-image",
-  templateUrl: "profile-image.html",
-  styleUrls: ["./content-mgmnt.component.scss"]
-})
-export class ProfileImageDialog {
-  file: File;
-  uploadImageEmmiter = new EventEmitter();
-  imageChangedEvent: any = "";
-  croppedImage: any = "";
-
-  constructor(public dialogRef: MatDialogRef<ProfileImageDialog>) { }
-
-  onFileChanged(event) {
-    this.imageChangedEvent = event;
-    this.file = event.target.files[0];
-    //this.uploadImageEmmiter.emit( this.file);
-    // this.dialogRef.close();
-  }
-  imageCropped(image: string) {
-    this.croppedImage = image;
-  }
-  imageLoaded() {
-    // show cropper
-  }
-  loadImageFailed() {
-    // show message
-  }
-  confirmUpload() {
-    this.uploadImageEmmiter.emit(this.file);
-    this.dialogRef.close();
-  }
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
 
 @Component({
   selector: 'class-setup-dialog',
@@ -204,7 +168,7 @@ export class ProfileImageDialog {
 export class ClassSetupDialog {
   classSetup: ClassSetupDetail = new ClassSetupDetail();
   classesEmmiter = new EventEmitter();
-  operationType: string="SAVE";
+  operationType: string = "SAVE";
   constructor(public dialogRef: MatDialogRef<ClassSetupDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
     this.operationType = data.type;
     if ("ADD" == data.type) {

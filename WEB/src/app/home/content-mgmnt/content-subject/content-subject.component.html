@@ -39,7 +39,7 @@
           <ul class="listItems">
             <li *ngFor="let subj of subjectList">
               <a (click)="showChapterDetailsDetails(subj,class)">
-                {{subj.displayName}} 
+                {{subj.displayName}}
               </a>
             </li>
           </ul>
@@ -54,6 +54,7 @@
             </div>
             <div class="history-body">
               <div class="media-left">
+                <img class="person-card-avatar bigPicture" src="{{classDetail.icon?classDetail.icon:'assets/images/class.jpg'}}">
                 <span>{{classDetail.description}}</span>
               </div>
             </div>
@@ -64,8 +65,8 @@
           <h4 class="media-heading">
             <strong>Details About Subjects</strong>
           </h4>
-          <div class="media">
-            <div class="pull-right">
+          <div>
+            <div class="pull-right right-btn">
               <a class="action-link" (click)="addSubjectDetails()">
                 <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                 <span class="txt">Add Subject</span>

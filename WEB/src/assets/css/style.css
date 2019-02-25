@@ -231,7 +231,7 @@ a {
   display: inline-block;
 }
 
-@media screen and max-height 450px {
+@media only screen and (max-height: 450px) {
 
   .sidenav,
   .sidenavR {
@@ -733,4 +733,7 @@ footer {
   .form-inner .form-control {
     width: 70%
   }
+}
+.pull-right {
+float: right;
 }

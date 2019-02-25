@@ -20,6 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.logicq.school.model.ChapterDetails;
+import com.logicq.school.model.ClassDetails;
+import com.logicq.school.model.SubjectDetails;
+import com.logicq.school.model.TopicDetails;
+import com.logicq.school.repository.ChapterDetailsRepo;
+import com.logicq.school.repository.ClassesDetailsRepo;
+import com.logicq.school.repository.SubjectDetailsRepo;
+import com.logicq.school.repository.TopicDetailsRepo;
 import com.logicq.school.service.FileStorageService;
 import com.logicq.school.vo.UploadFileResponse;
 
@@ -31,20 +39,47 @@ public class FileController {
 	@Autowired
 	private FileStorageService fileStorageService;
 
-//	@Autowired
-//	UserDetailsRepo userDetailsRepo;
+	@Autowired
+	ClassesDetailsRepo classesDetailsRepo;
+
+	@Autowired
+	SubjectDetailsRepo subjectDetailsRepo;
+
+	@Autowired
+	ChapterDetailsRepo chapterDetailsRepo;
+
+	@Autowired
+	TopicDetailsRepo topicDetailsRepo;
 
 	@PostMapping("/uploadFile")
-	public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,
-			@RequestParam("userid") String emailid) {
-		// User user = userDetailsRepo.findByEmailId(emailid);
+	public UploadFileResponse uploadFileForClass(@RequestParam("file") MultipartFile file,
+			@RequestParam("entityId") String entityId, @RequestParam("entityType") String entityType,
+			@RequestParam("classId") String classId, @RequestParam("subjectId") String subjectId,
+			@RequestParam("chapterId") String chapterId) {
 		String fileName = fileStorageService.storeFile(file);
 		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/downloadFile/")
 				.path(fileName).toUriString();
-		// user.setImageURL(fileDownloadUri);
-		// userDetailsRepo.save(user);
-		// new UploadFileResponse(fileName, fileDownloadUri,
-		// file.getContentType(), file.getSize())
+		if ("CLASS".equals(entityType)) {
+			ClassDetails classDetails = classesDetailsRepo.findOne(Long.valueOf(entityId));
+			classDetails.setIcon(fileDownloadUri);
+			classesDetailsRepo.save(classDetails);
+		} else if ("SUBJECT".equals(entityType)) {
+			SubjectDetails subjectDetails = subjectDetailsRepo.findByClassIdAndId(Long.valueOf(classId),
+					Long.valueOf(entityId));
+			subjectDetails.setIcon(fileDownloadUri);
+			subjectDetailsRepo.save(subjectDetails);
+		} else if ("CHAPTER".equals(entityType)) {
+			ChapterDetails chapterDetails = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(Long.valueOf(classId),
+					Long.valueOf(subjectId), Long.valueOf(entityId));
+			chapterDetails.setIcon(fileDownloadUri);
+			chapterDetailsRepo.save(chapterDetails);
+		} else if ("TOPIC".equals(entityType)) {
+			TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(Long.valueOf(classId),
+					Long.valueOf(subjectId), Long.valueOf(chapterId), Long.valueOf(entityId));
+			topic.setIcon(fileDownloadUri);
+			topicDetailsRepo.save(topic);
+		}
+
 		UploadFileResponse uploadRes = new UploadFileResponse();
 		uploadRes.setFileName(fileName);
 		uploadRes.setFileDownloadUri(fileDownloadUri);

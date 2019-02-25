@@ -10,8 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMaterialModule } from './core/material.module';
 import { FormsModule } from '@angular/forms';
 import { TokenStorage } from './core/token.storage';
-import { HomeComponent } from './home/home.component';
-import { HomeModule } from './home/home.module';
 
 
 

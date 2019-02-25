@@ -11,4 +11,6 @@ import com.logicq.school.model.TopicDetails;
 public interface TopicDetailsRepo extends JpaRepository<TopicDetails, Long> {
 
 	List<TopicDetails> findByClassIdAndSubjectIdAndChapterId(Long classId, Long subjectId, Long chapterId);
+
+	TopicDetails findByClassIdAndSubjectIdAndChapterIdAndId(Long classId, Long subjectId, Long chapterId, Long id);
 }

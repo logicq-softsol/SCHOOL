@@ -1,4 +1,3 @@
-
 <input type="file" (change)="onFileChanged($event)" />
 <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" [aspectRatio]="4 / 4"
   [resizeToWidth]="128" format="png" (imageCroppedBase64)="imageCropped($event)" (imageLoaded)="imageLoaded()"
