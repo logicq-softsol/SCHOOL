@@ -11,11 +11,13 @@ import { ImageCropperModule } from "ngx-image-cropper";
 import { ContentSubjectComponent, SubjectDetailDialog } from '../home/content-mgmnt/content-subject/content-subject.component';
 import { ContentChapterComponent, ChapterDetailDialog } from './content-mgmnt/content-subject/content-chapter/content-chapter.component';
 import { ImageUploadDialog } from './content-mgmnt/upload-file/upload-image';
+import { WorkSpaceDialog } from './content-mgmnt/workspace/work-space.component';
+import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
-  imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule,ImageCropperModule],
-  declarations: [ContentMgmntComponent,HomeComponent,ContentSubjectComponent,ContentChapterComponent,ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog],
-  entryComponents: [ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog],
+  imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule,ImageCropperModule,NgxEditorModule],
+  declarations: [ContentMgmntComponent,HomeComponent,ContentSubjectComponent,ContentChapterComponent,ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog,WorkSpaceDialog],
+  entryComponents: [ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog,WorkSpaceDialog],
   providers: [
     homeRoutingProviders,
     {

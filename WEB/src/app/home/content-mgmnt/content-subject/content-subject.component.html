@@ -74,6 +74,10 @@
             </div>
             <div class="media-body">
               <div class="order-history" *ngFor="let subject of subjectList">
+                  <a class="action-link" (click)="userWorkkSpace(subject)">
+                      <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                      <span class="txt">WorkSpace</span>
+                    </a>
                 <div class="history-head">
                   <span>{{subject.displayName}}</span>
                   <!--div class="pull-right hostOrderLink">

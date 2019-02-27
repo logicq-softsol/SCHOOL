@@ -16,4 +16,7 @@ public interface WorkSpaceDetailsRepo extends JpaRepository<UserWorkSpace, Long>
 
 	UserWorkSpace findByClassIdAndSubjectIdAndChapterIdAndUserId(Long classId, Long subjectId, Long chapterId,
 			Long userId);
+
+	UserWorkSpace findByClassIdAndSubjectIdAndChapterIdAndUserIdAndTopicId(Long classId, Long subjectId, Long chapterId,
+			Long userId, Long topicId);
 }

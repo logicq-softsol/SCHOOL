@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMaterialModule } from './core/material.module';
 import { FormsModule } from '@angular/forms';
 import { TokenStorage } from './core/token.storage';
-
+import { NgxEditorModule } from 'ngx-editor';
 
 
 
@@ -26,6 +26,7 @@ import { TokenStorage } from './core/token.storage';
     BrowserAnimationsModule,
     FormsModule,
     CustomMaterialModule,
+    NgxEditorModule,
     HttpClientModule
   ],
   providers: [{

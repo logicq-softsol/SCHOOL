@@ -145,6 +145,10 @@ export class ContentSubjectComponent implements OnInit {
     this.router.navigate(['/home/contentmgmnt/subject']);
   }
 
+  userWorkkSpace(subject:SubjectSetupDetail){
+
+  }
+
   onChangeImage(subject: SubjectSetupDetail) {
     const dialogRef = this.dialogProfileImage.open(
       ImageUploadDialog,

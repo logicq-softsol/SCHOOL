@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -38,6 +39,7 @@ public class UserWorkSpace extends AttributeDetails {
 	@Column(name = "USER_ID")
 	private Long userId;
 
+	@Lob
 	@Column(name = "TEXT")
 	private String text;
 

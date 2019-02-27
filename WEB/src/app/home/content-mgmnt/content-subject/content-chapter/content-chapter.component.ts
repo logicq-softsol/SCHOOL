@@ -10,6 +10,7 @@ import { UserDetail } from '../../../../public/model/user-detail';
 import { Router } from '@angular/router';
 import { ImageUploadDialog } from '../../../../home/content-mgmnt/upload-file/upload-image';
 import { HomeService } from '../../../../home/service/home.service';
+import { WorkSpaceDialog } from '../../workspace/work-space.component';
 
 
 @Component({
@@ -63,6 +64,15 @@ export class ContentChapterComponent implements OnInit {
 
   }
 
+  userYourWorkSpace(chapter:ChapterSetupDetail){
+    const dialogRef = this.dialog.open(WorkSpaceDialog, {
+      width: '600px',
+      data: {
+        type: "ADD",
+        chapterDetail: chapter
+      }
+    });
+  }
 
   showClassSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
