@@ -101,7 +101,7 @@ export class ContentMgmntService {
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
-    return this.http.post(environment.baseUrl + 'api/admin/chapterDetail', chapterDetail, httpOptions);
+    return this.http.post(environment.baseUrl + 'api/admin/chapters', chapterDetail, httpOptions);
   }
 
 

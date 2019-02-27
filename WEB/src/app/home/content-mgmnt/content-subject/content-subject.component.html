@@ -2,8 +2,8 @@
   <ul class="breadcrumb">
     <li>
       <a (click)="navigateToHome()">Home</a>/</li>
-    <li>Dashboard/</li>
-    <li>Subjects</li>
+    <li><a (click)="navigateToHome()">Class</a>/</li>
+    <li><a (click)="navigateToHome()">Subjects</a></li>
   </ul>
   <div class="container-fluid padd-15">
     <div class="row">
@@ -29,7 +29,7 @@
 
         <mat-expansion-panel *ngFor="let class of classList">
           <mat-expansion-panel-header>
-            <a (click)="showClassSubjectList(class)">
+            <a (click)="viewSubjectList(class)">
               <mat-panel-title>
                 <i class="material-icons">folder</i>
                 {{class.displayName}}
@@ -38,7 +38,7 @@
           </mat-expansion-panel-header>
           <ul class="listItems">
             <li *ngFor="let subj of subjectList">
-              <a (click)="showChapterDetailsDetails(subj,class)">
+              <a (click)="viewChapterList(subj)">
                 {{subj.displayName}}
               </a>
             </li>
@@ -81,6 +81,12 @@
                     </div-->
                 </div>
                 <div class="history-body">
+                    <div class="media-left">
+                        <img class="person-card-avatar bigPicture" src="{{subject.icon?subject.icon:'assets/images/class.jpg'}}">
+                        <a id="photoSelector" mat-icon-button (click)='onChangeImage(subject)'>
+                          <mat-icon>photo_camera</mat-icon> Edit image
+                        </a>
+                      </div>
                   <div class="media-left">
                     <span>{{subject.description}}</span>
                   </div>

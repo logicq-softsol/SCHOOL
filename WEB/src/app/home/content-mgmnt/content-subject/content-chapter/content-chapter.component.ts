@@ -1,13 +1,15 @@
 import { Component, OnInit, EventEmitter, Inject } from '@angular/core';
-import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
-import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
-import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { ContentMgmntService } from 'src/app/home/service/content-mgmnt.service';
+import { ClassSetupDetail } from '../../../../public/model/class-setup-detail';
+import { SubjectSetupDetail } from '../../../../public/model/subject-setup-detail';
+import { ChapterSetupDetail } from '../../../../public/model/chapter-setup-detail';
+import { AuthenticationService } from '../../../../services/authentication.service';
+import { ContentMgmntService } from '../../../../home/service/content-mgmnt.service';
 import { MatSnackBar } from "@angular/material";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { UserDetail } from 'src/app/public/model/user-detail';
+import { UserDetail } from '../../../../public/model/user-detail';
 import { Router } from '@angular/router';
+import { ImageUploadDialog } from '../../../../home/content-mgmnt/upload-file/upload-image';
+import { HomeService } from '../../../../home/service/home.service';
 
 
 @Component({
@@ -25,21 +27,34 @@ export class ContentChapterComponent implements OnInit {
 
   chapter: ChapterSetupDetail = new ChapterSetupDetail();
   chapterList: ChapterSetupDetail[] = [];
-  user: UserDetail = new UserDetail();
 
-  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private dialog: MatDialog, private snackBar: MatSnackBar,private router: Router) { }
+  user: UserDetail = new UserDetail();
+  selectImage: File;
+  imageUrl: string;
+
+  constructor(private authService: AuthenticationService,
+    private contentMgmntService: ContentMgmntService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private dialogProfileImage: MatDialog,
+    private homeService: HomeService) { }
 
   ngOnInit() {
 
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
     });
+    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
+      this.classList = data;
+    });
 
     this.contentMgmntService.getClassSetupDetail().subscribe((classDetail: ClassSetupDetail) => {
       this.classDetail = classDetail;
+      this.showClassSubjectList(classDetail);
     });
     this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
-      this.subjectDetail = this.subjectDetail;
+      this.subjectDetail = subject;
       this.contentMgmntService.getChapterListForSubjectAndClass(this.subjectDetail.classId, this.subjectDetail.id).subscribe((chapters: ChapterSetupDetail[]) => {
         this.chapterList = chapters;
       });
@@ -49,17 +64,20 @@ export class ContentChapterComponent implements OnInit {
   }
 
 
-  showClassSubjectList(classSetup: ClassSetupDetail){
+  showClassSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.subjectList = subjectList;
     });
   }
 
-
-  showChapterList(classDet: ClassSetupDetail, subjectDe: SubjectSetupDetail) {
-    this.contentMgmntService.changeClassSetupDetail(classDet);
-    this.contentMgmntService.changeSubjectDetail(subjectDe);
+  viewChapterList(subject: SubjectSetupDetail) {
+    this.contentMgmntService.changeSubjectDetail(subject);
     this.router.navigate(['/home/contentmgmnt/subject/chapter']);
+  }
+
+  viewSubjectList(classSetup: ClassSetupDetail) {
+    this.contentMgmntService.changeClassSetupDetail(classSetup);
+    this.router.navigate(['/home/contentmgmnt/subject']);
   }
 
   addChapterDetails() {
@@ -67,7 +85,7 @@ export class ContentChapterComponent implements OnInit {
       width: '600px',
       data: {
         type: "ADD",
-        subjectDetail: null
+        chapterDetail: null
       }
     });
 
@@ -90,7 +108,7 @@ export class ContentChapterComponent implements OnInit {
       width: '600px',
       data: {
         type: "EDIT",
-        subjectDetail: chapterDetail
+        chapterDetail: chapterDetail
       }
     });
 
@@ -125,6 +143,25 @@ export class ContentChapterComponent implements OnInit {
     });
   }
 
+
+  onChangeImage(chapter: ChapterSetupDetail) {
+    const dialogRef = this.dialogProfileImage.open(
+      ImageUploadDialog,
+      {
+        width: "600px"
+      }
+    );
+    dialogRef.componentInstance.uploadImageEmmiter.subscribe(data => {
+      this.selectImage = data;
+      this.homeService
+        .uploadImagesForChapter(this.selectImage, chapter)
+        .subscribe((data: any) => {
+          this.imageUrl = data.fileDownloadUri;
+        });
+    });
+
+    dialogRef.afterClosed().subscribe(result => { });
+  }
 
   openErrorSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {

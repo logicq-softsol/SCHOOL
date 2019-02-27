@@ -3,7 +3,7 @@
     <li>
       <a (click)="navigateToHome()">Home</a>/
     </li>
-    <li>Dashboard</li>
+    <li>Class</li>
   </ul>
   <div class="container-fluid padd-15">
     <div class="row">
@@ -35,7 +35,7 @@
           </mat-expansion-panel-header>
           <ul class="listItems">
             <li *ngFor="let subj of classSubjectList">
-              <a (click)="showChapterList(subj,class)">
+              <a (click)="viewChapterList(subj)">
                 {{subj.displayName}}
               </a>
             </li>

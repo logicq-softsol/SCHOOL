@@ -7,6 +7,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UserDetail } from '../../../public/model/user-detail';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { Router } from '@angular/router';
+import { ImageUploadDialog } from '../../../home/content-mgmnt/upload-file/upload-image';
+import { HomeService } from '../../../home/service/home.service';
 
 @Component({
   selector: 'app-content-subject',
@@ -22,8 +24,16 @@ export class ContentSubjectComponent implements OnInit {
   subjectDetail: SubjectSetupDetail = new SubjectSetupDetail();
 
   user: UserDetail = new UserDetail();
+  selectImage: File;
+  imageUrl: string;
 
-  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, public dialog: MatDialog, public snackBar: MatSnackBar,private router: Router) {
+  constructor(private authService: AuthenticationService,
+    private contentMgmntService: ContentMgmntService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private dialogProfileImage: MatDialog,
+    private router: Router,
+    private homeService: HomeService) {
 
   }
 
@@ -51,7 +61,7 @@ export class ContentSubjectComponent implements OnInit {
   }
 
 
-  showClassSubjectList(classSetup: ClassSetupDetail){
+  showClassSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.subjectList = subjectList;
     });
@@ -126,11 +136,33 @@ export class ContentSubjectComponent implements OnInit {
   }
 
   viewChapterList(subject: SubjectSetupDetail) {
-
+    this.contentMgmntService.changeSubjectDetail(subject);
+    this.router.navigate(['/home/contentmgmnt/subject/chapter']);
   }
 
+  viewSubjectList(classSetup: ClassSetupDetail) {
+    this.contentMgmntService.changeClassSetupDetail(classSetup);
+    this.router.navigate(['/home/contentmgmnt/subject']);
+  }
 
+  onChangeImage(subject: SubjectSetupDetail) {
+    const dialogRef = this.dialogProfileImage.open(
+      ImageUploadDialog,
+      {
+        width: "600px"
+      }
+    );
+    dialogRef.componentInstance.uploadImageEmmiter.subscribe(data => {
+      this.selectImage = data;
+      this.homeService
+        .uploadImagesForSubject(this.selectImage, subject)
+        .subscribe((data: any) => {
+          this.imageUrl = data.fileDownloadUri;
+        });
+    });
 
+    dialogRef.afterClosed().subscribe(result => { });
+  }
 
   openErrorSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {

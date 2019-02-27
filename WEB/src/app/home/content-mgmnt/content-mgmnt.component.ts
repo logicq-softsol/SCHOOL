@@ -10,6 +10,10 @@ import { ContentMgmntService } from 'src/app/home/service/content-mgmnt.service'
 import { MatSnackBar } from "@angular/material";
 import { Router } from '@angular/router';
 import { ImageUploadDialog } from './upload-file/upload-image';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-content-mgmnt',
@@ -30,6 +34,7 @@ export class ContentMgmntComponent implements OnInit {
   user: UserDetail = new UserDetail();
   selectImage: File;
   imageUrl: string;
+
 
   constructor(private homeService: HomeService,
     private contentMgmntService: ContentMgmntService,
@@ -60,8 +65,7 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
-  showChapterList(classSetup: ClassSetupDetail, subject: SubjectSetupDetail) {
-    this.contentMgmntService.changeClassSetupDetail(classSetup);
+  viewChapterList(subject: SubjectSetupDetail) {
     this.contentMgmntService.changeSubjectDetail(subject);
     this.router.navigate(['/home/contentmgmnt/subject/chapter']);
   }
@@ -127,7 +131,7 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
-  onChangeImage(classDet:ClassSetupDetail) {
+  onChangeImage(classDet: ClassSetupDetail) {
     const dialogRef = this.dialogProfileImage.open(
       ImageUploadDialog,
       {
@@ -137,7 +141,7 @@ export class ContentMgmntComponent implements OnInit {
     dialogRef.componentInstance.uploadImageEmmiter.subscribe(data => {
       this.selectImage = data;
       this.homeService
-        .uploadImages(this.selectImage,classDet.id,'CLASS')
+        .uploadImagesForEntity(this.selectImage, classDet.id, 'CLASS')
         .subscribe((data: any) => {
           this.imageUrl = data.fileDownloadUri;
         });

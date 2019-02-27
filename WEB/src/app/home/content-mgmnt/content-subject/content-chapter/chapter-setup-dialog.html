@@ -7,14 +7,14 @@
     <form class="example-form">
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Chapter Name</mat-label>
-            <input matInput placeholder="Chapter Name" [(ngModel)]="chapter.displayName" name="displayName" required>
+            <input matInput placeholder="Chapter Name" [(ngModel)]="chapterSetup.displayName" name="displayName" required>
         </mat-form-field>
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" [(ngModel)]="chapter.description" name="description" required></textarea>
+            <textarea matInput placeholder="Description" [(ngModel)]="chapterSetup.description" name="description" required></textarea>
         </mat-form-field>
         <div mat-dialog-actions class="host-table-header">
-            <button id="updateBtn" mat-raised-button color="primary" (click)="saveChapterChange()">SAVE</button>
+            <button id="updateBtn" mat-raised-button color="primary" (click)="saveChapterChange()">{{operationType}}</button>
             <div class="divider"></div>
             <button class="noThanksBtn" mat-raised-button (click)="onNoClick()">NO Thanks</button>
         </div>
