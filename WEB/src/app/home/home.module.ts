@@ -13,11 +13,12 @@ import { ContentChapterComponent, ChapterDetailDialog } from './content-mgmnt/co
 import { ImageUploadDialog } from './content-mgmnt/upload-file/upload-image';
 import { WorkSpaceDialog } from './content-mgmnt/workspace/work-space.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { ContentTopicComponent, TopicDetailDialog } from './content-mgmnt/content-subject/content-topic/content-topic.component';
 
 @NgModule({
   imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule,ImageCropperModule,NgxEditorModule],
-  declarations: [ContentMgmntComponent,HomeComponent,ContentSubjectComponent,ContentChapterComponent,ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog,WorkSpaceDialog],
-  entryComponents: [ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog,WorkSpaceDialog],
+  declarations: [ContentMgmntComponent,HomeComponent,ContentSubjectComponent,ContentChapterComponent,ContentTopicComponent,ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog,WorkSpaceDialog,TopicDetailDialog],
+  entryComponents: [ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog,WorkSpaceDialog,TopicDetailDialog],
   providers: [
     homeRoutingProviders,
     {

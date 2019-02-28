@@ -6,6 +6,7 @@ import { environment } from "../../../environments/environment";
 import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
 import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
+import { TopicDetail } from 'src/app/public/model/topic-detail';
 
 
 @Injectable({
@@ -67,5 +68,21 @@ export class HomeService {
     return this.http.post(environment.baseUrl + "api/uploadFile", file, httpOptions);
   }
 
+
+  
+  uploadImagesForTopic(imageData: File,topic:TopicDetail) {
+    let headers = new HttpHeaders();
+    headers.append("Content-Type", undefined);
+    headers.append("Access-Control-Allow-Origin", "*");
+    let httpOptions = { headers: headers };
+    const file: FormData = new FormData();
+    file.append("file", imageData, imageData.name);
+    file.append("entityId", topic.id.toString());
+    file.append("entityType","TOPIC");
+    file.append("classId",topic.classId.toString());
+    file.append("subjectId",topic.subjectId.toString());
+    file.append("chapterId",topic.chapterId.toString());
+    return this.http.post(environment.baseUrl + "api/uploadFile", file, httpOptions);
+  }
 
 }

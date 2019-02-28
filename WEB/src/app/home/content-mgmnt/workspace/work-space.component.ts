@@ -5,23 +5,34 @@ import { ContentMgmntService } from '../../service/content-mgmnt.service';
 import { MatSnackBar } from "@angular/material";
 import { Router } from '@angular/router';
 import { HomeService } from '../../../home/service/home.service';
+import { UserDetail } from 'src/app/public/model/user-detail';
 
 @Component({
     selector: "work-space",
     templateUrl: "work-space.html"
 })
 export class WorkSpaceDialog {
+    user: UserDetail = new UserDetail();
+    workSpaceEmmiter = new EventEmitter();
+    workSpaceContent: string;
 
-    constructor(private authService: AuthenticationService,
-        private contentMgmntService: ContentMgmntService,
-        private dialog: MatDialog,
-        private snackBar: MatSnackBar,
-        private dialogProfileImage: MatDialog,
-        private router: Router,
-        private homeService: HomeService) {
-    
-      }
+    constructor(private dialogRef: MatDialogRef<WorkSpaceDialog>, @Inject(MAT_DIALOG_DATA) private data: any,
+        private authService: AuthenticationService,
+        private contentMgmntService: ContentMgmntService, ) {
+        this.authService.getUserDetail().subscribe((user: UserDetail) => {
+            this.user = user;
+        });
+        this.contentMgmntService
 
-    ngOnInit() {}
+    }
+
+    saveWorkSpaceChange() {
+        this.workSpaceEmmiter.emit(this.workSpaceContent);
+        this.onNoClick();
+    }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
 
 }

@@ -37,7 +37,7 @@ public class UserWorkSpace extends AttributeDetails {
 	private Long topicId;
 
 	@Column(name = "USER_ID")
-	private Long userId;
+	private String userName;
 
 	@Lob
 	@Column(name = "TEXT")
@@ -116,14 +116,6 @@ public class UserWorkSpace extends AttributeDetails {
 		this.lastModificationDate = lastModificationDate;
 	}
 
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
 	public Long getTopicId() {
 		return topicId;
 	}
@@ -132,4 +124,14 @@ public class UserWorkSpace extends AttributeDetails {
 		this.topicId = topicId;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	
+	
 }

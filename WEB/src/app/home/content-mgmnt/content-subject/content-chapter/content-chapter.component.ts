@@ -64,6 +64,13 @@ export class ContentChapterComponent implements OnInit {
 
   }
 
+
+  viewTopicist(chapter:ChapterSetupDetail){
+    this.contentMgmntService.changeChapterSetupDetail(chapter);
+    this.router.navigate(['/home/contentmgmnt/subject/chapter/topic']);
+  }
+
+
   userYourWorkSpace(chapter:ChapterSetupDetail){
     const dialogRef = this.dialog.open(WorkSpaceDialog, {
       width: '600px',
@@ -71,6 +78,10 @@ export class ContentChapterComponent implements OnInit {
         type: "ADD",
         chapterDetail: chapter
       }
+    });
+
+    dialogRef.componentInstance.workSpaceEmmiter.subscribe((workSpaceContent:any)=>{
+
     });
   }
 

@@ -7,6 +7,7 @@ import { ClassSetupDetail } from '../../public/model/class-setup-detail';
 import { SubjectSetupDetail } from '../../public/model/subject-setup-detail';
 import { ChapterSetupDetail } from '../../public/model/chapter-setup-detail';
 import { ReplaySubject } from 'rxjs';
+import { TopicDetail } from 'src/app/public/model/topic-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,20 @@ export class ContentMgmntService {
 
   public classSetupDetail = new ReplaySubject<ClassSetupDetail>(1);
   public subjectDetail = new ReplaySubject<SubjectSetupDetail>(1);
+  public ChapterSetupDetail = new ReplaySubject<ChapterSetupDetail>(1);
 
   constructor(private http: HttpClient) { }
+
+
+
+
+  getChapterSetupDetail() {
+    return this.ChapterSetupDetail.asObservable();
+  }
+
+  public changeChapterSetupDetail(ChapterSetupDetail: ChapterSetupDetail) {
+    this.ChapterSetupDetail.next(ChapterSetupDetail);
+  }
 
 
 
@@ -138,5 +151,49 @@ export class ContentMgmntService {
   getChapterListForSubjectAndClass(classId: number, subjectId: number) {
     return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId);
   }
+
+  getTopicListForChapterForSubjectAndClass(classId: number, subjectId: number, chapterId: number) {
+    return this.http.get(environment.baseUrl + 'api/admin/topic/' + classId + "/" + subjectId + "/" + chapterId);
+  }
+
+
+  getWorkSpaceDetailForTopic(topic: TopicDetail) {
+    return this.http.get(environment.baseUrl + 'api/admin/workspace/' + topic.classId + "/" + topic.subjectId + "/" + topic.chapterId + "/" + topic.id);
+  }
+
+  getWorkSpaceDetailForChapter(chapter: ChapterSetupDetail) {
+    return this.http.get(environment.baseUrl + 'api/admin/workspace/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id);
+  }
+
+
+
+
+  setupTopicDetails(topicDetail: TopicDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.post(environment.baseUrl + 'api/admin/topic', topicDetail, httpOptions);
+  }
+
+
+
+  editTopicDetails(topicDetail: TopicDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.put(environment.baseUrl + 'api/admin/topic', topicDetail, httpOptions);
+  }
+
+
+  deleteTopicDetails(topicDetail: TopicDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.delete(environment.baseUrl + 'api/admin/topic/' + topicDetail.classId + "/" + topicDetail.subjectId + "/" + topicDetail.chapterId + "/" + topicDetail.id, httpOptions);
+  }
+
 
 }

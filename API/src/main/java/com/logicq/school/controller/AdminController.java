@@ -15,10 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.logicq.school.model.ChapterDetails;
 import com.logicq.school.model.ClassDetails;
+import com.logicq.school.model.LoginDetails;
 import com.logicq.school.model.SubjectDetails;
+import com.logicq.school.model.TopicDetails;
+import com.logicq.school.model.UserWorkSpace;
 import com.logicq.school.repository.ChapterDetailsRepo;
 import com.logicq.school.repository.ClassesDetailsRepo;
 import com.logicq.school.repository.SubjectDetailsRepo;
+import com.logicq.school.repository.TopicDetailsRepo;
+import com.logicq.school.repository.WorkSpaceDetailsRepo;
+import com.logicq.school.utils.SchoolSecurityUtils;
 
 @RestController
 @EnableAutoConfiguration
@@ -34,6 +40,16 @@ public class AdminController {
 	@Autowired
 	ChapterDetailsRepo chapterDetailsRepo;
 
+	@Autowired
+	TopicDetailsRepo topicDetailsRepo;
+
+	
+	@Autowired
+	WorkSpaceDetailsRepo workSpaceDetailsRepo;
+	
+	@Autowired
+	SchoolSecurityUtils schoolSecurityUtils;
+	
 	@RequestMapping(value = "/classes", method = RequestMethod.GET)
 	public ResponseEntity<List<ClassDetails>> getClassDetails() {
 		return new ResponseEntity<List<ClassDetails>>(classesDetailsRepo.findAll(), HttpStatus.OK);
@@ -123,6 +139,78 @@ public class AdminController {
 		ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId);
 		chapterDetailsRepo.delete(chapter);
 		return new ResponseEntity<ChapterDetails>(chapter, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/topic/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
+	public ResponseEntity<List<TopicDetails>> getTopicForChapterDetailsForClassAndSubject(@PathVariable Long classId,
+			@PathVariable Long subjectId, @PathVariable Long chapterId) {
+		return new ResponseEntity<List<TopicDetails>>(
+				topicDetailsRepo.findByClassIdAndSubjectIdAndChapterId(classId, subjectId, chapterId), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/topic/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.GET)
+	public ResponseEntity<TopicDetails> getChapterDetailsForClassAndSubjectAndTopic(@PathVariable Long classId,
+			@PathVariable Long subjectId, @PathVariable Long chapterId, @PathVariable Long topicId) {
+		return new ResponseEntity<TopicDetails>(
+				topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId, topicId),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/topic", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TopicDetails> addTopic(@RequestBody TopicDetails topicDetail) throws Exception {
+		topicDetailsRepo.save(topicDetail);
+		return new ResponseEntity<TopicDetails>(topicDetail, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/topic", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TopicDetails> updateTopicDetail(@RequestBody TopicDetails topicDetail) throws Exception {
+		topicDetailsRepo.save(topicDetail);
+		return new ResponseEntity<TopicDetails>(topicDetail, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/topic/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.DELETE)
+	public ResponseEntity<TopicDetails> deleteTopic(@PathVariable Long classId, @PathVariable Long subjectId,
+			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
+		TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId,
+				topicId);
+		topicDetailsRepo.delete(topic);
+		return new ResponseEntity<TopicDetails>(topic, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/workspace/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.GET)
+	public ResponseEntity<List<UserWorkSpace>> getUserWorkSpace(@PathVariable Long classId,
+			@PathVariable Long subjectId, @PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<UserWorkSpace> workspaceList = workSpaceDetailsRepo
+				.findByClassIdAndSubjectIdAndChapterIdAndUserNameAndTopicId(classId, subjectId, chapterId,
+						loginDetail.getUserName(), topicId);
+		return new ResponseEntity<List<UserWorkSpace>>(workspaceList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/workspace/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
+	public ResponseEntity<List<UserWorkSpace>> getUserWorkSpaceForChapters(@PathVariable Long classId,
+			@PathVariable Long subjectId, @PathVariable Long chapterId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<UserWorkSpace> workspaceList = workSpaceDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndUserName(
+				classId, subjectId, chapterId, loginDetail.getUserName());
+
+		return new ResponseEntity<List<UserWorkSpace>>(workspaceList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/workspace", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserWorkSpace> createWorkSpace(@RequestBody UserWorkSpace workSpace) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		workSpace.setUserName(loginDetail.getUserName());
+		workSpaceDetailsRepo.save(workSpace);
+		return new ResponseEntity<UserWorkSpace>(workSpace, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/workspace", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserWorkSpace> updateTopicDetail(@RequestBody UserWorkSpace workSpace) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		workSpace.setUserName(loginDetail.getUserName());
+		workSpaceDetailsRepo.save(workSpace);
+		return new ResponseEntity<UserWorkSpace>(workSpace, HttpStatus.OK);
 	}
 
 }

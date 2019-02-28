@@ -67,36 +67,32 @@
           </h4>
           <div class="media">
             <div class="pull-right right-btn">
-              <a class="action-link" (click)="addChapterDetails()">
+              <a class="action-link" (click)="addTopicDetails()">
                 <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                <span class="txt">Add Chapter</span>
+                <span class="txt">Add Topic</span>
               </a>
             </div>
             <div class="media-body">
-              <div class="order-history" *ngFor="let chapter of chapterList">
+              <div class="order-history" *ngFor="let topic of topics">
                 <div class="history-head">
-                  <span>{{chapter.displayName}}</span>
+                  <span>{{topic.displayName}}</span>
                   <div class="pull-right hostOrderLink">
-                      <a (click)="userWorkSpace(chapter)">WorkSpace</a>
+                      <a (click)="userWorkSpace(topic)">WorkSpace</a>
                   </div>
                 </div>
                 <div class="history-body">
                     <div class="media-left">
-                        <img class="person-card-avatar bigPicture" src="{{chapter.icon?chapter.icon:'assets/images/class.jpg'}}">
-                        <a id="photoSelector" mat-icon-button (click)='onChangeImage(chapter)'>
+                        <img class="person-card-avatar bigPicture" src="{{topic.icon?topic.icon:'assets/images/class.jpg'}}">
+                        <a id="photoSelector" mat-icon-button (click)='onChangeImage(topic)'>
                           <mat-icon>photo_camera</mat-icon> Edit image
                         </a>
                       </div>
                   <div class="media-left">
-                    <span>{{chapter.description}}</span>
+                    <span>{{topic.description}}</span>
                   </div>
                 </div>
                 <div class="history-foot">
                   <div class="pull-right">
-                    <a class="action-link" (click)="viewTopicist(chapter)">
-                      <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                      <span class="txt">Topics</span>
-                    </a>
                     <a class="action-link" (click)="editChapterDetail(chapter)">
                       <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                       <span class="txt">EDIT</span>

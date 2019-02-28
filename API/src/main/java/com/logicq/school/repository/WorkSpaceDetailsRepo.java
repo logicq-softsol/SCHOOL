@@ -10,13 +10,13 @@ import com.logicq.school.model.UserWorkSpace;
 @Repository
 public interface WorkSpaceDetailsRepo extends JpaRepository<UserWorkSpace, Long> {
 
-	List<UserWorkSpace> findByUserId(Long userId);
+	List<UserWorkSpace> findByUserName(String userName);
 
-	List<UserWorkSpace> findByClassIdAndSubjectIdAndUserId(Long classId, Long subjectId, Long userId);
+	List<UserWorkSpace> findByClassIdAndSubjectIdAndUserName(Long classId, Long subjectId, String userName);
 
-	UserWorkSpace findByClassIdAndSubjectIdAndChapterIdAndUserId(Long classId, Long subjectId, Long chapterId,
-			Long userId);
+	List<UserWorkSpace> findByClassIdAndSubjectIdAndChapterIdAndUserName(Long classId, Long subjectId, Long chapterId,
+			String userName);
 
-	UserWorkSpace findByClassIdAndSubjectIdAndChapterIdAndUserIdAndTopicId(Long classId, Long subjectId, Long chapterId,
-			Long userId, Long topicId);
+	List<UserWorkSpace> findByClassIdAndSubjectIdAndChapterIdAndUserNameAndTopicId(Long classId, Long subjectId,
+			Long chapterId, String userName, Long topicId);
 }
