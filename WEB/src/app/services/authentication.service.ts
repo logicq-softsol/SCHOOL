@@ -66,4 +66,7 @@ export class AuthenticationService {
     return this.http.get(environment.baseUrl + 'api/load');
   }
 
+
+  
+
 }

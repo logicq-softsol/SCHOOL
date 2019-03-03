@@ -12,13 +12,16 @@ import { ContentSubjectComponent, SubjectDetailDialog } from '../home/content-mg
 import { ContentChapterComponent, ChapterDetailDialog } from './content-mgmnt/content-subject/content-chapter/content-chapter.component';
 import { ImageUploadDialog } from './content-mgmnt/upload-file/upload-image';
 import { WorkSpaceDialog } from './content-mgmnt/workspace/work-space.component';
-import { NgxEditorModule } from 'ngx-editor';
 import { ContentTopicComponent, TopicDetailDialog } from './content-mgmnt/content-subject/content-topic/content-topic.component';
+import { VideoUploadDialog } from './content-mgmnt/upload-file/upload-video';
+import { EmbedVideo } from 'ngx-embed-video';
+import { TeacherRegisterComponent, UserRegDialog } from './teacher/teacher-register.component';
 
 @NgModule({
-  imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule,ImageCropperModule,NgxEditorModule],
-  declarations: [ContentMgmntComponent,HomeComponent,ContentSubjectComponent,ContentChapterComponent,ContentTopicComponent,ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog,WorkSpaceDialog,TopicDetailDialog],
-  entryComponents: [ClassSetupDialog,ImageUploadDialog,SubjectDetailDialog,ChapterDetailDialog,WorkSpaceDialog,TopicDetailDialog],
+  imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule, ImageCropperModule, EmbedVideo.forRoot()],
+  declarations: [ContentMgmntComponent, HomeComponent, ContentSubjectComponent, ContentChapterComponent, ContentTopicComponent, ClassSetupDialog, ImageUploadDialog, SubjectDetailDialog, ChapterDetailDialog, WorkSpaceDialog, TopicDetailDialog, VideoUploadDialog, UserRegDialog
+    , TeacherRegisterComponent],
+  entryComponents: [ClassSetupDialog, ImageUploadDialog, SubjectDetailDialog, ChapterDetailDialog, WorkSpaceDialog, TopicDetailDialog, VideoUploadDialog, UserRegDialog],
   providers: [
     homeRoutingProviders,
     {

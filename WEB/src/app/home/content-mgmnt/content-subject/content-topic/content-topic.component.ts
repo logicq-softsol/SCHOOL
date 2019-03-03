@@ -12,6 +12,7 @@ import { SubjectSetupDetail } from '../../../../public/model/subject-setup-detai
 import { ChapterSetupDetail } from '../../../../public/model/chapter-setup-detail';
 import { TopicDetail } from '../../../../public/model/topic-detail';
 import { UserDetail } from '../../../../public/model/user-detail';
+import { EmbedVideoService } from 'ngx-embed-video';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class ContentTopicComponent implements OnInit {
   user: UserDetail = new UserDetail();
   selectImage: File;
   imageUrl: string;
+  videoContent:any;
 
   constructor(private authService: AuthenticationService,
     private contentMgmntService: ContentMgmntService,
@@ -44,7 +46,7 @@ export class ContentTopicComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private dialogProfileImage: MatDialog,
-    private homeService: HomeService) { }
+    private homeService: HomeService,private embedService: EmbedVideoService) { }
 
   ngOnInit() {
 
@@ -71,6 +73,11 @@ export class ContentTopicComponent implements OnInit {
       });
     });
 
+  }
+
+  playVideo(topic:TopicDetail){
+    topic.playFileURL="assets/video/SampleVideo_1280x720_1mb.mp4";
+    this.videoContent = this.embedService.embed(topic.playFileURL);
   }
 
   userYourWorkSpace(chapter: ChapterSetupDetail) {

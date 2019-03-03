@@ -54,6 +54,13 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
+  
+  teacherSignUp(){
+    this.router.navigate(['/home/userreg']);
+  }
+
+
+
   viewSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.changeClassSetupDetail(classSetup);
     this.router.navigate(['/home/contentmgmnt/subject']);

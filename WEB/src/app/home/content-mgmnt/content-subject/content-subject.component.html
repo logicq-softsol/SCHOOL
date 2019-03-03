@@ -74,7 +74,7 @@
             </div>
             <div class="media-body">
               <div class="order-history" *ngFor="let subject of subjectList">
-                  <a class="action-link" (click)="userWorkkSpace(subject)">
+                  <a class="action-link" (click)="userWorkkSpace(subject)" *ngIf="user.role=='TEACHER'">
                       <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                       <span class="txt">WorkSpace</span>
                     </a>
@@ -87,7 +87,7 @@
                 <div class="history-body">
                     <div class="media-left">
                         <img class="person-card-avatar bigPicture" src="{{subject.icon?subject.icon:'assets/images/class.jpg'}}">
-                        <a id="photoSelector" mat-icon-button (click)='onChangeImage(subject)'>
+                        <a id="photoSelector" mat-icon-button (click)='onChangeImage(subject)'  *ngIf="user.role=='ADMIN'">
                           <mat-icon>photo_camera</mat-icon> Edit image
                         </a>
                       </div>
@@ -101,11 +101,11 @@
                       <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                       <span class="txt">chapters</span>
                     </a>
-                    <a class="action-link" (click)="editSubjectDetail(subject)">
+                    <a class="action-link" (click)="editSubjectDetail(subject)" *ngIf="user.role=='ADMIN'">
                       <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                       <span class="txt">EDIT</span>
                     </a>
-                    <a class="action-link" (click)="deleteSubjectDetail(subject)">
+                    <a class="action-link" (click)="deleteSubjectDetail(subject)" *ngIf="user.role=='ADMIN'">
                       <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                       <span class="txt">DELETE</span>
                     </a>

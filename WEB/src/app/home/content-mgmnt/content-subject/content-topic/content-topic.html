@@ -76,16 +76,17 @@
               <div class="order-history" *ngFor="let topic of topics">
                 <div class="history-head">
                   <span>{{topic.displayName}}</span>
-                  <div class="pull-right hostOrderLink">
+                  <div class="pull-right hostOrderLink" *ngIf="user.role=='TEACHER'">
                       <a (click)="userWorkSpace(topic)">WorkSpace</a>
                   </div>
                 </div>
                 <div class="history-body">
                     <div class="media-left">
-                        <img class="person-card-avatar bigPicture" src="{{topic.icon?topic.icon:'assets/images/class.jpg'}}">
+                        <!--img class="person-card-avatar bigPicture" src="{{topic.icon?topic.icon:'assets/images/class.jpg'}}">
                         <a id="photoSelector" mat-icon-button (click)='onChangeImage(topic)'>
                           <mat-icon>photo_camera</mat-icon> Edit image
-                        </a>
+                        </a-->
+                        <div [innerHtml]="videoContent" (click)="playVideo(topic)"></div>
                       </div>
                   <div class="media-left">
                     <span>{{topic.description}}</span>

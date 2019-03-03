@@ -1,0 +1,113 @@
+<div>
+    <h2 mat-dialog-title>
+        <strong>{{operationType}} User Details</strong>
+    </h2>
+</div>
+<div class="example-card">
+    <form class="example-form">
+            <div class="book-tables wh-bg history">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>User Name</mat-label>
+                                    <input matInput placeholder="User Name" [(ngModel)]="login.userName" name="login.userName"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input matInput placeholder="Password" type="password" [(ngModel)]="login.password" name="login.password"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div class="example-container">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Role</mat-label>
+                                        <input matInput placeholder="Last Name" [(ngModel)]="user.role" name="user.role" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        <div class="col-md-4">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>First Name</mat-label>
+                                    <input matInput placeholder="First Name" [(ngModel)]="user.firstname" name="user.firstname"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Last Name</mat-label>
+                                    <input matInput placeholder="Last Name" [(ngModel)]="user.lastname" name="user.lastname"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                           <div class="col-md-3">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Last Name</mat-label>
+                                    <input matInput placeholder="Last Name" [(ngModel)]="user.lastname" name="user.lastname"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-3">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Mobile Number</mat-label>
+                                    <input matInput placeholder="Last Name" [(ngModel)]="user.mobileno" name="user.mobileno"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput placeholder="Last Name" [(ngModel)]="user.email" name="user.email" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>City</mat-label>
+                                    <input matInput placeholder="City" [(ngModel)]="user.city" name="user.city">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>State</mat-label>
+                                    <input matInput placeholder="State" [(ngModel)]="user.state" name="user.state">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="example-container">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>County</mat-label>
+                                    <input matInput placeholder="Country" [(ngModel)]="user.country" name="user.country">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <div mat-dialog-actions class="host-table-header">
+            <button id="updateBtn" mat-raised-button color="primary" (click)="saveUserDetail()">{{operationType}}</button>
+            <div class="divider"></div>
+            <button class="noThanksBtn" mat-raised-button (click)="onNoClick()">NO Thanks</button>
+        </div>
+    </form>
+</div>

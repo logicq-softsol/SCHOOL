@@ -1,5 +1,7 @@
 package com.logicq.school.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.logicq.school.exception.SucessMessage;
 import com.logicq.school.model.ActivationDetails;
 import com.logicq.school.model.LoginDetails;
+import com.logicq.school.model.Message;
 import com.logicq.school.model.User;
 import com.logicq.school.repository.LoginDetailsRepo;
 import com.logicq.school.repository.ProductActivationRepo;
@@ -32,7 +33,9 @@ import com.logicq.school.repository.UserDetailsRepo;
 import com.logicq.school.security.JwtTokenProvider;
 import com.logicq.school.security.UserPrincipal;
 import com.logicq.school.utils.SchoolDateUtils;
+import com.logicq.school.utils.SucessHandlerUtils;
 import com.logicq.school.vo.ActivationVO;
+import com.logicq.school.vo.LoginVO;
 import com.logicq.school.vo.RecoverVO;
 
 @RestController
@@ -60,6 +63,9 @@ public class LoginController {
 
 	@Autowired
 	SchoolDateUtils schoolDateUtils;
+
+	@Autowired
+	SucessHandlerUtils sucessHandlerUtils;
 
 	@Autowired
 	HttpServletRequest context;
@@ -221,4 +227,36 @@ public class LoginController {
 		}
 		return new ResponseEntity<User>(new User(), HttpStatus.BAD_REQUEST);
 	}
+
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> findAllUser() {
+		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+			return new ResponseEntity<List<User>>(userDetailsRepo.findAll(), HttpStatus.OK);
+		}
+		return new ResponseEntity<List<User>>(new ArrayList<User>(), HttpStatus.BAD_REQUEST);
+	}
+
+	@RequestMapping(value = "/userRegister", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Message> registerUser(@RequestBody LoginVO login) throws Exception {
+		if (userDetailsRepo.findByUserName(login.getUserName()) != null) {
+			return new ResponseEntity<Message>(
+					sucessHandlerUtils.handleSucessMessage("AREG", "/api/userRegister", "Email Already Exist."),
+					HttpStatus.OK);
+		}
+		if (!StringUtils.isEmpty(login.getUserName())) {
+			userDetailsRepo.save(login.getUser());
+
+			LoginDetails newlogin = new LoginDetails();
+			newlogin.setUserName(login.getUserName());
+			newlogin.setPassword(passwordEncoder.encode(login.getPassword()));
+			newlogin.setLoginBy("SCHOOL_APP");
+			newlogin.setLoginTime(new Date());
+			loginDetailsRepo.save(newlogin);
+			return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("SREG", "/api/register"),
+					HttpStatus.OK);
+		}
+		return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("EREG", "/api/register"),
+				HttpStatus.BAD_REQUEST);
+	}
+
 }

@@ -7,10 +7,10 @@ import { RegisterComponent } from './public/register/register.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo:'login',pathMatch:'full' },
-  { path: 'login', component:LoginComponent },
-  { path: 'register', component:RegisterComponent},
-  { path: 'home',   canActivate:[AuthGuardService],loadChildren: './home/home.module#HomeModule' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'home', canActivate: [AuthGuardService], loadChildren: './home/home.module#HomeModule' }
 ];
 
 @NgModule({

@@ -58,6 +58,9 @@ public class User implements Serializable {
 	@Column(name = "ROLE")
 	private String role;
 
+	@Column(name = "PROFILE_IMAGE")
+	private String profileImage;
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -152,6 +155,14 @@ public class User implements Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
 }

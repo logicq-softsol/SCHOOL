@@ -1,0 +1,106 @@
+<div class="container-fluid">
+    <ul class="breadcrumb">
+        <li>
+            <a (click)="navigateToHome()">Home</a>/
+        </li>
+        <li>Register</li>
+    </ul>
+    <div class="container-fluid padd-15">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="book-tables wh-bg">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <strong>{{loginUser.firstname}} {{loginUser.lastname}}</strong>
+                            </h4>
+                            <P>
+                                <strong>{{loginUser.email}}</strong>
+                            </P>
+                            <p>
+                                <strong>{{loginUser.mobileno}}</strong>
+                            </p>
+                            <p>ROLE :
+                                <strong>{{loginUser.role}}</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <button mat-raised-button (click)="teacherSignUp()" color="primary" *ngIf="loginUser.role=='ADMIN'">Teachers</button>
+                </div>
+
+                <mat-expansion-panel *ngFor="let class of classList">
+                    <mat-expansion-panel-header>
+                        <a (click)="showClassSubjectList(class)">
+                            <mat-panel-title> <i class="material-icons">folder</i> {{class.displayName}}</mat-panel-title>
+                        </a>
+                    </mat-expansion-panel-header>
+                    <ul class="listItems">
+                        <li *ngFor="let subj of classSubjectList">
+                            <a (click)="viewChapterList(subj)">
+                                {{subj.displayName}}
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+
+            <div class="row wh-bg margin-padding">
+                <div class="col-md-12">
+                    <div class="search-box pull-right">
+                        <input class="search-input" placeholder="Search by Teacher Name , Mobile Number">
+                        <i class="material-icons">search</i>
+                        <button class="cancelBtn" mat-raised-button>CANCEL</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="pull-right right-btn">
+                        <a class="action-link" (click)="registerUser()">
+                            <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                            <span class="txt">Add User</span>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6" *ngFor="let regUser of regUserList">
+                        <div class="media-body">
+                            <div class="order-history">
+                                <div class="history-head">
+                                    <span>{{regUser.firstname}} {{regUser.lastname}} | {{regUser.role}}</span>
+                                </div>
+                                <div class="history-body">
+                                    <div class="media-left">
+                                        <img class="person-card-avatar bigPicture" src="{{regUser.profileImage?regUser.profileImage:'assets/images/teacher.png'}}">
+                                        <a id="photoSelector" mat-icon-button (click)='onChangeImage(regUser)' *ngIf="loginUser.role=='ADMIN'">
+                                            <mat-icon>photo_camera</mat-icon> Edit image
+                                        </a>
+                                    </div>
+                                    <div class="media-left">
+                                        <span class="detail">{{regUser.mobileno}} |{{regUser.email}} </span>
+                                        <span>{{regUser.address}} {{regUser.city}} {{regUser.state}}
+                                            {{regUser.country}}
+                                            {{regUser.postalcode}}</span>
+                                    </div>
+                                </div>
+                                <div class="history-foot">
+                                    <div class="action-btns">
+                                        <div class="pull-right" *ngIf="loginUser.role=='ADMIN'">
+                                            <a class="action-link" (click)="editClassDetails(class)">
+                                                <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                                                <span class="txt">EDIT</span>
+                                            </a>
+                                            <a class="action-link" (click)="deleteClassDetails(class)">
+                                                <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                                                <span class="txt">DELETE</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

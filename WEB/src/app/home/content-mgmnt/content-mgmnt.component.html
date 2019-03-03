@@ -25,6 +25,7 @@
               </p>
             </div>
           </div>
+          <button mat-raised-button (click)="teacherSignUp()" color="primary"  *ngIf="user.role=='ADMIN'">Teachers</button>
         </div>
 
         <mat-expansion-panel *ngFor="let class of classList">
@@ -67,46 +68,46 @@
               </div>
             </div>
             <div class="row">
-            <div class="col-md-6" *ngFor="let class of classList">
-              <div class="media-body">
-                <div class="order-history">
-                  <div class="history-head">
-                    <span>{{class.displayName}}</span>
-                    <a class="action-link pull-right" (click)="viewSubjectList(class)">
-                      <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                      <span class="txt">View Subjects</span>
-                    </a>
-                  </div>
-                  <div class="history-body">
-                    <div class="media-left">
-                      <img class="person-card-avatar bigPicture" src="{{class.icon?class.icon:'assets/images/class.jpg'}}">
-                      <a id="photoSelector" mat-icon-button (click)='onChangeImage(class)'>
-                        <mat-icon>photo_camera</mat-icon> Edit image
+              <div class="col-md-6" *ngFor="let class of classList">
+                <div class="media-body">
+                  <div class="order-history">
+                    <div class="history-head">
+                      <span>{{class.displayName}}</span>
+                      <a class="action-link pull-right" (click)="viewSubjectList(class)">
+                        <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                        <span class="txt">View Subjects</span>
                       </a>
                     </div>
-                    <div class="media-left">
-                      <span>{{class.description}}</span>
-                    </div>
-                  </div>
-                  <div class="history-foot">
-                    <div class="action-btns">
-                      <div class="pull-right">
-                        <a class="action-link" (click)="editClassDetails(class)">
-                          <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                          <span class="txt">EDIT</span>
-                        </a>
-                        <a class="action-link" (click)="deleteClassDetails(class)">
-                          <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                          <span class="txt">DELETE</span>
+                    <div class="history-body">
+                      <div class="media-left">
+                        <img class="person-card-avatar bigPicture" src="{{class.icon?class.icon:'assets/images/class.jpg'}}">
+                        <a id="photoSelector" mat-icon-button (click)='onChangeImage(class)' *ngIf="user.role=='ADMIN'">
+                          <mat-icon>photo_camera</mat-icon> Edit image
                         </a>
                       </div>
+                      <div class="media-left">
+                        <span>{{class.description}}</span>
+                      </div>
                     </div>
+                    <div class="history-foot">
+                      <div class="action-btns">
+                        <div class="pull-right" *ngIf="user.role=='ADMIN'">
+                          <a class="action-link" (click)="editClassDetails(class)">
+                            <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                            <span class="txt">EDIT</span>
+                          </a>
+                          <a class="action-link" (click)="deleteClassDetails(class)">
+                            <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                            <span class="txt">DELETE</span>
+                          </a>
+                        </div>
+                      </div>
 
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-              </div>
 
           </div>
         </div>

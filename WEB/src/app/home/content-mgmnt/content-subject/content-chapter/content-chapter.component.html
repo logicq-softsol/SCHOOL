@@ -76,7 +76,7 @@
               <div class="order-history" *ngFor="let chapter of chapterList">
                 <div class="history-head">
                   <span>{{chapter.displayName}}</span>
-                  <div class="pull-right hostOrderLink">
+                  <div class="pull-right hostOrderLink" *ngIf="user.role=='TEACHER'">
                       <a (click)="userWorkSpace(chapter)">WorkSpace</a>
                   </div>
                 </div>
