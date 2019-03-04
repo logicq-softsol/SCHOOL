@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   classSubjectList: SubjectSetupDetail[] = [];
   chapterList: ChapterSetupDetail[] = [];
   topicList: TopicDetail[] = [];
-  breadcurmblist = [];
+  breadcurmblist = ['HOME'];
 
 
   constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router) {
@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.user = user;
       });
-      this.breadcurmblist.push('HOME');
     }
   }
 
