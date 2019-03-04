@@ -12,7 +12,7 @@ import { SubjectSetupDetail } from '../../../../public/model/subject-setup-detai
 import { ChapterSetupDetail } from '../../../../public/model/chapter-setup-detail';
 import { TopicDetail } from '../../../../public/model/topic-detail';
 import { UserDetail } from '../../../../public/model/user-detail';
-import { EmbedVideoService } from 'ngx-embed-video';
+import { VideoUploadDialog } from 'src/app/home/content-mgmnt/upload-file/upload-video';
 
 
 @Component({
@@ -22,23 +22,14 @@ import { EmbedVideoService } from 'ngx-embed-video';
 })
 export class ContentTopicComponent implements OnInit {
 
-  classDetail: ClassSetupDetail = new ClassSetupDetail();
-  classList: ClassSetupDetail[] = [];
-
-  subjectList: SubjectSetupDetail[] = [];
-  subjectDetail: SubjectSetupDetail = new SubjectSetupDetail();
-
   chapter: ChapterSetupDetail = new ChapterSetupDetail();
   chapterList: ChapterSetupDetail[] = [];
 
   topic: TopicDetail = new TopicDetail();
   topics: TopicDetail[] = [];
 
-
-  user: UserDetail = new UserDetail();
   selectImage: File;
   imageUrl: string;
-  videoContent:any;
 
   constructor(private authService: AuthenticationService,
     private contentMgmntService: ContentMgmntService,
@@ -46,28 +37,11 @@ export class ContentTopicComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private dialogProfileImage: MatDialog,
-    private homeService: HomeService,private embedService: EmbedVideoService) { }
+    private homeService: HomeService) { }
 
   ngOnInit() {
-
-    this.authService.getUserDetail().subscribe((user: UserDetail) => {
-      this.user = user;
-    });
-    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-      this.classList = data;
-    });
-
-    this.contentMgmntService.getClassSetupDetail().subscribe((classDetail: ClassSetupDetail) => {
-      this.classDetail = classDetail;
-      this.showClassSubjectList(classDetail);
-    });
-    this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
-      this.subjectDetail = subject;
-      this.contentMgmntService.getChapterListForSubjectAndClass(this.subjectDetail.classId, this.subjectDetail.id).subscribe((chapters: ChapterSetupDetail[]) => {
-        this.chapterList = chapters;
-      });
-    });
     this.contentMgmntService.getChapterSetupDetail().subscribe((chapter: ChapterSetupDetail) => {
+      this.chapter = chapter;
       this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.classId).subscribe((topics: TopicDetail[]) => {
         this.topics = topics;
       });
@@ -75,9 +49,22 @@ export class ContentTopicComponent implements OnInit {
 
   }
 
-  playVideo(topic:TopicDetail){
-    topic.playFileURL="assets/video/SampleVideo_1280x720_1mb.mp4";
-    this.videoContent = this.embedService.embed(topic.playFileURL);
+  playVideo(topic: TopicDetail) {
+    topic.playFileURL = "assets/video/SampleVideo_1280x720_1mb.mp4";
+
+  }
+
+  uploadVideo(topic: TopicDetail) {
+    const dialogRef = this.dialog.open(VideoUploadDialog, {
+      width: '700px',
+      data: {
+        type: "ADD",
+        topic: topic
+      }
+    });
+    dialogRef.componentInstance.uploadVideoEmmiter.subscribe((fileInput: any) => {
+
+    });
   }
 
   userYourWorkSpace(chapter: ChapterSetupDetail) {
@@ -90,15 +77,10 @@ export class ContentTopicComponent implements OnInit {
     });
 
     dialogRef.componentInstance.workSpaceEmmiter.subscribe((workSpaceContent: any) => {
-
+      this.contentMgmntService
     });
   }
 
-  showClassSubjectList(classSetup: ClassSetupDetail) {
-    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
-      this.subjectList = subjectList;
-    });
-  }
 
 
   addTopicDetails() {
@@ -113,8 +95,8 @@ export class ContentTopicComponent implements OnInit {
     dialogRef.componentInstance.topicEventEmmiter.subscribe((topicDetail: TopicDetail) => {
       topicDetail.icon = this.imageUrl;
       topicDetail.type = "TOPIC";
-      topicDetail.classId = this.classDetail.id;
-      topicDetail.subjectId = this.subjectDetail.id;
+      topicDetail.classId = this.chapter.classId;
+      topicDetail.subjectId = this.chapter.subjectId;
       topicDetail.chapterId = this.chapter.id;
       this.contentMgmntService.setupTopicDetails(topicDetail).subscribe((topicDetail: TopicDetail) => {
         this.snackBar.open(" Topic Added Sucessfully. ", "CLOSE");

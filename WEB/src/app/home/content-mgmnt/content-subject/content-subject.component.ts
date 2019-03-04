@@ -38,13 +38,6 @@ export class ContentSubjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.getUserDetail().subscribe((user: UserDetail) => {
-      this.user = user;
-    });
-    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-      this.classList = data;
-    });
-
     this.contentMgmntService.getClassSetupDetail().subscribe((classDetail: ClassSetupDetail) => {
       this.classDetail = classDetail;
       this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((subjectList: SubjectSetupDetail[]) => {
@@ -55,7 +48,6 @@ export class ContentSubjectComponent implements OnInit {
   }
 
   showChapterList(classDet: ClassSetupDetail, subjectDe: SubjectSetupDetail) {
-    this.contentMgmntService.changeClassSetupDetail(classDet);
     this.contentMgmntService.changeSubjectDetail(subjectDe);
     this.router.navigate(['/home/contentmgmnt/subject/chapter']);
   }

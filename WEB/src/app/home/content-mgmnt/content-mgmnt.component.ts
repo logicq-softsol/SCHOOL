@@ -25,13 +25,6 @@ export class ContentMgmntComponent implements OnInit {
   classList: ClassSetupDetail[] = [];
   classSetup: ClassSetupDetail = new ClassSetupDetail();
 
-  classSubjectList: SubjectSetupDetail[] = [];
-  subjectSetup: SubjectSetupDetail = new SubjectSetupDetail();
-
-  chapterList: ChapterSetupDetail[] = [];
-  chapterDetails: ChapterSetupDetail = new ChapterSetupDetail();
-
-  user: UserDetail = new UserDetail();
   selectImage: File;
   imageUrl: string;
 
@@ -45,13 +38,10 @@ export class ContentMgmntComponent implements OnInit {
 
   ngOnInit() {
 
-    this.authService.getUserDetail().subscribe((user: UserDetail) => {
-      this.user = user;
-    });
-
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
       this.classList = data;
     });
+    
   }
 
   
@@ -60,22 +50,6 @@ export class ContentMgmntComponent implements OnInit {
   }
 
 
-
-  viewSubjectList(classSetup: ClassSetupDetail) {
-    this.contentMgmntService.changeClassSetupDetail(classSetup);
-    this.router.navigate(['/home/contentmgmnt/subject']);
-  }
-
-  showClassSubjectList(classSetup: ClassSetupDetail) {
-    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
-      this.classSubjectList = subjectList;
-    });
-  }
-
-  viewChapterList(subject: SubjectSetupDetail) {
-    this.contentMgmntService.changeSubjectDetail(subject);
-    this.router.navigate(['/home/contentmgmnt/subject/chapter']);
-  }
 
 
   editClassDetails(classSetup: ClassSetupDetail) {

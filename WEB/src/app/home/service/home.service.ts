@@ -115,4 +115,17 @@ export class HomeService {
   }
 
 
+
+  
+  uploadVideosProfile(imageData: File) {
+    let headers = new HttpHeaders();
+    headers.append("Content-Type", undefined);
+    headers.append("Access-Control-Allow-Origin", "*");
+    let httpOptions = { headers: headers };
+    const file: FormData = new FormData();
+    file.append("file", imageData, imageData.name);
+    return this.http.post(environment.baseUrl + "api/uploadVideo", file, httpOptions);
+  }
+
+
 }

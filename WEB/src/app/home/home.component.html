@@ -1,6 +1,55 @@
 <div class="navbar navbar-default navbar-fixed-top">
-        <div class="navbar-header">
-            <a target="_blank"  class="navbar-brand">Company Name</a>
-        </div>
+    <div class="navbar-header">
+        <a target="_blank" class="navbar-brand">Company Name</a>
+    </div>
 </div>
-<router-outlet></router-outlet>
+
+
+<div class="container-fluid padd-15">
+    <ul class="breadcrumb">
+        <li *ngFor="let breadcurmb of breadcurmblist"><a (click)="onclickBreadcrumb(breadcurmb)">{{breadcurmb}}</a></li>
+    </ul>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="book-tables wh-bg">
+                <div class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <strong>{{user.firstname}} {{user.lastname}}</strong>
+                        </h4>
+                        <P>
+                            <strong>{{user.email}}</strong>
+                        </P>
+                        <p>
+                            <strong>{{user.mobileno}}</strong>
+                        </p>
+                        <p>ROLE :
+                            <strong>{{user.role}}</strong>
+                        </p>
+                    </div>
+                </div>
+                <button mat-raised-button (click)="teacherSignUp()" color="primary" *ngIf="user.role=='ADMIN'">USERS</button>
+            </div>
+
+            <mat-expansion-panel *ngFor="let class of classList">
+                <mat-expansion-panel-header>
+                    <a (click)="showClassSubjectList(class)">
+                        <mat-panel-title>
+                            <i class="material-icons">folder</i> {{class.displayName}}</mat-panel-title>
+                    </a>
+                </mat-expansion-panel-header>
+                <ul class="listItems">
+                    <li *ngFor="let subj of classSubjectList">
+                        <a (click)="viewChapterList(subj)">{{subj.displayName}}</a>
+                        <ul class="listItems" *ngIf="chapterList.length>0">
+                            <li *ngFor="let chapter of chapterList">
+                                <a (click)="viewTopicList(chapter)">{{chapter.displayName}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </mat-expansion-panel>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

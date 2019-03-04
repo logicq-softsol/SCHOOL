@@ -10,6 +10,7 @@ import { HomeService } from '../service/home.service';
 import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
 import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ContentMgmntService } from '../service/content-mgmnt.service';
+import { TopicDetail } from 'src/app/public/model/topic-detail';
 
 
 
@@ -32,6 +33,7 @@ export class TeacherRegisterComponent implements OnInit {
 
   classSubjectList: SubjectSetupDetail[] = [];
   subjectSetup: SubjectSetupDetail = new SubjectSetupDetail();
+
 
   constructor(private authService: AuthenticationService,    private contentMgmntService: ContentMgmntService, private homeService: HomeService, public dialogProfileImage: MatDialog, public snackBar: MatSnackBar, private router: Router, public dialog: MatDialog) { }
 
@@ -57,6 +59,9 @@ export class TeacherRegisterComponent implements OnInit {
     });
   }
 
+  viewTopicList(){
+
+  }
 
   registerUser() {
     const dialogRef = this.dialog.open(UserRegDialog, {

@@ -106,6 +106,22 @@ public class FileController {
 	
 	
 
+	@PostMapping("/uploadVideo")
+	public UploadFileResponse uploadVideoFile(@RequestParam("file") MultipartFile file) {
+		String fileName = fileStorageService.storeFile(file);
+		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/downloadFile/")
+				.path(fileName).toUriString();
+
+		UploadFileResponse uploadRes = new UploadFileResponse();
+		uploadRes.setFileName(fileName);
+		uploadRes.setFileDownloadUri(fileDownloadUri);
+		uploadRes.setFileType(file.getContentType());
+		uploadRes.setSize(file.getSize());
+		return uploadRes;
+	}
+		
+	
+
 	@GetMapping("/downloadFile/{fileName:.+}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
 		// Load file as Resource

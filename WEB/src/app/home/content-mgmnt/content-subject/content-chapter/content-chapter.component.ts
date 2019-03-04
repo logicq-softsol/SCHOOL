@@ -20,16 +20,12 @@ import { WorkSpaceDialog } from '../../workspace/work-space.component';
 })
 export class ContentChapterComponent implements OnInit {
 
-  classDetail: ClassSetupDetail = new ClassSetupDetail();
-  classList: ClassSetupDetail[] = [];
 
-  subjectList: SubjectSetupDetail[] = [];
   subjectDetail: SubjectSetupDetail = new SubjectSetupDetail();
 
   chapter: ChapterSetupDetail = new ChapterSetupDetail();
   chapterList: ChapterSetupDetail[] = [];
 
-  user: UserDetail = new UserDetail();
   selectImage: File;
   imageUrl: string;
 
@@ -43,35 +39,21 @@ export class ContentChapterComponent implements OnInit {
 
   ngOnInit() {
 
-    this.authService.getUserDetail().subscribe((user: UserDetail) => {
-      this.user = user;
-    });
-    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-      this.classList = data;
-    });
-
-    this.contentMgmntService.getClassSetupDetail().subscribe((classDetail: ClassSetupDetail) => {
-      this.classDetail = classDetail;
-      this.showClassSubjectList(classDetail);
-    });
     this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
-      this.subjectDetail = subject;
-      this.contentMgmntService.getChapterListForSubjectAndClass(this.subjectDetail.classId, this.subjectDetail.id).subscribe((chapters: ChapterSetupDetail[]) => {
+      this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
         this.chapterList = chapters;
       });
     });
 
-
   }
 
 
-  viewTopicist(chapter:ChapterSetupDetail){
+  viewTopicist(chapter: ChapterSetupDetail) {
     this.contentMgmntService.changeChapterSetupDetail(chapter);
-    this.router.navigate(['/home/contentmgmnt/subject/chapter/topic']);
   }
 
 
-  userYourWorkSpace(chapter:ChapterSetupDetail){
+  userYourWorkSpace(chapter: ChapterSetupDetail) {
     const dialogRef = this.dialog.open(WorkSpaceDialog, {
       width: '600px',
       data: {
@@ -80,26 +62,12 @@ export class ContentChapterComponent implements OnInit {
       }
     });
 
-    dialogRef.componentInstance.workSpaceEmmiter.subscribe((workSpaceContent:any)=>{
+    dialogRef.componentInstance.workSpaceEmmiter.subscribe((workSpaceContent: any) => {
 
     });
   }
 
-  showClassSubjectList(classSetup: ClassSetupDetail) {
-    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
-      this.subjectList = subjectList;
-    });
-  }
 
-  viewChapterList(subject: SubjectSetupDetail) {
-    this.contentMgmntService.changeSubjectDetail(subject);
-    this.router.navigate(['/home/contentmgmnt/subject/chapter']);
-  }
-
-  viewSubjectList(classSetup: ClassSetupDetail) {
-    this.contentMgmntService.changeClassSetupDetail(classSetup);
-    this.router.navigate(['/home/contentmgmnt/subject']);
-  }
 
   addChapterDetails() {
     const dialogRef = this.dialog.open(ChapterDetailDialog, {

@@ -1,4 +1,4 @@
-<input type="file" (change)="onFileChanged($event)" />
+<input type="file" #fileInput placeholder="Upload Video..." />
 
 <div mat-dialog-actions class="host-table-header">
   <button mat-raised-button color="primary" (click)="confirmUpload()">Confirm</button>
