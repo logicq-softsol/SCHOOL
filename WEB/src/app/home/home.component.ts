@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   classSubjectList: SubjectSetupDetail[] = [];
   chapterList: ChapterSetupDetail[] = [];
   topicList: TopicDetail[] = [];
-  breadcurmblist = ['HOME'];
+  breadcurmblist: any;
 
 
   constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router) {
@@ -31,48 +31,44 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.showClassContent();
+    this.showClassContent();
   }
 
+  viewUserList() {
+    this.breadcurmblist = ['HOME', 'USER'];
+    this.router.navigate(['/home/userreg']);
+  }
 
   onclickBreadcrumb(value: any) {
-    const index: number = this.breadcurmblist.indexOf(value);
-    if (index !== -1) {
-      this.breadcurmblist.splice(index, 1);
+    this.breadcurmblist = [];
+    if (value == 'CLASS') {
+      this.breadcurmblist = ['HOME', 'CLASS'];
+      this.showClassContent();
     }
-    if(value=='CLASS'){
-     this.showClassContent();
-    }
-    if(value=='SUBJECT'){
+    if (value == 'SUBJECT') {
+      this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT'];
       this.router.navigate(['/home/contentmgmnt/subject']);
     }
-    if(value=='CHAPTER'){
+    if (value == 'CHAPTER') {
+      this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT', 'CHAPTER'];
       this.router.navigate(['/home/contentmgmnt/subject/chapter']);
     }
-    if(value=='TOPIC'){
+    if (value == 'TOPIC') {
+      this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT', 'CHAPTER', 'TOPIC'];
       this.router.navigate(['/home/contentmgmnt/subject/chapter/topic']);
     }
   }
 
-showClassContent(){
-  const index: number = this.breadcurmblist.indexOf('CLASS');
-  if (index == -1) {
-    this.breadcurmblist.push('CLASS');
+  showClassContent() {
+    this.breadcurmblist = ['HOME', 'CLASS'];
+    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
+      this.classList = data;
+    });
+    this.router.navigate(['/home/contentmgmnt']);
   }
 
-  this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-    this.classList = data;
-  });
-  
-  this.router.navigate(['/home/contentmgmnt']);
-}
-
   showClassSubjectList(classSetup: ClassSetupDetail) {
-    const index: number = this.breadcurmblist.indexOf('SUBJECT');
-    if (index == -1) {
-      this.breadcurmblist.push('SUBJECT');
-    }
-
+    this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT'];
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.classSubjectList = subjectList;
     });
@@ -83,11 +79,7 @@ showClassContent(){
 
 
   viewChapterList(subject: SubjectSetupDetail) {
-    const index: number = this.breadcurmblist.indexOf('CHAPTER');
-    if (index == -1) {
-      this.breadcurmblist.push('CHAPTER');
-    }
-
+    this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT', 'CHAPTER'];
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
       this.chapterList = chapters;
     });
@@ -96,11 +88,7 @@ showClassContent(){
   }
 
   viewTopicList(chapter: ChapterSetupDetail) {
-    const index: number = this.breadcurmblist.indexOf('TOPIC');
-    if (index == -1) {
-      this.breadcurmblist.push('TOPIC');
-    }
-
+    this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT', 'CHAPTER', 'TOPIC'];
     this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.classId).subscribe((topics: TopicDetail[]) => {
       this.topicList = topics;
     });

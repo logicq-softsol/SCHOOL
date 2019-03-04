@@ -44,12 +44,6 @@ export class ContentMgmntComponent implements OnInit {
     
   }
 
-  
-  teacherSignUp(){
-    this.router.navigate(['/home/userreg']);
-  }
-
-
 
 
   editClassDetails(classSetup: ClassSetupDetail) {

@@ -28,7 +28,7 @@
                         </p>
                     </div>
                 </div>
-                <button mat-raised-button (click)="teacherSignUp()" color="primary" *ngIf="user.role=='ADMIN'">USERS</button>
+                <button mat-raised-button (click)="viewUserList()" color="primary" *ngIf="user.role=='ADMIN'">USERS</button>
             </div>
 
             <mat-expansion-panel *ngFor="let class of classList">
@@ -38,18 +38,25 @@
                             <i class="material-icons">folder</i> {{class.displayName}}</mat-panel-title>
                     </a>
                 </mat-expansion-panel-header>
-                <ul class="listItems">
-                    <li *ngFor="let subj of classSubjectList">
-                        <a (click)="viewChapterList(subj)">{{subj.displayName}}</a>
-                        <ul class="listItems" *ngIf="chapterList.length>0">
-                            <li *ngFor="let chapter of chapterList">
-                                <a (click)="viewTopicList(chapter)">{{chapter.displayName}}</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+
+                <mat-expansion-panel *ngFor="let subj of classSubjectList">
+                    <mat-expansion-panel-header>
+                        <a (click)="viewChapterList(subj)">
+                            <mat-panel-title>
+                                <i class="material-icons">developer_board</i> {{subj.displayName}}</mat-panel-title>
+                        </a>
+                    </mat-expansion-panel-header>
+                    <ul class="listItems" *ngIf="chapterList.length>0">
+                        <li *ngFor="let chapter of chapterList">
+                            <a (click)="viewTopicList(chapter)">{{chapter.displayName}}</a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+
             </mat-expansion-panel>
         </div>
-        <router-outlet></router-outlet>
+        <div class="col-md-9">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>
