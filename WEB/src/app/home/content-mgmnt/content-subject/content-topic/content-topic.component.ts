@@ -13,7 +13,7 @@ import { ChapterSetupDetail } from '../../../../public/model/chapter-setup-detai
 import { TopicDetail } from '../../../../public/model/topic-detail';
 import { UserDetail } from '../../../../public/model/user-detail';
 import { VideoUploadDialog } from 'src/app/home/content-mgmnt/upload-file/upload-video';
-
+import {VgAPI} from 'videogular2/core';
 
 @Component({
   selector: 'app-content-topic',
@@ -30,6 +30,8 @@ export class ContentTopicComponent implements OnInit {
 
   selectImage: File;
   imageUrl: string;
+  preload:string = 'auto';
+  api:VgAPI;
 
   constructor(private authService: AuthenticationService,
     private contentMgmntService: ContentMgmntService,
@@ -42,17 +44,18 @@ export class ContentTopicComponent implements OnInit {
   ngOnInit() {
     this.contentMgmntService.getChapterSetupDetail().subscribe((chapter: ChapterSetupDetail) => {
       this.chapter = chapter;
-      this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.classId).subscribe((topics: TopicDetail[]) => {
+      this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
         this.topics = topics;
       });
     });
 
   }
 
-  playVideo(topic: TopicDetail) {
-    topic.playFileURL = "assets/video/SampleVideo_1280x720_1mb.mp4";
+  onPlayerReady(api:VgAPI) {
+    this.api = api;
+}
 
-  }
+ 
 
   uploadVideo(topic: TopicDetail) {
     const dialogRef = this.dialog.open(VideoUploadDialog, {

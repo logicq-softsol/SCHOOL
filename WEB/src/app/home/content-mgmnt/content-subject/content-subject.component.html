@@ -3,6 +3,12 @@
     <div class="order-history">
       <div class="history-head">
         <span>{{classDetail.displayName}}</span>
+        <div class="pull-right right-btn">
+          <a class="action-link" (click)="addSubjectDetails()">
+            <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+            <span class="txt">Add Subject</span>
+          </a>
+        </div>
       </div>
       <div class="history-body">
         <div class="media-left">
@@ -14,27 +20,22 @@
   </div>
 
   <div class="book-tables wh-bg history">
-    <h4 class="media-heading">
-      <strong>Details About Subjects</strong>
-    </h4>
-    <div>
-      <div class="pull-right right-btn">
-        <a class="action-link" (click)="addSubjectDetails()">
-          <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-          <span class="txt">Add Subject</span>
-        </a>
+    <h4 class="media-heading">All Subject for {{classDetail.displayName}}</h4>
+    <div class="row wh-bg margin-padding">
+        <div class="search-box pull-right">
+          <input class="search-input" placeholder="Search by class name , Subject Name">
+          <i class="material-icons">search</i>
+          <button class="cancelBtn" mat-raised-button>CANCEL</button>
+        </div>
       </div>
-      <div class="media-body">
-        <div class="order-history" *ngFor="let subject of subjectList">
-          <a class="action-link" (click)="userWorkkSpace(subject)">
-            <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-            <span class="txt">WorkSpace</span>
-          </a>
+    <div class="row">
+
+      <div class="media-body col-md-4" *ngFor="let subject of subjectList">
+        <div class="order-history">
           <div class="history-head">
-            <span>{{subject.displayName}}</span>
-            <!--div class="pull-right hostOrderLink">
-                      <a (click)="viewYourWorkSpace(class)">WORK-SPACE</a>
-                    </div-->
+            <span>
+              <strong>{{subject.displayName}}</strong>
+            </span>
           </div>
           <div class="history-body">
             <div class="media-left">
@@ -56,10 +57,6 @@
               <a class="action-link" (click)="editSubjectDetail(subject)">
                 <span class="glyphicon glyphicon-plus-sign green-icon"></span>
                 <span class="txt">EDIT</span>
-              </a>
-              <a class="action-link" (click)="deleteSubjectDetail(subject)">
-                <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                <span class="txt">DELETE</span>
               </a>
             </div>
           </div>

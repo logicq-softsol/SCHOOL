@@ -37,13 +37,17 @@ export class ContentMgmntComponent implements OnInit {
     public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
-
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
       this.classList = data;
     });
     
   }
 
+
+  viewSubjectList(classSetup: ClassSetupDetail){
+    this.contentMgmntService.changeClassSetupDetail(classSetup);
+    this.router.navigate(['/home/contentmgmnt/subject']);
+  }
 
 
   editClassDetails(classSetup: ClassSetupDetail) {

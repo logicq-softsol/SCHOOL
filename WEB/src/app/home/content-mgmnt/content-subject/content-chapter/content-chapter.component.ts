@@ -40,6 +40,7 @@ export class ContentChapterComponent implements OnInit {
   ngOnInit() {
 
     this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
+      this.subjectDetail=subject;
       this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
         this.chapterList = chapters;
       });
@@ -50,6 +51,7 @@ export class ContentChapterComponent implements OnInit {
 
   viewTopicist(chapter: ChapterSetupDetail) {
     this.contentMgmntService.changeChapterSetupDetail(chapter);
+    this.router.navigate(['/home/contentmgmnt/subject/chapter/topic']);
   }
 
 
