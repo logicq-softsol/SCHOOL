@@ -1,4 +1,5 @@
-<div class="container-fluid padd-15">
+<div class="book-tables wh-bg history">
+    <h4 class="media-heading">Subject List For Class {{classDetail.displayName}}</h4>
   <div class="media-body">
     <div class="order-history">
       <div class="history-head">
@@ -10,44 +11,34 @@
           </a>
         </div>
       </div>
-      <div class="history-body">
+      <!--div class="history-body">
         <div class="media-left">
           <img class="person-card-avatar bigPicture" src="{{classDetail.icon?classDetail.icon:'assets/images/class.jpg'}}">
           <span>{{classDetail.description}}</span>
         </div>
-      </div>
+      </div-->
     </div>
   </div>
-
-  <div class="book-tables wh-bg history">
-    <h4 class="media-heading">All Subject for {{classDetail.displayName}}</h4>
-    <div class="row wh-bg margin-padding">
-        <div class="search-box pull-right">
-          <input class="search-input" placeholder="Search by class name , Subject Name">
-          <i class="material-icons">search</i>
-          <button class="cancelBtn" mat-raised-button>CANCEL</button>
-        </div>
-      </div>
-    <div class="row">
-
-      <div class="media-body col-md-4" *ngFor="let subject of subjectList">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let subject of subjectList">
+      <div class="media-body">
         <div class="order-history">
           <div class="history-head">
             <span>
               <strong>{{subject.displayName}}</strong>
             </span>
           </div>
-          <div class="history-body">
-            <div class="media-left">
-              <img class="person-card-avatar bigPicture" src="{{subject.icon?subject.icon:'assets/images/class.jpg'}}">
-              <a id="photoSelector" mat-icon-button (click)='onChangeImage(subject)'>
-                <mat-icon>photo_camera</mat-icon> Edit image
-              </a>
-            </div>
-            <div class="media-left">
+          <!--div class="history-body">
+          <div class="media-left">
+            <img class="person-card-avatar bigPicture" src="{{subject.icon?subject.icon:'assets/images/class.jpg'}}">
+            <a id="photoSelector" mat-icon-button (click)='onChangeImage(subject)'>
+              <mat-icon>photo_camera</mat-icon> Edit image
+            </a>
+          </div-->
+          <!--div class="media-left">
               <span>{{subject.description}}</span>
             </div>
-          </div>
+        </div-->
           <div class="history-foot">
             <div class="pull-right">
               <a class="action-link" (click)="viewChapterList(subject)">
