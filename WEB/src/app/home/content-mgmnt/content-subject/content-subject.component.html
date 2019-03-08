@@ -27,6 +27,8 @@
             <span>
               <strong>{{subject.displayName}}</strong>
             </span>
+            <span><a (click)="markFavorites(subject)" *ngIf="subject.type=='NOT_FAVORTIE'"><i class="material-icons">favorite_border</i></a></span>
+            <span><a (click)="removeFavorites(subject)"  *ngIf="subject.type=='FAVORTIE'"><i class="material-icons">favorite</i></a></span>
           </div>
           <!--div class="history-body">
           <div class="media-left">

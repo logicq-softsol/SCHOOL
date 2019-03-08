@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.logicq.school.model.ChapterDetails;
 import com.logicq.school.model.ClassDetails;
+import com.logicq.school.model.Favorites;
 import com.logicq.school.model.LoginDetails;
 import com.logicq.school.model.SubjectDetails;
 import com.logicq.school.model.TopicDetails;
@@ -23,6 +24,7 @@ import com.logicq.school.repository.ChapterDetailsRepo;
 import com.logicq.school.repository.ClassesDetailsRepo;
 import com.logicq.school.repository.SubjectDetailsRepo;
 import com.logicq.school.repository.TopicDetailsRepo;
+import com.logicq.school.repository.UserFavortiesRepo;
 import com.logicq.school.repository.WorkSpaceDetailsRepo;
 import com.logicq.school.utils.SchoolSecurityUtils;
 
@@ -43,16 +45,32 @@ public class AdminController {
 	@Autowired
 	TopicDetailsRepo topicDetailsRepo;
 
-	
 	@Autowired
 	WorkSpaceDetailsRepo workSpaceDetailsRepo;
-	
+
+	@Autowired
+	UserFavortiesRepo userFavortiesRepo;
+
 	@Autowired
 	SchoolSecurityUtils schoolSecurityUtils;
-	
+
 	@RequestMapping(value = "/classes", method = RequestMethod.GET)
-	public ResponseEntity<List<ClassDetails>> getClassDetails() {
-		return new ResponseEntity<List<ClassDetails>>(classesDetailsRepo.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<ClassDetails>> getClassDetails() throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<ClassDetails> classesList = classesDetailsRepo.findAll();
+		if (!classesList.isEmpty()) {
+			classesList.forEach(classes -> {
+				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "CLASS",
+						classes.getId());
+				if (null != fav) {
+					classes.setType("FAVORTIE");
+				} else {
+					classes.setType("NOT_FAVORTIE");
+				}
+			});
+		}
+
+		return new ResponseEntity<List<ClassDetails>>(classesList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/classes", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -74,13 +92,42 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/subjects", method = RequestMethod.GET)
-	public ResponseEntity<List<SubjectDetails>> getSubjectDetails() {
-		return new ResponseEntity<List<SubjectDetails>>(subjectDetailsRepo.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<SubjectDetails>> getSubjectDetails() throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<SubjectDetails> subjectList = subjectDetailsRepo.findAll();
+		if (!subjectList.isEmpty()) {
+			subjectList.forEach(subj -> {
+				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(),
+						"SUBJECT", subj.getId());
+				if (null != fav) {
+					subj.setType("FAVORTIE");
+				} else {
+					subj.setType("NOT_FAVORTIE");
+				}
+			});
+		}
+
+		return new ResponseEntity<List<SubjectDetails>>(subjectList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/subjects/{classId}", method = RequestMethod.GET)
-	public ResponseEntity<List<SubjectDetails>> getSubjectDetailsForClasses(@PathVariable Long classId) {
-		return new ResponseEntity<List<SubjectDetails>>(subjectDetailsRepo.findByClassId(classId), HttpStatus.OK);
+	public ResponseEntity<List<SubjectDetails>> getSubjectDetailsForClasses(@PathVariable Long classId)
+			throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<SubjectDetails> subjectList = subjectDetailsRepo.findByClassId(classId);
+		if (!subjectList.isEmpty()) {
+			subjectList.forEach(subj -> {
+				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(),
+						"SUBJECT", subj.getId());
+				if (null != fav) {
+					subj.setType("FAVORTIE");
+				} else {
+					subj.setType("NOT_FAVORTIE");
+				}
+			});
+		}
+
+		return new ResponseEntity<List<SubjectDetails>>(subjectList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/subjects", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -109,9 +156,22 @@ public class AdminController {
 
 	@RequestMapping(value = "/chapters/{classId}/{subjectId}", method = RequestMethod.GET)
 	public ResponseEntity<List<ChapterDetails>> getChapterDetailsForClassAndSubject(@PathVariable Long classId,
-			@PathVariable Long subjectId) {
-		return new ResponseEntity<List<ChapterDetails>>(
-				chapterDetailsRepo.findByClassIdAndSubjectId(classId, subjectId), HttpStatus.OK);
+			@PathVariable Long subjectId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<ChapterDetails> chapterList = chapterDetailsRepo.findByClassIdAndSubjectId(classId, subjectId);
+		if (!chapterList.isEmpty()) {
+			chapterList.forEach(chapter -> {
+				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(),
+						"CHAPTER", chapter.getId());
+				if (null != fav) {
+					chapter.setType("FAVORTIE");
+				} else {
+					chapter.setType("NOT_FAVORTIE");
+				}
+			});
+		}
+
+		return new ResponseEntity<List<ChapterDetails>>(chapterList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/chapters/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
@@ -143,9 +203,22 @@ public class AdminController {
 
 	@RequestMapping(value = "/topic/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
 	public ResponseEntity<List<TopicDetails>> getTopicForChapterDetailsForClassAndSubject(@PathVariable Long classId,
-			@PathVariable Long subjectId, @PathVariable Long chapterId) {
-		return new ResponseEntity<List<TopicDetails>>(
-				topicDetailsRepo.findByClassIdAndSubjectIdAndChapterId(classId, subjectId, chapterId), HttpStatus.OK);
+			@PathVariable Long subjectId, @PathVariable Long chapterId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<TopicDetails> topicList = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterId(classId, subjectId,
+				chapterId);
+		if (!topicList.isEmpty()) {
+			topicList.forEach(topic -> {
+				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "TOPIC",
+						topic.getId());
+				if (null != fav) {
+					topic.setType("FAVORTIE");
+				} else {
+					topic.setType("NOT_FAVORTIE");
+				}
+			});
+		}
+		return new ResponseEntity<List<TopicDetails>>(topicList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/topic/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.GET)
@@ -211,6 +284,30 @@ public class AdminController {
 		workSpace.setUserName(loginDetail.getUserName());
 		workSpaceDetailsRepo.save(workSpace);
 		return new ResponseEntity<UserWorkSpace>(workSpace, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/favorties", method = RequestMethod.GET)
+	public ResponseEntity<List<Favorites>> getFavorties() throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		return new ResponseEntity<List<Favorites>>(userFavortiesRepo.findByUserName(loginDetail.getUserName()),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/favortie", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Favorites> markFavorites(@RequestBody Favorites favorites) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		favorites.setUserName(loginDetail.getUserName());
+		userFavortiesRepo.save(favorites);
+		return new ResponseEntity<Favorites>(favorites, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/favortie/{type}/{typeId}", method = RequestMethod.DELETE)
+	public ResponseEntity<Favorites> removeFavorites(@PathVariable String type, @PathVariable Long typeId)
+			throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), type, typeId);
+		userFavortiesRepo.delete(fav);
+		return new ResponseEntity<Favorites>(fav, HttpStatus.OK);
 	}
 
 }

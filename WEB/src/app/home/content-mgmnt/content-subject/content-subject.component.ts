@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { Router } from '@angular/router';
 import { ImageUploadDialog } from '../../../home/content-mgmnt/upload-file/upload-image';
 import { HomeService } from '../../../home/service/home.service';
+import { Favorites } from 'src/app/public/model/favorite';
 
 @Component({
   selector: 'app-content-subject',
@@ -137,9 +138,28 @@ export class ContentSubjectComponent implements OnInit {
     this.router.navigate(['/home/contentmgmnt/subject']);
   }
 
-  userWorkkSpace(subject:SubjectSetupDetail){
+  userWorkkSpace(subject: SubjectSetupDetail) {
 
   }
+
+  markFavorites(subject: SubjectSetupDetail) {
+    let favorite: Favorites = new Favorites();
+    favorite.type = "SUBJECT";
+    favorite.typeValue = subject.id;
+    this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Subject " + subject.displayName + " mark favorite.", "CLOSE");
+    });
+  }
+
+
+  
+
+  removeFavorites(subject: SubjectSetupDetail) {
+    this.contentMgmntService.removeFavorites("SUBJECT", subject.id).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Class " + subject.displayName + " remove from your favorite.", "CLOSE");
+    });
+  }
+
 
   onChangeImage(subject: SubjectSetupDetail) {
     const dialogRef = this.dialogProfileImage.open(

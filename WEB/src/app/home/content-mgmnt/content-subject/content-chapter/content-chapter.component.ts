@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ImageUploadDialog } from '../../../../home/content-mgmnt/upload-file/upload-image';
 import { HomeService } from '../../../../home/service/home.service';
 import { WorkSpaceDialog } from '../../workspace/work-space.component';
+import { Favorites } from 'src/app/public/model/favorite';
 
 
 @Component({
@@ -47,6 +48,24 @@ export class ContentChapterComponent implements OnInit {
     });
 
   }
+
+  markFavorites(chapter: ChapterSetupDetail) {
+    let favorite: Favorites = new Favorites();
+    favorite.type = "CHAPTER";
+    favorite.typeValue = chapter.id;
+    this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Chapter " + chapter.displayName + " mark favorite.", "CLOSE");
+    });
+  }
+
+
+
+  removeFavorites(chapter: ChapterSetupDetail) {
+    this.contentMgmntService.removeFavorites("CHAPTER", chapter.id).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Chapter " + chapter.displayName + " remove from your favorite.", "CLOSE");
+    });
+  }
+
 
 
   viewTopicist(chapter: ChapterSetupDetail) {

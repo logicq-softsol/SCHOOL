@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import { Favorites } from 'src/app/public/model/favorite';
 
 @Component({
   selector: 'app-content-mgmnt',
@@ -22,6 +23,7 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class ContentMgmntComponent implements OnInit {
 
+  user: UserDetail = new UserDetail();
   classList: ClassSetupDetail[] = [];
   classSetup: ClassSetupDetail = new ClassSetupDetail();
 
@@ -40,11 +42,14 @@ export class ContentMgmntComponent implements OnInit {
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
       this.classList = data;
     });
-    
+    this.authService.getUserDetail().subscribe((user: UserDetail) => {
+      this.user = user;
+    });
+
   }
 
 
-  viewSubjectList(classSetup: ClassSetupDetail){
+  viewSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.changeClassSetupDetail(classSetup);
     this.router.navigate(['/home/contentmgmnt/subject']);
   }
@@ -130,7 +135,22 @@ export class ContentMgmntComponent implements OnInit {
   }
 
 
+  markFavorites(classDet: ClassSetupDetail) {
+    let favorite: Favorites = new Favorites();
+    favorite.type = "CLASS";
+    favorite.typeValue = classDet.id;
+    this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Class " + classDet.displayName + " mark favorite.", "CLOSE");
+    });
+  }
 
+
+
+  removeFavorites(classDet: ClassSetupDetail) {
+    this.contentMgmntService.removeFavorites("CLASS", classDet.id).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Class " + classDet.displayName + " remove from your favorite.", "CLOSE");
+    });
+  }
 
 
   openErrorSnackBar(message: string, action: string) {

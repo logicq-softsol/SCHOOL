@@ -28,6 +28,8 @@
           <div class="col-md-4">
             <div class="history-head">
               <span>{{topic.displayName}}</span>
+              <span><a (click)="markFavorites(topic)" *ngIf="topic.type=='NOT_FAVORTIE'"><i class="material-icons">favorite_border</i></a></span>
+              <span><a (click)="removeFavorites(topic)"  *ngIf="topic.type=='FAVORTIE'"><i class="material-icons">favorite</i></a></span>
               <div class="pull-right hostOrderLink">
                 <a (click)="userWorkSpace(topic)">WorkSpace</a>
               </div>

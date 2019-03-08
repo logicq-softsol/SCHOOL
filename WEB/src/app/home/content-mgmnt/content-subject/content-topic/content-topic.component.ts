@@ -13,7 +13,8 @@ import { ChapterSetupDetail } from '../../../../public/model/chapter-setup-detai
 import { TopicDetail } from '../../../../public/model/topic-detail';
 import { UserDetail } from '../../../../public/model/user-detail';
 import { VideoUploadDialog } from 'src/app/home/content-mgmnt/upload-file/upload-video';
-import {VgAPI} from 'videogular2/core';
+import { VgAPI } from 'videogular2/core';
+import { Favorites } from 'src/app/public/model/favorite';
 
 @Component({
   selector: 'app-content-topic',
@@ -30,8 +31,8 @@ export class ContentTopicComponent implements OnInit {
 
   selectImage: File;
   imageUrl: string;
-  preload:string = 'auto';
-  api:VgAPI;
+  preload: string = 'auto';
+  api: VgAPI;
 
   constructor(private authService: AuthenticationService,
     private contentMgmntService: ContentMgmntService,
@@ -51,11 +52,29 @@ export class ContentTopicComponent implements OnInit {
 
   }
 
-  onPlayerReady(api:VgAPI) {
+  onPlayerReady(api: VgAPI) {
     this.api = api;
-}
+  }
 
- 
+
+  markFavorites(topic: TopicDetail) {
+    let favorite: Favorites = new Favorites();
+    favorite.type = "TOPIC";
+    favorite.typeValue = topic.id;
+    this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Subject " + topic.displayName + " mark favorite.", "CLOSE");
+    });
+  }
+
+
+
+  removeFavorites(topic: TopicDetail) {
+    this.contentMgmntService.removeFavorites("TOPIC", topic.id).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Topic " + topic.displayName + " remove from your favorite.", "CLOSE");
+    });
+  }
+
+
 
   uploadVideo(topic: TopicDetail) {
     const dialogRef = this.dialog.open(VideoUploadDialog, {

@@ -196,4 +196,25 @@ export class ContentMgmntService {
   }
 
 
+  getFavorites() {
+    return this.http.get(environment.baseUrl + 'api/admin/favortie/');
+  }
+
+  markFavorites(favorite: any) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.post(environment.baseUrl + 'api/admin/favortie', favorite, httpOptions);
+  }
+
+
+  removeFavorites(type: string,typeId:number) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.delete(environment.baseUrl + 'api/admin/favortie/'+type+"/"+typeId, httpOptions);
+  }
+
 }
