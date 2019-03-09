@@ -18,9 +18,14 @@ public class DemoEncryption {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		encrypt("demodemodemodem0", new File("E:\\Demo_ENCY\\test.zip"), new File("E:\\Demo_ENCY\\encrypt_test"));
-		decrypt("demodemodemodem0", new File("E:\\Demo_ENCY\\encrypt_test"),
-				new File("E:\\Demo_ENCY\\decrypt_test.zip"));
+		System.out.println(" Encryption Start : " + System.currentTimeMillis());
+		encrypt("demodemodemodem0", new File("C:\\Users\\sudhanshu\\Desktop\\film\\test.mp4"),
+				new File("C:\\Users\\sudhanshu\\Desktop\\film\\movi_enc.lq"));
+		System.out.println(" Encryption End : " + System.currentTimeMillis());
+		System.out.println(" Decrypt Start : " + System.currentTimeMillis());
+		decrypt("demodemodemodem0", new File("C:\\Users\\sudhanshu\\Desktop\\film\\movi_enc.lq"),
+				new File("C:\\Users\\sudhanshu\\Desktop\\film\\movi_enc.mp4"));
+		System.out.println(" Decrypt End : " + System.currentTimeMillis());
 	}
 
 	private static final String ALGORITHM = "AES";

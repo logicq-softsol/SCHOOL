@@ -19,8 +19,8 @@
         <div class="order-history">
           <div class="history-head">
             <span><strong>{{class.displayName}}</strong></span>
-             <span><a (click)="markFavorites(class)" *ngIf="class.type=='NOT_FAVORTIE'"><i class="material-icons">favorite_border</i></a></span>
-             <span><a (click)="removeFavorites(class)"  *ngIf="class.type=='FAVORTIE'"><i class="material-icons">favorite</i></a></span>
+             <span><a (click)="markFavorites(class)" *ngIf="class.type=='NOT_FAVORTIE'" class="pull-right" color="accent"><i class="material-icons">favorite_border</i></a></span>
+             <span><a (click)="removeFavorites(class)"  *ngIf="class.type=='FAVORTIE'" class="pull-right" color="accent"><i class="material-icons">favorite</i></a></span>
           </div>
           <!--div class="history-body">
             <div class="media-left">

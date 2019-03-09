@@ -28,8 +28,8 @@
         <div class="order-history" *ngFor="let chapter of chapterList">
           <div class="history-head">
             <span>{{chapter.displayName}}</span>
-            <span><a (click)="markFavorites(chapter)" *ngIf="chapter.type=='NOT_FAVORTIE'"><i class="material-icons">favorite_border</i></a></span>
-            <span><a (click)="removeFavorites(chapter)"  *ngIf="chapter.type=='FAVORTIE'"><i class="material-icons">favorite</i></a></span>
+            <span><a (click)="markFavorites(chapter)" *ngIf="chapter.type=='NOT_FAVORTIE'" class="pull-right" color="accent"><i class="material-icons">favorite_border</i></a></span>
+            <span><a (click)="removeFavorites(chapter)"  *ngIf="chapter.type=='FAVORTIE'" class="pull-right" color="accent"><i class="material-icons">favorite</i></a></span>
             <div class="pull-right hostOrderLink">
               <a (click)="userWorkSpace(chapter)">WorkSpace</a>
             </div>
