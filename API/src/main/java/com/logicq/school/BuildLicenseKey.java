@@ -11,8 +11,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 
-import org.apache.commons.text.CharacterPredicates;
-import org.apache.commons.text.RandomStringGenerator;
+
 
 public class BuildLicenseKey {
 	private static final String UNICODE_FORMAT = "UTF8";
