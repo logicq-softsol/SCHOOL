@@ -19,7 +19,6 @@ import javax.crypto.Cipher;
 public class LicenseBuild {
 
 	private static final String ALGORITHM = "RSA";
-	private static final String TRANSFORMATION = "AES";
 	private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	private final static Random rng = new SecureRandom();
 	private static Cipher cipher;
@@ -72,18 +71,9 @@ public class LicenseBuild {
 			FileOutputStream outputStream = new FileOutputStream("license.txt");
 			outputStream.write(encryptedText.getBytes());
 			outputStream.close();
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	public static KeyPair generateKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException {
-		KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM);
-		SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
-		// 512 is keysize
-		keyGen.initialize(512, random);
-		KeyPair generateKeyPair = keyGen.generateKeyPair();
-		return generateKeyPair;
-	}
 }
