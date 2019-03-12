@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMaterialModule } from './core/material.module';
 import { FormsModule } from '@angular/forms';
 import { TokenStorage } from './core/token.storage';
+import { LicenseComponent } from './public/license/license.component';
 
 
 
@@ -18,7 +19,8 @@ import { TokenStorage } from './core/token.storage';
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LicenseComponent
   ],
   imports: [
     BrowserModule,

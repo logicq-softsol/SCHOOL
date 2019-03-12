@@ -33,10 +33,10 @@ export class RegisterComponent implements OnInit {
   registerProduct() {
     this.productDetail.user = this.user;
     this.productDetail.login = this.login;
-    this.authService.activateProduct(this.productDetail).subscribe((data: any) => {
-      this.router.navigate(['/login']);
-      this.openSnackBar(data.message, data.messageCode);
-    });
+    // this.authService.activateProduct(this.productDetail).subscribe((data: any) => {
+    //   this.router.navigate(['/login']);
+    //   this.openSnackBar(data.message, data.messageCode);
+    // });
   }
 
 

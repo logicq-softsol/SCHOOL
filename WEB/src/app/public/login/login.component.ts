@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.authService.checkValidateProduct().subscribe((data: any) => {
       if (data.messageCode == "NO_LICENSE") {
-        this.router.navigate(['/register']);
+        this.router.navigate(['/license']);
       }
     });
   }

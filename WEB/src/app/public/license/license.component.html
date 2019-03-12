@@ -1,0 +1,31 @@
+<mat-card>
+    <mat-toolbar>Enter Your License</mat-toolbar>
+    <table style="width:100%" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field appearance="outline">
+                    <input matInput [(ngModel)]="licnkey.param1" required>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field appearance="outline">
+                    <input matInput [(ngModel)]="licnkey.param2" required>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field appearance="outline">
+                    <input matInput [(ngModel)]="licnkey.param3" required>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field appearance="outline">
+                    <input matInput [(ngModel)]="licnkey.param4" required>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+
+    <mat-card-actions>
+        <button mat-raised-button (click)="registerProduct()" color="primary">Register</button>
+    </mat-card-actions>
+</mat-card>

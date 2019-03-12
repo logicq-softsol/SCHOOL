@@ -7,6 +7,7 @@ import { Activation } from '../public/model/product-detail';
 import { LoginDetail } from '../public/model/login-detail';
 import { UserDetail } from '../public/model/user-detail';
 import { ReplaySubject } from 'rxjs';
+import { License } from 'src/app/public/model/license';
 
 
 @Injectable({
@@ -50,12 +51,12 @@ export class AuthenticationService {
     return this.http.get(environment.baseUrl + 'api/validateProduct');
   }
 
-  activateProduct(product: Activation) {
+  activateProduct(key: License) {
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
-    return this.http.post(environment.baseUrl + 'api/activateProduct', product, httpOptions);
+    return this.http.post(environment.baseUrl + 'api/activateProduct', key, httpOptions);
   }
   
   loadRole() {

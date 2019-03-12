@@ -1,25 +1,36 @@
 package com.logicq.license;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Random;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 
 public class LicenseBuild {
-	static final private String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	final private static Random rng = new SecureRandom();
-	private Cipher cipher;
+
+	private static final String ALGORITHM = "RSA";
+	private static final String TRANSFORMATION = "AES";
+	private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	private final static Random rng = new SecureRandom();
+	private static Cipher cipher;
 
 	public static void main(String[] args) throws Exception {
-		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-		keyGenerator.init(128); // block size is 128bits
-		SecretKey secretKey = keyGenerator.generateKey();
-		String temp = new String(Base64.getEncoder().encode(secretKey.getEncoded()));
 
-		buildproductKey(secretKey);
+		GenerateKeys gk = new GenerateKeys(1024);
+		gk.createKeys();
+		gk.writeToFile("KeyPair/publicKey", gk.getPublicKey().getEncoded());
+		gk.writeToFile("KeyPair/privateKey", gk.getPrivateKey().getEncoded());
+		buildproductKey(gk.getPrivateKey());
 
 	}
 
@@ -42,16 +53,37 @@ public class LicenseBuild {
 		return sb.toString();
 	}
 
-	public static void buildproductKey(SecretKey secretKey) {
+	public static void buildproductKey(PrivateKey key) throws Exception {
 		String licenseKey = randomUUID(16, 4, '-');
+		System.out.println("printable License key :" + licenseKey);
+		encryptText(licenseKey, key);
+
 	}
 
-	public String encryptText(String plainText, SecretKey secretKey) throws Exception {
-		byte[] plainTextByte = plainText.getBytes();
-		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-		byte[] encryptedByte = cipher.doFinal(plainTextByte);
-		Base64.Encoder encoder = Base64.getEncoder();
-		String encryptedText = encoder.encodeToString(encryptedByte);
-		return encryptedText;
+	public static void encryptText(String plainText, PrivateKey privateKey) throws Exception {
+		String orignalKey = plainText.replaceAll("-", "");
+		SchoolSecurityUtils securityUtil = new SchoolSecurityUtils();
+		String encryptedText = securityUtil.encryptText(orignalKey, privateKey);
+		generateLicenseFileAndEncrypt(encryptedText);
+	}
+
+	private static void generateLicenseFileAndEncrypt(String encryptedText) {
+		try {
+			FileOutputStream outputStream = new FileOutputStream("license.txt");
+			outputStream.write(encryptedText.getBytes());
+			outputStream.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static KeyPair generateKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException {
+		KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM);
+		SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
+		// 512 is keysize
+		keyGen.initialize(512, random);
+		KeyPair generateKeyPair = keyGen.generateKeyPair();
+		return generateKeyPair;
 	}
 }
