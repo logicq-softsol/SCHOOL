@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
@@ -66,7 +68,8 @@ public class SchoolSecurityUtils {
 
 	// https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
 	public PublicKey getPublic(String filename) throws Exception {
-		byte[] keyBytes = Files.readAllBytes(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
+		byte[] keyBytes = Files
+				.readAllBytes(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
 		X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory kf = KeyFactory.getInstance("RSA");
 		return kf.generatePublic(spec);
@@ -110,6 +113,11 @@ public class SchoolSecurityUtils {
 		fos.write(toWrite);
 		fos.flush();
 		fos.close();
+	}
+
+	public String getSystemHostName() throws Exception {
+		InetAddress ip = InetAddress.getLocalHost();
+		return ip.getHostName();
 	}
 
 }

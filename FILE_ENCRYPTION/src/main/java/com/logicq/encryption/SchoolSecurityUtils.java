@@ -1,4 +1,4 @@
-package com.logicq.license;
+package com.logicq.encryption;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +21,7 @@ public class SchoolSecurityUtils {
 	private static final String ALGORITHM = "RSA";
 
 	public PrivateKey getPrivate(String filename) throws Exception {
-		byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
+		byte[] keyBytes = Files.readAllBytes(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
 		PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory kf = KeyFactory.getInstance("RSA");
 		return kf.generatePrivate(spec);
@@ -29,7 +29,8 @@ public class SchoolSecurityUtils {
 
 	// https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
 	public PublicKey getPublic(String filename) throws Exception {
-		byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
+		byte[] keyBytes = Files
+				.readAllBytes(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
 		X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory kf = KeyFactory.getInstance("RSA");
 		return kf.generatePublic(spec);

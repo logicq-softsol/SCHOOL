@@ -21,8 +21,8 @@ public class ActivationDetails {
 	@Column(name = "ACTIVATION_KEY")
 	private String activationKey;
 
-	@Column(name = "LISENCE_KEY")
-	private String licenseKey;
+	@Column(name = "ACTIVATION_FOR")
+	private String activationFor;
 
 	@Column(name = "PRODUCT_NAME")
 	private String productName;
@@ -56,14 +56,6 @@ public class ActivationDetails {
 
 	public void setActivationKey(String activationKey) {
 		this.activationKey = activationKey;
-	}
-
-	public String getLicenseKey() {
-		return licenseKey;
-	}
-
-	public void setLicenseKey(String licenseKey) {
-		this.licenseKey = licenseKey;
 	}
 
 	public String getProductName() {
@@ -113,8 +105,13 @@ public class ActivationDetails {
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-	
-	
-	
+
+	public String getActivationFor() {
+		return activationFor;
+	}
+
+	public void setActivationFor(String activationFor) {
+		this.activationFor = activationFor;
+	}
 
 }

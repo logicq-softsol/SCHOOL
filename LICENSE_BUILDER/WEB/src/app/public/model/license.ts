@@ -13,4 +13,5 @@ export class License {
     public status: string;
     public createdBy: string;
     public creationTime: Date;
+    public productName:string;
 }

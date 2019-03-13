@@ -8,6 +8,6 @@ import com.logicq.school.model.ActivationDetails;
 @Repository
 public interface ProductActivationRepo extends JpaRepository<ActivationDetails, Long> {
 
-	ActivationDetails findByActivationKey(String activationKey);
+	ActivationDetails findByActivationFor(String activationFor);
 
 }

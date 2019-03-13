@@ -19,15 +19,21 @@
                             required>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example-full-width">
-                        <input matInput [matDatepicker]="activationDate" placeholder="Choose a date" [(ngModel)]="licenseDetail.activationDate">
-                        <mat-datepicker-toggle matSuffix [for]="activationDate"></mat-datepicker-toggle>
-                        <mat-datepicker #activationDate></mat-datepicker>
+                        <input matInput [matDatepicker]="activation" placeholder="Choose a date" [(ngModel)]="licenseDetail.activationDate" name="activation">
+                        <mat-datepicker-toggle matSuffix [for]="activation"></mat-datepicker-toggle>
+                        <mat-datepicker #activation></mat-datepicker>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="example-full-width">
                         <mat-label>License Validity in Days</mat-label>
                         <input matInput placeholder="License Validity in Days" [(ngModel)]="licenseDetail.validityDay"
                             name="validityDay" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput placeholder="Product Name" [(ngModel)]="licenseDetail.productName" name="productName"
+                            required>
                     </mat-form-field>
 
                 </form>

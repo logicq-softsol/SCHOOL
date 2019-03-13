@@ -1,14 +1,9 @@
 package com.logicq.school.controller;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
@@ -16,8 +11,6 @@ import javax.validation.ValidationException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.logicq.school.exception.SucessMessage;
 import com.logicq.school.model.ActivationDetails;
-import com.logicq.school.model.LicenseKey;
 import com.logicq.school.model.LoginDetails;
 import com.logicq.school.model.Message;
 import com.logicq.school.model.User;
@@ -42,9 +34,11 @@ import com.logicq.school.repository.UserDetailsRepo;
 import com.logicq.school.security.JwtTokenProvider;
 import com.logicq.school.security.UserPrincipal;
 import com.logicq.school.utils.SchoolDateUtils;
+import com.logicq.school.utils.SchoolRestClient;
 import com.logicq.school.utils.SchoolSecurityUtils;
 import com.logicq.school.utils.SucessHandlerUtils;
-import com.logicq.school.vo.ActivationVO;
+import com.logicq.school.vo.LicenseDetails;
+import com.logicq.school.vo.LicenseKey;
 import com.logicq.school.vo.LoginVO;
 import com.logicq.school.vo.RecoverVO;
 
@@ -83,19 +77,34 @@ public class LoginController {
 	@Autowired
 	SchoolSecurityUtils schoolSecurityUtils;
 
+	@Autowired
+	SchoolRestClient schoolRestClient;
+
 	@RequestMapping(value = "/activateProduct", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> registerPartner(@RequestBody LicenseKey licnkey) throws Exception {
 		if (!StringUtils.isEmpty(licnkey.getParam1()) && !StringUtils.isEmpty(licnkey.getParam2())
 				&& !StringUtils.isEmpty(licnkey.getParam3()) && !StringUtils.isEmpty(licnkey.getParam4())) {
-
-			List<String> licenseData = Files
-					.readAllLines(new File(getClass().getClassLoader().getResource("license.txt").getFile()).toPath());
-			String decryptedkey = schoolSecurityUtils.decryptText(licenseData.get(0),
-					schoolSecurityUtils.getPublic("publicKey"));
+			// List<String> licenseData = Files
+			// .readAllLines(new
+			// File(getClass().getClassLoader().getResource("license.txt").getFile()).toPath());
+			String hostName = schoolSecurityUtils.getSystemHostName();
+			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName).getBody();
+			String decryptedkey = schoolSecurityUtils.decryptText(licenseDetails.getLicenseKey(),
+					schoolSecurityUtils.getPublic("KeyPair/publicKey"));
 			String inputkey = licnkey.getParam1() + licnkey.getParam2() + licnkey.getParam3() + licnkey.getParam4();
 			if (inputkey.equals(decryptedkey)) {
+				ActivationDetails activationDetail = new ActivationDetails();
+				activationDetail.setActivationDate(schoolDateUtils.currentDate());
+				activationDetail.setActivationKey(licenseDetails.getLicenseKey());
+				activationDetail.setLastUpdate(schoolDateUtils.currentDate());
+				activationDetail.setProductName(licenseDetails.getProductName());
+				activationDetail.setProductStatus("ACTIVE");
+				activationDetail.setExpiryDate(schoolDateUtils.getExpiryDate(licenseDetails.getValidityDay()));
+				activationDetail.setProductVersion("001");
+				activationDetail.setActivationFor(hostName);
+				productActivationRepo.save(activationDetail);
 				return new ResponseEntity<SucessMessage>(
-						new SucessMessage(schoolDateUtils.currentDate(), "Products Valided Sucessfully", "SUCESS"),
+						new SucessMessage(schoolDateUtils.currentDate(), "Products Activated Sucessfully", "SUCESS"),
 						HttpStatus.OK);
 			}
 		}
@@ -149,29 +158,6 @@ public class LoginController {
 				new SucessMessage(schoolDateUtils.currentDate(), "Unable to logout ", "ERROR"), HttpStatus.BAD_REQUEST);
 	}
 
-	@RequestMapping(value = "/recoverAccount", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SucessMessage> recoverAccount(@RequestBody RecoverVO recover) throws Exception {
-		ActivationDetails activationDetail = productActivationRepo
-				.findByActivationKey(passwordEncoder.encode(recover.getLicenseKey()));
-		if (null != activationDetail) {
-			if (passwordEncoder.matches(recover.getLicenseKey(), activationDetail.getActivationKey())) {
-				User user = userDetailsRepo.findByUserName(recover.getUserName());
-				if (null != user) {
-					LoginDetails loginDetails = loginDetailsRepo.findByUserName(user.getUserName());
-					loginDetails.setPassword(passwordEncoder.encode(recover.getNewPassword()));
-					loginDetailsRepo.save(loginDetails);
-					return new ResponseEntity<SucessMessage>(
-							new SucessMessage(schoolDateUtils.currentDate(), "Password Change SucessFully", "SUCESS"),
-							HttpStatus.OK);
-				}
-
-			}
-		}
-
-		return new ResponseEntity<SucessMessage>(
-				new SucessMessage(schoolDateUtils.currentDate(), "Invalid login", "ERROR"), HttpStatus.BAD_REQUEST);
-	}
-
 	@RequestMapping(value = "/load", method = RequestMethod.GET)
 	public ResponseEntity<User> loadUserDetails() {
 		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
@@ -213,10 +199,15 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/validateProduct", method = RequestMethod.GET)
-	public ResponseEntity<SucessMessage> checkProductValidity() {
-		// need to code to check enecrytpted key with data base
-		return new ResponseEntity<SucessMessage>(
-				new SucessMessage(schoolDateUtils.currentDate(), "Product Not Register", "NO_LICENSE"), HttpStatus.OK);
+	public ResponseEntity<SucessMessage> checkProductValidity() throws Exception {
+		String hostName = schoolSecurityUtils.getSystemHostName();
+		ActivationDetails activationDeatils = productActivationRepo.findByActivationFor(hostName);
+		if (null != activationDeatils) {
+			return new ResponseEntity<SucessMessage>(
+					new SucessMessage(schoolDateUtils.currentDate(), "Product Validated", "LICENSED"), HttpStatus.OK);
+		}
+		return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+				"Product is Not Valid For this System", "NO_LICENSE"), HttpStatus.OK);
 	}
 
 }

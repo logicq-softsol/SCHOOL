@@ -1,4 +1,4 @@
-package com.logicq.school.model;
+package com.logicq.school.vo;
 
 public class LicenseKey {
 

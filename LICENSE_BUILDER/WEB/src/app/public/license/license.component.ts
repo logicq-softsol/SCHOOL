@@ -25,6 +25,7 @@ export class LicenseComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     if (this.authService.isAuthenticate) {
       this.authService.licensedList().subscribe((licList: License[]) => {
+        this.dataSource = new MatTableDataSource<License>(licList);
         this.licenseList = licList;
       });
     }

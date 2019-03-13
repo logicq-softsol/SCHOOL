@@ -20,7 +20,8 @@ public class SchoolDateUtils {
 	static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
 	public Date findTodayStartDate() {
-		LocalDateTime startDate = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid"))).with(LocalTime.MIN);
+		LocalDateTime startDate = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid")))
+				.with(LocalTime.MIN);
 		return Date.from(startDate.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());
 
 	}
@@ -37,15 +38,19 @@ public class SchoolDateUtils {
 		return Date.from(currentTime.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());
 	}
 
+	public Date getExpiryDate(Integer days) {
+		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid")));
+		currentTime = currentTime.plusDays(days);
+		return Date.from(currentTime.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());
+	}
+
 	public String currentDateWithString() {
 		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid")));
 		return dtf.format(currentTime);
 	}
-	
+
 	public String getTodayDay() {
 		return LocalDate.now(ZoneId.of(env.getProperty("school.date.zoneid"))).getDayOfWeek().name();
 	}
-
-
 
 }

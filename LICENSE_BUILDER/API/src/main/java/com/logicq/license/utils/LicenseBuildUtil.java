@@ -44,7 +44,9 @@ public class LicenseBuildUtil {
 			}
 		}
 		if (licenseDetail.getValidityDay() > 0000) {
-			sb.append(licenseDetail.getValidityDay());
+			String validityDay = "0000" + licenseDetail.getValidityDay();
+			String day = validityDay.substring(validityDay.length() - 4);
+			sb.append(day);
 			sb.append("-");
 			String generateKey = String.format("%04d", rng.nextInt(10000));
 			sb.append(generateKey);
@@ -53,26 +55,27 @@ public class LicenseBuildUtil {
 		return sb.toString();
 	}
 
-	public void buildproductKey(LicenseDetails licenseDetail) throws Exception {
+	public String buildproductKey(LicenseDetails licenseDetail) throws Exception {
 		GenerateKeys gk = new GenerateKeys(1024);
 		gk.createKeys();
 		gk.writeToFile("KeyPair/publicKey", gk.getPublicKey().getEncoded());
 		gk.writeToFile("KeyPair/privateKey", gk.getPrivateKey().getEncoded());
 		String licenseKey = buildKey(licenseDetail);
-		encryptText(licenseKey, gk.getPrivateKey());
+		return encryptText(licenseKey, gk.getPrivateKey());
 
 	}
 
-	public void encryptText(String plainText, PrivateKey privateKey) throws Exception {
+	public String encryptText(String plainText, PrivateKey privateKey) throws Exception {
 		String orignalKey = plainText.replaceAll("-", "");
 		String encryptedText = licenseSecurityUtils.encryptText(orignalKey, privateKey);
-		generateLicenseFileAndEncrypt(encryptedText);
+		generateLicenseFileAndEncrypt(plainText);
+		return encryptedText;
 	}
 
-	private void generateLicenseFileAndEncrypt(String encryptedText) {
+	private void generateLicenseFileAndEncrypt(String plainText) {
 		try {
 			FileOutputStream outputStream = new FileOutputStream("license.txt");
-			outputStream.write(encryptedText.getBytes());
+			outputStream.write(plainText.getBytes());
 			outputStream.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();

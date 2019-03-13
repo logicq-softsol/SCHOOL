@@ -1,4 +1,4 @@
-package com.logicq.license;
+package com.logicq.encryption;
 
 import java.io.File;
 import java.io.FileOutputStream;
