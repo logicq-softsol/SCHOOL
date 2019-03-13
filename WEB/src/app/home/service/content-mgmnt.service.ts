@@ -217,4 +217,11 @@ export class ContentMgmntService {
     return this.http.delete(environment.baseUrl + 'api/admin/favortie/'+type+"/"+typeId, httpOptions);
   }
 
+loadVideoFile(){
+  const httpOptions = {
+    'responseType': 'arraybuffer' as 'json'
+  };
+  return this.http.get<any>(environment.baseUrl +'api/admin/readvideofile', httpOptions);
+}
+
 }

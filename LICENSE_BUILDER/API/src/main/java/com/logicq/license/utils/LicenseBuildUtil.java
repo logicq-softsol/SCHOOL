@@ -68,15 +68,19 @@ public class LicenseBuildUtil {
 	public String encryptText(String plainText, PrivateKey privateKey) throws Exception {
 		String orignalKey = plainText.replaceAll("-", "");
 		String encryptedText = licenseSecurityUtils.encryptText(orignalKey, privateKey);
-		generateLicenseFileAndEncrypt(plainText);
+		generateLicenseFileAndEncrypt(encryptedText, plainText);
 		return encryptedText;
 	}
 
-	private void generateLicenseFileAndEncrypt(String plainText) {
+	private void generateLicenseFileAndEncrypt(String encryptedText, String plainText) {
 		try {
-			FileOutputStream outputStream = new FileOutputStream("license.txt");
-			outputStream.write(plainText.getBytes());
+			FileOutputStream outputStream = new FileOutputStream("license.key");
+			outputStream.write(encryptedText.getBytes());
 			outputStream.close();
+
+			FileOutputStream plainStream = new FileOutputStream("license.txt");
+			plainStream.write(plainText.getBytes());
+			plainStream.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

@@ -11,6 +11,7 @@ import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -21,7 +22,8 @@ public class SchoolSecurityUtils {
 	private static final String ALGORITHM = "RSA";
 
 	public PrivateKey getPrivate(String filename) throws Exception {
-		byte[] keyBytes = Files.readAllBytes(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
+		byte[] keyBytes = Files
+				.readAllBytes(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
 		PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory kf = KeyFactory.getInstance("RSA");
 		return kf.generatePrivate(spec);
@@ -74,6 +76,13 @@ public class SchoolSecurityUtils {
 		fos.write(toWrite);
 		fos.flush();
 		fos.close();
+	}
+
+	// https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
+	public String readFileLine(String filename) throws Exception {
+		List<String> lines = Files
+				.readAllLines(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
+		return lines.get(0);
 	}
 
 }

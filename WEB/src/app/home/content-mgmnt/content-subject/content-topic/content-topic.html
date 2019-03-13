@@ -1,71 +1,54 @@
-<div class="container-fluid padd-15">
+<div class="book-tables wh-bg history">
+  <h4 class="media-heading">Topic List For Chapter {{chapter.displayName}}</h4>
   <div class="media-body">
     <div class="order-history">
       <div class="history-head">
-        <span>{{chapter.displayName}}</span>
-      </div>
-      <div class="history-body">
-        <div class="media-left">
-          <img class="person-card-avatar bigPicture" src="{{chapter.icon?chapter.icon:'assets/images/class.jpg'}}">
-          <span>{{chapter.description}}</span>
+        <span>{{classSetupDetail.displayName}}>>{{subjectDetail.displayName}} >> {{chapter.displayName}} </span>
+        <div class="pull-right right-btn">
+          <a class="action-link" (click)="addTopicDetails()">
+            <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+            <span class="txt">Add Topic</span>
+          </a>
         </div>
       </div>
     </div>
   </div>
-  <div class="book-tables wh-bg history">
-    <h4 class="media-heading">
-      <strong>Details About Chapter</strong>
-    </h4>
-    <div class="media">
-      <div class="pull-right right-btn">
-        <a class="action-link" (click)="addTopicDetails()">
-          <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-          <span class="txt">Add Topic</span>
-        </a>
-      </div>
-      <div class="row">
-        <div class="media-body" *ngFor="let topic of topics">
-          <div class="col-md-4">
-            <div class="history-head">
-              <span>{{topic.displayName}}</span>
-              <span><a (click)="markFavorites(topic)" *ngIf="topic.type=='NOT_FAVORTIE'" class="pull-right" color="accent"><i class="material-icons">favorite_border</i></a></span>
-              <span><a (click)="removeFavorites(topic)"  *ngIf="topic.type=='FAVORTIE'" class="pull-right" color="accent"><i class="material-icons">favorite</i></a></span>
-              <div class="pull-right hostOrderLink">
-                <a (click)="userWorkSpace(topic)">WorkSpace</a>
+
+
+  <div class="container-fluid padd-15">
+    <div class="book-tables wh-bg history">
+      <h4 class="media-heading">
+        <strong>Topic List</strong>
+      </h4>
+      <div class="media">
+        <div class="row">
+          <div class="media-body" *ngFor="let topic of topics">
+            <div class="col-md-4">
+              <div class="history-head">
+                <span>{{topic.displayName}}</span>
+                <span><a (click)="markFavorites(topic)" *ngIf="topic.type=='NOT_FAVORTIE'" class="pull-right" color="accent"><i
+                      class="material-icons">favorite_border</i></a></span>
+                <span><a (click)="removeFavorites(topic)" *ngIf="topic.type=='FAVORTIE'" class="pull-right" color="accent"><i
+                      class="material-icons">favorite</i></a></span>
+                <div class="pull-right hostOrderLink">
+                  <a (click)="userWorkSpace(topic)">WorkSpace</a>
+                </div>
               </div>
-            </div>
-            <vg-player (onPlayerReady)="onPlayerReady($event)">
-              <vg-overlay-play></vg-overlay-play>
-              <vg-buffering></vg-buffering>
-              <vg-controls>
-                <vg-play-pause></vg-play-pause>
-                <vg-playback-button></vg-playback-button>
-                <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
-                <vg-scrub-bar>
-                  <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                  <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-                </vg-scrub-bar>
-                <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
-                <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
-                <vg-track-selector></vg-track-selector>
-                <vg-mute></vg-mute>
-                <vg-volume></vg-volume>
-                <vg-fullscreen></vg-fullscreen>
-              </vg-controls>
-              <video [vgMedia]="media" #media preload="auto" crossorigin>
-                <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
-              </video>
-            </vg-player>
-            <div class="history-foot">
-              <div class="pull-right">
-                <a class="action-link" (click)="editChapterDetail(topic)">
-                  <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                  <span class="txt">EDIT</span>
-                </a>
-                <a class="action-link" (click)="deleteChapterDetail(topic)">
-                  <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                  <span class="txt">DELETE</span>
-                </a>
+              <mat-card (click)="playLessonForTopic(topic)"> 
+                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                  alt="Photo of a Shiba Inu">
+                </mat-card>
+              <div class="history-foot">
+                <div class="pull-right">
+                  <a class="action-link" (click)="editChapterDetail(topic)">
+                    <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                    <span class="txt">EDIT</span>
+                  </a>
+                  <a class="action-link" (click)="deleteChapterDetail(topic)">
+                    <span class="glyphicon glyphicon-plus-sign green-icon"></span>
+                    <span class="txt">DELETE</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -73,3 +56,4 @@
       </div>
     </div>
   </div>
+</div>

@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -17,12 +18,15 @@ import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -118,6 +122,34 @@ public class SchoolSecurityUtils {
 	public String getSystemHostName() throws Exception {
 		InetAddress ip = InetAddress.getLocalHost();
 		return ip.getHostName();
+	}
+
+	public String readFileLine(String filename) throws Exception {
+		List<String> lines = Files
+				.readAllLines(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
+		return lines.get(0);
+	}
+
+	public void decryptVideoFile(String key, File inputFile, HttpServletResponse response) {
+		try {
+			Key secretKey = new SecretKeySpec(key.getBytes(), "AES");
+			Cipher cipher = Cipher.getInstance("AES");
+			cipher.init(Cipher.DECRYPT_MODE, secretKey);
+			FileInputStream inputStream = new FileInputStream(inputFile);
+			byte[] inputBytes = new byte[(int) inputFile.length()];
+			inputStream.read(inputBytes);
+
+			byte[] outputBytes = cipher.doFinal(inputBytes);
+			response.getOutputStream().write(outputBytes);
+			inputStream.close();
+			response.setContentType("video/mp4");
+			response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
+			response.getOutputStream().flush();
+
+		} catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
+				| IllegalBlockSizeException | IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

@@ -32,11 +32,9 @@
             <mat-expansion-panel *ngFor="let class of classList">
                 <mat-expansion-panel-header>
                     <a (click)="showClassSubjectList(class)">
-                        <mat-panel-title>
-                            <i class="material-icons">folder</i> {{class.displayName}}</mat-panel-title>
+                        <mat-panel-title><i class="material-icons">folder</i> {{class.displayName}}</mat-panel-title>
                     </a>
                 </mat-expansion-panel-header>
-
                 <mat-expansion-panel *ngFor="let subj of classSubjectList">
                     <mat-expansion-panel-header>
                         <a (click)="viewChapterList(subj)">
@@ -50,7 +48,6 @@
                         </li>
                     </ul>
                 </mat-expansion-panel>
-
             </mat-expansion-panel>
         </div>
         <div class="col-md-9">

@@ -22,10 +22,11 @@ public class VideoFileEncryption {
 		String outputfolder = scanner.nextLine();
 		File outputFoler = new File(outputfolder);
 		SchoolSecurityUtils securityUtil = new SchoolSecurityUtils();
-		// This license key will be decrpted by RSA and get key for orginal and encrypt
-		// it.
 
-		Key secretKey = new SecretKeySpec("T496LEDU01002218".getBytes(), ALGORITHM);
+		String decryptedkey = securityUtil.decryptText(securityUtil.readFileLine("license.key"),
+				securityUtil.getPublic("KeyPair/publicKey"));
+
+		Key secretKey = new SecretKeySpec(decryptedkey.getBytes(), ALGORITHM);
 		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 		// Need to read license encrypted text and decrypt the license AND pass license

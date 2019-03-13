@@ -21,7 +21,7 @@ import { Favorites } from 'src/app/public/model/favorite';
 })
 export class ContentChapterComponent implements OnInit {
 
-
+  classSetupDetail:ClassSetupDetail=new ClassSetupDetail();
   subjectDetail: SubjectSetupDetail = new SubjectSetupDetail();
 
   chapter: ChapterSetupDetail = new ChapterSetupDetail();
@@ -39,7 +39,9 @@ export class ContentChapterComponent implements OnInit {
     private homeService: HomeService) { }
 
   ngOnInit() {
-
+    this.contentMgmntService.getClassSetupDetail().subscribe((classDetail:ClassSetupDetail)=>{
+         this.classSetupDetail=classDetail;
+    });
     this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
       this.subjectDetail=subject;
       this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {

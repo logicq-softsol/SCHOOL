@@ -1,12 +1,16 @@
 package com.logicq.school.controller;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -308,6 +312,20 @@ public class AdminController {
 		Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), type, typeId);
 		userFavortiesRepo.delete(fav);
 		return new ResponseEntity<Favorites>(fav, HttpStatus.OK);
+	}
+
+	@GetMapping("/readvideofile")
+	public void readVideoFile(HttpServletResponse response) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		if (null != loginDetail) {
+			String decryptedkey = schoolSecurityUtils.decryptText(schoolSecurityUtils.readFileLine("license.key"),
+					schoolSecurityUtils.getPublic("KeyPair/publicKey"));
+			schoolSecurityUtils.decryptVideoFile(decryptedkey,
+					new File("E:\\WORK_SPACE\\SCHOOL_CONTENT\\video\\video_encrypted\\1.First Aid for wounds.lq"),
+					response);
+
+		}
+
 	}
 
 }

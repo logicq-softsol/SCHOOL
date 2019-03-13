@@ -23,6 +23,8 @@ import { Favorites } from 'src/app/public/model/favorite';
 })
 export class ContentTopicComponent implements OnInit {
 
+  classSetupDetail: ClassSetupDetail = new ClassSetupDetail();
+  subjectDetail: SubjectSetupDetail = new SubjectSetupDetail();
   chapter: ChapterSetupDetail = new ChapterSetupDetail();
   chapterList: ChapterSetupDetail[] = [];
 
@@ -32,7 +34,7 @@ export class ContentTopicComponent implements OnInit {
   selectImage: File;
   imageUrl: string;
   preload: string = 'auto';
-  api: VgAPI;
+
 
   constructor(private authService: AuthenticationService,
     private contentMgmntService: ContentMgmntService,
@@ -43,6 +45,12 @@ export class ContentTopicComponent implements OnInit {
     private homeService: HomeService) { }
 
   ngOnInit() {
+    this.contentMgmntService.getClassSetupDetail().subscribe((classDetail: ClassSetupDetail) => {
+      this.classSetupDetail = classDetail;
+      this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
+        this.subjectDetail = subject;
+      });
+    });
     this.contentMgmntService.getChapterSetupDetail().subscribe((chapter: ChapterSetupDetail) => {
       this.chapter = chapter;
       this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
@@ -52,8 +60,13 @@ export class ContentTopicComponent implements OnInit {
 
   }
 
-  onPlayerReady(api: VgAPI) {
-    this.api = api;
+  playLessonForTopic() {
+    //this.api = api;
+    this.contentMgmntService.loadVideoFile().subscribe((data) => {
+      let file = new Blob([data], { type: 'video/mp4' });
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    });
   }
 
 

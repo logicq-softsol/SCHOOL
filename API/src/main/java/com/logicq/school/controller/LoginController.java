@@ -84,9 +84,6 @@ public class LoginController {
 	public ResponseEntity<SucessMessage> registerPartner(@RequestBody LicenseKey licnkey) throws Exception {
 		if (!StringUtils.isEmpty(licnkey.getParam1()) && !StringUtils.isEmpty(licnkey.getParam2())
 				&& !StringUtils.isEmpty(licnkey.getParam3()) && !StringUtils.isEmpty(licnkey.getParam4())) {
-			// List<String> licenseData = Files
-			// .readAllLines(new
-			// File(getClass().getClassLoader().getResource("license.txt").getFile()).toPath());
 			String hostName = schoolSecurityUtils.getSystemHostName();
 			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName).getBody();
 			String decryptedkey = schoolSecurityUtils.decryptText(licenseDetails.getLicenseKey(),
@@ -115,26 +112,30 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> login(@RequestBody LoginDetails login) throws Exception {
-		if (!StringUtils.isEmpty(login.getUserName())) {
-			LoginDetails loginDetails = loginDetailsRepo.findByUserName(login.getUserName());
-			if (null != loginDetails) {
-				User userDetails = userDetailsRepo.findByUserName(login.getUserName());
-				UserPrincipal usrPrincipal = UserPrincipal.create(userDetails, loginDetails);
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-						usrPrincipal, null, usrPrincipal.getAuthorities());
+		String hostName = schoolSecurityUtils.getSystemHostName();
+		ActivationDetails activationDeatils = productActivationRepo.findByActivationFor(hostName);
+		if (null != activationDeatils) {
+			if (!StringUtils.isEmpty(login.getUserName())) {
+				LoginDetails loginDetails = loginDetailsRepo.findByUserName(login.getUserName());
+				if (null != loginDetails) {
+					User userDetails = userDetailsRepo.findByUserName(login.getUserName());
+					UserPrincipal usrPrincipal = UserPrincipal.create(userDetails, loginDetails);
+					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+							usrPrincipal, null, usrPrincipal.getAuthorities());
 
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-				if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-					String jwt = tokenProvider.generateToken(authentication);
-					if (null != loginDetails) {
-						loginDetails.setLoginTime(schoolDateUtils.currentDate());
-						loginDetails.setLoginStatus("ACTIVE");
-						loginDetailsRepo.save(loginDetails);
+					SecurityContextHolder.getContext().setAuthentication(authentication);
+					if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+						String jwt = tokenProvider.generateToken(authentication);
+						if (null != loginDetails) {
+							loginDetails.setLoginTime(schoolDateUtils.currentDate());
+							loginDetails.setLoginStatus("ACTIVE");
+							loginDetailsRepo.save(loginDetails);
+						}
+						return new ResponseEntity<SucessMessage>(
+								new SucessMessage(schoolDateUtils.currentDate(), jwt, "acess_token"), HttpStatus.OK);
+					} else {
+						throw new ValidationException("ERROR-LOGIN");
 					}
-					return new ResponseEntity<SucessMessage>(
-							new SucessMessage(schoolDateUtils.currentDate(), jwt, "acess_token"), HttpStatus.OK);
-				} else {
-					throw new ValidationException("ERROR-LOGIN");
 				}
 			}
 		}
@@ -206,8 +207,9 @@ public class LoginController {
 			return new ResponseEntity<SucessMessage>(
 					new SucessMessage(schoolDateUtils.currentDate(), "Product Validated", "LICENSED"), HttpStatus.OK);
 		}
-		return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
-				"Product is Not Valid For this System", "NO_LICENSE"), HttpStatus.OK);
+		return new ResponseEntity<SucessMessage>(
+				new SucessMessage(schoolDateUtils.currentDate(), "Product is Not Valid For this System", "NO_LICENSE"),
+				HttpStatus.OK);
 	}
 
 }
