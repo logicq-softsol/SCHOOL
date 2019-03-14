@@ -44,6 +44,7 @@ public class GenerateKeys {
 		fos.write(key);
 		fos.flush();
 		fos.close();
+		
 	}
 
 }

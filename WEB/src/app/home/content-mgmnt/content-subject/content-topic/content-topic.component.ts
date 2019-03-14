@@ -12,9 +12,8 @@ import { SubjectSetupDetail } from '../../../../public/model/subject-setup-detai
 import { ChapterSetupDetail } from '../../../../public/model/chapter-setup-detail';
 import { TopicDetail } from '../../../../public/model/topic-detail';
 import { UserDetail } from '../../../../public/model/user-detail';
-import { VideoUploadDialog } from 'src/app/home/content-mgmnt/upload-file/upload-video';
-import { VgAPI } from 'videogular2/core';
-import { Favorites } from 'src/app/public/model/favorite';
+import { VideoUploadDialog } from '../../../../home/content-mgmnt/upload-file/upload-video';
+import { Favorites } from '../../../../public/model/favorite';
 
 @Component({
   selector: 'app-content-topic',

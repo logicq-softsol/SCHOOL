@@ -708,7 +708,7 @@
   float: left; 
 }
 .breadcrumb li a {
-  color: white;
+  color: black;
   text-decoration: none; 
   padding: 10px 0 10px 55px;
   background: brown; /* fallback color */
@@ -738,7 +738,7 @@
   height: 0;
   border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
   border-bottom: 50px solid transparent;
-  border-left: 30px solid white;
+  border-left: 30px solid black;
   position: absolute;
   top: 50%;
   margin-top: -50px; 
@@ -774,7 +774,7 @@
   overflow: hidden;
 }
 .steps a {
-  color: white;
+  color: black;
   text-decoration: none;
 }
 .steps em {
@@ -789,7 +789,7 @@
   height: 70px; /* total height */
   list-style-type: none;
   padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
-  border-right: 3px solid white; /* width: gap between arrows, color: background of document */
+  border-right: 3px solid black; /* width: gap between arrows, color: background of document */
   position: relative;
 }
 /* remove extra padding on the first object since it doesn't have an arrow to the left */
@@ -802,7 +802,7 @@
   top:0;
   left:0;
   display: block;
-  border-left: 25px solid white; /* width: arrow width, color: background of document */
+  border-left: 25px solid black; /* width: arrow width, color: background of document */
   border-top: 40px solid transparent; /* width: half height */
   border-bottom: 40px solid transparent; /* width: half height */
   width: 0;

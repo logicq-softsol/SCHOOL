@@ -3,9 +3,6 @@
         <a target="_blank" class="navbar-brand">Company Name</a>
     </div>
 </div>
-<ul class="breadcrumb">
-    <li *ngFor="let breadcurmb of breadcurmblist"><a (click)="onclickBreadcrumb(breadcurmb)">{{breadcurmb}}</a></li>
-</ul>
 <div class="container-fluid padd-15">
     <div class="row">
         <div class="col-md-3">
@@ -51,6 +48,9 @@
             </mat-expansion-panel>
         </div>
         <div class="col-md-9">
+               <ul class="breadcrumb">
+                        <li *ngFor="let breadcurmb of breadcurmblist"><a (click)="onclickBreadcrumb(breadcurmb)">{{breadcurmb}}</a></li>
+               </ul>
             <router-outlet></router-outlet>
         </div>
     </div>

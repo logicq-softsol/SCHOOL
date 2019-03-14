@@ -114,5 +114,6 @@ public class LoginController {
 		}
 		return new ResponseEntity<User>(new User(), HttpStatus.BAD_REQUEST);
 	}
-
+	
+	
 }

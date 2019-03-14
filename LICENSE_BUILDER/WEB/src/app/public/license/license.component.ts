@@ -12,7 +12,7 @@ import { License } from '../model/license';
   styleUrls: ['./license.scss']
 })
 export class LicenseComponent implements OnInit {
-  displayedColumns: string[] = ['hostName', 'activationDate', 'validityDay'];
+  displayedColumns: string[] = ['hostName', 'activationDate', 'validityDay','download'];
   licenseList: License[] = [];
   dataSource = new MatTableDataSource<License>(this.licenseList);
 
@@ -29,6 +29,10 @@ export class LicenseComponent implements OnInit {
         this.licenseList = licList;
       });
     }
+  }
+
+  downloadLicenseFile(license:License){
+
   }
 
   applyFilter(filterValue: string) {
