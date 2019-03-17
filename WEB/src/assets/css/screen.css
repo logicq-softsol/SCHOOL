@@ -1,0 +1,84 @@
+@CHARSET "ISO-8859-1";
+/* Reset CSS
+ * --------------------------------------- */
+ @charset "utf-8";
+/* CSS Document */
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.clearfix::after,.clearfix:after{clear:both;content:" ";visibility:hidden}
+a { border:0; outline:none; -webkit-transition: all 200s ease-in-out; -moz-transition: all 200ms ease-in-out; -o-transition: all 200ms ease-in-out; -ms-transition: all 200ms ease-in-out; transition: all 200ms ease-in-out; color:#1b1b1b; text-decoration:none; }
+a:hover, a:focus{text-decoration:none; color:#0174e7;  outline-style: none;}
+img{max-width:100%;}
+body  {
+	-ms-overflow-style: scrollbar;
+    padding: 0;
+    margin: 0;
+	font-family: 'Roboto', sans-serif; 
+	font-size:14px;
+	font-weight:300;
+	line-height:20px;
+	background-color: #eaeff4; 
+}
+ 
+a{
+	text-decoration:none;
+}  
+.top-header{ background:#fff; height:96px;  }
+.login-info{ float:right; list-style-type:none; margin:0; padding:0;}
+.login-info li{margin-left:25px; display:inline-block}
+.login-info li a{font-size:20px;}
+.info{color:#fdb812;}
+.search-container{background:#0f048e; padding:30px 0;}
+.home-search{ margin-right:50px;}
+.home-search select.form-control{background:#a09fd7; height:50px; border:0; color:#000; font-size:18px;}
+.home-search label{color:#fff; font-size:18px; font-weight:600;}
+.btn-search{background:#fdb913; color:#fff;  padding:10px 50px; font-size:18px;}
+.user-details{background:#f3f7ff; border:1px dashed #929292; border-radius:5px; margin-left:50px; position:relative}
+.user-av{width:80px; height:80px; border-radius:50%; background:#fff; overflow:hidden; display:block; margin:0 auto;}
+.user-details p, .user-details strong, .user-details small{display:block; color:#5c5c5c;	}
+.user-details strong{font-size:18px;  margin:17px 0 10px 0;}
+.user-details small{font-size:14px;}
+.user-details p{font-size:16px; font-weight:400;}
+.edit-info{position:absolute; right:15px; top:15px; width:40px; height:36px;border:1px solid #d6d6d6; color:#002d88; border-radius:5px; background:#fff;}
+.small-title{color:#0f0690; font-size:24px;}
+.result-list .card-body{padding-bottom:0}
+.result-list .card-header{background:#fff;  color:#002d88; padding-left:12px; font-weight:600; position:relative}
+.card-body ol{padding:0 5px; margin-bottom:0}
+.card-body ol li{float:left; margin-right:40px; margin-bottom:12px;}
+.action{position:absolute; right:15px; top:15px;}
+.action a{margin-left:20px; font-size:18px;color:#002d88;}
+.action a.active{color:#ff50d6;}
+.load-more{ float:right; margin-top:15px; text-decoration:underline;}
+.load-more:hover, .load-more:focus{color:#002d88;}
+.recent-search{margin-bottom:100px;}
+.footer-container .container{border-top:1px solid #d5d5d5;  padding:15px 0;}
+.footer-container .form-control{background:none; width:150px; border:0; padding:0; height:auto;}
+.footer-container .form-control:focus{box-shadow:none;}
+.footer-container a{font-weight:500;}
+/* TABLET LAYOUT (LANDSCAPE/992PX) ----------------------------------------------- */
+@media only screen and (min-width: 992px) and (max-width: 1279px) {
+	 
+}
+
+/* TABLET LAYOUT (PORTRAIT/768PX) ----------------------------------------------- */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	 
+}
+
+
+/* MOBILE LAYOUT (PORTRAIT/320PX) ----------------------------------------------- */
+@media only screen and (max-width: 767px) { 
+	.home-search{margin-right:0} 
+	.user-details{margin-left:0; margin-top:15px;}
+	.btn-search{width:100%;}
+}	 
+ 
