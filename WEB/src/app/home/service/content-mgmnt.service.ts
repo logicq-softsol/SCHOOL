@@ -209,19 +209,28 @@ export class ContentMgmntService {
   }
 
 
-  removeFavorites(type: string,typeId:number) {
+  removeFavorites(type: string, typeId: number) {
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
-    return this.http.delete(environment.baseUrl + 'api/admin/favortie/'+type+"/"+typeId, httpOptions);
+    return this.http.delete(environment.baseUrl + 'api/admin/favortie/' + type + "/" + typeId, httpOptions);
   }
 
-loadVideoFile(){
-  const httpOptions = {
-    'responseType': 'arraybuffer' as 'json'
-  };
-  return this.http.get<any>(environment.baseUrl +'api/admin/readvideofile', httpOptions);
-}
+  loadVideoFile() {
+    const httpOptions = {
+      'responseType': 'arraybuffer' as 'json'
+    };
+    return this.http.get<any>(environment.baseUrl + 'api/admin/readvideofile', httpOptions);
+  }
+
+  playLesson() {
+    const httpOptions = {
+      'responseType': 'arraybuffer' as 'json'
+    };
+    return this.http.get<any>(environment.baseUrl + 'api/admin/readvideofile', httpOptions);
+
+  }
+
 
 }

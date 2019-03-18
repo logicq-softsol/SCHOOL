@@ -1,3 +1,15 @@
+<header class="container-fluid top-header d-flex align-items-center">
+    <div class="w-100">
+        <div class="row clearfix">
+            <div class="col-lg-12 ">
+                    <a class="logo " href="#"><img src="assets/images/logo.png" alt=""></a>
+                    <ul class="login-info">
+                        <li></li>
+                    </ul>
+                </div> 
+        </div>
+    </div>
+</header>
 <mat-card>
     <mat-toolbar>Enter Your License</mat-toolbar>
     <table style="width:100%" cellspacing="0">
@@ -25,7 +37,7 @@
         </tr>
     </table>
 
-    <mat-card-actions>
-        <button mat-raised-button (click)="registerProduct()" color="primary">Register</button>
+    <mat-card-actions class="col-md-5 col-lg-6 text-right pull-right">
+        <button mat-raised-button (click)="registerProduct()" color="primary">Validate License</button>
     </mat-card-actions>
 </mat-card>

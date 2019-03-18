@@ -67,7 +67,13 @@ export class AuthenticationService {
     return this.http.get(environment.baseUrl + 'api/load');
   }
 
-
+  registerUserForProduct(login: LoginDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.post(environment.baseUrl + 'api/userRegister', login, httpOptions);
+  }
   
 
 }

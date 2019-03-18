@@ -11,6 +11,7 @@ import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
 import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ContentMgmntService } from '../service/content-mgmnt.service';
 import { TopicDetail } from 'src/app/public/model/topic-detail';
+import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 
 
 
@@ -34,8 +35,14 @@ export class TeacherRegisterComponent implements OnInit {
   classSubjectList: SubjectSetupDetail[] = [];
   subjectSetup: SubjectSetupDetail = new SubjectSetupDetail();
 
+  chapterList: ChapterSetupDetail[] = [];
+  chapter: ChapterSetupDetail = new ChapterSetupDetail();
 
-  constructor(private authService: AuthenticationService,    private contentMgmntService: ContentMgmntService, private homeService: HomeService, public dialogProfileImage: MatDialog, public snackBar: MatSnackBar, private router: Router, public dialog: MatDialog) { }
+   topicList:TopicDetail[]=[];
+   topic:TopicDetail=new TopicDetail();
+
+
+  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private homeService: HomeService, public dialogProfileImage: MatDialog, public snackBar: MatSnackBar, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     if (this.authService.isAuthenticate) {
@@ -51,7 +58,10 @@ export class TeacherRegisterComponent implements OnInit {
     }
   }
 
-
+  onClassChange(event) {
+    let classDetails: ClassSetupDetail = this.classList.find(cls => cls.displayName == event);
+    this.showClassSubjectList(classDetails);
+  }
 
   showClassSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
@@ -59,25 +69,24 @@ export class TeacherRegisterComponent implements OnInit {
     });
   }
 
-  viewTopicList(){
-
+  viewChapterList(subject:SubjectSetupDetail) {
+    this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
+      this.chapterList = chapters;
+    });
   }
 
-  registerUser() {
-    const dialogRef = this.dialog.open(UserRegDialog, {
-      width: '600px',
-      data: {
-        type: "ADD",
-        loginDetail: null
-      }
+  showTopicList(chapter:ChapterSetupDetail){
+    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId,chapter.subjectId,chapter.id).subscribe((topics:TopicDetail[])=>{
+      this.topicList=topics;
     });
+  }
 
-    dialogRef.componentInstance.userRegEmmiter.subscribe((login: LoginDetail) => {
-      this.homeService.registerUser(login).subscribe((data: any) => {
-        this.openSnackBar(data.message, data.messageCode);
-      });
+  playTopic(topic:TopicDetail){
+    this.contentMgmntService.playLesson().subscribe((data) => {
+      let file = new Blob([data], { type: 'video/mp4' });
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
     });
-
   }
 
 
@@ -87,41 +96,4 @@ export class TeacherRegisterComponent implements OnInit {
       duration: 10000
     });
   }
-}
-
-
-
-
-
-@Component({
-  selector: 'user-reg-dialog',
-  templateUrl: 'user-register-dialog.html',
-  styleUrls: ['./teacher-register.component.scss']
-})
-export class UserRegDialog {
-  login: LoginDetail = new LoginDetail();
-  user: UserDetail = new UserDetail();
-  userRegEmmiter = new EventEmitter();
-  operationType: string = "SAVE";
-  constructor(public dialogRef: MatDialogRef<UserRegDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
-    this.operationType = data.type;
-    if ("ADD" == data.type) {
-      this.login = new LoginDetail();
-      this.login.user = new UserDetail();
-    } else {
-      this.login = data.loginDetail;
-      this.user = this.login.user;
-    }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  saveUserDetail() {
-    this.login.user = this.user;
-    this.userRegEmmiter.emit(this.login);
-    this.onNoClick();
-  }
-
 }

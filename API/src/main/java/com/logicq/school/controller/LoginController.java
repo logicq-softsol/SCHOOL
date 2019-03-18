@@ -180,10 +180,11 @@ public class LoginController {
 	public ResponseEntity<Message> registerUser(@RequestBody LoginVO login) throws Exception {
 		if (userDetailsRepo.findByUserName(login.getUserName()) != null) {
 			return new ResponseEntity<Message>(
-					sucessHandlerUtils.handleSucessMessage("AREG", "/api/userRegister", "Email Already Exist."),
+					sucessHandlerUtils.handleSucessMessage("AREG", "/api/userRegister", "User Already Exist."),
 					HttpStatus.OK);
 		}
 		if (!StringUtils.isEmpty(login.getUserName())) {
+			login.getUser().setUserName(login.getUserName());
 			userDetailsRepo.save(login.getUser());
 
 			LoginDetails newlogin = new LoginDetails();
@@ -191,11 +192,12 @@ public class LoginController {
 			newlogin.setPassword(passwordEncoder.encode(login.getPassword()));
 			newlogin.setLoginBy("SCHOOL_APP");
 			newlogin.setLoginTime(new Date());
+			newlogin.setLoginStatus("IN_ACTIVE");
 			loginDetailsRepo.save(newlogin);
-			return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("SREG", "/api/register"),
+			return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("SREG", "/api/register","User Register Sucessfully"),
 					HttpStatus.OK);
 		}
-		return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("EREG", "/api/register"),
+		return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("EREG", "/api/register","User Unable to Register"),
 				HttpStatus.BAD_REQUEST);
 	}
 

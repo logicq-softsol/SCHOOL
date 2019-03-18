@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { MatPaginator, MatTableDataSource,MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { License } from '../model/license';
 
 
@@ -12,10 +12,10 @@ import { License } from '../model/license';
   styleUrls: ['./license.scss']
 })
 export class LicenseComponent implements OnInit {
-  displayedColumns: string[] = ['hostName', 'activationDate', 'validityDay','download'];
+  displayedColumns: string[] = ['hostName', 'activationDate', 'validityDay', 'download'];
   licenseList: License[] = [];
   dataSource = new MatTableDataSource<License>(this.licenseList);
-
+  today = new Date();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -31,7 +31,7 @@ export class LicenseComponent implements OnInit {
     }
   }
 
-  downloadLicenseFile(license:License){
+  downloadLicenseFile(license: License) {
 
   }
 
@@ -42,7 +42,7 @@ export class LicenseComponent implements OnInit {
     }
   }
 
-  registerNewLicense(){
+  registerNewLicense() {
     this.router.navigate(['/register']);
   }
 

@@ -14,13 +14,13 @@ import { ImageUploadDialog } from './content-mgmnt/upload-file/upload-image';
 import { WorkSpaceDialog } from './content-mgmnt/workspace/work-space.component';
 import { ContentTopicComponent, TopicDetailDialog } from './content-mgmnt/content-subject/content-topic/content-topic.component';
 import { VideoUploadDialog } from './content-mgmnt/upload-file/upload-video';
-import { TeacherRegisterComponent, UserRegDialog } from './teacher/teacher-register.component';
+import { TeacherRegisterComponent } from './teacher/teacher-register.component';
 
 @NgModule({
   imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule, ImageCropperModule],
-  declarations: [ContentMgmntComponent, HomeComponent, ContentSubjectComponent, ContentChapterComponent, ContentTopicComponent, ClassSetupDialog, ImageUploadDialog, SubjectDetailDialog, ChapterDetailDialog, WorkSpaceDialog, TopicDetailDialog, VideoUploadDialog, UserRegDialog
+  declarations: [ContentMgmntComponent, HomeComponent, ContentSubjectComponent, ContentChapterComponent, ContentTopicComponent, ClassSetupDialog, ImageUploadDialog, SubjectDetailDialog, ChapterDetailDialog, WorkSpaceDialog, TopicDetailDialog, VideoUploadDialog
     , TeacherRegisterComponent],
-  entryComponents: [ClassSetupDialog, ImageUploadDialog, SubjectDetailDialog, ChapterDetailDialog, WorkSpaceDialog, TopicDetailDialog, VideoUploadDialog, UserRegDialog],
+  entryComponents: [ClassSetupDialog, ImageUploadDialog, SubjectDetailDialog, ChapterDetailDialog, WorkSpaceDialog, TopicDetailDialog, VideoUploadDialog],
   providers: [
     homeRoutingProviders,
     {

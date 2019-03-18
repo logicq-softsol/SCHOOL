@@ -23,20 +23,25 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthenticationService, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
-    this.authService.loadRole().subscribe((data:[]) => {
+    this.authService.loadRole().subscribe((data: []) => {
       this.roles = data;
     });
 
   }
 
 
-  registerProduct() {
+  confirmRegisterUser() {
     this.productDetail.user = this.user;
-    this.productDetail.login = this.login;
-    // this.authService.activateProduct(this.productDetail).subscribe((data: any) => {
-    //   this.router.navigate(['/login']);
-    //   this.openSnackBar(data.message, data.messageCode);
-    // });
+    this.login.user = this.user;
+    this.authService.registerUserForProduct(this.login).subscribe((data: any) => {
+      if (data.messageCode == "SREG") {
+        this.router.navigate(['/login']);
+        this.openSnackBar(data.message, data.messageCode);
+      } else if (data.messageCode == "AREG") {
+        this.router.navigate(['/login']);
+        this.openSnackBar(data.message, data.messageCode);
+      }
+    });
   }
 
 
