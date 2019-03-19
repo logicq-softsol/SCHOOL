@@ -49,11 +49,9 @@ export class TeacherRegisterComponent implements OnInit {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.loginUser = user;
       });
-      this.homeService.findUsers().subscribe((users: UserDetail[]) => {
-        this.regUserList = users
-      });
       this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
         this.classList = data;
+        this.onClassChange(this.classList[0].displayName);
       });
     }
   }
@@ -66,12 +64,14 @@ export class TeacherRegisterComponent implements OnInit {
   showClassSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.classSubjectList = subjectList;
+      this.viewChapterList( this.classSubjectList[0]);
     });
   }
 
   viewChapterList(subject:SubjectSetupDetail) {
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
       this.chapterList = chapters;
+      this.showTopicList(this.chapterList[0]);
     });
   }
 

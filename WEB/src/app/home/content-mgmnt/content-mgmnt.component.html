@@ -1,55 +1,111 @@
-<div class="book-tables wh-bg history">
-  <div class="pull-right right-btn">
-    <a class="action-link" (click)="addClassDetails()">
-      <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-      <span class="txt">Add Class</span>
-    </a>
-  </div>
-
-  <div class="row wh-bg margin-padding">
-    <div class="search-box pull-right">
-      <input class="search-input" placeholder="Search by class name , Subject Name">
-      <i class="material-icons">search</i>
-      <button class="cancelBtn" mat-raised-button>CANCEL</button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6" *ngFor="let class of classList">
-      <div class="media-body">
-        <div class="order-history">
-          <div class="history-head">
-            <span><strong>{{class.displayName}}</strong></span>
-             <span><a (click)="markFavorites(class)" *ngIf="class.type=='NOT_FAVORTIE'" class="pull-right" color="accent"><i class="material-icons">favorite_border</i></a></span>
-             <span><a (click)="removeFavorites(class)"  *ngIf="class.type=='FAVORTIE'" class="pull-right" color="accent"><i class="material-icons">favorite</i></a></span>
-          </div>
-          <!--div class="history-body">
-            <div class="media-left">
-              <img class="person-card-avatar bigPicture" src="{{class.icon?class.icon:'assets/images/class.jpg'}}">
-              <a id="photoSelector" mat-icon-button (click)='onChangeImage(class)'>
-                <mat-icon>photo_camera</mat-icon> Edit image
-              </a>
+<section class="search-container d-flex align-items-center">
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-md-7">
+        <div class="home-search pt-3">
+          <form>
+            <div class="form-group mb-4">
+              <label for="exampleInputEmail1">Select a Class</label>
+              <select class="form-control">
+                <option value="">Select</option>
+                <option [value]="classSetup.displayName" *ngFor="let class of classList">{{class.displayName}}</option>
+              </select>
             </div>
-            <div class="media-left">
-              <span>{{class.description}}</span>
+            <div class="form-group mb-4">
+              <label for="exampleInputEmail1">Select a Subject</label>
+              <select class="form-control">
+                <option value="">Select</option>
+                <option [value]="subjectSetup.displayName" *ngFor="let subejct of classSubjectList">{{subejct.displayName}}</option>
+              </select>
             </div>
-          </div-->
-          <div class="history-foot">
-            <div class="action-btns">
-              <a class="action-link pull-right" (click)="viewSubjectList(class)">
-                <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                <span class="txt">Subjects</span>
-              </a>
-              <div class="pull-right">
-                <a class="action-link" (click)="editClassDetails(class)">
-                  <span class="glyphicon glyphicon-plus-sign green-icon"></span>
-                  <span class="txt">EDIT</span>
-                </a>
-              </div>
+            <div class="form-group mb-4">
+              <label for="exampleInputEmail1">Select a Chapter</label>
+              <select class="form-control">
+                <option value="">Select</option>
+                <option [value]="chapter.displayName" *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
+              </select>
             </div>
-
-          </div>
+            <button type="submit" class="btn btn-search">
+              <i class="fas fa-search"></i> Search</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="user-details p-3 text-center">
+          <a class="edit-info d-flex align-items-center justify-content-center" href="#">
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          <span class="user-av d-flex align-items-center justify-content-center">
+            <img src="assets/images/user.png" alt="">
+          </span>
+          <strong>{{user.firstname}} {{user.lastname}}</strong>
+          <small>Role</small>
+          <p>{{user.role}}</p>
+          <small>Email</small>
+          <p>{{user.email}}</p>
+          <small>Mobile Number</small>
+          <p>{{user.mobileno}}</p>
         </div>
       </div>
     </div>
   </div>
+</section>
+
+<div class="container mt-4 recent-search">
+  <h3 class="small-title mb-3">Your Favorties</h3>
+  <div class="row clearfix">
+    <div class="col-md-6">
+      <div class="card result-list">
+        <div class="card-header">
+          Standard 1
+          <div class="action">
+            <a href="#">
+              <i class="far fa-heart"></i>
+            </a>
+            <a href="#">
+              <i class="fas fa-pencil-alt"></i>
+            </a>
+          </div>
+        </div>
+        <div class="card-body ">
+          <ol>
+            <li>EVS/Science</li>
+            <li>Maths</li>
+            <li>English</li>
+            <li>Hindi</li>
+            <li>Region</li>
+            <li>International English</li>
+            <li>English Grammer</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card result-list">
+        <div class="card-header">
+          Standard 2
+          <div class="action">
+            <a href="#" class="active">
+              <i class="fas fa-heart"></i>
+            </a>
+            <a href="#">
+              <i class="fas fa-pencil-alt"></i>
+            </a>
+          </div>
+        </div>
+        <div class="card-body ">
+          <ol>
+            <li>EVS/Science</li>
+            <li>Maths</li>
+            <li>English</li>
+            <li>Hindi</li>
+            <li>Region</li>
+            <li>International English</li>
+            <li>English Grammer</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="load-more">Load More</a>
 </div>
