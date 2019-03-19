@@ -26,74 +26,45 @@ export class HomeComponent implements OnInit {
     if (this.authService.isAuthenticate) {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.user = user;
+        if(user.role=='TEACHER'){
+          this.router.navigate(['/home/teacher']);
+        }
+        if(user.role=='ADMIN'){
+          this.router.navigate(['/home/admin']);
+        }
+      });
+
+      this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
+        this.classList = data;
       });
     }
   }
 
   ngOnInit() {
-    this.showClassContent();
-  }
-
-  viewUserList() {
-    this.breadcurmblist = ['HOME', 'USER'];
-    this.router.navigate(['/home/userreg']);
-  }
-
-  onclickBreadcrumb(value: any) {
-    this.breadcurmblist = [];
-    if (value == 'CLASS') {
-      this.breadcurmblist = ['HOME', 'CLASS'];
-      this.showClassContent();
-    }
-    if (value == 'SUBJECT') {
-      this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT'];
-      this.router.navigate(['/home/contentmgmnt/subject']);
-    }
-    if (value == 'CHAPTER') {
-      this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT', 'CHAPTER'];
-      this.router.navigate(['/home/contentmgmnt/subject/chapter']);
-    }
-    if (value == 'TOPIC') {
-      this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT', 'CHAPTER', 'TOPIC'];
-      this.router.navigate(['/home/contentmgmnt/subject/chapter/topic']);
-    }
-  }
-
-  showClassContent() {
-    this.breadcurmblist = ['HOME', 'CLASS'];
-    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-      this.classList = data;
-    });
-    this.router.navigate(['/home/contentmgmnt']);
+   // this.showClassContent();
   }
 
   showClassSubjectList(classSetup: ClassSetupDetail) {
-    this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT'];
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.classSubjectList = subjectList;
     });
-
-    this.router.navigate(['/home/contentmgmnt/subject']);
   }
 
 
 
   viewChapterList(subject: SubjectSetupDetail) {
-    this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT', 'CHAPTER'];
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
       this.chapterList = chapters;
     });
     this.contentMgmntService.changeSubjectDetail(subject);
-    this.router.navigate(['/home/contentmgmnt/subject/chapter']);
   }
 
   viewTopicList(chapter: ChapterSetupDetail) {
-    this.breadcurmblist = ['HOME', 'CLASS', 'SUBJECT', 'CHAPTER', 'TOPIC'];
+
     this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.classId).subscribe((topics: TopicDetail[]) => {
       this.topicList = topics;
     });
     this.contentMgmntService.changeChapterSetupDetail(chapter);
-    this.router.navigate(['/home/contentmgmnt/subject/chapter/topic']);
   }
 
 }

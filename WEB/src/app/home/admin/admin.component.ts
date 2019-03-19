@@ -4,23 +4,22 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { LoginDetail } from '../../public/model/login-detail';
 import { UserDetail } from '../../public/model/user-detail';
 import { HomeService } from '../service/home.service';
-import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
-import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
+import { ClassSetupDetail } from '../../public/model/class-setup-detail';
+import { SubjectSetupDetail } from '../../public/model/subject-setup-detail';
 import { ContentMgmntService } from '../service/content-mgmnt.service';
-import { TopicDetail } from 'src/app/public/model/topic-detail';
-import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
+import { TopicDetail } from '../../public/model/topic-detail';
+import { ChapterSetupDetail } from '../../public/model/chapter-setup-detail';
 
 
 
 @Component({
-  selector: 'app-register-teacher',
-  templateUrl: './teacher-register.component.html',
-  styleUrls: ['./teacher-register.component.scss']
+  selector: 'app-admin',
+  templateUrl: './admin.html',
+  styleUrls: ['./admin.scss']
 })
-export class TeacherRegisterComponent implements OnInit {
+export class AdminComponent implements OnInit {
 
   loginUser: UserDetail;
 

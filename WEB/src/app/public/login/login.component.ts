@@ -35,8 +35,9 @@ export class LoginComponent implements OnInit {
       if (this.authService.isAuthenticate) {
         this.authService.loadUser().subscribe((user: UserDetail) => {
           this.authService.changeUserDetail(user);
+            this.router.navigate(['/home']);
         });
-        this.router.navigate(['/home']);
+        
       }
     });
 

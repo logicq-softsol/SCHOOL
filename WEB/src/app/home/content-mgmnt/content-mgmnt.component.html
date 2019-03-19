@@ -5,21 +5,21 @@
         <div class="home-search pt-3">
           <form>
             <div class="form-group mb-4">
-              <label for="exampleInputEmail1">Select a Class</label>
+              <label for="exampleInputEmail1">Select  Class</label>
               <select class="form-control">
                 <option value="">Select</option>
                 <option [value]="classSetup.displayName" *ngFor="let class of classList">{{class.displayName}}</option>
               </select>
             </div>
             <div class="form-group mb-4">
-              <label for="exampleInputEmail1">Select a Subject</label>
+              <label for="exampleInputEmail1">Select Subject</label>
               <select class="form-control">
                 <option value="">Select</option>
                 <option [value]="subjectSetup.displayName" *ngFor="let subejct of classSubjectList">{{subejct.displayName}}</option>
               </select>
             </div>
             <div class="form-group mb-4">
-              <label for="exampleInputEmail1">Select a Chapter</label>
+              <label for="exampleInputEmail1">Select Chapter</label>
               <select class="form-control">
                 <option value="">Select</option>
                 <option [value]="chapter.displayName" *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
@@ -33,7 +33,7 @@
       <div class="col-md-5">
         <div class="user-details p-3 text-center">
           <a class="edit-info d-flex align-items-center justify-content-center" href="#">
-            <i class="fas fa-pencil-alt"></i>
+            <i class="material-icons">edit</i>
           </a>
           <span class="user-av d-flex align-items-center justify-content-center">
             <img src="assets/images/user.png" alt="">

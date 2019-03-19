@@ -95,7 +95,6 @@ export class ContentMgmntComponent implements OnInit {
 
   viewSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.changeClassSetupDetail(classSetup);
-    this.router.navigate(['/home/contentmgmnt/subject']);
   }
 
 
