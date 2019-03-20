@@ -117,71 +117,6 @@ export class ContentTopicComponent implements OnInit {
 
 
 
-  addTopicDetails() {
-    const dialogRef = this.dialog.open(TopicDetailDialog, {
-      width: '600px',
-      data: {
-        type: "ADD",
-        chapterDetail: null
-      }
-    });
-
-    dialogRef.componentInstance.topicEventEmmiter.subscribe((topicDetail: TopicDetail) => {
-      topicDetail.icon = this.imageUrl;
-      topicDetail.type = "TOPIC";
-      topicDetail.classId = this.chapter.classId;
-      topicDetail.subjectId = this.chapter.subjectId;
-      topicDetail.chapterId = this.chapter.id;
-      this.contentMgmntService.setupTopicDetails(topicDetail).subscribe((topicDetail: TopicDetail) => {
-        this.snackBar.open(" Topic Added Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getTopicListForChapterForSubjectAndClass(topicDetail.classId, topicDetail.subjectId, topicDetail.chapterId).subscribe((topics: TopicDetail[]) => {
-          this.topics = topics;
-        });
-
-      });
-    });
-  }
-
-  editTopicDetail(topicDetail: TopicDetail) {
-    const dialogRef = this.dialog.open(TopicDetailDialog, {
-      width: '600px',
-      data: {
-        type: "EDIT",
-        topic: topicDetail
-      }
-    });
-
-    dialogRef.componentInstance.topicEventEmmiter.subscribe((topicDetail: TopicDetail) => {
-      this.contentMgmntService.editTopicDetails(topicDetail).subscribe((topicDetail: TopicDetail) => {
-        this.snackBar.open(" Topic Edited Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getTopicListForChapterForSubjectAndClass(topicDetail.classId, topicDetail.subjectId, topicDetail.chapterId).subscribe((topics: TopicDetail[]) => {
-          this.topics = topics;
-        });
-      });
-    });
-
-  }
-
-  deleteTopicDetail(topicDetail: TopicDetail) {
-    const dialogRef = this.dialog.open(TopicDetailDialog, {
-      width: '600px',
-      data: {
-        type: "DELETE",
-        topic: topicDetail
-      }
-    });
-
-    dialogRef.componentInstance.topicEventEmmiter.subscribe((topicDetail: TopicDetail) => {
-      this.contentMgmntService.deleteTopicDetails(topicDetail).subscribe((topicDetail: TopicDetail) => {
-        this.snackBar.open(" Topic Deleted Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getTopicListForChapterForSubjectAndClass(topicDetail.classId, topicDetail.subjectId, topicDetail.chapterId).subscribe((topics: TopicDetail[]) => {
-          this.topics = topics;
-        });
-      });
-    });
-  }
-
-
   onChangeImage(topic: TopicDetail) {
     const dialogRef = this.dialogProfileImage.open(
       ImageUploadDialog,
@@ -210,37 +145,3 @@ export class ContentTopicComponent implements OnInit {
 
 
 
-
-@Component({
-  selector: 'topic-setup-dialog',
-  templateUrl: 'topic-setup-dialog.html',
-  styleUrls: ['./content-topic.scss']
-})
-export class TopicDetailDialog {
-  topicDetail: TopicDetail = new TopicDetail();
-  topicEventEmmiter = new EventEmitter();
-  operationType: string = "SAVE";
-  constructor(public dialogRef: MatDialogRef<TopicDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
-    this.operationType = data.type;
-    if ("ADD" == data.type) {
-      this.topicDetail = new TopicDetail();
-    } else {
-      this.topicDetail = data.tpoic;
-    }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  saveTopicDetails() {
-    if ("ADD" == this.operationType) {
-      if (this.topicDetail.name == null) {
-        this.topicDetail.name = this.topicDetail.displayName.replace(/\s/g, "");
-      }
-    }
-    this.topicEventEmmiter.emit(this.topicDetail);
-    this.onNoClick();
-  }
-
-}

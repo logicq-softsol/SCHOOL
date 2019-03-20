@@ -98,66 +98,6 @@ export class ContentMgmntComponent implements OnInit {
   }
 
 
-  editClassDetails(classSetup: ClassSetupDetail) {
-    const dialogRef = this.dialog.open(ClassSetupDialog, {
-      width: '600px',
-      data: {
-        type: "EDIT",
-        classDetail: classSetup
-      }
-    });
-
-    dialogRef.componentInstance.classesEmmiter.subscribe((classDetails: ClassSetupDetail) => {
-      this.contentMgmntService.editClassDetails(classDetails).subscribe((classDetails: ClassSetupDetail) => {
-        this.snackBar.open(" Class Edited Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-          this.classList = data;
-        });
-      });
-    });
-  }
-
-  deleteClassDetails(classSetup: ClassSetupDetail) {
-    const dialogRef = this.dialog.open(ClassSetupDialog, {
-      width: '600px',
-      data: {
-        type: "DELETE",
-        classDetail: classSetup
-      }
-    });
-
-    dialogRef.componentInstance.classesEmmiter.subscribe((classDetails: ClassSetupDetail) => {
-      this.contentMgmntService.deleteClassDetails(classDetails).subscribe((classDetails: ClassSetupDetail) => {
-        this.snackBar.open(" Class Delete Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-          this.classList = data;
-        });
-      });
-    });
-  }
-
-
-  addClassDetails() {
-    const dialogRef = this.dialog.open(ClassSetupDialog, {
-      width: '600px',
-      data: {
-        type: "ADD",
-        classDetail: null
-      }
-    });
-
-    dialogRef.componentInstance.classesEmmiter.subscribe((classDetails: ClassSetupDetail) => {
-      classDetails.icon = this.imageUrl;
-      classDetails.type = "CLASS"
-      this.contentMgmntService.setupClassDetails(classDetails).subscribe((classDetails: ClassSetupDetail) => {
-        this.snackBar.open(" Class Added Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-          this.classList = data;
-        });
-      });
-    });
-  }
-
   onChangeImage(classDet: ClassSetupDetail) {
     const dialogRef = this.dialogProfileImage.open(
       ImageUploadDialog,
@@ -204,41 +144,6 @@ export class ContentMgmntComponent implements OnInit {
 }
 
 
-
-
-@Component({
-  selector: 'class-setup-dialog',
-  templateUrl: 'class-setup-dialog.html',
-  styleUrls: ['./content-mgmnt.component.scss']
-})
-export class ClassSetupDialog {
-  classSetup: ClassSetupDetail = new ClassSetupDetail();
-  classesEmmiter = new EventEmitter();
-  operationType: string = "SAVE";
-  constructor(public dialogRef: MatDialogRef<ClassSetupDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
-    this.operationType = data.type;
-    if ("ADD" == data.type) {
-      this.classSetup = new ClassSetupDetail();
-    } else {
-      this.classSetup = data.classDetail;
-    }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  saveClassChange() {
-    if ("ADD" == this.operationType) {
-      if (this.classSetup.name == null) {
-        this.classSetup.name = this.classSetup.displayName.replace(/\s/g, "");
-      }
-    }
-    this.classesEmmiter.emit(this.classSetup);
-    this.onNoClick();
-  }
-
-}
 
 
 

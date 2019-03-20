@@ -61,72 +61,6 @@ export class ContentSubjectComponent implements OnInit {
   }
 
 
-  addSubjectDetails() {
-    const dialogRef = this.dialog.open(SubjectDetailDialog, {
-      width: '600px',
-      data: {
-        type: "ADD",
-        subjectDetail: null
-      }
-    });
-
-    dialogRef.componentInstance.subjectEventEmmiter.subscribe((subjectDetail: SubjectSetupDetail) => {
-      //   subjectDetail.icon = this.imageUrl;
-      subjectDetail.type = "SUBJECT";
-      subjectDetail.classId = this.classDetail.id;
-      this.contentMgmntService.setupSubjectDetails(subjectDetail).subscribe((subjectDetail: SubjectSetupDetail) => {
-        this.snackBar.open(" Subjject Added Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getSubjectListForClass(this.classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
-          this.subjectList = data;
-        });
-      });
-    });
-  }
-
-  editSubjectDetail(subject: SubjectSetupDetail) {
-    const dialogRef = this.dialog.open(SubjectDetailDialog, {
-      width: '600px',
-      data: {
-        type: "EDIT",
-        subjectDetail: subject
-      }
-    });
-
-    dialogRef.componentInstance.subjectEventEmmiter.subscribe((subjectDetail: SubjectSetupDetail) => {
-      //   subjectDetail.icon = this.imageUrl;
-      subjectDetail.type = "SUBJECT";
-      subjectDetail.classId = this.classDetail.id;
-      this.contentMgmntService.setupSubjectDetails(subjectDetail).subscribe((subjectDetail: SubjectSetupDetail) => {
-        this.snackBar.open(" Subjject Added Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getSubjectListForClass(this.classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
-          this.subjectList = data;
-        });
-      });
-    });
-
-  }
-
-  deleteSubjectDetail(subject: SubjectSetupDetail) {
-    const dialogRef = this.dialog.open(SubjectDetailDialog, {
-      width: '600px',
-      data: {
-        type: "DELETE",
-        subjectDetail: subject
-      }
-    });
-
-    dialogRef.componentInstance.subjectEventEmmiter.subscribe((subjectDetail: SubjectSetupDetail) => {
-      //   subjectDetail.icon = this.imageUrl;
-      subjectDetail.type = "SUBJECT";
-      subjectDetail.classId = this.classDetail.id;
-      this.contentMgmntService.setupSubjectDetails(subjectDetail).subscribe((subjectDetail: SubjectSetupDetail) => {
-        this.snackBar.open(" Subjject Added Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getSubjectListForClass(this.classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
-          this.subjectList = data;
-        });
-      });
-    });
-  }
 
   viewChapterList(subject: SubjectSetupDetail) {
     this.contentMgmntService.changeSubjectDetail(subject);
@@ -184,42 +118,6 @@ export class ContentSubjectComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 10000
     });
-  }
-
-}
-
-
-
-@Component({
-  selector: 'subject-setup-dialog',
-  templateUrl: 'subject-setup-dialog.html',
-  styleUrls: ['./content-subject.component.scss']
-})
-export class SubjectDetailDialog {
-  subjectSetup: SubjectSetupDetail = new SubjectSetupDetail();
-  subjectEventEmmiter = new EventEmitter();
-  operationType: string = "SAVE";
-  constructor(public dialogRef: MatDialogRef<SubjectDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
-    this.operationType = data.type;
-    if ("ADD" == data.type) {
-      this.subjectSetup = new SubjectSetupDetail();
-    } else {
-      this.subjectSetup = data.subjectDetail;
-    }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  saveClassChange() {
-    if ("ADD" == this.operationType) {
-      if (this.subjectSetup.name == null) {
-        this.subjectSetup.name = this.subjectSetup.displayName.replace(/\s/g, "");
-      }
-    }
-    this.subjectEventEmmiter.emit(this.subjectSetup);
-    this.onNoClick();
   }
 
 }

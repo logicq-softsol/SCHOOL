@@ -15,7 +15,7 @@ public class LicenseDetails {
 	@Column(name = "LICENSE_KEY")
 	private String licenseKey;
 
-	@Column(name = "HOST_NAME")
+	@Column(name = "HOST_NAME",unique=true)
 	private String hostName;
 
 	@Column(name = "PRODUCT_NAME")
