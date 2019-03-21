@@ -4,6 +4,27 @@
     </h2>
 </div>
 <div class="example-card">
+    <div class="form-group">
+
+        <select class="form-control" (change)="onClassChange($event.target.value)">
+            <option value="">Select Class</option>
+            <option *ngFor="let class of classList">{{class.displayName}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+
+        <select class="form-control" (change)="onSubjectChange($event.target.value)">
+            <option value="">Select Subject</option>
+            <option *ngFor="let subject of subjectList">{{subject.displayName}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+
+        <select class="form-control" (change)="onChapterChange($event.target.value)">
+            <option value="">Select Chapter</option>
+            <option *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
+        </select>
+    </div>
     <form class="example-form">
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Topic Name</mat-label>
@@ -11,7 +32,8 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" [(ngModel)]="topicDetail.description" name="description" required></textarea>
+            <textarea matInput placeholder="Description" [(ngModel)]="topicDetail.description" name="description"
+                required></textarea>
         </mat-form-field>
         <div mat-dialog-actions class="host-table-header">
             <button id="updateBtn" mat-raised-button color="primary" (click)="saveTopicDetails()">{{operationType}}</button>

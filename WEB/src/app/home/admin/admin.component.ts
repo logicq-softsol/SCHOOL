@@ -60,23 +60,30 @@ export class AdminComponent implements OnInit {
   }
 
   showClassSubjectList(classSetup: ClassSetupDetail) {
-    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
-      this.classSubjectList = subjectList;
-      this.viewChapterList(this.classSubjectList[0]);
-    });
+    if (null != classSetup) {
+      this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
+        this.classSubjectList = subjectList;
+        this.viewChapterList(this.classSubjectList[0]);
+      });
+    }
   }
 
   viewChapterList(subject: SubjectSetupDetail) {
-    this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
-      this.chapterList = chapters;
-      this.showTopicList(this.chapterList[0]);
-    });
+    if (null != subject) {
+      this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
+        this.chapterList = chapters;
+        this.showTopicList(this.chapterList[0]);
+      });
+    }
+
   }
 
   showTopicList(chapter: ChapterSetupDetail) {
-    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
-      this.topicList = topics;
-    });
+    if (null != chapter) {
+      this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
+        this.topicList = topics;
+      });
+    }
   }
 
   playTopic(topic: TopicDetail) {
@@ -154,17 +161,15 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "ADD",
-        subjectDetail: null
+        classList: this.classList,
+        subject: null
       }
     });
 
     dialogRef.componentInstance.subjectEventEmmiter.subscribe((subjectDetail: SubjectSetupDetail) => {
-      //   subjectDetail.icon = this.imageUrl;
-      subjectDetail.type = "SUBJECT";
-      subjectDetail.classId = this.classSetup.id;
       this.contentMgmntService.setupSubjectDetails(subjectDetail).subscribe((subjectDetail: SubjectSetupDetail) => {
-        this.snackBar.open(" Subjject Added Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getSubjectListForClass(this.classSetup.id).subscribe((data: SubjectSetupDetail[]) => {
+        this.snackBar.open("Subject Added Sucessfully. ", "CLOSE");
+        this.contentMgmntService.getSubjectListForClass(subjectDetail.classId).subscribe((data: SubjectSetupDetail[]) => {
           this.classSubjectList = data;
         });
       });
@@ -176,17 +181,15 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "EDIT",
-        subjectDetail: subject
+        classList: this.classList,
+        subject: subject
       }
     });
 
     dialogRef.componentInstance.subjectEventEmmiter.subscribe((subjectDetail: SubjectSetupDetail) => {
-      //   subjectDetail.icon = this.imageUrl;
-      subjectDetail.type = "SUBJECT";
-      subjectDetail.classId = this.classSetup.id;
       this.contentMgmntService.setupSubjectDetails(subjectDetail).subscribe((subjectDetail: SubjectSetupDetail) => {
-        this.snackBar.open(" Subjject Added Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getSubjectListForClass(this.classSetup.id).subscribe((data: SubjectSetupDetail[]) => {
+        this.snackBar.open("Subject Edited Sucessfully. ", "CLOSE");
+        this.contentMgmntService.getSubjectListForClass(subjectDetail.classId).subscribe((data: SubjectSetupDetail[]) => {
           this.classSubjectList = data;
         });
       });
@@ -199,17 +202,15 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "DELETE",
-        subjectDetail: subject
+        classList: this.classList,
+        subject: subject
       }
     });
 
     dialogRef.componentInstance.subjectEventEmmiter.subscribe((subjectDetail: SubjectSetupDetail) => {
-      //   subjectDetail.icon = this.imageUrl;
-      subjectDetail.type = "SUBJECT";
-      subjectDetail.classId = this.classSetup.id;
       this.contentMgmntService.setupSubjectDetails(subjectDetail).subscribe((subjectDetail: SubjectSetupDetail) => {
-        this.snackBar.open(" Subjject Added Sucessfully. ", "CLOSE");
-        this.contentMgmntService.getSubjectListForClass(this.classSetup.id).subscribe((data: SubjectSetupDetail[]) => {
+        this.snackBar.open("Subject Deleted Sucessfully. ", "CLOSE");
+        this.contentMgmntService.getSubjectListForClass(subjectDetail.classId).subscribe((data: SubjectSetupDetail[]) => {
           this.classSubjectList = data;
         });
       });
@@ -224,15 +225,12 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "ADD",
-        chapterDetail: null
+        classList: this.classList,
+        chapter: null
       }
     });
 
     dialogRef.componentInstance.chapterEventEmmiter.subscribe((chapterDetail: ChapterSetupDetail) => {
-      //   subjectDetail.icon = this.imageUrl;
-      chapterDetail.type = "CHAPTER";
-      chapterDetail.classId = this.subjectSetup.classId;
-      chapterDetail.subjectId = this.subjectSetup.id;
       this.contentMgmntService.setupChapterDetails(chapterDetail).subscribe((chapterDetail: ChapterSetupDetail) => {
         this.snackBar.open(" Subjject Added Sucessfully. ", "CLOSE");
         this.contentMgmntService.getChapterListForSubjectAndClass(chapterDetail.classId, chapterDetail.subjectId).subscribe((data: ChapterSetupDetail[]) => {
@@ -247,7 +245,8 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "EDIT",
-        chapterDetail: chapterDetail
+        classList: this.classList,
+        chapter: chapterDetail
       }
     });
 
@@ -267,13 +266,14 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "DELETE",
-        chapterDetail: chapterDetail
+        classList: this.classList,
+        chapter: chapterDetail
       }
     });
 
     dialogRef.componentInstance.chapterEventEmmiter.subscribe((chapterDetail: ChapterSetupDetail) => {
 
-      this.contentMgmntService.deleteChapterDetails(chapterDetail).subscribe((subjectDetail: SubjectSetupDetail) => {
+      this.contentMgmntService.deleteChapterDetails(chapterDetail).subscribe((chapterDetail: ChapterSetupDetail) => {
         this.snackBar.open("Chapter Deleted Sucessfully. ", "CLOSE");
         this.contentMgmntService.getChapterListForSubjectAndClass(chapterDetail.classId, chapterDetail.subjectId).subscribe((data: ChapterSetupDetail[]) => {
           this.chapterList = data;
@@ -289,16 +289,13 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "ADD",
-        chapterDetail: null
+        classList: this.classList,
+        topic: null
       }
     });
 
     dialogRef.componentInstance.topicEventEmmiter.subscribe((topicDetail: TopicDetail) => {
       topicDetail.icon = this.imageUrl;
-      topicDetail.type = "TOPIC";
-      topicDetail.classId = this.chapter.classId;
-      topicDetail.subjectId = this.chapter.subjectId;
-      topicDetail.chapterId = this.chapter.id;
       this.contentMgmntService.setupTopicDetails(topicDetail).subscribe((topicDetail: TopicDetail) => {
         this.snackBar.open(" Topic Added Sucessfully. ", "CLOSE");
         this.contentMgmntService.getTopicListForChapterForSubjectAndClass(topicDetail.classId, topicDetail.subjectId, topicDetail.chapterId).subscribe((topics: TopicDetail[]) => {
@@ -314,6 +311,7 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "EDIT",
+        classList: this.classList,
         topic: topicDetail
       }
     });
@@ -334,6 +332,7 @@ export class AdminComponent implements OnInit {
       width: '600px',
       data: {
         type: "DELETE",
+        classList: this.classList,
         topic: topicDetail
       }
     });
@@ -404,12 +403,16 @@ export class SubjectDetailDialog {
   subjectSetup: SubjectSetupDetail = new SubjectSetupDetail();
   subjectEventEmmiter = new EventEmitter();
   operationType: string = "SAVE";
+  classList: ClassSetupDetail[] = [];
+  className: string;
+
   constructor(public dialogRef: MatDialogRef<SubjectDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
     this.operationType = data.type;
+    this.classList = data.classList;
     if ("ADD" == data.type) {
       this.subjectSetup = new SubjectSetupDetail();
     } else {
-      this.subjectSetup = data.subjectDetail;
+      this.subjectSetup = data.subject;
     }
   }
 
@@ -417,8 +420,15 @@ export class SubjectDetailDialog {
     this.dialogRef.close();
   }
 
-  saveClassChange() {
+  onClassChange(value) {
+    this.className = value;
+  }
+
+  saveSubjectChange() {
     if ("ADD" == this.operationType) {
+      let classSetup: ClassSetupDetail = this.classList.find(x => x.displayName == this.className);
+      this.subjectSetup.classId = classSetup.id;
+      this.subjectSetup.type = "SUBJECT";
       if (this.subjectSetup.name == null) {
         this.subjectSetup.name = this.subjectSetup.displayName.replace(/\s/g, "");
       }
@@ -439,8 +449,14 @@ export class ChapterDetailDialog {
   chapterSetup: ChapterSetupDetail = new ChapterSetupDetail();
   chapterEventEmmiter = new EventEmitter();
   operationType: string = "SAVE";
-  constructor(public dialogRef: MatDialogRef<ChapterDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
+  classList: ClassSetupDetail[] = [];
+  subjectList: SubjectSetupDetail[] = [];
+  className: string;
+  subjectName: string;
+
+  constructor(public dialogRef: MatDialogRef<ChapterDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService) {
     this.operationType = data.type;
+    this.classList = data.classList;
     if ("ADD" == data.type) {
       this.chapterSetup = new ChapterSetupDetail();
     } else {
@@ -448,11 +464,27 @@ export class ChapterDetailDialog {
     }
   }
 
+
+  onClassChange(value) {
+    this.className = value;
+    let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == this.className);
+    this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
+      this.subjectList = data;
+    });
+  }
+
+
+  onSubjectChange(value) {
+    this.subjectName = value;
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  saveChapterChange() {
+  saveChapter() {
+    let subject: SubjectSetupDetail = this.subjectList.find(x => x.displayName == this.subjectName);
+    this.chapterSetup.classId = subject.classId;
+    this.chapterSetup.subjectId = subject.id;
     if ("ADD" == this.operationType) {
       if (this.chapterSetup.name == null) {
         this.chapterSetup.name = this.chapterSetup.displayName.replace(/\s/g, "");
@@ -478,8 +510,16 @@ export class TopicDetailDialog {
   topicDetail: TopicDetail = new TopicDetail();
   topicEventEmmiter = new EventEmitter();
   operationType: string = "SAVE";
-  constructor(public dialogRef: MatDialogRef<TopicDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
+  classList: ClassSetupDetail[] = [];
+  subjectList: SubjectSetupDetail[] = [];
+  chapterList: ChapterSetupDetail[] = [];
+  className: string;
+  subjectName: string;
+  chapterName: string;
+
+  constructor(public dialogRef: MatDialogRef<TopicDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService) {
     this.operationType = data.type;
+    this.classList=data.classList;
     if ("ADD" == data.type) {
       this.topicDetail = new TopicDetail();
     } else {
@@ -487,11 +527,38 @@ export class TopicDetailDialog {
     }
   }
 
+
+
+  onClassChange(value) {
+    this.className = value;
+    let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == this.className);
+    this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
+      this.subjectList = data;
+    });
+  }
+
+
+  onSubjectChange(value) {
+    this.subjectName = value;
+    let subject: SubjectSetupDetail = this.subjectList.find(x => x.displayName == this.subjectName);
+    this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
+      this.chapterList = data;
+    });
+  }
+
+  onChapterChange(value){
+    this.chapterName=value;
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   saveTopicDetails() {
+    let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == this.chapterName);
+    this.topicDetail.classId = chapter.classId;
+    this.topicDetail.subjectId = chapter.subjectId;
+    this.topicDetail.chapterId = chapter.id;
     if ("ADD" == this.operationType) {
       if (this.topicDetail.name == null) {
         this.topicDetail.name = this.topicDetail.displayName.replace(/\s/g, "");

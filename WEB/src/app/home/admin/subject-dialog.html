@@ -5,16 +5,21 @@
 </div>
 <div class="example-card">
     <form class="example-form">
-        <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Subject Name</mat-label>
-            <input matInput placeholder="Subject Name" [(ngModel)]="subjectSetup.displayName" name="displayName" required>
-        </mat-form-field>
-        <!--mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" [(ngModel)]="subjectSetup.description" name="description" required></textarea>
-        </mat-form-field-->
+        <div class="form-group">
+            <select class="form-control"  (change)="onClassChange($event.target.value)">
+                <option value="">Select Class</option>
+                <option  *ngFor="let class of classList">{{class.displayName}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <mat-form-field appearance="outline" class="form-control">
+                <mat-label>Subject Name</mat-label>
+                <input matInput placeholder="Subject Name" [(ngModel)]="subjectSetup.displayName" name="displayName"
+                    required>
+            </mat-form-field>
+        </div>
         <div mat-dialog-actions class="host-table-header">
-            <button id="updateBtn" mat-raised-button color="primary" (click)="saveClassChange()">{{operationType}}</button>
+            <button id="updateBtn" mat-raised-button color="primary" (click)="saveSubjectChange()">{{operationType}}</button>
             <div class="divider"></div>
             <button class="noThanksBtn" mat-raised-button (click)="onNoClick()">NO Thanks</button>
         </div>
