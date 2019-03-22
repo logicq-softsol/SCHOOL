@@ -6,4 +6,6 @@ export class Favorites {
     public id: number;
     public userName: string;
     public typeValue: number;
+    public url:string;
+    public icon:string;
 }

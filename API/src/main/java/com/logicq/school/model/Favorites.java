@@ -26,6 +26,12 @@ public class Favorites extends AttributeDetails {
 
 	@Column(name = "TYPE_VALUE")
 	private Long typeValue;
+	
+	@Column(name = "URL")
+	private String url;
+	
+	@Column(name = "ICON")
+	private String icon;
 
 	public Long getId() {
 		return id;
@@ -50,5 +56,23 @@ public class Favorites extends AttributeDetails {
 	public void setTypeValue(Long typeValue) {
 		this.typeValue = typeValue;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+	
+	
 
 }

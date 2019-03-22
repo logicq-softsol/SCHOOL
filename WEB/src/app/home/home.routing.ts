@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { ContentMgmntComponent } from './content-mgmnt/content-mgmnt.component';
 import { AdminComponent } from './admin/admin.component';
+import { TopicComponent } from './content-mgmnt/topics/topic.component';
 
 
 export const homeRoutes: Routes = [
@@ -10,7 +11,8 @@ export const homeRoutes: Routes = [
     path: '', component: HomeComponent,
     children: [
       { path: 'admin', component: AdminComponent },
-      { path: 'teacher', component: ContentMgmntComponent }
+      { path: 'teacher', component: ContentMgmntComponent },
+      { path: 'teacher/topics', component: TopicComponent }
     ]
   }
 ];

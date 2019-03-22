@@ -86,8 +86,8 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  playTopic(topic: TopicDetail) {
-    this.contentMgmntService.playLesson().subscribe((data) => {
+  playLessonForTopic(topic: TopicDetail) {
+    this.contentMgmntService.playLesson(topic).subscribe((data) => {
       let file = new Blob([data], { type: 'video/mp4' });
       var fileURL = URL.createObjectURL(file);
       window.open(fileURL);
@@ -348,6 +348,22 @@ export class AdminComponent implements OnInit {
   }
 
 
+  viewChapterListForSubject() {
+    const dialogRef = this.dialog.open(ChapterListDialog, {
+      width: '600px',
+      data: {
+        type: "DELETE",
+        chapterList: this.chapterList
+      }
+    });
+
+    dialogRef.componentInstance.chapterListEventEmmiter.subscribe((chapter: ChapterSetupDetail) => {
+      this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
+        this.topicList = topics;
+      });
+    });
+  }
+
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 10000
@@ -497,10 +513,6 @@ export class ChapterDetailDialog {
 }
 
 
-
-
-
-
 @Component({
   selector: 'topic-dialog',
   templateUrl: 'topic-dialog.html',
@@ -519,7 +531,7 @@ export class TopicDetailDialog {
 
   constructor(public dialogRef: MatDialogRef<TopicDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService) {
     this.operationType = data.type;
-    this.classList=data.classList;
+    this.classList = data.classList;
     if ("ADD" == data.type) {
       this.topicDetail = new TopicDetail();
     } else {
@@ -546,8 +558,8 @@ export class TopicDetailDialog {
     });
   }
 
-  onChapterChange(value){
-    this.chapterName=value;
+  onChapterChange(value) {
+    this.chapterName = value;
   }
 
   onNoClick(): void {
@@ -569,3 +581,32 @@ export class TopicDetailDialog {
   }
 
 }
+
+
+
+@Component({
+  selector: 'chapter-list-dialog',
+  templateUrl: 'chapter-list.html',
+  styleUrls: ['./admin.scss']
+})
+export class ChapterListDialog {
+  chapterListEventEmmiter = new EventEmitter();
+  chapterList: ChapterSetupDetail[] = [];
+  chapter: ChapterSetupDetail = new ChapterSetupDetail();
+
+
+  constructor(public dialogRef: MatDialogRef<ChapterDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
+
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  veiwChaptersTopic() {
+    this.chapterListEventEmmiter.emit(this.chapter);
+    this.onNoClick();
+  }
+
+}
+

@@ -197,7 +197,7 @@ export class ContentMgmntService {
 
 
   getFavorites() {
-    return this.http.get(environment.baseUrl + 'api/admin/favortie/');
+    return this.http.get(environment.baseUrl + 'api/admin/favorties');
   }
 
   markFavorites(favorite: any) {
@@ -224,11 +224,11 @@ export class ContentMgmntService {
     return this.http.get<any>(environment.baseUrl + 'api/admin/readvideofile', httpOptions);
   }
 
-  playLesson() {
+  playLesson(topic:TopicDetail) {
     const httpOptions = {
       'responseType': 'arraybuffer' as 'json'
     };
-    return this.http.get<any>(environment.baseUrl + 'api/admin/readvideofile', httpOptions);
+    return this.http.get<any>(environment.baseUrl + 'api/admin/playlesson/'+topic.id, httpOptions);
 
   }
 

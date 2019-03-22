@@ -34,12 +34,15 @@ export class ContentMgmntComponent implements OnInit {
   chapterList: ChapterSetupDetail[] = [];
   chapter: ChapterSetupDetail = new ChapterSetupDetail();
 
-  
-  topicList:TopicDetail[]=[];
-  topic:TopicDetail=new TopicDetail();
+
+  topicList: TopicDetail[] = [];
+  topic: TopicDetail = new TopicDetail();
+
+  favorites: Favorites[] = [];
 
   selectImage: File;
   imageUrl: string;
+
 
 
   constructor(private homeService: HomeService,
@@ -50,72 +53,90 @@ export class ContentMgmntComponent implements OnInit {
     public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
-   
+
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
     });
 
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
       this.classList = data;
-      this.classSetup=this.classList[0];
-      this.onClassChange(this.classSetup); 
+      this.classSetup = this.classList[0];
+      this.onDefaultClassChange(this.classSetup);
+    });
+
+    this.contentMgmntService.getFavorites().subscribe((favorites: Favorites[]) => {
+      this.favorites = favorites;
     });
 
   }
 
-  
-  onClassChange(classSetup:ClassSetupDetail) {
+
+  gotToHomepage() {
+    if (this.user.role == 'TEACHER') {
+      this.router.navigate(['/home/teacher']);
+    }
+  }
+
+
+  onDefaultClassChange(classSetup: ClassSetupDetail) {
     this.showClassSubjectList(classSetup);
   }
 
 
-  
-  showClassSubjectList(classSetup: ClassSetupDetail) {
-    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
-      this.classSubjectList = subjectList;
-      this.subjectSetup= this.classSubjectList[0];
-      this.viewChapterList(  this.subjectSetup);
+  onClassChange(value) {
+    let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == value);
+    this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
+      this.classSubjectList = data;
     });
   }
 
-  viewChapterList(subject:SubjectSetupDetail) {
+
+  onSubjectChange(value) {
+    let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == value);
+    this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
+      this.chapterList = data;
+    });
+  }
+
+  onChapterChange(value) {
+    let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == value);
+    this.contentMgmntService.changeChapterSetupDetail(chapter);
+
+  }
+
+  searchTopicDetails() {
+    if (this.user.role == 'TEACHER') {
+      this.router.navigate(['/home/teacher/topics']);
+    }
+  }
+
+  showClassSubjectList(classSetup: ClassSetupDetail) {
+    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
+      this.classSubjectList = subjectList;
+      this.subjectSetup = this.classSubjectList[0];
+      this.viewChapterList(this.subjectSetup);
+    });
+  }
+
+  viewChapterList(subject: SubjectSetupDetail) {
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
       this.chapterList = chapters;
-      this.chapter=this.chapterList[0];
+      this.chapter = this.chapterList[0];
       this.showTopicList(this.chapter);
     });
   }
 
-  showTopicList(chapter:ChapterSetupDetail){
-    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId,chapter.subjectId,chapter.id).subscribe((topics:TopicDetail[])=>{
-      this.topicList=topics;
+  showTopicList(chapter: ChapterSetupDetail) {
+    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
+      this.topicList = topics;
     });
   }
-  
+
 
   viewSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.changeClassSetupDetail(classSetup);
   }
 
-
-  onChangeImage(classDet: ClassSetupDetail) {
-    const dialogRef = this.dialogProfileImage.open(
-      ImageUploadDialog,
-      {
-        width: "600px"
-      }
-    );
-    dialogRef.componentInstance.uploadImageEmmiter.subscribe(data => {
-      this.selectImage = data;
-      this.homeService
-        .uploadImagesForEntity(this.selectImage, classDet.id, 'CLASS')
-        .subscribe((data: any) => {
-          this.imageUrl = data.fileDownloadUri;
-        });
-    });
-
-    dialogRef.afterClosed().subscribe(result => { });
-  }
 
 
   markFavorites(classDet: ClassSetupDetail) {
@@ -129,9 +150,9 @@ export class ContentMgmntComponent implements OnInit {
 
 
 
-  removeFavorites(classDet: ClassSetupDetail) {
-    this.contentMgmntService.removeFavorites("CLASS", classDet.id).subscribe((fav: Favorites) => {
-      this.openErrorSnackBar("Class " + classDet.displayName + " remove from your favorite.", "CLOSE");
+  removeFavorites(fav: Favorites) {
+    this.contentMgmntService.removeFavorites(fav.type, fav.typeValue).subscribe((fav: Favorites) => {
+      this.openErrorSnackBar("Topic  remove from your favorite.", "CLOSE");
     });
   }
 

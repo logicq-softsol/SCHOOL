@@ -15,12 +15,8 @@ import { TopicDetail } from '../public/model/topic-detail';
 })
 export class HomeComponent implements OnInit {
   user: UserDetail = new UserDetail();
-  classList: ClassSetupDetail[] = [];
-  classSubjectList: SubjectSetupDetail[] = [];
-  chapterList: ChapterSetupDetail[] = [];
-  topicList: TopicDetail[] = [];
   breadcurmblist: any;
-
+  today:Date=new Date();
 
   constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router) {
     if (this.authService.isAuthenticate) {
@@ -33,38 +29,23 @@ export class HomeComponent implements OnInit {
           this.router.navigate(['/home/admin']);
         }
       });
-
-      this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-        this.classList = data;
-      });
     }
   }
 
   ngOnInit() {
-   // this.showClassContent();
+
   }
 
-  showClassSubjectList(classSetup: ClassSetupDetail) {
-    this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
-      this.classSubjectList = subjectList;
-    });
+ 
+  gotToHomepage(){
+    if(this.user.role=='TEACHER'){
+    this.router.navigate(['/home/teacher']);
+    }
   }
-
-
-
-  viewChapterList(subject: SubjectSetupDetail) {
-    this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
-      this.chapterList = chapters;
-    });
-    this.contentMgmntService.changeSubjectDetail(subject);
-  }
-
-  viewTopicList(chapter: ChapterSetupDetail) {
-
-    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.classId).subscribe((topics: TopicDetail[]) => {
-      this.topicList = topics;
-    });
-    this.contentMgmntService.changeChapterSetupDetail(chapter);
+  viewSessionReport(){
+    if(this.user.role=='ADMIN'){
+      this.router.navigate(['/home/teacher']);
+      }
   }
 
 }

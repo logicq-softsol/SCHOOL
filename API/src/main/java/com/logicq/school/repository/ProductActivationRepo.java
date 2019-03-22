@@ -10,4 +10,5 @@ public interface ProductActivationRepo extends JpaRepository<ActivationDetails, 
 
 	ActivationDetails findByActivationFor(String activationFor);
 
+
 }

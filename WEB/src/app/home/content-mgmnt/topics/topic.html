@@ -1,0 +1,82 @@
+<section>
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-md-3 d-flex align-items-center search-container">
+        <div class="home-search pt-3">
+          <form>
+            <div class="form-group mb-4">
+              <label for="exampleInputEmail1">Select Class</label>
+              <select class="form-control" (change)="onClassChange($event.target.value)">
+                <option value="">Select</option>
+                <option  *ngFor="let class of classList">{{class.displayName}}</option>
+              </select>
+            </div>
+            <div class="form-group mb-4">
+              <label for="exampleInputEmail1">Select Subject</label>
+              <select class="form-control" (change)="onSubjectChange($event.target.value)">
+                <option value="">Select</option>
+                <option  *ngFor="let subejct of classSubjectList">{{subejct.displayName}}</option>
+              </select>
+            </div>
+            <div class="form-group mb-4">
+              <label for="exampleInputEmail1">Select Chapter</label>
+              <select class="form-control" (change)="onChapterChange($event.target.value)">
+                <option value="">Select</option>
+                <option  *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">
+              <i class="material-icons">search</i> Search
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-9">
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search Topics, Chapter, Subject or Class"  [matAutocomplete]="auto" [formControl]="stateCtrl">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                    <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
+                    <span>{{state.name}}</span> |
+                    <small>Population: {{state.population}}</small>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="col-md-3">
+            <button mat-raised-button color="accent">Your Favorites</button>
+          </div>
+        </div>
+        <div class="container mt-4 recent-search">
+          <h3 class="small-title mb-3">Topics</h3>
+          <div class="row clearfix">
+            <div class="col-md-4" *ngFor="let topic of topicList">
+              <div class="card result-list">
+                <div class="card-header">
+                  <a (click)="playLessonForTopic(topic)">{{topic.displayName}}</a>
+                  <div class="action">
+                    <a (click)="markFavorites(topic)">
+                      <i class="material-icons"> favorite_border</i>
+                    </a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <a (click)="playLessonForTopic(topic)">
+                    <img src="{{topic.icon}}" alt="Avatar">
+                    <div class="container">
+                      <p>{{topic.description}}</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

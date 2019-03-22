@@ -5,28 +5,29 @@
         <div class="home-search pt-3">
           <form>
             <div class="form-group mb-4">
-              <label for="exampleInputEmail1">Select  Class</label>
-              <select class="form-control">
+              <label for="exampleInputEmail1">Select Class</label>
+              <select class="form-control" (change)="onClassChange($event.target.value)">
                 <option value="">Select</option>
                 <option [value]="classSetup.displayName" *ngFor="let class of classList">{{class.displayName}}</option>
               </select>
             </div>
             <div class="form-group mb-4">
               <label for="exampleInputEmail1">Select Subject</label>
-              <select class="form-control">
+              <select class="form-control" (change)="onSubjectChange($event.target.value)">
                 <option value="">Select</option>
                 <option [value]="subjectSetup.displayName" *ngFor="let subejct of classSubjectList">{{subejct.displayName}}</option>
               </select>
             </div>
             <div class="form-group mb-4">
               <label for="exampleInputEmail1">Select Chapter</label>
-              <select class="form-control">
+              <select class="form-control" (change)="onChapterChange($event.target.value)">
                 <option value="">Select</option>
                 <option [value]="chapter.displayName" *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-search">
-              <i class="fas fa-search"></i> Search</button>
+            <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">
+              <i class="material-icons">search</i> Search
+            </button>
           </form>
         </div>
       </div>
@@ -54,58 +55,24 @@
 <div class="container mt-4 recent-search">
   <h3 class="small-title mb-3">Your Favorties</h3>
   <div class="row clearfix">
-    <div class="col-md-6">
+    <div class="col-md-3" *ngFor="let fav of favorites">
       <div class="card result-list">
         <div class="card-header">
-          Standard 1
+          {{fav.displayName}}
           <div class="action">
-            <a href="#">
-              <i class="far fa-heart"></i>
-            </a>
-            <a href="#">
-              <i class="fas fa-pencil-alt"></i>
-            </a>
+            <a (click)="removeFavorites(topic)"><i class="material-icons">favorite </i> </a>
           </div>
         </div>
-        <div class="card-body ">
-          <ol>
-            <li>EVS/Science</li>
-            <li>Maths</li>
-            <li>English</li>
-            <li>Hindi</li>
-            <li>Region</li>
-            <li>International English</li>
-            <li>English Grammer</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card result-list">
-        <div class="card-header">
-          Standard 2
-          <div class="action">
-            <a href="#" class="active">
-              <i class="fas fa-heart"></i>
-            </a>
-            <a href="#">
-              <i class="fas fa-pencil-alt"></i>
-            </a>
-          </div>
-        </div>
-        <div class="card-body ">
-          <ol>
-            <li>EVS/Science</li>
-            <li>Maths</li>
-            <li>English</li>
-            <li>Hindi</li>
-            <li>Region</li>
-            <li>International English</li>
-            <li>English Grammer</li>
-          </ol>
+        <div class="card-body">
+          <a (click)="playLessonForTopic(fav)">
+            <img src="{{fav.icon}}" alt="Avatar">
+            <div class="container">
+              <p>{{fav.description}}</p>
+            </div>
+          </a>
         </div>
       </div>
     </div>
   </div>
-  <a href="#" class="load-more">Load More</a>
+  <a  class="load-more">Load More</a>
 </div>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.logicq.school.model.ActivationDetails;
 import com.logicq.school.model.ChapterDetails;
 import com.logicq.school.model.ClassDetails;
 import com.logicq.school.model.Favorites;
@@ -26,6 +27,7 @@ import com.logicq.school.model.TopicDetails;
 import com.logicq.school.model.UserWorkSpace;
 import com.logicq.school.repository.ChapterDetailsRepo;
 import com.logicq.school.repository.ClassesDetailsRepo;
+import com.logicq.school.repository.ProductActivationRepo;
 import com.logicq.school.repository.SubjectDetailsRepo;
 import com.logicq.school.repository.TopicDetailsRepo;
 import com.logicq.school.repository.UserFavortiesRepo;
@@ -57,6 +59,9 @@ public class AdminController {
 
 	@Autowired
 	SchoolSecurityUtils schoolSecurityUtils;
+
+	@Autowired
+	ProductActivationRepo productActivationRepo;
 
 	@RequestMapping(value = "/classes", method = RequestMethod.GET)
 	public ResponseEntity<List<ClassDetails>> getClassDetails() throws Exception {
@@ -314,16 +319,18 @@ public class AdminController {
 		return new ResponseEntity<Favorites>(fav, HttpStatus.OK);
 	}
 
-	@GetMapping("/readvideofile")
-	public void readVideoFile(HttpServletResponse response) throws Exception {
+	@GetMapping("/playlesson/{topicId}")
+	public void playLessonForTopic(@PathVariable String topicId, HttpServletResponse response) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		if (null != loginDetail) {
-			String decryptedkey = schoolSecurityUtils.decryptText(schoolSecurityUtils.readFileLine("license.key"),
-					schoolSecurityUtils.getPublic("KeyPair/publicKey"));
-			schoolSecurityUtils.decryptVideoFile(decryptedkey,
-					new File("E:\\WORK_SPACE\\SCHOOL_CONTENT\\video\\video_encrypted\\1.First Aid for wounds.lq"),
-					response);
-
+			TopicDetails topic = topicDetailsRepo.findOne(Long.valueOf(topicId));
+			if (null != topic) {
+				String hostName = schoolSecurityUtils.getSystemHostName();
+				ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
+				String decryptedkey = schoolSecurityUtils.decryptText(activationDetails.getActivationKey(),
+						schoolSecurityUtils.getPublic("KeyPair/publicKey"));
+				schoolSecurityUtils.decryptVideoFile(decryptedkey, new File(topic.getPlayFileURL()), response);
+			}
 		}
 
 	}
