@@ -182,3 +182,116 @@ box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.56); background:#fff; padding:20px;}
   .example-button-row a {
 	margin-right: 8px;
   }
+
+  .person-card-avatar {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+  
+  }
+
+  
+.book-tables {
+  border: 1px solid #e2e2e2;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.book-tables .table-code {
+  min-width: 85px;
+  background: #ffefeb;
+  border: 1px solid #e2e2e2;
+  padding: 10px;
+  text-align: center;
+}
+
+.book-tables .table-code small {
+  color: #000;
+}
+
+.book-tables .table-code strong {
+  font-size: 20px;
+  color: #000;
+}
+
+.book-tables .media-heading {
+  font-size: 18px;
+  font-weight: 400
+}
+
+.book-tables .media-heading span,
+.book-tables .media-body p strong {
+  color: #000;
+  font-weight: 600
+}
+
+.book-tables .media-body p {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.book-tables .media-body p span.cl-org {
+  color: #f18b76;
+}
+
+.book-tables ul {
+  padding: 0;
+  list-style-type: none;
+  text-align: left;
+  border-top: 2px solid #e2e2e2;
+  margin-top: 15px;
+  padding-top: 15px;
+  margin-bottom: 0;
+}
+
+.book-tables ul li {
+  display: inline-block;
+  color: #333;
+  margin-right: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.book-tables ul li:last-child {
+  margin-right: 0;
+}
+
+.asigned-table {
+	position: absolute;
+	display: inline-block;
+	padding: 3px 5px;
+	right: 15px;
+	top:15px;
+	font-size: 14px;
+	color: #fff;
+	
+}
+
+.danger {
+	background-color: #fa0000;
+}
+
+.ember {
+	background-color: #FFC200;
+}
+
+.available {
+	background-color: #228B22;
+}
+.waiter-list{
+  padding:10px;
+}
+.wh-bg{
+  background:#fff;
+}
+.padd-15{
+  padding:15px;
+}
+
+.btn-holder{margin-bottom:15px;}
+.text-right{text-align:right;}
+.text-left{text-align:left;}

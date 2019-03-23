@@ -14,20 +14,23 @@
                     {{subject.displayName}}</a></li>
         </ul>
     </div>
+
     <div class="body-content">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a (click)="viewSubjectList()">Class</a></li>
-                <li class="breadcrumb-item"><a (click)="viewChapterList()">Subject</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a (click)="viewTopicList()">Chapter</a></li>
+                <li class="breadcrumb-item"><a [routerLink]="" (click)="goToHome()"><strong>HOME</strong></a></li>
+                <li class="breadcrumb-item"><a [routerLink]="" (click)="viewClassList()"><strong>CLASS</strong></a></li>
+                <li class="breadcrumb-item"><a [routerLink]="" (click)="viewSubjectList()"><strong>SUBJECT</strong></a></li>
+                <li class="breadcrumb-item"><a [routerLink]="" (click)="viewAllChapterList()"><strong>CHAPTER</strong></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a [routerLink]="" (click)="viewTopics()"><strong>TOPIC</strong></a></li>
             </ol>
         </nav>
         <div class="content-area">
             <div class="primary-action mb-3">
                 <div class="row clearfix">
                     <div class="col-md-7 col-lg-6">
-                        <h3 class="mid-tittle"></h3>
+
+
                     </div>
                     <div class="col-md-5 col-lg-6 text-right">
                         <button type="button" class="btn btn-warning" (click)="addClassDetails()">Add Class</button>
@@ -37,8 +40,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row clearfix">
-                <div class="col-md-12">
+            <div class="row clearfix wh-bg">
+                <div class="col-md-12" *ngIf="displayView=='TOPIC'">
                     <mat-expansion-panel *ngFor="let chapter of chapterList">
                         <mat-expansion-panel-header>
                             <a (click)="showTopicList(chapter)">
@@ -46,28 +49,152 @@
                             </a>
                         </mat-expansion-panel-header>
                         <div class="row">
-                            <div class="col-md-3" *ngFor="let topic of topicList">
-                                <div class="card result-list">
-                                    <div class="card-header">
-                                        {{topic.displayName}}
-                                        <div class="action">
-                                            <a (click)="editTopicDetail(topic)">
-                                                <i class="material-icons">edit</i>
-                                            </a>
+                            <div class="col-md-3 col-sm-4" *ngFor="let topic of topicList">
+                                <div class="book-tables waiter-list">
+                                    <div class="media" (click)="playLessonForTopic(topic)">
+                                        <div class="media-left">
+                                            <img class="person-card-avatar" src="assets/images/class.jpg">
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><strong> {{topic.displayName}}</strong></h4>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <a (click)="playLessonForTopic(topic)">
-                                            <img src="{{topic.icon}}" alt="Avatar">
-                                            <div class="container">
-                                                <p>{{topic.description}}</p>
+                                    <ul>
+                                        <li>
+                                            <div class="text-left btn-holder">
+                                                <button mat-icon-button matTooltip="Play Lesson" (click)="playLessonForTopic(topic)">
+                                                    <mat-icon aria-label="Play Lesson">play_circle_filled_white</mat-icon>
+                                                </button>
                                             </div>
-                                        </a>
-                                    </div>
+                                        </li>
+                                        <li>
+                                            <div class="text-right btn-holder">
+                                                <button mat-icon-button matTooltip="Edit Chapter" (click)="editTopicDetail(topic)">
+                                                    <mat-icon aria-label="Edit Chapter">edit</mat-icon>
+                                                </button>
+                                                <button mat-icon-button matTooltip="Delete Chapter">
+                                                    <mat-icon aria-label="Delete Chapter">delete_forever</mat-icon>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </mat-expansion-panel>
+                </div>
+
+                <div class="col-md-12" *ngIf="displayView=='CHAPTER'">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6" *ngFor="let chapter of chapterList">
+                            <div class="book-tables waiter-list">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img class="person-card-avatar" src="assets/images/class.jpg">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><strong>{{chapter.displayName}}</strong>
+                                            <span class="asigned-table available">10 Topics</span> </h4>
+                                    </div>
+
+                                </div>
+                                <ul>
+                                    <li>Avilable Videos : 40</li>
+                                    <li>
+                                        <div class="text-right btn-holder">
+                                            <button mat-icon-button matTooltip="Add More Topics">
+                                                <mat-icon aria-label="Add More Topics">playlist_add</mat-icon>
+                                            </button>
+
+                                            <button mat-icon-button matTooltip="Edit Chapter" (click)="editChapterDetail(chapter)">
+                                                <mat-icon aria-label="Edit Chapter">edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button matTooltip="Delete Chapter">
+                                                <mat-icon aria-label="Delete Chapter">delete_forever</mat-icon>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-12" *ngIf="displayView=='SUBJECT'">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6" *ngFor="let subject of classSubjectList">
+                            <div class="book-tables waiter-list">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img class="person-card-avatar" src="assets/images/class.jpg">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><strong>{{subject.displayName}}</strong>
+                                            <span class="asigned-table available">6 Chapters</span> </h4>
+                                    </div>
+
+                                </div>
+                                <ul>
+                                    <li>Avilable Videos : 60</li>
+                                    <li>
+                                        <div class="text-right btn-holder">
+                                            <button mat-icon-button matTooltip="Add More Chapters">
+                                                <mat-icon aria-label="Add More Chapters">playlist_add</mat-icon>
+                                            </button>
+
+                                            <button mat-icon-button matTooltip="Edit Subject" (click)="editSubjectDetail(subject)">
+                                                <mat-icon aria-label="Edit Subject">edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button matTooltip="Delete Subject">
+                                                <mat-icon aria-label="Delete Subject">delete_forever</mat-icon>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12" *ngIf="displayView=='CLASS'">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6" *ngFor="let class of classList">
+                            <div class="book-tables waiter-list">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <img class="person-card-avatar" src="assets/images/class.jpg">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><strong>{{class.displayName}}</strong>
+                                            <span class="asigned-table available">4 Subjects</span> </h4>
+                                    </div>
+
+                                </div>
+                                <ul>
+                                    <li>Avilable Videos : 60</li>
+                                    <li>
+                                        <div class="text-right btn-holder">
+                                            <button mat-icon-button matTooltip="Add More Subjects">
+                                                <mat-icon aria-label="Add More Subjects">playlist_add</mat-icon>
+                                            </button>
+
+                                            <button mat-icon-button matTooltip="Edit Class" (click)="editClassDetails(class)">
+                                                <mat-icon aria-label="Edit Subject">edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button matTooltip="Delete Class">
+                                                <mat-icon aria-label="Delete Subject">delete_forever</mat-icon>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

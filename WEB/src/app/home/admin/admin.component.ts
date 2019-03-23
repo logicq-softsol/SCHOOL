@@ -39,13 +39,16 @@ export class AdminComponent implements OnInit {
   topicList: TopicDetail[] = [];
   topic: TopicDetail = new TopicDetail();
 
+  displayView: string = 'TOPIC';
 
   constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private homeService: HomeService, public dialogProfileImage: MatDialog, public snackBar: MatSnackBar, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
+
     if (this.authService.isAuthenticate) {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.loginUser = user;
+        this.displayView = 'TOPIC';
       });
       this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
         this.classList = data;
@@ -54,6 +57,28 @@ export class AdminComponent implements OnInit {
     }
   }
 
+
+  goToHome() {
+    if (this.loginUser.role == 'ADMIN') {
+      this.router.navigate(['/home/admin']);
+    }
+  }
+
+  viewClassList() {
+    this.displayView = 'CLASS';
+  }
+
+  viewSubjectList() {
+    this.displayView = 'SUBJECT';
+  }
+
+  viewAllChapterList() {
+    this.displayView = 'CHAPTER';
+  }
+
+  viewTopics(){
+    this.displayView='TOPIC';
+  }
   onClassChange(event) {
     let classDetails: ClassSetupDetail = this.classList.find(cls => cls.displayName == event);
     this.showClassSubjectList(classDetails);
@@ -474,18 +499,28 @@ export class ChapterDetailDialog {
   constructor(public dialogRef: MatDialogRef<ChapterDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService) {
     this.operationType = data.type;
     this.classList = data.classList;
+
     if ("ADD" == data.type) {
       this.chapterSetup = new ChapterSetupDetail();
     } else {
-      this.chapterSetup = data.chapterDetail;
+      this.chapterSetup = data.chapter;
+      let classDetail: ClassSetupDetail = this.classList.find(x => x.id == this.chapterSetup.classId);
+      this.className = classDetail.displayName;
+      this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
+        this.subjectList = data;
+        let subject: SubjectSetupDetail = this.subjectList.find(x => x.id == this.chapterSetup.subjectId);
+        this.subjectName = subject.displayName;
+      });
     }
   }
 
 
   onClassChange(value) {
     this.className = value;
-    let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == this.className);
+    let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == value);
     this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
+      this.subjectList = [];
+      this.subjectName = '';
       this.subjectList = data;
     });
   }
@@ -494,6 +529,7 @@ export class ChapterDetailDialog {
   onSubjectChange(value) {
     this.subjectName = value;
   }
+
   onNoClick(): void {
     this.dialogRef.close();
   }

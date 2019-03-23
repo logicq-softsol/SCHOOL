@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <select class="form-control" (change)="onClassChange($event.target.value)">
+                    <select class="form-control" (change)="onClassChange($event.target.value)" [value]="className">
                         <option value="">Select Class</option>
                         <option *ngFor="let class of classList">{{class.displayName}}</option>
                     </select>
@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <select class="form-control" (change)="onSubjectChange($event.target.value)">
+                    <select class="form-control" (change)="onSubjectChange($event.target.value)" [value]="subjectName">
                         <option value="">Select Subject</option>
                         <option *ngFor="let subject of subjectList">{{subject.displayName}}</option>
                     </select>

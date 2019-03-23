@@ -30,8 +30,12 @@ export class TopicComponent implements OnInit {
   chapter: ChapterSetupDetail = new ChapterSetupDetail();
 
 
+
   topicList: TopicDetail[] = [];
   topic: TopicDetail = new TopicDetail();
+
+  favorites: Favorites[] = [];
+  favTopicList: TopicDetail[] = [];
 
   selectImage: File;
   imageUrl: string;
@@ -39,27 +43,38 @@ export class TopicComponent implements OnInit {
   className: string;
   subjectName: string;
   chapterName: string;
-
+  displayView: string = 'TOPIC';
 
   constructor(
     private contentMgmntService: ContentMgmntService,
     private authService: AuthenticationService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar, private router: Router) { }
+    public snackBar: MatSnackBar, private router: Router) {
+  }
 
   ngOnInit() {
+
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
+      this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
+        this.classList = data;
+      });
     });
 
     this.contentMgmntService.getClassSetupDetail().subscribe((classSet: ClassSetupDetail) => {
       this.classSetup = classSet;
       this.className = classSet.displayName;
-      
+      this.contentMgmntService.getSubjectListForClass(this.classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
+        this.classSubjectList = subjectList;
+      });
+
       this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
         this.subjectSetup = subject;
         this.subjectName = subject.displayName;
+        this.contentMgmntService.getChapterListForSubjectAndClass(this.subjectSetup.classId, this.subjectSetup.id).subscribe((chapterList: ChapterSetupDetail[]) => {
+          this.chapterList = chapterList;
+        });
       });
 
       this.contentMgmntService.getChapterSetupDetail().subscribe((chapter: ChapterSetupDetail) => {
@@ -71,19 +86,49 @@ export class TopicComponent implements OnInit {
       });
     });
 
-
-
-    this.loadSearcDetails();
-
-
   }
 
+  viewMyFavorites() {
+    this.favTopicList=[];
+    this.displayView = 'FAVTOPIC';
+    this.contentMgmntService.getFavorites().subscribe((favorites: Favorites[]) => {
+      this.favorites = favorites;
+      for (let fav of this.favorites) {
+        let topic: TopicDetail = this.topicList.find(x => x.id == fav.typeValue);
+        this.favTopicList.push(topic);
+      }
+    });
+  }
+
+
+  goToHome() {
+    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
+      this.classList = data;
+    });
+    this.displayView = 'CLASS';
+  }
+
+  viewSubjectListForClass(value) {
+    this.onClassChange(value);
+    this.displayView = 'SUBJECT';
+  }
+
+  viewChapterListForSubject(value) {
+    this.onSubjectChange(value);
+    this.displayView = 'CHAPTER';
+  }
+
+  viewTopicListForChapter(value) {
+    this.onChapterChange(value);
+    this.displayView = 'TOPIC';
+  }
 
   onClassChange(value) {
     let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == value);
     this.className = classDetail.displayName;
     this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
       this.classSubjectList = data;
+      this.topicList = [];
     });
   }
 
@@ -93,6 +138,7 @@ export class TopicComponent implements OnInit {
     this.subjectName = subject.displayName;
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
       this.chapterList = data;
+      this.topicList = [];
     });
   }
 
@@ -100,22 +146,12 @@ export class TopicComponent implements OnInit {
     let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == value);
     this.chapterName = chapter.displayName;
     this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
+      this.topicList = [];
       this.topicList = topics;
     });
   }
 
 
-  loadSearcDetails() {
-    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-      this.classList = data;
-    });
-    this.contentMgmntService.getSubjectListForClass(this.classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
-      this.classSubjectList = subjectList;
-    });
-    this.contentMgmntService.getChapterListForSubjectAndClass(this.subjectSetup.classId, this.subjectSetup.id).subscribe((chapterList: ChapterSetupDetail[]) => {
-      this.chapterList = chapterList;
-    });
-  }
 
   markFavorites(topic: TopicDetail) {
     let favorite: Favorites = new Favorites();
