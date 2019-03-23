@@ -6,23 +6,23 @@
           <form>
             <div class="form-group mb-4">
               <label for="exampleInputEmail1">Select Class</label>
-              <select class="form-control" (change)="onClassChange($event.target.value)">
-                <option value="">Select</option>
-                <option [value]="classSetup.displayName" *ngFor="let class of classList">{{class.displayName}}</option>
+              <select class="form-control" (change)="onClassChange($event.target.value)" [value]="className">
+                <option value="">Select Class</option>
+                <option  *ngFor="let class of classList">{{class.displayName}}</option>
               </select>
             </div>
             <div class="form-group mb-4">
               <label for="exampleInputEmail1">Select Subject</label>
-              <select class="form-control" (change)="onSubjectChange($event.target.value)">
+              <select class="form-control" (change)="onSubjectChange($event.target.value)" [value]="subjectName">
                 <option value="">Select</option>
-                <option [value]="subjectSetup.displayName" *ngFor="let subejct of classSubjectList">{{subejct.displayName}}</option>
+                <option *ngFor="let subejct of classSubjectList">{{subejct.displayName}}</option>
               </select>
             </div>
             <div class="form-group mb-4">
               <label for="exampleInputEmail1">Select Chapter</label>
-              <select class="form-control" (change)="onChapterChange($event.target.value)">
+              <select class="form-control" (change)="onChapterChange($event.target.value)" [value]="chapterName">
                 <option value="">Select</option>
-                <option [value]="chapter.displayName" *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
+                <option  *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
               </select>
             </div>
             <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">

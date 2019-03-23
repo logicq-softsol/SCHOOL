@@ -36,6 +36,10 @@ export class TopicComponent implements OnInit {
   selectImage: File;
   imageUrl: string;
 
+  className: string;
+  subjectName: string;
+  chapterName: string;
+
 
   constructor(
     private contentMgmntService: ContentMgmntService,
@@ -45,21 +49,39 @@ export class TopicComponent implements OnInit {
     public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
-
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
     });
-   
-    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
-      this.classList = data;
+
+    this.contentMgmntService.getClassSetupDetail().subscribe((classSet: ClassSetupDetail) => {
+      this.classSetup = classSet;
+      this.className = classSet.displayName;
+      
+      this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
+        this.subjectSetup = subject;
+        this.subjectName = subject.displayName;
+      });
+
+      this.contentMgmntService.getChapterSetupDetail().subscribe((chapter: ChapterSetupDetail) => {
+        this.chapter = chapter;
+        this.chapterName = chapter.displayName;
+        this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
+          this.topicList = topics;
+        });
+      });
     });
 
-    this.showTopicList();
+
+
+    this.loadSearcDetails();
+
+
   }
 
 
   onClassChange(value) {
     let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == value);
+    this.className = classDetail.displayName;
     this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
       this.classSubjectList = data;
     });
@@ -68,6 +90,7 @@ export class TopicComponent implements OnInit {
 
   onSubjectChange(value) {
     let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == value);
+    this.subjectName = subject.displayName;
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
       this.chapterList = data;
     });
@@ -75,16 +98,22 @@ export class TopicComponent implements OnInit {
 
   onChapterChange(value) {
     let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == value);
-    this.contentMgmntService.changeChapterSetupDetail(chapter);
-    this.showTopicList();
+    this.chapterName = chapter.displayName;
+    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
+      this.topicList = topics;
+    });
   }
 
 
-  showTopicList() {
-    this.contentMgmntService.getChapterSetupDetail().subscribe((chapter: ChapterSetupDetail) => {
-      this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
-        this.topicList = topics;
-      });
+  loadSearcDetails() {
+    this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
+      this.classList = data;
+    });
+    this.contentMgmntService.getSubjectListForClass(this.classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
+      this.classSubjectList = subjectList;
+    });
+    this.contentMgmntService.getChapterListForSubjectAndClass(this.subjectSetup.classId, this.subjectSetup.id).subscribe((chapterList: ChapterSetupDetail[]) => {
+      this.chapterList = chapterList;
     });
   }
 
@@ -108,7 +137,7 @@ export class TopicComponent implements OnInit {
       this.openErrorSnackBar("Topic  remove from your favorite.", "CLOSE");
     });
   }
-  
+
 
   playLessonForTopic(topic: TopicDetail) {
     this.contentMgmntService.playLesson(topic).subscribe((data) => {

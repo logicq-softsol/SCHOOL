@@ -1,17 +1,8 @@
-<h3 class="small-title mb-3">Chapter List</h3>
-<div class="container mt-4 recent-search">
+<h6 class="small-title">Chapter List For {{subject.displayName}}</h6>
+<div class="container recent-search">
     <div class="row clearfix">
         <div class="col-md-4" *ngFor="let chapter of chapterList">
-            <a (click)="showTopicList(chapter)">
-                <div class="card result-list">
-                    <div class="card-header">
-                        {{chapter.displayName}}
-                    </div>
-                    <div class="card-body">
-                        {{chapter.description}}
-                    </div>
-                </div>
-            </a>
+            <button mat-raised-button color="accent" (click)="veiwChaptersTopic(chapter)"><b>{{chapter.displayName}}</b></button>
         </div>
     </div>
 </div>

@@ -348,17 +348,18 @@ export class AdminComponent implements OnInit {
   }
 
 
-  viewChapterListForSubject() {
+  viewChapterListForSubject(subject: SubjectSetupDetail) {
     const dialogRef = this.dialog.open(ChapterListDialog, {
       width: '600px',
       data: {
-        type: "DELETE",
-        chapterList: this.chapterList
+        subject: subject
       }
     });
 
     dialogRef.componentInstance.chapterListEventEmmiter.subscribe((chapter: ChapterSetupDetail) => {
       this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
+        this.chapterList = [];
+        this.chapterList.push(chapter);
         this.topicList = topics;
       });
     });
@@ -535,7 +536,10 @@ export class TopicDetailDialog {
     if ("ADD" == data.type) {
       this.topicDetail = new TopicDetail();
     } else {
-      this.topicDetail = data.tpoic;
+      this.topicDetail = data.topic;
+      let classDetail: ClassSetupDetail = this.classList.find(x => x.id == this.topicDetail.classId);
+      this.className = classDetail.displayName;
+      this.onClassChange(this.className);
     }
   }
 
@@ -546,6 +550,9 @@ export class TopicDetailDialog {
     let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == this.className);
     this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
       this.subjectList = data;
+      let subject: SubjectSetupDetail = this.subjectList.find(x => x.id == this.topicDetail.subjectId);
+      this.subjectName = subject.displayName;
+      this.onSubjectChange(this.subjectName);
     });
   }
 
@@ -555,6 +562,9 @@ export class TopicDetailDialog {
     let subject: SubjectSetupDetail = this.subjectList.find(x => x.displayName == this.subjectName);
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
       this.chapterList = data;
+      let chapter: ChapterSetupDetail = this.chapterList.find(x => x.id == this.topicDetail.chapterId);
+      this.chapterName = chapter.displayName;
+      this.onChapterChange(this.chapterName);
     });
   }
 
@@ -592,19 +602,21 @@ export class TopicDetailDialog {
 export class ChapterListDialog {
   chapterListEventEmmiter = new EventEmitter();
   chapterList: ChapterSetupDetail[] = [];
-  chapter: ChapterSetupDetail = new ChapterSetupDetail();
+  subject: SubjectSetupDetail = new SubjectSetupDetail();
 
-
-  constructor(public dialogRef: MatDialogRef<ChapterDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any) {
-
+  constructor(public dialogRef: MatDialogRef<ChapterDetailDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService) {
+    this.subject = data.subject;
+    this.contentMgmntService.getChapterListForSubjectAndClass(this.subject.classId, this.subject.id).subscribe((data: ChapterSetupDetail[]) => {
+      this.chapterList = data;
+    });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  veiwChaptersTopic() {
-    this.chapterListEventEmmiter.emit(this.chapter);
+  veiwChaptersTopic(chapter: ChapterSetupDetail) {
+    this.chapterListEventEmmiter.emit(chapter);
     this.onNoClick();
   }
 

@@ -7,62 +7,54 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <select class="form-control" (change)="onClassChange($event.target.value)">
-                    <option value="">Select Class</option>
+                <select class="form-control" (change)="onClassChange($event.target.value)" [value]="className">
+                    <option>Select Class</option>
                     <option *ngFor="let class of classList">{{class.displayName}}</option>
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <select class="form-control" (change)="onSubjectChange($event.target.value)">
-                    <option value="">Select Subject</option>
-                    <option *ngFor="let subject of subjectList">{{subject.displayName}}</option>
+                <select class="form-control" (change)="onSubjectChange($event.target.value)"  [value]="subjectName">
+                    <option>Select Subject</option>
+                    <option  *ngFor="let subject of subjectList">{{subject.displayName}}</option>
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <select class="form-control" (change)="onChapterChange($event.target.value)">
-                    <option value="">Select Chapter</option>
-                    <option *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
+                <select class="form-control" (change)="onChapterChange($event.target.value)"  [value]="chapterName">
+                    <option>Select Chapter</option>
+                    <option  *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
                 </select>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <mat-form-field appearance="outline" class="form-control">
+        <div class="col-md-6 form-group">
+                <mat-form-field appearance="outline" class="example-full-width">
                     <mat-label>Topic Name</mat-label>
                     <input matInput placeholder="Topic Name" [(ngModel)]="topicDetail.displayName" name="displayName"
                         required>
                 </mat-form-field>
-            </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <mat-form-field appearance="outline" class="form-control">
+        <div class="col-md-6 form-group">
+                <mat-form-field appearance="outline" class="example-full-width">
                     <mat-label>Description</mat-label>
                     <textarea matInput placeholder="Description" [(ngModel)]="topicDetail.description" name="description"
                         required></textarea>
                 </mat-form-field>
-            </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <mat-form-field appearance="outline" class="form-control">
+        <div class="col-md-12 form-group">
+                <mat-form-field appearance="outline" class="example-full-width">
                     <mat-label>Video path</mat-label>
                     <input matInput placeholder="Video Path" [(ngModel)]="topicDetail.playFileURL" name="videofilepath"
                         required>
                 </mat-form-field>
-            </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
+        <div class="col-md-12 form-group">
                 <mat-form-field appearance="outline" class="example-full-width">
                     <mat-label>Icon Path</mat-label>
                     <input matInput placeholder="Icon Path" [(ngModel)]="topicDetail.icon" name="icon" required>
                 </mat-form-field>
-            </div>
         </div>
         <div class="col-md-12">
             <div mat-dialog-actions class="host-table-header">

@@ -43,6 +43,10 @@ export class ContentMgmntComponent implements OnInit {
   selectImage: File;
   imageUrl: string;
 
+  className: string;
+  subjectName: string;
+  chapterName: string;
+
 
 
   constructor(private homeService: HomeService,
@@ -61,6 +65,7 @@ export class ContentMgmntComponent implements OnInit {
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
       this.classList = data;
       this.classSetup = this.classList[0];
+      this.className = this.classSetup.displayName;
       this.onDefaultClassChange(this.classSetup);
     });
 
@@ -79,12 +84,15 @@ export class ContentMgmntComponent implements OnInit {
 
 
   onDefaultClassChange(classSetup: ClassSetupDetail) {
+    this.contentMgmntService.changeClassSetupDetail(classSetup);
     this.showClassSubjectList(classSetup);
   }
 
 
   onClassChange(value) {
     let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == value);
+    this.contentMgmntService.changeClassSetupDetail(classDetail);
+    this.classSetup=classDetail;
     this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
       this.classSubjectList = data;
     });
@@ -93,6 +101,8 @@ export class ContentMgmntComponent implements OnInit {
 
   onSubjectChange(value) {
     let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == value);
+    this.contentMgmntService.changeSubjectDetail(subject);
+    this.subjectSetup=subject;
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
       this.chapterList = data;
     });
@@ -101,10 +111,15 @@ export class ContentMgmntComponent implements OnInit {
   onChapterChange(value) {
     let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == value);
     this.contentMgmntService.changeChapterSetupDetail(chapter);
+    this.chapter=chapter;
 
   }
 
   searchTopicDetails() {
+    this.contentMgmntService.changeClassSetupDetail(this.classSetup);
+    this.contentMgmntService.changeSubjectDetail(this.subjectSetup);
+    this.contentMgmntService.changeChapterSetupDetail(this.chapter);
+  
     if (this.user.role == 'TEACHER') {
       this.router.navigate(['/home/teacher/topics']);
     }
@@ -114,6 +129,8 @@ export class ContentMgmntComponent implements OnInit {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.classSubjectList = subjectList;
       this.subjectSetup = this.classSubjectList[0];
+      this.subjectName = this.subjectSetup.displayName;
+      this.contentMgmntService.changeSubjectDetail(this.subjectSetup);
       this.viewChapterList(this.subjectSetup);
     });
   }
@@ -122,6 +139,8 @@ export class ContentMgmntComponent implements OnInit {
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
       this.chapterList = chapters;
       this.chapter = this.chapterList[0];
+      this.chapterName = this.chapter.displayName;
+      this.contentMgmntService.changeChapterSetupDetail(this.chapter);
       this.showTopicList(this.chapter);
     });
   }
