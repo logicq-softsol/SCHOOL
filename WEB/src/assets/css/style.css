@@ -448,25 +448,10 @@ a {
   margin-top: 10px;
 }
 
-footer {
-  background: #212124;
-  padding: 50px 0;
-  position: relative;
-}
-
-.footer-content {
-  margin-top: 33px;
-}
-
-.footer-txt h3 {
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 14px;
-}
-
-.footer-txt p {
-  color: #696969;
-  font-size: 16px;
+.footer-container .container-fluid {
+  border-top: 1px solid #b3b1b1;
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
 
 .link-more {

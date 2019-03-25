@@ -10,6 +10,17 @@ import { TopicDetail } from '../../../public/model/topic-detail';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ContentMgmntService } from '../../service/content-mgmnt.service';
 import { Favorites } from '../../../public/model/favorite';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
+export class SearchDetails {
+  id: number;
+  type: string;
+  displayName: string;
+  icon: string;
+  color: string;
+}
 
 
 @Component({
@@ -45,6 +56,10 @@ export class TopicComponent implements OnInit {
   chapterName: string;
   displayView: string = 'TOPIC';
 
+  searchCtrl = new FormControl();
+  filteredSearched: Observable<SearchDetails[]>;
+  searched: SearchDetails[] = [];
+
   constructor(
     private contentMgmntService: ContentMgmntService,
     private authService: AuthenticationService,
@@ -59,6 +74,15 @@ export class TopicComponent implements OnInit {
       this.user = user;
       this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
         this.classList = data;
+        for (let clas of this.classList) {
+          let search: SearchDetails = new SearchDetails();
+          search.displayName = clas.displayName;
+          search.id = clas.id;
+          search.icon = clas.icon;
+          search.type = 'CLASS';
+          search.color = 'accent';
+          this.searched.push(search);
+        }
       });
     });
 
@@ -67,6 +91,16 @@ export class TopicComponent implements OnInit {
       this.className = classSet.displayName;
       this.contentMgmntService.getSubjectListForClass(this.classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
         this.classSubjectList = subjectList;
+        for (let subj of this.classSubjectList) {
+          let search: SearchDetails = new SearchDetails();
+          search.displayName = subj.displayName;
+          search.id = subj.id;
+          search.icon = subj.icon;
+          search.type = 'SUBJECT';
+          search.color = 'primary';
+          this.searched.push(search);
+        }
+
       });
 
       this.contentMgmntService.getSubjectDetail().subscribe((subject: SubjectSetupDetail) => {
@@ -74,6 +108,15 @@ export class TopicComponent implements OnInit {
         this.subjectName = subject.displayName;
         this.contentMgmntService.getChapterListForSubjectAndClass(this.subjectSetup.classId, this.subjectSetup.id).subscribe((chapterList: ChapterSetupDetail[]) => {
           this.chapterList = chapterList;
+          for (let chapter of this.chapterList) {
+            let search: SearchDetails = new SearchDetails();
+            search.displayName = chapter.displayName;
+            search.id = chapter.id;
+            search.icon = chapter.icon;
+            search.type = 'CHAPTER';
+            search.color = 'warn';
+            this.searched.push(search);
+          }
         });
       });
 
@@ -82,14 +125,35 @@ export class TopicComponent implements OnInit {
         this.chapterName = chapter.displayName;
         this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
           this.topicList = topics;
+          for (let topic of this.topicList) {
+            let search: SearchDetails = new SearchDetails();
+            search.displayName = topic.displayName;
+            search.id = topic.id;
+            search.icon = topic.icon;
+            search.type = 'CHAPTER';
+            search.color = '';
+            this.searched.push(search);
+          }
         });
       });
     });
 
+
+    this.filteredSearched = this.searchCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(search => search ? this._filteredSearched(search) : this.searched.slice())
+      );
+  }
+
+
+  private _filteredSearched(value: string): SearchDetails[] {
+    const filterValue = value.toLowerCase();
+    return this.searched.filter(searc => searc.displayName.toLowerCase().indexOf(filterValue) === 0);
   }
 
   viewMyFavorites() {
-    this.favTopicList=[];
+    this.favTopicList = [];
     this.displayView = 'FAVTOPIC';
     this.contentMgmntService.getFavorites().subscribe((favorites: Favorites[]) => {
       this.favorites = favorites;
@@ -125,30 +189,42 @@ export class TopicComponent implements OnInit {
 
   onClassChange(value) {
     let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == value);
-    this.className = classDetail.displayName;
-    this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
-      this.classSubjectList = data;
-      this.topicList = [];
-    });
+    this.topicList = [];
+    this.subjectName = '';
+    this.chapterName = '';
+    if (null != classDetail) {
+      this.className = classDetail.displayName;
+      this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
+        this.classSubjectList = data;
+        this.topicList = [];
+      });
+    }
   }
 
 
   onSubjectChange(value) {
     let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == value);
-    this.subjectName = subject.displayName;
-    this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
-      this.chapterList = data;
-      this.topicList = [];
-    });
+    this.topicList = [];
+    this.chapterName = '';
+    if (null != subject) {
+      this.subjectName = subject.displayName;
+      this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
+        this.chapterList = data;
+      });
+    }
+
   }
 
   onChapterChange(value) {
+    this.topicList = [];
     let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == value);
-    this.chapterName = chapter.displayName;
-    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
-      this.topicList = [];
-      this.topicList = topics;
-    });
+    if (null != chapter) {
+      this.chapterName = chapter.displayName;
+      this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
+        this.topicList = topics;
+      });
+    }
+
   }
 
 

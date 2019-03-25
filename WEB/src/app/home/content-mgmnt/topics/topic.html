@@ -1,8 +1,8 @@
-<section>
-  <div class="container">
-    <div class="row clearfix">
-      <div class="col-md-3 d-flex align-items-center search-container">
-        <div class="home-search pt-3">
+<section class="main-wrapper">
+
+    
+      <div class="left-menu">
+        <div class="select-class">
           <form>
             <div class="form-group">
               <label for="exampleInputEmail1">Select Class</label>
@@ -31,7 +31,7 @@
           </form>
         </div>
       </div>
-      <div class="col-md-9 body-content">
+      <div class="body-content">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a [routerLink]="" (click)="goToHome()"><strong>Home</strong></a></li>
@@ -47,55 +47,70 @@
           <div class="primary-action mb-3">
             <div class="row clearfix">
               <div class="col-md-7 col-lg-6">
-
-
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Search for  class,subject,chapter and  topics " [matAutocomplete]="auto"
+                    [formControl]="searchCtrl">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let search of filteredSearched | async" [value]="search.displayName">
+                      <img class="example-option-img" aria-hidden [src]="search.icon" height="25">
+                      <span>{{search.displayName}}</span> |
+                      <mat-chip color="search.color">{{search.type}}</mat-chip>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <!--mat-icon>search</mat-icon>-->
               </div>
-              <div class="col-md-5 col-lg-6 text-right">
-                <button type="button" class="btn btn-warning" (click)="viewMyFavorites()">My Favorites</button>
-                <button type="button" class="btn btn-warning" (click)="mylastLesson()">Last Session</button>
+              <div class="col-md-5 col-lg-4 text-right">
+                <div class="example-button-row">
+                  <button mat-raised-button color="accent" (click)="viewMyFavorites()">My Favorites</button>
+                  <button mat-raised-button color="primary" (click)="mylastLesson()">Last Session</button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row clearfix wh-bg">
+          <div class="row">
 
-              <div class="col-md-12" *ngIf="displayView=='FAVTOPIC'">
+            <div class="col-md-12" *ngIf="displayView=='FAVTOPIC'">
+              <div class="wh-bg">
                   <div class="row">
-                    <div class="col-md-4 col-sm-6" *ngFor="let favTopic of favTopicList">
-                      <div class="book-tables waiter-list">
-                        <div class="media" (click)="playLessonForTopic(favTopic)">
-                          <div class="media-left">
-                            <img class="person-card-avatar" src="assets/images/class.jpg">
-                          </div>
-                          <div class="media-body">
-                            <h4 class="media-heading"><strong> {{favTopic.displayName}}</strong></h4>
-                          </div>
-                        </div>
-                        <ul>
-                          <li>
-                            <div class="text-left btn-holder">
-                              <button mat-icon-button matTooltip="Play Lesson" (click)="playLessonForTopic(favTopic)">
-                                <mat-icon aria-label="Play Lesson" color="primary">play_circle_filled_white</mat-icon>
-                              </button>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="text-right btn-holder">
-                              <button mat-icon-button matTooltip="I loved it!" (click)="markFavorites(topic)">
-                                <mat-icon aria-label="I loved it!" color="accent">thumb_up</mat-icon>
-                              </button>
-                            </div>
-                          </li>
-                        </ul>
+                <div class="col-md-4 col-sm-6" *ngFor="let favTopic of favTopicList">
+                  <div class="book-tables waiter-list">
+                    <div class="media" (click)="playLessonForTopic(favTopic)">
+                      <div class="media-left">
+                        <img class="person-card-avatar" src="assets/images/class.jpg">
+                      </div>
+                      <div class="media-body">
+                        <h4 class="media-heading"><strong> {{favTopic.displayName}}</strong></h4>
                       </div>
                     </div>
+                    <ul>
+                      <li>
+                        <div class="text-left btn-holder">
+                          <button mat-icon-button matTooltip="Play Lesson" (click)="playLessonForTopic(favTopic)">
+                            <mat-icon aria-label="Play Lesson" color="primary">play_circle_filled_white</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="text-right btn-holder">
+                          <button mat-icon-button matTooltip="I loved it!" (click)="markFavorites(topic)">
+                            <mat-icon aria-label="I loved it!" color="accent">thumb_up</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
+              </div>
+              </div>
+            </div>
 
 
 
 
             <div class="col-md-12" *ngIf="displayView=='TOPIC'">
-              <div class="row">
+              <div class="wh-bg">
+                  <div class="row">
                 <div class="col-md-4 col-sm-6" *ngFor="let topic of topicList">
                   <div class="book-tables waiter-list">
                     <div class="media" (click)="playLessonForTopic(topic)">
@@ -126,9 +141,11 @@
                 </div>
               </div>
             </div>
+            </div>
 
             <div class="col-md-12" *ngIf="displayView=='CHAPTER'">
-              <div class="row">
+              <div class="wh-bg">
+                  <div class="row">
                 <div class="col-md-4 col-sm-6" *ngFor="let chapter of chapterList">
                   <div class="book-tables waiter-list">
                     <div class="media">
@@ -136,29 +153,17 @@
                         <img class="person-card-avatar" src="assets/images/class.jpg">
                       </div>
                       <div class="media-body">
-                        <h4 class="media-heading"><strong>{{chapter.displayName}}</strong>
-                          <span class="asigned-table available">10 Topics</span> </h4>
+                        <h4 class="media-heading"><strong>{{chapter.displayName}}</strong></h4>
                       </div>
-
                     </div>
                     <ul>
-                      <li>
-                        <div class="text-left btn-holder">
-                          <button mat-icon-button matTooltip="Search Topic">
-                            <mat-icon aria-label="Search Topic" color="primary">image_search</mat-icon>
-                          </button>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="text-right btn-holder">
-                          <button mat-icon-button matTooltip="Chapter Notes">
-                            <mat-icon aria-label="Chapter Notes">note</mat-icon>
-                          </button>
-                        </div>
-                      </li>
+                      <button mat-stroked-button color="accent">10 Topics
+                        <i class="material-icons"> search</i>
+                      </button>
                     </ul>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
 
@@ -166,7 +171,8 @@
 
 
             <div class="col-md-12" *ngIf="displayView=='SUBJECT'">
-              <div class="row">
+              <div class="wh-bg">
+                  <div class="row">
                 <div class="col-md-4 col-sm-6" *ngFor="let subject of classSubjectList">
                   <div class="book-tables waiter-list">
                     <div class="media">
@@ -192,12 +198,14 @@
                   </div>
                 </div>
               </div>
+              </div>
             </div>
 
 
 
             <div class="col-md-12" *ngIf="displayView=='CLASS'">
-              <div class="row">
+              <div class="wh-bg">
+                  <div class="row">
                 <div class="col-md-4 col-sm-6" *ngFor="let class of classList">
                   <div class="book-tables waiter-list">
                     <div class="media">
@@ -224,9 +232,10 @@
                 </div>
               </div>
             </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+   
+
 </section>

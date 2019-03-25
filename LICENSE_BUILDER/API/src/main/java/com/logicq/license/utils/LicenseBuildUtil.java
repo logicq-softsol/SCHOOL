@@ -58,27 +58,27 @@ public class LicenseBuildUtil {
 	public String buildproductKey(LicenseDetails licenseDetail) throws Exception {
 		GenerateKeys gk = new GenerateKeys(1024);
 		gk.createKeys();
-		gk.writeToFile("KeyPair/publicKey", gk.getPublicKey().getEncoded());
-		gk.writeToFile("KeyPair/privateKey", gk.getPrivateKey().getEncoded());
+		gk.writeToFile(licenseDetail.getHostName() + "/KeyPair/publicKey", gk.getPublicKey().getEncoded());
+		gk.writeToFile(licenseDetail.getHostName() + "/KeyPair/privateKey", gk.getPrivateKey().getEncoded());
 		String licenseKey = buildKey(licenseDetail);
-		return encryptText(licenseKey, gk.getPrivateKey());
+		return encryptText(licenseKey, gk.getPrivateKey(), licenseDetail.getHostName());
 
 	}
 
-	public String encryptText(String plainText, PrivateKey privateKey) throws Exception {
+	public String encryptText(String plainText, PrivateKey privateKey, String hostName) throws Exception {
 		String orignalKey = plainText.replaceAll("-", "");
 		String encryptedText = licenseSecurityUtils.encryptText(orignalKey, privateKey);
-		generateLicenseFileAndEncrypt(encryptedText, plainText);
+		generateLicenseFileAndEncrypt(encryptedText, plainText, hostName);
 		return encryptedText;
 	}
 
-	private void generateLicenseFileAndEncrypt(String encryptedText, String plainText) {
+	private void generateLicenseFileAndEncrypt(String encryptedText, String plainText, String hostName) {
 		try {
-			FileOutputStream outputStream = new FileOutputStream("license.key");
+			FileOutputStream outputStream = new FileOutputStream(hostName + "/license.key");
 			outputStream.write(encryptedText.getBytes());
 			outputStream.close();
 
-			FileOutputStream plainStream = new FileOutputStream("license.txt");
+			FileOutputStream plainStream = new FileOutputStream(hostName +"/license.txt");
 			plainStream.write(plainText.getBytes());
 			plainStream.close();
 		} catch (Exception ex) {

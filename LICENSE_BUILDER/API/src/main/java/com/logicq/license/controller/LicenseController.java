@@ -102,9 +102,6 @@ public class LicenseController {
 		return new ResponseEntity<LicenseDetails>(licenseDetails, HttpStatus.BAD_REQUEST);
 	}
 
-	@GetMapping("/license/download/{hostname}")
-	public void downloadLicenseDetails(@PathVariable String hostname, HttpServletResponse response) {
-
-	}
+	
 
 }
