@@ -1,95 +1,82 @@
-<header class="container-fluid top-header d-flex align-items-center">
-    <div class="w-100">
-        <div class="row clearfix">
-            <div class="col-lg-12 ">
-                <a class="logo " href="#"><img src="assets/images/logo.png" alt=""></a>
-                <ul class="login-info">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+<div class="d-flex justify-content-center h-100">
+
+    <div class="card-container register">
+        <div class="login-conetnt">
+            <div class="card-header">
+                <h3>Sign Up</h3>
+                <div class="d-flex justify-content-end social_icon">
+                    <span><i class="fab fa-facebook-square"></i></span>
+                    <span><i class="fab fa-google-plus-square"></i></span>
+                    <span><i class="fab fa-twitter-square"></i></span>
+                </div>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="input-group form-group">
+                        <div class="col-md-6">
+                            <div class="input-group-prepend">
+                                <label class="input-label-text">User Name</label>
+                            </div>
+                            <input matInput class="form-control" placeholder="User Name" [(ngModel)]="login.userName" name="login.userName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group-prepend">
+                                <label class="input-label-text">Password</label>
+                            </div>
+                            <input  class="form-control" matInput placeholder="Password" [(ngModel)]="login.password" name="login.password">
+                        </div>
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="col-md-6">
+                            <div class="input-group-prepend">
+                                <label class="input-label-text">First Name</label>
+                            </div>
+                            <input matInput class="form-control" placeholder="First Name" [(ngModel)]="user.firstname" name="user.firstname" required>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group-prepend">
+                                <label class="input-label-text">Last Name</label>
+                            </div>
+                            <input  class="form-control" matInput placeholder="Last Name" [(ngModel)]="user.lastname" name="user.lastname" required>
+                        </div>
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="col-md-6">
+                            <div class="input-group-prepend">
+                                <label class="input-label-text">Email</label>
+                            </div>
+                            <input  class="form-control" matInput placeholder="Last Name" [(ngModel)]="user.email" name="user.email" required>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group-prepend">
+                                <label class="input-label-text">Phone</label>
+                            </div>
+                            <input matInput class="form-control" placeholder="Phone Number" [(ngModel)]="user.mobileno" name="user.mobileno" required>
+                        </div>
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="col-md-6">
+                            <mat-select placeholder="Role" [(ngModel)]="user.role" name="user.role">
+                                <mat-option *ngFor="let role of roles" [value]="role.value">
+                                    {{role.displayValue}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="button" class="btn float-right login_btn" (click)="confirmRegisterUser()">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center links">
+                    Don't have an account?<a href="#">Sign Up</a>
+                </div>
             </div>
         </div>
-    </div>
-</header>
-<div class="body-content">
-    <div class="content-area">
-        <div class="primary-action mb-3">
-            <div class="row clearfix">
-                <h4> Register New User </h4>
-            </div>
-        </div>
-    </div>
-    <div class="row clearfix">
-        <mat-card class="example-card">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="example-container">
-                        <mat-form-field appearance="outline">
-                            <mat-label>User Name</mat-label>
-                            <input matInput placeholder="User Name" [(ngModel)]="login.userName" name="login.userName"
-                                required>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="example-container">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Password</mat-label>
-                            <input matInput placeholder="Password" [(ngModel)]="login.password" name="login.password">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="example-container">
-                        <mat-select placeholder="Role" [(ngModel)]="user.role" name="user.role">
-                            <mat-option *ngFor="let role of roles" [value]="role.value">
-                                {{role.displayValue}}
-                            </mat-option>
-                        </mat-select>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="example-container">
-                        <mat-form-field appearance="outline">
-                            <mat-label>First Name</mat-label>
-                            <input matInput placeholder="First Name" [(ngModel)]="user.firstname" name="user.firstname"
-                                required>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="example-container">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Last Name</mat-label>
-                            <input matInput placeholder="Last Name" [(ngModel)]="user.lastname" name="user.lastname"
-                                required>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="example-container">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Mobile Number</mat-label>
-                            <input matInput placeholder="Last Name" [(ngModel)]="user.mobileno" name="user.mobileno"
-                                required>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="example-container">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Email</mat-label>
-                            <input matInput placeholder="Last Name" [(ngModel)]="user.email" name="user.email" required>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 col-lg-6 text-right pull-right">
-                <button type="button" class="btn btn-warning" mat-raised-button (click)="confirmRegisterUser()">
-                    Confirm Register</button>
-            </div>
-        </mat-card>
+
     </div>
 
 </div>

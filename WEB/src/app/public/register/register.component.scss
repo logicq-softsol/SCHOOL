@@ -1,17 +1,118 @@
-.example-container {
-    display: flex;
-    flex-direction: column;
+/* Made with love by Mutiullah Samim*/
+
+html,body{
+  background-image: url('/assets/images/school-bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
   }
   
-  .example-container > * {
-    width: 100%;
+  .container{
+  height: 100%;
+  align-content: center;
   }
-
-  .body-content{
-    margin-left:30px;
-    margin-right:30px;
-    margin-top:20px;
+  
+  .card-container{
+  height: 420px;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 400px;
+  position: relative;
   }
-  .btn{
-    margin-left:20px;
+  
+  .login-conetnt{
+  background-color: rgba(0,0,0,0.5) !important;
+    border-radius: 3px;
   }
+  
+  
+  .social_icon span{
+  font-size: 60px;
+  margin-left: 10px;
+  color: #FFC312;
+  }
+  
+  .social_icon span:hover{
+  color: white;
+  cursor: pointer;
+  }
+  
+  .card-header h3{
+  color: white;
+  }
+  
+  .social_icon{
+  position: absolute;
+  right: 20px;
+  top: -45px;
+  }
+  
+  .input-group-prepend span{
+  width: 50px;
+  background-color: #FFC312;
+  color: black;
+  border:0 !important;
+  }
+  
+  input:focus{
+  outline: 0 0 0 0  !important;
+  box-shadow: 0 0 0 0 !important;
+  
+  }
+  
+  .remember{
+  color: white;
+  }
+  
+  .remember input
+  {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  margin-right: 5px;
+  }
+  
+  .login_btn{
+  color: black;
+  background-color: #FFC312;
+  width: 100px;
+  }
+  
+  .login_btn:hover{
+  color: black;
+  background-color: white;
+  }
+  
+  .links{
+  color: white;
+  }
+  
+  .links a{
+  margin-left: 4px;
+  }
+  
+  .footer-logo {
+  height: 60px;
+  margin-top: 30px;
+  width: 400px;
+  color: #FFFFFF;
+  text-align: center;
+  }
+  
+  .footer-logo .small{
+  font-size:11px;
+  }
+  
+  .card-container.register{
+  width: 800px;
+  }
+  
+  .card-container.register .footer-logo {
+  width: 800px;
+  }
+  .input-label-text {
+    color: #fff;
+    font-size: 12px;
+  }
+  
