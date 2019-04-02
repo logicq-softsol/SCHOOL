@@ -18,8 +18,6 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 
 public class SchoolSecurityUtils {
-	private static final String TRANSFORMATION = "AES";
-	private static final String ALGORITHM = "RSA";
 
 	public PrivateKey getPrivate(String filename) throws Exception {
 		byte[] keyBytes = Files
@@ -30,9 +28,8 @@ public class SchoolSecurityUtils {
 	}
 
 	// https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
-	public PublicKey getPublic(String filename) throws Exception {
-		byte[] keyBytes = Files
-				.readAllBytes(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
+	public PublicKey getPublic(File publicKeyFile) throws Exception {
+		byte[] keyBytes = Files.readAllBytes(publicKeyFile.toPath());
 		X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory kf = KeyFactory.getInstance("RSA");
 		return kf.generatePublic(spec);
@@ -85,4 +82,30 @@ public class SchoolSecurityUtils {
 		return lines.get(0);
 	}
 
+	public String readLicenseKey(File licenseFolder) throws IOException {
+		List<String> lines = Files.readAllLines(findFileForKey(licenseFolder).toPath());
+		return lines.get(0);
+	}
+
+	public File readPublicKey(File licenseFolder) throws IOException {
+		return findFileForPublicKey(licenseFolder);
+	}
+
+	public File findFileForPublicKey(File folder) throws IOException {
+		for (final File fileEntry : folder.listFiles()) {
+			if (fileEntry.isFile() && "publicKey".equalsIgnoreCase(fileEntry.getName())) {
+				return fileEntry;
+			}
+		}
+		return null;
+	}
+
+	public File findFileForKey(File folder) throws IOException {
+		for (final File fileEntry : folder.listFiles()) {
+			if (fileEntry.isFile() && "license.key".equalsIgnoreCase(fileEntry.getName())) {
+				return fileEntry;
+			}
+		}
+		return null;
+	}
 }

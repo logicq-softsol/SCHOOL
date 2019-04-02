@@ -49,12 +49,12 @@ export class LoginComponent implements OnInit {
     this.storage.signOut();
     this.authService.authenticationState.next(false);
     if (this.authService.isAuthenticate) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['login']);
     }
   }
 
   registerUser(){
-    this.router.navigate(['/registeruser']);
+    this.router.navigate(['registeruser']);
   }
 
 }

@@ -52,7 +52,7 @@ public class LicenseController {
 	FileStorageService fileStorageService;
 
 	@RequestMapping(value = "/license", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SucessMessage> logout(@RequestBody LicenseDetails licenseDetails) throws Exception {
+	public ResponseEntity<SucessMessage> buildLicense(@RequestBody LicenseDetails licenseDetails) throws Exception {
 		LoginDetails loginDetail = licenseSecurityUtils.getUserFromSecurityContext();
 		if (null != loginDetail) {
 			LicenseDetails fetchLicensed = licenseDetailRepo.findByHostName(licenseDetails.getHostName());

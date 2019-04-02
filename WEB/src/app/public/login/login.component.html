@@ -1,3 +1,4 @@
+<body>
 <div class="container">
 	<div class="d-flex justify-content-center h-100">
 		
@@ -15,14 +16,14 @@
 				<form>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-user"></i></span>
+							<span class="input-group-text"><i class="material-icons">account_box</i></span>
 						</div>
-						<input  class="form-control" matInput placeholder="Username" [(ngModel)]="username" required>
+						<input matInput  type="text" class="form-control"  placeholder="Username" [(ngModel)]="username" name="username"  required>
 						
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-key"></i></span>
+							<span class="input-group-text"><i class="material-icons">vpn_key</i></span>
 						</div>
 						<input matInput type="password" class="form-control" placeholder="password" [(ngModel)]="password" name="password" required>
 					</div>
@@ -36,7 +37,7 @@
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					Don't have an account?<a href="" (click)="registerUser()">Sign Up</a>
+					Don't have an account?<a  [routerLink]="['/registeruser']" (click)="registerUser()">Sign Up</a>
 				</div>
 				<div class="d-flex justify-content-center">
 					<a href="#">Forgot your password?</a>
@@ -49,3 +50,4 @@
 
 	</div>
 </div>
+</body>

@@ -29,24 +29,22 @@ public class LicenseBuildUtil {
 		StringBuilder sb = new StringBuilder();
 		if (!StringUtils.isEmpty(licenseDetail.getHostName())) {
 			if (licenseDetail.getHostName().length() >= 4) {
-				String hostName = licenseDetail.getHostName().substring(licenseDetail.getHostName().length() - 4);
-				sb.append(hostName);
+				String generateHostKey = String.format("%04d", rng.nextInt(10000));
+				sb.append(generateHostKey);
 				sb.append("-");
 			}
 		}
 
 		if (!StringUtils.isEmpty(licenseDetail.getProductName())) {
 			if (licenseDetail.getProductName().length() >= 4) {
-				String productName = licenseDetail.getProductName()
-						.substring(licenseDetail.getProductName().length() - 4);
-				sb.append(productName);
+				String generateProductKey = String.format("%04d", rng.nextInt(10000));
+				sb.append(generateProductKey);
 				sb.append("-");
 			}
 		}
-		if (licenseDetail.getValidityDay() > 0000) {
-			String validityDay = "0000" + licenseDetail.getValidityDay();
-			String day = validityDay.substring(validityDay.length() - 4);
-			sb.append(day);
+		if (licenseDetail.getValidityDay() > 0000 ) {
+			String generateVaidityKey = String.format("%04d", rng.nextInt(10000));
+			sb.append(generateVaidityKey);
 			sb.append("-");
 			String generateKey = String.format("%04d", rng.nextInt(10000));
 			sb.append(generateKey);
@@ -58,8 +56,8 @@ public class LicenseBuildUtil {
 	public String buildproductKey(LicenseDetails licenseDetail) throws Exception {
 		GenerateKeys gk = new GenerateKeys(1024);
 		gk.createKeys();
-		gk.writeToFile(licenseDetail.getHostName() + "/KeyPair/publicKey", gk.getPublicKey().getEncoded());
-		gk.writeToFile(licenseDetail.getHostName() + "/KeyPair/privateKey", gk.getPrivateKey().getEncoded());
+		gk.writeToFile("edusure/license/"+licenseDetail.getHostName() + "/KeyPair/publicKey", gk.getPublicKey().getEncoded());
+		gk.writeToFile("edusure/license/"+licenseDetail.getHostName() + "/KeyPair/privateKey", gk.getPrivateKey().getEncoded());
 		String licenseKey = buildKey(licenseDetail);
 		return encryptText(licenseKey, gk.getPrivateKey(), licenseDetail.getHostName());
 
@@ -74,11 +72,11 @@ public class LicenseBuildUtil {
 
 	private void generateLicenseFileAndEncrypt(String encryptedText, String plainText, String hostName) {
 		try {
-			FileOutputStream outputStream = new FileOutputStream(hostName + "/license.key");
+			FileOutputStream outputStream = new FileOutputStream("edusure/license/"+hostName + "/license.key");
 			outputStream.write(encryptedText.getBytes());
 			outputStream.close();
 
-			FileOutputStream plainStream = new FileOutputStream(hostName +"/license.txt");
+			FileOutputStream plainStream = new FileOutputStream("edusure/license/"+hostName +"/license.txt");
 			plainStream.write(plainText.getBytes());
 			plainStream.close();
 		} catch (Exception ex) {

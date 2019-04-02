@@ -4,6 +4,6 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://127.0.0.1:8081/',
-  socketUrl: 'http://127.0.0.1:8081/socket'
+  baseUrl: 'http://127.0.0.1:8080/school/',
+  socketUrl: 'http://127.0.0.1:8080/school/socket'
 };

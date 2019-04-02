@@ -6,7 +6,8 @@
 	<groupId>com.logicq.school</groupId>
 	<artifactId>school</artifactId>
 	<version>0.0.1</version>
-	<packaging>jar</packaging>
+	<!-- packaging>jar</packagin -->
+	<packaging>war</packaging>
 	<name>school</name>
 
 	<description>LogicQ project for School Content</description>
@@ -48,9 +49,13 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.4.197</version>
 		</dependency>
 
 		<dependency>

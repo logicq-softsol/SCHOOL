@@ -57,10 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.anonymous().and().servletApi().and().authorizeRequests()
 				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
-						"/**/*.css", "/**/*.js")
+						"/**/*.css", "/**/*.js", "/h2-console/**")
 				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				// Allow anonymous logins
-				.antMatchers("/api/activateProduct", "/api/login","/api/validateProduct","/api/userRegister").permitAll()
+				.antMatchers("/api/activateProduct", "/api/login", "/api/validateProduct", "/api/userRegister")
+				.permitAll()
 
 				// All other request need to be authenticated
 				.anyRequest().authenticated().and()
@@ -68,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// Custom Token based authentication based on the header previously given to the
 				// client
 				.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		http.headers().frameOptions().disable();
 
 	}
 

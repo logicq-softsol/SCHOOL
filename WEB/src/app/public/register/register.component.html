@@ -1,82 +1,91 @@
-<div class="d-flex justify-content-center h-100">
+<body>
+    <div class="d-flex justify-content-center h-100">
 
-    <div class="card-container register">
-        <div class="login-conetnt">
-            <div class="card-header">
-                <h3>Sign Up</h3>
-                <div class="d-flex justify-content-end social_icon">
-                    <span><i class="fab fa-facebook-square"></i></span>
-                    <span><i class="fab fa-google-plus-square"></i></span>
-                    <span><i class="fab fa-twitter-square"></i></span>
+        <div class="card-container register">
+            <div class="login-conetnt">
+                <div class="card-header">
+                    <h3>Sign Up</h3>
+                    <div class="d-flex justify-content-end social_icon">
+                        <span><i class="fab fa-facebook-square"></i></span>
+                        <span><i class="fab fa-google-plus-square"></i></span>
+                        <span><i class="fab fa-twitter-square"></i></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="input-group form-group">
+                            <div class="col-md-4">
+                                <div class="input-group-prepend">
+                                    <label class="input-label-text">User Name</label>
+                                </div>
+                                <input matInput class="form-control" placeholder="User Name" [(ngModel)]="login.userName"
+                                    name="login.userName" required>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group-prepend">
+                                    <label class="input-label-text">Password</label>
+                                </div>
+                                <input class="form-control" matInput placeholder="Password" [(ngModel)]="login.password"
+                                    name="login.password" required>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group-prepend">
+                                    <label class="input-label-text">Role</label>
+                                </div>
+                                <mat-select placeholder="Role" [(ngModel)]="user.role" name="user.role" required class="form-control">
+                                    <mat-option *ngFor="let role of roles" [value]="role.value">
+                                        {{role.displayValue}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="col-md-6">
+                                <div class="input-group-prepend">
+                                    <label class="input-label-text">First Name</label>
+                                </div>
+                                <input matInput class="form-control" placeholder="First Name" [(ngModel)]="user.firstname"
+                                    name="user.firstname" required>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group-prepend">
+                                    <label class="input-label-text">Last Name</label>
+                                </div>
+                                <input class="form-control" matInput placeholder="Last Name" [(ngModel)]="user.lastname"
+                                    name="user.lastname" required>
+                            </div>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="col-md-6">
+                                <div class="input-group-prepend">
+                                    <label class="input-label-text">Email</label>
+                                </div>
+                                <input class="form-control" matInput placeholder="Last Name" [(ngModel)]="user.email"
+                                    name="user.email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group-prepend">
+                                    <label class="input-label-text">Phone</label>
+                                </div>
+                                <input matInput class="form-control" placeholder="Phone Number" [(ngModel)]="user.mobileno"
+                                    name="user.mobileno" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn float-right login_btn" (click)="confirmRegisterUser()">Register</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        Already have an account?<a [routerLink]="['login']">Login</a>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-                <form>
-                    <div class="input-group form-group">
-                        <div class="col-md-6">
-                            <div class="input-group-prepend">
-                                <label class="input-label-text">User Name</label>
-                            </div>
-                            <input matInput class="form-control" placeholder="User Name" [(ngModel)]="login.userName" name="login.userName" required>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group-prepend">
-                                <label class="input-label-text">Password</label>
-                            </div>
-                            <input  class="form-control" matInput placeholder="Password" [(ngModel)]="login.password" name="login.password">
-                        </div>
-                    </div>
-                    <div class="input-group form-group">
-                        <div class="col-md-6">
-                            <div class="input-group-prepend">
-                                <label class="input-label-text">First Name</label>
-                            </div>
-                            <input matInput class="form-control" placeholder="First Name" [(ngModel)]="user.firstname" name="user.firstname" required>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group-prepend">
-                                <label class="input-label-text">Last Name</label>
-                            </div>
-                            <input  class="form-control" matInput placeholder="Last Name" [(ngModel)]="user.lastname" name="user.lastname" required>
-                        </div>
-                    </div>
-                    <div class="input-group form-group">
-                        <div class="col-md-6">
-                            <div class="input-group-prepend">
-                                <label class="input-label-text">Email</label>
-                            </div>
-                            <input  class="form-control" matInput placeholder="Last Name" [(ngModel)]="user.email" name="user.email" required>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="input-group-prepend">
-                                <label class="input-label-text">Phone</label>
-                            </div>
-                            <input matInput class="form-control" placeholder="Phone Number" [(ngModel)]="user.mobileno" name="user.mobileno" required>
-                        </div>
-                    </div>
-                    <div class="input-group form-group">
-                        <div class="col-md-6">
-                            <mat-select placeholder="Role" [(ngModel)]="user.role" name="user.role">
-                                <mat-option *ngFor="let role of roles" [value]="role.value">
-                                    {{role.displayValue}}
-                                </mat-option>
-                            </mat-select>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <button type="button" class="btn float-right login_btn" (click)="confirmRegisterUser()">Register</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer">
-                <div class="d-flex justify-content-center links">
-                    Don't have an account?<a href="#">Sign Up</a>
-                </div>
-            </div>
+
         </div>
 
     </div>
-
-</div>
+</body>

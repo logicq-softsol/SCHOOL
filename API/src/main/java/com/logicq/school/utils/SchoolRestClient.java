@@ -1,5 +1,7 @@
 package com.logicq.school.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -8,10 +10,13 @@ import com.logicq.school.vo.LicenseDetails;
 
 @Component
 public class SchoolRestClient {
+	
+	@Autowired
+	Environment env;
 
 	public ResponseEntity<LicenseDetails> validateLicense(String hostName) {
 		RestTemplate restTemplate = new RestTemplate();
-		return restTemplate.getForEntity("http://127.0.0.1:8080/api/school/license/" + hostName, LicenseDetails.class);
+		return restTemplate.getForEntity(env.getProperty("school.client.uri")+ hostName, LicenseDetails.class);
 	}
 
 }

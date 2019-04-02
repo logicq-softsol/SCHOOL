@@ -17,16 +17,19 @@ export class RegisterComponent implements OnInit {
   productDetail: Activation = new Activation();
   user: UserDetail = new UserDetail();
   login: LoginDetail = new LoginDetail();
-  roles: [] = [];
+  roles: any[] = [{
+    value: "TEACHER",
+    displayValue: "TEACHER"
+  }, {
+    value: "ADMIN",
+    displayValue: "ADMIN"
+  }];
 
 
   constructor(private authService: AuthenticationService, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
-    this.authService.loadRole().subscribe((data: []) => {
-      this.roles = data;
-    });
-
+  
   }
 
 

@@ -15,16 +15,19 @@ public class VideoFileEncryption {
 	private static final String TRANSFORMATION = "AES";
 
 	public static void main(String[] args) throws Exception {
+
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(" Enter video File Folder: ");
 		String videoFileFolder = scanner.nextLine();
-		System.out.println(" Enter Encrypted File to be Store Folder: ");
-		String outputfolder = scanner.nextLine();
-		File outputFoler = new File(outputfolder);
-		SchoolSecurityUtils securityUtil = new SchoolSecurityUtils();
+		File outputFoler = new File(videoFileFolder);
 
-		String decryptedkey = securityUtil.decryptText(securityUtil.readFileLine("license.key"),
-				securityUtil.getPublic("KeyPair/publicKey"));
+		System.out.println(" Enter License File  Folder: ");
+		String licenseFileFolder = scanner.nextLine();
+		String publicKey=licenseFileFolder+"/KeyPair";
+
+		SchoolSecurityUtils securityUtil = new SchoolSecurityUtils();
+		String decryptedkey = securityUtil.decryptText(securityUtil.readLicenseKey(new File(licenseFileFolder)),
+				securityUtil.getPublic(securityUtil.readPublicKey(new File(publicKey))));
 
 		Key secretKey = new SecretKeySpec(decryptedkey.getBytes(), ALGORITHM);
 		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
@@ -32,6 +35,8 @@ public class VideoFileEncryption {
 		// Need to read license encrypted text and decrypt the license AND pass license
 		// key to decrypt it.
 		findFilesInFolderAndEncrypt(cipher, securityUtil, new File(videoFileFolder), outputFoler);
+		
+		System.out.println(" We Are done. Good to go ############## LogicQ SoftSol Private Limited.");
 	}
 
 	private static void findFilesInFolderAndEncrypt(Cipher cipher, SchoolSecurityUtils securityUtil, File folder,
