@@ -3,39 +3,35 @@ package com.logicq.encryption;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.security.Key;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Scanner;
 
 import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 
 public class VideoFileEncryption {
-
-	private static final String ALGORITHM = "AES";
-	private static final String TRANSFORMATION = "AES";
 
 	public static void main(String[] args) throws Exception {
 
 		Scanner scanner = new Scanner(System.in);
+		System.out.println(" Enter HostName For Which Want to Encrypt : ");
+		String hostName = scanner.nextLine();
+		EncryptionRestClient encryptionRestCLient = new EncryptionRestClient();
+		LicenseDetails licenseDetails = encryptionRestCLient.validateLicenseForHostName(hostName);
+
 		System.out.println(" Enter video File Folder: ");
 		String videoFileFolder = scanner.nextLine();
 		File outputFoler = new File(videoFileFolder);
 
-		System.out.println(" Enter License File  Folder: ");
-		String licenseFileFolder = scanner.nextLine();
-		String publicKey=licenseFileFolder+"/KeyPair";
-
 		SchoolSecurityUtils securityUtil = new SchoolSecurityUtils();
-		String decryptedkey = securityUtil.decryptText(securityUtil.readLicenseKey(new File(licenseFileFolder)),
-				securityUtil.getPublic(securityUtil.readPublicKey(new File(publicKey))));
+		PrivateKey key = securityUtil.getPrivate(licenseDetails);
 
-		Key secretKey = new SecretKeySpec(decryptedkey.getBytes(), ALGORITHM);
-		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+		Cipher cipher = Cipher.getInstance("RSA");
+		cipher.init(Cipher.ENCRYPT_MODE, key);
 		// Need to read license encrypted text and decrypt the license AND pass license
 		// key to decrypt it.
 		findFilesInFolderAndEncrypt(cipher, securityUtil, new File(videoFileFolder), outputFoler);
-		
+
 		System.out.println(" We Are done. Good to go ############## LogicQ SoftSol Private Limited.");
 	}
 

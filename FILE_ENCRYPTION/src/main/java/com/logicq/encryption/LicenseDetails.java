@@ -1,6 +1,7 @@
-package com.logicq.school.vo;
+package com.logicq.encryption;
 
 import java.util.Date;
+
 
 public class LicenseDetails {
 

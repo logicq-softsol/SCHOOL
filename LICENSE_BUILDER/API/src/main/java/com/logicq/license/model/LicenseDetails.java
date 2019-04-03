@@ -15,7 +15,7 @@ public class LicenseDetails {
 	@Column(name = "LICENSE_KEY")
 	private String licenseKey;
 
-	@Column(name = "HOST_NAME",unique=true)
+	@Column(name = "HOST_NAME", unique = true)
 	private String hostName;
 
 	@Column(name = "PRODUCT_NAME")
@@ -59,6 +59,9 @@ public class LicenseDetails {
 
 	@Column(name = "CREATION_TIME")
 	private Date creationTime;
+
+	@Column(name = "PRIVATE_KEY",columnDefinition="TEXT")
+	private String privateKey;
 
 	public String getLicenseKey() {
 		return licenseKey;
@@ -186,6 +189,14 @@ public class LicenseDetails {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public String getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(String privateKey) {
+		this.privateKey = privateKey;
 	}
 
 }

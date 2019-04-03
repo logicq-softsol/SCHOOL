@@ -3,10 +3,12 @@ package com.logicq.license.utils;
 import java.io.FileOutputStream;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.logicq.license.model.LicenseDetails;
@@ -14,12 +16,14 @@ import com.logicq.license.model.LicenseDetails;
 @Component
 public class LicenseBuildUtil {
 
-	private static final String ALGORITHM = "RSA";
 	private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	private final static Random rng = new SecureRandom();
 
 	@Autowired
 	LicenseSecurityUtils licenseSecurityUtils;
+
+	@Autowired
+	Environment env;
 
 	static char randomChar() {
 		return ALPHABET.charAt(rng.nextInt(ALPHABET.length()));
@@ -37,16 +41,16 @@ public class LicenseBuildUtil {
 
 		if (!StringUtils.isEmpty(licenseDetail.getProductName())) {
 			if (licenseDetail.getProductName().length() >= 4) {
-				String generateProductKey = String.format("%04d", rng.nextInt(10000));
+				String generateProductKey = String.format("%04d", rng.nextInt(100000));
 				sb.append(generateProductKey);
 				sb.append("-");
 			}
 		}
-		if (licenseDetail.getValidityDay() > 0000 ) {
+		if (licenseDetail.getValidityDay() > 0000) {
 			String generateVaidityKey = String.format("%04d", rng.nextInt(10000));
 			sb.append(generateVaidityKey);
 			sb.append("-");
-			String generateKey = String.format("%04d", rng.nextInt(10000));
+			String generateKey = String.format("%04d", rng.nextInt(100000));
 			sb.append(generateKey);
 		}
 
@@ -56,28 +60,23 @@ public class LicenseBuildUtil {
 	public String buildproductKey(LicenseDetails licenseDetail) throws Exception {
 		GenerateKeys gk = new GenerateKeys(1024);
 		gk.createKeys();
-		gk.writeToFile("edusure/license/"+licenseDetail.getHostName() + "/KeyPair/publicKey", gk.getPublicKey().getEncoded());
-		gk.writeToFile("edusure/license/"+licenseDetail.getHostName() + "/KeyPair/privateKey", gk.getPrivateKey().getEncoded());
+		gk.writeToFile(env.getProperty("license.path") + licenseDetail.getHostName() + "/KeyPair/publicKey",
+				gk.getPublicKey().getEncoded());
+		gk.writeToFile(env.getProperty("license.path")+ licenseDetail.getHostName() + "/KeyPair/privateKey",
+				gk.getPrivateKey().getEncoded());
+		licenseDetail.setPrivateKey(Base64.getEncoder().encodeToString(gk.getPrivateKey().getEncoded()));
 		String licenseKey = buildKey(licenseDetail);
-		return encryptText(licenseKey, gk.getPrivateKey(), licenseDetail.getHostName());
+		licenseDetail.setLicenseKey(licenseKey);
+		generateLicenseFile(licenseKey, licenseDetail.getHostName());
+		return licenseKey;
 
 	}
 
-	public String encryptText(String plainText, PrivateKey privateKey, String hostName) throws Exception {
-		String orignalKey = plainText.replaceAll("-", "");
-		String encryptedText = licenseSecurityUtils.encryptText(orignalKey, privateKey);
-		generateLicenseFileAndEncrypt(encryptedText, plainText, hostName);
-		return encryptedText;
-	}
-
-	private void generateLicenseFileAndEncrypt(String encryptedText, String plainText, String hostName) {
+	private void generateLicenseFile(String key, String hostName) {
 		try {
-			FileOutputStream outputStream = new FileOutputStream("edusure/license/"+hostName + "/license.key");
-			outputStream.write(encryptedText.getBytes());
-			outputStream.close();
-
-			FileOutputStream plainStream = new FileOutputStream("edusure/license/"+hostName +"/license.txt");
-			plainStream.write(plainText.getBytes());
+			FileOutputStream plainStream = new FileOutputStream(
+					env.getProperty("license.path")+ hostName + "/license.txt");
+			plainStream.write(key.getBytes());
 			plainStream.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();

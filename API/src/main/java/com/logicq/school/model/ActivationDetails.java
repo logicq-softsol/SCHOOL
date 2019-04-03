@@ -18,7 +18,7 @@ public class ActivationDetails {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "ACTIVATION_KEY")
+	@Column(name = "ACTIVATION_KEY",columnDefinition="TEXT")
 	private String activationKey;
 
 	@Column(name = "ACTIVATION_FOR")

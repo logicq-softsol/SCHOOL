@@ -33,8 +33,6 @@ import com.logicq.license.security.JwtTokenProvider;
 
 @Component
 public class LicenseSecurityUtils {
-	private static final String TRANSFORMATION = "AES";
-	private static final String ALGORITHM = "RSA";
 
 	@Autowired
 	LoginDetailsRepo loginDetailsRepo;
@@ -44,9 +42,6 @@ public class LicenseSecurityUtils {
 
 	@Autowired
 	private HttpServletRequest context;
-
-	@Autowired
-	private Environment env;
 
 	public LoginDetails getUserFromSecurityContext() throws Exception {
 		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
@@ -59,39 +54,39 @@ public class LicenseSecurityUtils {
 
 	public PrivateKey getPrivate(String filename) throws Exception {
 		byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
-		PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory kf = KeyFactory.getInstance("RSA");
-		return kf.generatePrivate(spec);
+		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(keyBytes));
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		return keyFactory.generatePrivate(keySpec);
 	}
 
 	// https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
 	public PublicKey getPublic(String filename) throws Exception {
-		byte[] keyBytes = Files.readAllBytes(new File(getClass().getClassLoader().getResource(filename).getFile()).toPath());
-		X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
-		KeyFactory kf = KeyFactory.getInstance("RSA");
-		return kf.generatePublic(spec);
+		byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
+		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(keyBytes));
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		return keyFactory.generatePublic(keySpec);
 	}
 
 	public void encryptFile(byte[] input, File output, PrivateKey key) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA");
+		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.ENCRYPT_MODE, key);
 		writeToFile(output, cipher.doFinal(input));
 	}
 
 	public void decryptFile(byte[] input, File output, PublicKey key) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA");
+		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.DECRYPT_MODE, key);
 		writeToFile(output, cipher.doFinal(input));
 	}
 
 	public String encryptText(String msg, PrivateKey key) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA");
+		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.ENCRYPT_MODE, key);
 		return Base64.getEncoder().encodeToString(cipher.doFinal(msg.getBytes("UTF-8")));
 	}
 
 	public String decryptText(String msg, PublicKey key) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA");
+		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.DECRYPT_MODE, key);
 		return new String(cipher.doFinal(Base64.getDecoder().decode(msg)), "UTF-8");
 	}

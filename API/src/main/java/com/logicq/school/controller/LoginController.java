@@ -11,6 +11,7 @@ import javax.validation.ValidationException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -80,24 +81,26 @@ public class LoginController {
 	@Autowired
 	SchoolRestClient schoolRestClient;
 
+	@Autowired
+	Environment env;
+
 	@RequestMapping(value = "/activateProduct", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> registerPartner(@RequestBody LicenseKey licnkey) throws Exception {
 		if (!StringUtils.isEmpty(licnkey.getParam1()) && !StringUtils.isEmpty(licnkey.getParam2())
 				&& !StringUtils.isEmpty(licnkey.getParam3()) && !StringUtils.isEmpty(licnkey.getParam4())) {
 			String hostName = schoolSecurityUtils.getSystemHostName();
 			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName).getBody();
-			String decryptedkey = schoolSecurityUtils.decryptText(licenseDetails.getLicenseKey(),
-					schoolSecurityUtils.getPublic("KeyPair/publicKey"));
-			String inputkey = licnkey.getParam1() + licnkey.getParam2() + licnkey.getParam3() + licnkey.getParam4();
-			if (inputkey.equals(decryptedkey)) {
+			String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
+					+ licnkey.getParam4();
+			if (inputkey.equals(licenseDetails.getLicenseKey())) {
 				ActivationDetails activationDetail = new ActivationDetails();
 				activationDetail.setActivationDate(schoolDateUtils.currentDate());
-				activationDetail.setActivationKey(licenseDetails.getLicenseKey());
+				activationDetail.setActivationKey(licenseDetails.getPrivateKey());
 				activationDetail.setLastUpdate(schoolDateUtils.currentDate());
 				activationDetail.setProductName(licenseDetails.getProductName());
 				activationDetail.setProductStatus("ACTIVE");
 				activationDetail.setExpiryDate(schoolDateUtils.getExpiryDate(licenseDetails.getValidityDay()));
-				activationDetail.setProductVersion("001");
+				activationDetail.setProductVersion(env.getProperty("schoool.version"));
 				activationDetail.setActivationFor(hostName);
 				productActivationRepo.save(activationDetail);
 				return new ResponseEntity<SucessMessage>(
@@ -194,10 +197,12 @@ public class LoginController {
 			newlogin.setLoginTime(new Date());
 			newlogin.setLoginStatus("IN_ACTIVE");
 			loginDetailsRepo.save(newlogin);
-			return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("SREG", "/api/register","User Register Sucessfully"),
+			return new ResponseEntity<Message>(
+					sucessHandlerUtils.handleSucessMessage("SREG", "/api/register", "User Register Sucessfully"),
 					HttpStatus.OK);
 		}
-		return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("EREG", "/api/register","User Unable to Register"),
+		return new ResponseEntity<Message>(
+				sucessHandlerUtils.handleSucessMessage("EREG", "/api/register", "User Unable to Register"),
 				HttpStatus.BAD_REQUEST);
 	}
 

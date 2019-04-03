@@ -60,8 +60,7 @@ public class LicenseController {
 				licenseDetails.setCreationTime(schoolDateUtils.currentDate());
 				licenseDetails.setCreatedBy(loginDetail.getUserName());
 				licenseDetails.setStatus("IN_ACTIVE");
-				String licenseKey = licenseBuildUtil.buildproductKey(licenseDetails);
-				licenseDetails.setLicenseKey(licenseKey);
+				licenseBuildUtil.buildproductKey(licenseDetails);
 				licenseDetailRepo.save(licenseDetails);
 				return new ResponseEntity<SucessMessage>(
 						new SucessMessage(schoolDateUtils.currentDate(), "Sucess Fully Registered", "SUCESS"),
@@ -101,7 +100,5 @@ public class LicenseController {
 
 		return new ResponseEntity<LicenseDetails>(licenseDetails, HttpStatus.BAD_REQUEST);
 	}
-
-	
 
 }

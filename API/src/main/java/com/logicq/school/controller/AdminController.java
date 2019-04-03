@@ -327,9 +327,7 @@ public class AdminController {
 			if (null != topic) {
 				String hostName = schoolSecurityUtils.getSystemHostName();
 				ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
-				String decryptedkey = schoolSecurityUtils.decryptText(activationDetails.getActivationKey(),
-						schoolSecurityUtils.getPublic("KeyPair/publicKey"));
-				schoolSecurityUtils.decryptVideoFile(decryptedkey, new File(topic.getPlayFileURL()), response);
+				schoolSecurityUtils.decryptVideoFile(activationDetails, topic, response);
 			}
 		}
 
