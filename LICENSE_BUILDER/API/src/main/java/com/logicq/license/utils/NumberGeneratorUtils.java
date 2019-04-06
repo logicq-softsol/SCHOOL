@@ -11,12 +11,16 @@ public class NumberGeneratorUtils {
 	@Autowired
 	Environment env;
 
-	public String generateHostId() {
-		return RandomStringUtils.randomAlphabetic(4).toUpperCase();
+	public String generateSalt() {
+		return RandomStringUtils.randomAlphanumeric(8);
 	}
 
-	public String generateBillId() {
-		return RandomStringUtils.randomAlphabetic(8);
+	public String generateKey() {
+		return RandomStringUtils.randomAlphanumeric(8);
+	}
+
+	public String generateBuildKey() {
+		return RandomStringUtils.randomAlphanumeric(4);
 	}
 
 	public String generateTableCode() {
