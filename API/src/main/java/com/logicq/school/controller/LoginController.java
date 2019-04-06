@@ -38,6 +38,7 @@ import com.logicq.school.utils.SchoolDateUtils;
 import com.logicq.school.utils.SchoolRestClient;
 import com.logicq.school.utils.SchoolSecurityUtils;
 import com.logicq.school.utils.SucessHandlerUtils;
+import com.logicq.school.vo.ActivateKey;
 import com.logicq.school.vo.LicenseDetails;
 import com.logicq.school.vo.LicenseKey;
 import com.logicq.school.vo.LoginVO;
@@ -92,10 +93,21 @@ public class LoginController {
 			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName).getBody();
 			String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
 					+ licnkey.getParam4();
-			if (inputkey.equals(licenseDetails.getLicenseKey())) {
+			 ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
+			
+//			ActivateKey activateKey = new ActivateKey();
+//			activateKey.setHostKey("CARfSPIL");
+//			activateKey.setHostKeySalt("FdQgZS4J");
+
+			String licenseKey = schoolSecurityUtils.decrypt(licenseDetails.getLicenseKey(), activateKey.getHostKey(),
+					activateKey.getHostKeySalt());
+
+			if (inputkey.equals(licenseKey)) {
 				ActivationDetails activationDetail = new ActivationDetails();
 				activationDetail.setActivationDate(schoolDateUtils.currentDate());
-				activationDetail.setActivationKey(licenseDetails.getPrivateKey());
+				activationDetail.setActivationLicense(licenseDetails.getLicenseKey());
+				activationDetail.setActivationKey(activateKey.getHostKey());
+				activationDetail.setActivationToken(activateKey.getHostKeySalt());
 				activationDetail.setLastUpdate(schoolDateUtils.currentDate());
 				activationDetail.setProductName(licenseDetails.getProductName());
 				activationDetail.setProductStatus("ACTIVE");

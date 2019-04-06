@@ -22,8 +22,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.logicq.license.exception.SucessMessage;
 import com.logicq.license.model.LicenseDetails;
+import com.logicq.license.model.LicenseKey;
 import com.logicq.license.model.LoginDetails;
 import com.logicq.license.repository.LicenseDetailRepo;
+import com.logicq.license.repository.LicenseKeyRepo;
 import com.logicq.license.service.FileStorageService;
 import com.logicq.license.utils.LicenseBuildUtil;
 import com.logicq.license.utils.LicenseSecurityUtils;
@@ -49,7 +51,7 @@ public class LicenseController {
 	LicenseBuildUtil licenseBuildUtil;
 
 	@Autowired
-	FileStorageService fileStorageService;
+	LicenseKeyRepo licenseKeyRepo;
 
 	@RequestMapping(value = "/license", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> buildLicense(@RequestBody LicenseDetails licenseDetails) throws Exception {
@@ -88,6 +90,11 @@ public class LicenseController {
 	@RequestMapping(value = "/license/{hostname}", method = RequestMethod.GET)
 	public ResponseEntity<LicenseDetails> findLicenseByHostName(@PathVariable String hostname) {
 		return new ResponseEntity<LicenseDetails>(licenseDetailRepo.findByHostName(hostname), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/licenseKey/{hostname}", method = RequestMethod.GET)
+	public ResponseEntity<LicenseKey> findLicenseKeyByHostName(@PathVariable String hostname) {
+		return new ResponseEntity<LicenseKey>(licenseKeyRepo.findByHostName(hostname), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/validateLicense", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

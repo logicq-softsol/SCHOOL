@@ -327,7 +327,15 @@ public class AdminController {
 			if (null != topic) {
 				String hostName = schoolSecurityUtils.getSystemHostName();
 				ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
-				schoolSecurityUtils.decryptVideoFile(activationDetails, topic, response);
+				String licenseKey = schoolSecurityUtils.decrypt(activationDetails.getActivationLicense(),
+						activationDetails.getActivationKey(), activationDetails.getActivationToken());
+
+				byte[] readData = schoolSecurityUtils.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
+						licenseKey, activationDetails.getActivationToken());
+				response.getOutputStream().write(readData);
+				response.setContentType("video/mp4");
+				response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
+				response.getOutputStream().flush();
 			}
 		}
 

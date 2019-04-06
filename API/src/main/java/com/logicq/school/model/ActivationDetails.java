@@ -18,8 +18,14 @@ public class ActivationDetails {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "ACTIVATION_KEY",columnDefinition="TEXT")
+	@Column(name = "ACTIVATION_LICENSE")
+	private String activationLicense;
+
+	@Column(name = "ACTIVATION_KEY")
 	private String activationKey;
+
+	@Column(name = "ACTIVATION_TOKEN")
+	private String activationToken;
 
 	@Column(name = "ACTIVATION_FOR")
 	private String activationFor;
@@ -110,8 +116,24 @@ public class ActivationDetails {
 		return activationFor;
 	}
 
+	public String getActivationToken() {
+		return activationToken;
+	}
+
+	public void setActivationToken(String activationToken) {
+		this.activationToken = activationToken;
+	}
+
 	public void setActivationFor(String activationFor) {
 		this.activationFor = activationFor;
+	}
+
+	public String getActivationLicense() {
+		return activationLicense;
+	}
+
+	public void setActivationLicense(String activationLicense) {
+		this.activationLicense = activationLicense;
 	}
 
 }

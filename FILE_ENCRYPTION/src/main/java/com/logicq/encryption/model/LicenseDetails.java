@@ -1,4 +1,4 @@
-package com.logicq.encryption;
+package com.logicq.encryption.model;
 
 import java.util.Date;
 

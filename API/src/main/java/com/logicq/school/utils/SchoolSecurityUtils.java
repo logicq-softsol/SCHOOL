@@ -2,47 +2,33 @@ package com.logicq.school.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.file.Files;
-import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
+import java.security.spec.KeySpec;
 import java.util.Base64;
-import java.util.List;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.logicq.school.model.ActivationDetails;
 import com.logicq.school.model.LoginDetails;
-import com.logicq.school.model.TopicDetails;
 import com.logicq.school.repository.LoginDetailsRepo;
 import com.logicq.school.security.JwtTokenProvider;
 
 @Component
 public class SchoolSecurityUtils {
-	private static final String TRANSFORMATION = "AES";
-	private static final String ALGORITHM = "RSA";
+
+	static Logger LOG = LoggerFactory.getLogger(SchoolSecurityUtils.class);
 
 	@Autowired
 	LoginDetailsRepo loginDetailsRepo;
@@ -53,9 +39,6 @@ public class SchoolSecurityUtils {
 	@Autowired
 	private HttpServletRequest context;
 
-	@Autowired
-	private Environment env;
-
 	public LoginDetails getUserFromSecurityContext() throws Exception {
 		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
 			String userName = tokenProvider.getUserIdFromJWT(tokenProvider.getJwtFromRequest(context));
@@ -65,66 +48,56 @@ public class SchoolSecurityUtils {
 		}
 	}
 
-	public PrivateKey getPrivate(String privateKey) throws Exception {
-		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey.getBytes()));
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		return keyFactory.generatePrivate(keySpec);
-	}
-
-	public void encryptFile(byte[] input, File output, PrivateKey key) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.ENCRYPT_MODE, key);
-		writeToFile(output, cipher.doFinal(input));
-	}
-
-	public void decryptFile(byte[] input, File output, PublicKey key) throws Exception {
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.DECRYPT_MODE, key);
-		writeToFile(output, cipher.doFinal(input));
-	}
-
-	public byte[] getFileInBytes(File f) throws IOException {
-		FileInputStream fis = new FileInputStream(f);
-		byte[] fbytes = new byte[(int) f.length()];
-		fis.read(fbytes);
-		fis.close();
-		return fbytes;
-	}
-
-	private void writeToFile(File output, byte[] toWrite)
-			throws IllegalBlockSizeException, BadPaddingException, IOException {
-		FileOutputStream fos = new FileOutputStream(output);
-		fos.write(toWrite);
-		fos.flush();
-		fos.close();
-	}
-
 	public String getSystemHostName() throws Exception {
 		InetAddress ip = InetAddress.getLocalHost();
 		return ip.getHostName();
 	}
 
-	public void decryptVideoFile(ActivationDetails activationDetails, TopicDetails topic, HttpServletResponse response)
-			throws Exception {
+	public String decrypt(String strToDecrypt, String key, String salt) {
 		try {
-			File inputFile = new File(topic.getPlayFileURL());
-			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-			cipher.init(Cipher.DECRYPT_MODE, getPrivate(activationDetails.getActivationKey()));
-			FileInputStream inputStream = new FileInputStream(inputFile);
-			byte[] inputBytes = new byte[(int) inputFile.length()];
-			inputStream.read(inputBytes);
+			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			IvParameterSpec ivspec = new IvParameterSpec(iv);
 
-			byte[] outputBytes = cipher.doFinal(inputBytes);
-			response.getOutputStream().write(outputBytes);
-			inputStream.close();
-			response.setContentType("video/mp4");
-			response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
-			response.getOutputStream().flush();
+			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+			KeySpec spec = new PBEKeySpec(key.toCharArray(), salt.getBytes(), 65536, 256);
+			SecretKey tmp = factory.generateSecret(spec);
+			SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
 
-		} catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
-				| IllegalBlockSizeException | IOException ex) {
-			ex.printStackTrace();
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+			cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+			return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+		} catch (Exception ex) {
+			LOG.error("Error while decrypting: " + ex.getMessage(), ex);
 		}
+		return null;
+	}
+
+	public byte[] readFileAndDecryptFile(File fileToBeDecrypt, String key, String salt) throws IOException {
+		FileInputStream fis = new FileInputStream(fileToBeDecrypt);
+		byte[] fbytes = new byte[(int) fileToBeDecrypt.length()];
+		fis.read(fbytes);
+		fis.close();
+		return decryptFile(fbytes, key, salt);
+	}
+
+	private byte[] decryptFile(byte[] dataToDecrypt, String key, String salt) {
+		try {
+			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			IvParameterSpec ivspec = new IvParameterSpec(iv);
+
+			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+			KeySpec spec = new PBEKeySpec(key.toCharArray(), salt.getBytes(), 65536, 256);
+			SecretKey tmp = factory.generateSecret(spec);
+			SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
+
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+			cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+
+			return cipher.doFinal(dataToDecrypt);
+		} catch (Exception ex) {
+			LOG.error(" Unable to decrypt : " + ex.getMessage());
+		}
+		return null;
 	}
 
 }

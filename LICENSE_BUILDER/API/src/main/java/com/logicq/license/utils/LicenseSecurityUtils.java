@@ -1,5 +1,6 @@
 package com.logicq.license.utils;
 
+import java.net.InetAddress;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
@@ -47,6 +48,11 @@ public class LicenseSecurityUtils {
 		} else {
 			throw new Exception(" User is Not Authorized to acess ");
 		}
+	}
+
+	public String getSystemHostName() throws Exception {
+		InetAddress ip = InetAddress.getLocalHost();
+		return ip.getHostName();
 	}
 
 	public String encryptText(String strToEncrypt, LicenseKey key) {
