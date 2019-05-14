@@ -15,4 +15,6 @@ public interface ChapterDetailsRepo extends JpaRepository<ChapterDetails, Long> 
 	List<ChapterDetails> findByClassIdAndSubjectId(Long classId, Long subjectId);
 
 	ChapterDetails findByClassIdAndSubjectIdAndId(Long classId, Long subjectId, Long chapterId);
+	
+	ChapterDetails findByClassIdAndSubjectIdAndName(Long classId, Long subjectId, String name);
 }

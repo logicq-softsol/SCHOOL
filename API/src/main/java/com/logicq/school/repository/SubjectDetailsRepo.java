@@ -13,4 +13,5 @@ public interface SubjectDetailsRepo extends JpaRepository<SubjectDetails, Long> 
 	List<SubjectDetails> findByClassId(Long classId);
 
 	SubjectDetails findByClassIdAndId(Long classId, Long subjectId);
+	SubjectDetails findByClassIdAndName(Long classId, String subjectName);
 }

@@ -57,6 +57,8 @@ export class AdminComponent implements OnInit {
     }
   }
 
+ 
+
 
   goToHome() {
     if (this.loginUser.role == 'ADMIN') {
@@ -76,8 +78,8 @@ export class AdminComponent implements OnInit {
     this.displayView = 'CHAPTER';
   }
 
-  viewTopics(){
-    this.displayView='TOPIC';
+  viewTopics() {
+    this.displayView = 'TOPIC';
   }
   onClassChange(event) {
     let classDetails: ClassSetupDetail = this.classList.find(cls => cls.displayName == event);

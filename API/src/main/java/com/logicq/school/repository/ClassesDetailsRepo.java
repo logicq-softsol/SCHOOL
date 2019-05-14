@@ -12,4 +12,6 @@ public interface ClassesDetailsRepo extends JpaRepository<ClassDetails, Long> {
 
 	List<ClassDetails> findByUserId(Long userId);
 
+	ClassDetails findByName(String name);
+
 }

@@ -1,12 +1,20 @@
 package com.logicq.school.controller;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +70,197 @@ public class AdminController {
 
 	@Autowired
 	ProductActivationRepo productActivationRepo;
+
+	@Autowired
+	Environment env;
+
+	@RequestMapping(value = "/DAY0/CLASS", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ClassDetails>> setupDayZeroForClass() throws Exception {
+		// LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		classesDetailsRepo.deleteAll();
+		Path pathForClassFile = Paths.get(env.getProperty("school.day0.class"));
+		Stream<String> classLines = Files.lines(pathForClassFile);
+		List<ClassDetails> allClass = new ArrayList<>();
+		classLines.forEach(lin -> {
+			ClassDetails classresult = new ClassDetails();
+			classresult.setDisplayName(lin);
+			classresult.setName(classresult.getDisplayName().toLowerCase().trim());
+			classresult.setDescription("About class " + classresult.getDisplayName());
+			classresult.setType("CLASS");
+			allClass.add(classresult);
+		});
+		if (!allClass.isEmpty())
+			classesDetailsRepo.save(allClass);
+		return new ResponseEntity<List<ClassDetails>>(allClass, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/DAY0/SUBJECT", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SubjectDetails>> setupDayZeroForSubject() throws Exception {
+		// LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		subjectDetailsRepo.deleteAll();
+		Path pathForClassFile = Paths.get(env.getProperty("school.day0.subject"));
+		Stream<String> subjectLines = Files.lines(pathForClassFile);
+		List<SubjectDetails> allSubject = new ArrayList<>();
+		subjectLines.forEach(lin -> {
+			String[] wordList = lin.split("#");
+
+			ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+			SubjectDetails subejctDetail = new SubjectDetails();
+			subejctDetail.setClassId(classDetails.getId());
+			subejctDetail.setName(wordList[1].toLowerCase().trim());
+			subejctDetail.setDisplayName(wordList[1]);
+			subejctDetail.setDescription(
+					"About Subject" + subejctDetail.getDisplayName() + " for " + classDetails.getDisplayName());
+			subejctDetail.setType("SUBJECT");
+			allSubject.add(subejctDetail);
+
+		});
+		if (!allSubject.isEmpty())
+			subjectDetailsRepo.save(allSubject);
+
+		return new ResponseEntity<List<SubjectDetails>>(allSubject, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/DAY0/CHAPTER", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ChapterDetails>> setupDayZeroForChapter() throws Exception {
+		// LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		chapterDetailsRepo.deleteAll();
+		Path pathForClassFile = Paths.get(env.getProperty("school.day0.chapter"));
+		Stream<String> chapterLines = Files.lines(pathForClassFile);
+		List<ChapterDetails> allChapter = new ArrayList<>();
+		chapterLines.forEach(lin -> {
+			String[] wordList = lin.split("#");
+			ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+			SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
+					wordList[1].toLowerCase().trim());
+			ChapterDetails chapterDetails = new ChapterDetails();
+			chapterDetails.setClassId(classDetails.getId());
+			chapterDetails.setName(wordList[2].toLowerCase().trim());
+			chapterDetails.setDisplayName(wordList[2]);
+			chapterDetails.setDescription(
+					"About Chapter for " + subejctDetail.getDisplayName() + " for " + classDetails.getDisplayName());
+			chapterDetails.setSubjectId(subejctDetail.getId());
+			chapterDetails.setType("CHAPTER");
+
+			allChapter.add(chapterDetails);
+		});
+		if (!allChapter.isEmpty())
+			chapterDetailsRepo.save(allChapter);
+
+		return new ResponseEntity<List<ChapterDetails>>(allChapter, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/day0/setup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TopicDetails>> setupDayZeroForTopic() throws Exception {
+		// LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<TopicDetails> allTopicDetail = new ArrayList<>();
+		Path pathForClassFile = Paths.get(env.getProperty("school.day0.setup"));
+		Stream<String> topicLines = Files.lines(pathForClassFile);
+
+		topicDetailsRepo.deleteAll();
+		chapterDetailsRepo.deleteAll();
+		subjectDetailsRepo.deleteAll();
+		classesDetailsRepo.deleteAll();
+
+		List<String> classList = new ArrayList<>();
+		List<String> subjectList = new ArrayList<>();
+		List<String> chapterList = new ArrayList<>();
+		List<String> topicList = new ArrayList<>();
+
+		topicLines.forEach(lin -> {
+			String[] wordList = lin.split("#");
+			classList.add(wordList[0]);
+			subjectList.add(wordList[0] + "#" + wordList[1]);
+			chapterList.add(wordList[0] + "#" + wordList[1] + "#" + wordList[2]);
+			topicList.add(lin);
+		});
+
+		if (!classList.isEmpty()) {
+			List<ClassDetails> allClass = new ArrayList<>();
+			classList.stream().distinct().forEach(lin -> {
+				ClassDetails classresult = new ClassDetails();
+				classresult.setDisplayName(lin);
+				classresult.setName(classresult.getDisplayName().toLowerCase().trim());
+				classresult.setDescription("About class " + classresult.getDisplayName());
+				classresult.setType("CLASS");
+				allClass.add(classresult);
+			});
+			if (!allClass.isEmpty())
+				classesDetailsRepo.save(allClass);
+		}
+
+		if (!subjectList.isEmpty()) {
+			List<SubjectDetails> allSubject = new ArrayList<>();
+			subjectList.stream().distinct().forEach(lin -> {
+				String[] wordList = lin.split("#");
+				ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+				SubjectDetails subejctDetail = new SubjectDetails();
+				subejctDetail.setClassId(classDetails.getId());
+				subejctDetail.setName(wordList[1].toLowerCase().trim());
+				subejctDetail.setDisplayName(wordList[1]);
+				subejctDetail.setDescription(
+						"About Subject" + subejctDetail.getDisplayName() + " for " + classDetails.getDisplayName());
+				subejctDetail.setType("SUBJECT");
+				allSubject.add(subejctDetail);
+
+			});
+			if (!allSubject.isEmpty())
+				subjectDetailsRepo.save(allSubject);
+		}
+
+		if (!chapterList.isEmpty()) {
+			List<ChapterDetails> allChapter = new ArrayList<>();
+			chapterList.stream().distinct().forEach(lin -> {
+				String[] wordList = lin.split("#");
+				ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+				SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
+						wordList[1].toLowerCase().trim());
+				ChapterDetails chapterDetails = new ChapterDetails();
+				chapterDetails.setClassId(classDetails.getId());
+				chapterDetails.setName(wordList[2].toLowerCase().trim());
+				chapterDetails.setDisplayName(wordList[2]);
+				chapterDetails.setDescription("About Chapter for " + subejctDetail.getDisplayName() + " for "
+						+ classDetails.getDisplayName());
+				chapterDetails.setSubjectId(subejctDetail.getId());
+				chapterDetails.setType("CHAPTER");
+
+				allChapter.add(chapterDetails);
+
+			});
+			if (!allChapter.isEmpty())
+				chapterDetailsRepo.save(allChapter);
+		}
+
+		if (!topicList.isEmpty()) {
+
+			topicList.stream().distinct().forEach(lin -> {
+				String[] wordList = lin.split("#");
+				ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+				SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
+						wordList[1].toLowerCase().trim());
+				ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndName(classDetails.getId(),
+						subejctDetail.getId(), wordList[2].toLowerCase().trim());
+
+				TopicDetails topicDetails = new TopicDetails();
+				topicDetails.setClassId(classDetails.getId());
+				topicDetails.setName(wordList[3].toLowerCase().trim());
+				topicDetails.setDisplayName(wordList[3]);
+				topicDetails.setDescription("About Topic for chapter" + chapter.getDisplayName() + " for Subject "
+						+ subejctDetail.getDisplayName() + " of class " + classDetails.getDisplayName());
+				topicDetails.setSubjectId(subejctDetail.getId());
+				topicDetails.setPlayFileType("mp4");
+				topicDetails.setPlayFileURL(wordList[4]);
+				topicDetails.setChapterId(chapter.getId());
+				topicDetails.setType("TOPIC");
+				allTopicDetail.add(topicDetails);
+
+			});
+			if (!allTopicDetail.isEmpty())
+				topicDetailsRepo.save(allTopicDetail);
+		}
+
+		return new ResponseEntity<List<TopicDetails>>(allTopicDetail, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/classes", method = RequestMethod.GET)
 	public ResponseEntity<List<ClassDetails>> getClassDetails() throws Exception {

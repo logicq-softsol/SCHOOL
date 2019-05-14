@@ -69,11 +69,11 @@
                                         </li>
                                         <li>
                                             <div class="text-right btn-holder">
-                                                <button mat-icon-button matTooltip="Edit Chapter" (click)="editTopicDetail(topic)">
-                                                    <mat-icon aria-label="Edit Chapter">edit</mat-icon>
+                                                <button mat-icon-button matTooltip="Edit Topic" (click)="editTopicDetail(topic)">
+                                                    <mat-icon aria-label="Edit Topic">edit</mat-icon>
                                                 </button>
-                                                <button mat-icon-button matTooltip="Delete Chapter">
-                                                    <mat-icon aria-label="Delete Chapter">delete_forever</mat-icon>
+                                                <button mat-icon-button matTooltip="Delete Topic" (click)="deleteTopicDetail(topic)">
+                                                    <mat-icon aria-label="Delete Topic">delete_forever</mat-icon>
                                                 </button>
                                             </div>
                                         </li>
@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="media-heading"><strong>{{chapter.displayName}}</strong>
-                                            <span class="asigned-table available">10 Topics</span> </h4>
+                                            <span class="asigned-table available">{{topicList.length}} Topics</span> </h4>
                                     </div>
 
                                 </div>
@@ -109,7 +109,7 @@
                                             <button mat-icon-button matTooltip="Edit Chapter" (click)="editChapterDetail(chapter)">
                                                 <mat-icon aria-label="Edit Chapter">edit</mat-icon>
                                             </button>
-                                            <button mat-icon-button matTooltip="Delete Chapter">
+                                            <button mat-icon-button matTooltip="Delete Chapter" (click)="deleteChapterDetail(chapter)">
                                                 <mat-icon aria-label="Delete Chapter">delete_forever</mat-icon>
                                             </button>
                                         </div>
@@ -133,7 +133,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="media-heading"><strong>{{subject.displayName}}</strong>
-                                            <span class="asigned-table available">6 Chapters</span> </h4>
+                                            <span class="asigned-table available">{{chapterList.length}} Chapters</span> </h4>
                                     </div>
 
                                 </div>
@@ -148,7 +148,7 @@
                                             <button mat-icon-button matTooltip="Edit Subject" (click)="editSubjectDetail(subject)">
                                                 <mat-icon aria-label="Edit Subject">edit</mat-icon>
                                             </button>
-                                            <button mat-icon-button matTooltip="Delete Subject">
+                                            <button mat-icon-button matTooltip="Delete Subject" (click)="deleteSubjectDetail(subject)">
                                                 <mat-icon aria-label="Delete Subject">delete_forever</mat-icon>
                                             </button>
                                         </div>
@@ -171,7 +171,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="media-heading"><strong>{{class.displayName}}</strong>
-                                            <span class="asigned-table available">4 Subjects</span> </h4>
+                                            <span class="asigned-table available">{{classSubjectList.length}} Subjects</span> </h4>
                                     </div>
 
                                 </div>
@@ -186,7 +186,7 @@
                                             <button mat-icon-button matTooltip="Edit Class" (click)="editClassDetails(class)">
                                                 <mat-icon aria-label="Edit Subject">edit</mat-icon>
                                             </button>
-                                            <button mat-icon-button matTooltip="Delete Class">
+                                            <button mat-icon-button matTooltip="Delete Class"  (click)="deleteClassDetails(class)">
                                                 <mat-icon aria-label="Delete Subject">delete_forever</mat-icon>
                                             </button>
                                         </div>

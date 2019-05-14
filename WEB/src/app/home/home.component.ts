@@ -7,6 +7,7 @@ import { SubjectSetupDetail } from '../public/model/subject-setup-detail';
 import { ChapterSetupDetail } from '../public/model/chapter-setup-detail';
 import { ContentMgmntService } from '../home/service/content-mgmnt.service';
 import { TopicDetail } from '../public/model/topic-detail';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   breadcurmblist: any;
   today:Date=new Date();
 
-  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router) {
+  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router, public snackBar: MatSnackBar) {
     if (this.authService.isAuthenticate) {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.user = user;
@@ -36,6 +37,16 @@ export class HomeComponent implements OnInit {
 
   }
 
+
+  logout() {
+    this.router.navigate(['login']);
+  }
+
+  setupDayZero() {
+    this.contentMgmntService.setupDayZeroForSchool().subscribe(data => {
+      this.openSnackBar("All Class,Subject,Chapter,Topic Setup sucessfully", "SUCESS");
+    });
+  }
  
   gotToHomepage(){
     if(this.user.role=='TEACHER'){
@@ -46,6 +57,12 @@ export class HomeComponent implements OnInit {
     if(this.user.role=='ADMIN'){
       this.router.navigate(['/home/teacher']);
       }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 10000
+    });
   }
 
 }

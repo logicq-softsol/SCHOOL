@@ -4,10 +4,24 @@
             <div class="col-lg-12 ">
                 <a class="logo " href="#"><img src="assets/images/logo.png" alt=""></a>
                 <ul class="login-info">
-                    <li><a class="user" (click)="viewSessionReport()" *ngIf="user.role=='ADMIN'">View Session Reports</a></li>
-                    <li>Last login : {{ today | date:'MM/dd/yy h:mm:ss a' }}</li>
-                    <li><a class="user" (click)="gotToHomepage()"><i class="material-icons">account_circle</i></a></li>
+                    <li><button class="user" (click)="setupDayZero()" *ngIf="user.role=='ADMIN'"> <span>DayZero</span></button></li>
+                    <li>{{ today | date:'MM/dd/yy h:mm:ss a' }}</li>
+                    <li><a class="user" [matMenuTriggerFor]="menu"><i class="material-icons">account_circle</i></a></li>
                 </ul>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                      <mat-icon>account_box</mat-icon>
+                      <span>View Profile</span>
+                    </button>
+                    <button mat-menu-item>
+                      <mat-icon>calendar_today</mat-icon>
+                      <span>View Session</span>
+                    </button>
+                    <button mat-menu-item (click)="logout()">
+                      <mat-icon>power_settings_new</mat-icon>
+                      <span>Logout</span>
+                    </button>
+                  </mat-menu>
             </div>
         </div>
     </div>
