@@ -1,118 +1,47 @@
-/* Made with love by Mutiullah Samim*/
 
 html,body{
-  background-image: url('/assets/images/school-bg.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: #FFFFFF;
   height: 100%;
   font-family: 'Poppins', sans-serif;
   }
   
-  .container{
-  height: 100%;
-  align-content: center;
+  /* .container-fluid, .login-container, .login-container .row, .login-container .col-lg-8{
+    height: 100%;
   }
+   */
+  .login-container  .container-fluid, .login-container .row, .login-container .d-flex{height: 100%;}
   
-  .card-container{
-  height: 420px;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 400px;
-  position: relative;
+  
+  
+  .slider{  background-size: cover;height:100%;}
+  
+  .signin h2 {margin:0 0 25px; text-align:left; font-size: 1.6rem;}
+  .login-form{padding:50px   20px;}
+  .login-form h3{color:#2F3341; font-size:18px; font-weight:500; margin:20px 0 30px 0}
+  .login-form .form-control{color:#9C9C9C; font-size:14px; border-color:#CBCBCB; border-radius:3px;} 
+  .login-form  label{color:#252525; font-size:14px;}
+  .forget-pass{color:#ED683D; float:right; font-size:14px;}
+  
+  .btn-login{background:#ED683D; padding:10px 60px; border-radius:40px; color:#FFFFFF; font-size:16px; border:0; margin:50px 0 30px 0}
+  .btn-center{float:none; display:inline-block;}
+  
+  .welcome-text{float: right;  padding-left: 57%;}
+  .welcome-text h3{color:#fff; font-size:24px; font-weight:500;}
+  .welcome-text p{color:#fff; font-size:18px;}
+  
+  .flex-footer{position:absolute; left:0; bottom:0; width:100%; border-top:1px solid #999999; color:#999999; font-size:12px;padding:20px 30px 5px 30px}
+  .flex-footer .forget-pass{font-size:12px; }
+  .flex-footer p{display:inline-block}
+  .dont{float:none;}
+  
+  /* MOBILE LAYOUT (PORTRAIT/320PX) ----------------------------------------------- */
+  @media only screen and (max-width: 767px) { 
+    .forget-pass{float:none; display:inline-block; margin-top:15px;}
+    .flex-footer{position:static; text-align:center;}
+    .flex-footer p{display:block; }
+    .flex-footer .forget-pass{float:none; display:inline-block; margin-top:0}
+    .flex-footer{padding:20px 10px;}
+    .slider{display:none !important;}
+    .login-form{padding:0}
+    .btn-login{margin:  0}
   }
-  
-  .login-conetnt{
-  background-color: rgba(0,0,0,0.5) !important;
-    border-radius: 3px;
-  }
-  
-  
-  .social_icon span{
-  font-size: 60px;
-  margin-left: 10px;
-  color: #FFC312;
-  }
-  
-  .social_icon span:hover{
-  color: white;
-  cursor: pointer;
-  }
-  
-  .card-header h3{
-  color: white;
-  }
-  
-  .social_icon{
-  position: absolute;
-  right: 20px;
-  top: -45px;
-  }
-  
-  .input-group-prepend span{
-  width: 50px;
-  background-color: #FFC312;
-  color: black;
-  border:0 !important;
-  }
-  
-  input:focus{
-  outline: 0 0 0 0  !important;
-  box-shadow: 0 0 0 0 !important;
-  
-  }
-  
-  .remember{
-  color: white;
-  }
-  
-  .remember input
-  {
-  width: 20px;
-  height: 20px;
-  margin-left: 15px;
-  margin-right: 5px;
-  }
-  
-  .login_btn{
-  color: black;
-  background-color: #FFC312;
-  width: 100px;
-  }
-  
-  .login_btn:hover{
-  color: black;
-  background-color: white;
-  }
-  
-  .links{
-  color: white;
-  }
-  
-  .links a{
-  margin-left: 4px;
-  }
-  
-  .footer-logo {
-  height: 60px;
-  margin-top: 30px;
-  width: 400px;
-  color: #FFFFFF;
-  text-align: center;
-  }
-  
-  .footer-logo .small{
-  font-size:11px;
-  }
-  
-  .card-container.register{
-  width: 800px;
-  }
-  
-  .card-container.register .footer-logo {
-  width: 800px;
-  }
-  .input-label-text {
-    color: #fff;
-    font-size: 12px;
-  }
-  

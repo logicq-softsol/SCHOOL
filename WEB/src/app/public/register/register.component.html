@@ -1,91 +1,54 @@
-<body>
-    <div class="d-flex justify-content-center h-100">
-
-        <div class="card-container register">
-            <div class="login-conetnt">
-                <div class="card-header">
-                    <h3>Sign Up</h3>
-                    <div class="d-flex justify-content-end social_icon">
-                        <span><i class="fab fa-facebook-square"></i></span>
-                        <span><i class="fab fa-google-plus-square"></i></span>
-                        <span><i class="fab fa-twitter-square"></i></span>
+<body class="login-container ">
+    <div class="d-flex align-items-stretch">
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-md-7 slider d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/login.jpg) left bottom no-repeat'}">
+                    <div class="welcome-text">
+                        <h3>Welcome</h3>
+                        <p>Grow yours business with us. Over 38,742 + insurance professionals already are. 
+                        <br><br>Contact 24x7 toll free number.</p>
                     </div>
                 </div>
-                <div class="card-body">
-                    <form>
-                        <div class="input-group form-group">
-                            <div class="col-md-4">
-                                <div class="input-group-prepend">
-                                    <label class="input-label-text">User Name</label>
-                                </div>
-                                <input matInput class="form-control" placeholder="User Name" [(ngModel)]="login.userName"
-                                    name="login.userName" required>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="input-group-prepend">
-                                    <label class="input-label-text">Password</label>
-                                </div>
-                                <input class="form-control" matInput placeholder="Password" [(ngModel)]="login.password"
-                                    name="login.password" required>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="input-group-prepend">
-                                    <label class="input-label-text">Role</label>
-                                </div>
-                                <mat-select placeholder="Role" [(ngModel)]="user.role" name="user.role" required class="form-control">
-                                    <mat-option *ngFor="let role of roles" [value]="role.value">
-                                        {{role.displayValue}}
-                                    </mat-option>
-                                </mat-select>
-                            </div>
-                        </div>
-                        <div class="input-group form-group">
-                            <div class="col-md-6">
-                                <div class="input-group-prepend">
-                                    <label class="input-label-text">First Name</label>
-                                </div>
-                                <input matInput class="form-control" placeholder="First Name" [(ngModel)]="user.firstname"
-                                    name="user.firstname" required>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group-prepend">
-                                    <label class="input-label-text">Last Name</label>
-                                </div>
-                                <input class="form-control" matInput placeholder="Last Name" [(ngModel)]="user.lastname"
-                                    name="user.lastname" required>
-                            </div>
-                        </div>
-                        <div class="input-group form-group">
-                            <div class="col-md-6">
-                                <div class="input-group-prepend">
-                                    <label class="input-label-text">Email</label>
-                                </div>
-                                <input class="form-control" matInput placeholder="Last Name" [(ngModel)]="user.email"
-                                    name="user.email" required>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group-prepend">
-                                    <label class="input-label-text">Phone</label>
-                                </div>
-                                <input matInput class="form-control" placeholder="Phone Number" [(ngModel)]="user.mobileno"
-                                    name="user.mobileno" required>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
+                <div class="col-md-5">
+                    <div class="login-form">
+                        <img src="assets/images/logo-edusure.png" alt="" />
+                        <h3>Please sign in to start with.</h3>
+                        <div class="filled-form">
                             <div class="form-group">
-                                <button type="button" class="btn float-right login_btn" (click)="confirmRegisterUser()">Register</button>
+                                <label>User Name</label>
+                                <input matInput  type="text" class="form-control"   [(ngModel)]="login.userName" name="login.userName"  placeholder="Enter your User Name" required>
                             </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input matInput type="password" class="form-control" [(ngModel)]="login.password" name="login.password" placeholder="Enter your Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input matInput type="text" class="form-control"  [(ngModel)]="user.firstname" name="user.firstname" placeholder="Enter your First Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input matInput type="text" class="form-control"  [(ngModel)]="user.lastname" name="user.lastname" placeholder="Enter your Last Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input matInput type="text" class="form-control"  [(ngModel)]="user.mobileno" name="user.mobileno" placeholder="Enter your Phone Number" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input matInput type="text" class="form-control"  [(ngModel)]="user.email" name="user.email" placeholder="Enter your Email" required>
+                            </div>
+                            <p class="text-center">
+                                <button type="button" class="btn-login" (click)="confirmRegisterUser()">Register</button>	
+                            </p>
+                            <p class="text-center"><a  class="forget-pass dont" [routerLink]="['login']">Already have an account?Login</a></p>
                         </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-                        Already have an account?<a [routerLink]="['login']">Login</a>
+                    </div>
+                    <div class="flex-footer">
+                        <p>Copyrights, 2019 C2LBizAll Rights Reserved,</p> <a href="#" class="forget-pass">Terms and conditions</a>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
-</body>
+    </body>

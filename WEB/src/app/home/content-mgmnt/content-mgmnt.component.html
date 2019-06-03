@@ -1,78 +1,53 @@
-<section class="search-container d-flex align-items-center">
+<section class="search-container d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/home-banner.png) left bottom no-repeat'}">
   <div class="container">
     <div class="row clearfix">
-      <div class="col-md-7">
+      <div class="col-md-12">
         <div class="home-search pt-3">
-          <form>
-            <div class="form-group mb-4">
-              <label for="exampleInputEmail1">Select Class</label>
-              <select class="form-control" (change)="onClassChange($event.target.value)" [value]="className">
-                <option value="">Select Class</option>
-                <option  *ngFor="let class of classList">{{class.displayName}}</option>
-              </select>
+          <h3>Hello, {{user.firstname}} {{user.lastname}}  What you are looking for?</h3>
+        	<div class="d-flex justify-content-center">
+              <div class="row">
+                <div class="col-md-4 form-group"> 
+                  <input type="text" placeholder="Select or type a class" class="form-control"  list="classList" [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
+                  <datalist id="classList">
+                      <option *ngFor="let classDetail of classList" [value]="classDetail.displayName" >{{classDetail?.displayName}}</option>
+                    </datalist>
+                 </div>
+                <div class="col-md-4 form-group"> 
+                  <input type="text" placeholder="Select or type a subject" class="form-control"  list="classSubjectList" [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)"/> 
+                  <datalist id="classSubjectList">
+                      <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName" >{{classSubject?.displayName}}</option>
+                    </datalist>
+                </div> 
+                 <div class="col-md-4 form-group">
+                  <input type="text" placeholder="Select or type a Chapter" class="form-control"  list="chapterList" [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)"/>  
+                  <datalist id="chapterList">
+                      <option *ngFor="let chapter of chapterList" [value]="chapter.displayName" >{{chapter?.displayName}}</option>
+                    </datalist>
+                </div> 
+              </div> 
             </div>
-            <div class="form-group mb-4">
-              <label for="exampleInputEmail1">Select Subject</label>
-              <select class="form-control" (change)="onSubjectChange($event.target.value)" [value]="subjectName">
-                <option value="">Select</option>
-                <option *ngFor="let subejct of classSubjectList">{{subejct.displayName}}</option>
-              </select>
-            </div>
-            <div class="form-group mb-4">
-              <label for="exampleInputEmail1">Select Chapter</label>
-              <select class="form-control" (change)="onChapterChange($event.target.value)" [value]="chapterName">
-                <option value="">Select</option>
-                <option  *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">
-              <i class="material-icons">search</i> Search
-            </button>
-          </form>
         </div>
-      </div>
-      <div class="col-md-5">
-        <div class="user-details p-3 text-center">
-          <a class="edit-info d-flex align-items-center justify-content-center" href="#">
-            <i class="material-icons">edit</i>
-          </a>
-          <span class="user-av d-flex align-items-center justify-content-center">
-            <img src="assets/images/user.png" alt="">
-          </span>
-          <strong>{{user.firstname}} {{user.lastname}}</strong>
-          <small>Role</small>
-          <p>{{user.role}}</p>
-          <small>Email</small>
-          <p>{{user.email}}</p>
-          <small>Mobile Number</small>
-          <p>{{user.mobileno}}</p>
-        </div>
-      </div>
+        <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">Search</button>
+      </div> 
     </div>
   </div>
 </section>
-
-<div class="container mt-4 recent-search">
-  <h3 class="small-title mb-3">Your Favorties</h3>
-  <div class="row clearfix">
-    <div class="col-md-3" *ngFor="let fav of favorites">
-      <div class="card result-list">
-        <div class="card-header">
-          {{fav.displayName}}
+<div class="container mt-4"> 
+  <div class="recent-search  topics mb-5">
+    <h3 class="small-title mb-3">Favourite Topics </h3>
+    <div class="row clearfix">
+      <div class="col-md-4" *ngFor="let fav of favorites">
+        <div class="card mb-15">
           <div class="action">
-            <a (click)="removeFavorites(topic)"> <mat-icon aria-label="I Loved It!" color="accent">favorite</mat-icon> </a>
+            <a href="#"><img src="{{fav.icon}}" alt=""></a> 
           </div>
-        </div>
-        <div class="card-body">
-          <a (click)="playLessonForTopic(fav)">
-            <img src="{{fav.icon}}" alt="Avatar">
-            <div class="container">
-              <p>{{fav.description}}</p>
-            </div>
-          </a>
+          <img src="assets/images/image2.png" class="card-img-top" alt="">
+          <div class="card-body">
+            <a href="#"><h4> {{fav.displayName}}</h4>
+            <p class="card-text">{{fav.description}}</p></a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <a  class="load-more">Load More</a>
 </div>

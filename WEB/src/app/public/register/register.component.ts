@@ -34,6 +34,7 @@ export class RegisterComponent implements OnInit {
 
 
   confirmRegisterUser() {
+    this.user.role='TEACHER';
     this.productDetail.user = this.user;
     this.login.user = this.user;
     this.authService.registerUserForProduct(this.login).subscribe((data: any) => {

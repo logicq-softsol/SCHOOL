@@ -1,241 +1,66 @@
-<section class="main-wrapper">
-
-    
-      <div class="left-menu">
-        <div class="select-class">
-          <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Select Class</label>
-              <select class="form-control" (change)="onClassChange($event.target.value)" [value]="className">
-                <option value="">Select Class</option>
-                <option *ngFor="let class of classList">{{class.displayName}}</option>
-              </select>
+<section class="search-container inner d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/home-banner.png) left bottom no-repeat'}">
+    <div class="container">
+      <div class="row clearfix">
+        <div class="col-md-12">
+          <div class="home-search inner-search pt-3">  
+            <div class="d-flex justify-content-center">
+              <div class="row">
+                <div class="col-md-3 form-group"> 
+                  <label>Class</label>
+                  <input type="text" placeholder="Select or type a class" class="form-control"  list="classList" [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
+                  <datalist id="classList">
+                      <option *ngFor="let classDetail of classList" [value]="classDetail.displayName" >{{classDetail?.displayName}}</option>
+                    </datalist>
+                 </div>
+                <div class="col-md-3 form-group"> 
+                  <label>Subject</label>
+                  <input type="text" placeholder="Select or type a subject" class="form-control"  list="classSubjectList" [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)"/> 
+                  <datalist id="classSubjectList">
+                      <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName" >{{classSubject?.displayName}}</option>
+                    </datalist>
+                </div> 
+                <div class="col-md-3 form-group">
+                    <label>Chapter</label>
+                  <input type="text" placeholder="Select or type a Chapter" class="form-control"  list="chapterList" [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)"/>  
+                  <datalist id="chapterList">
+                      <option *ngFor="let chapter of chapterList" [value]="chapter.displayName" >{{chapter?.displayName}}</option>
+                    </datalist>
+                </div> 
+                </div> 
+                <div class="col-md-3 form-group">
+                  <label>&nbsp;</label>
+                  <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">Search</button>
+                </div>
+              </div> 
             </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Select Subject</label>
-              <select class="form-control" (change)="onSubjectChange($event.target.value)" [value]="subjectName">
-                <option value="">Select Subject</option>
-                <option *ngFor="let subejct of classSubjectList">{{subejct.displayName}}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Select Chapter</label>
-              <select class="form-control" (change)="onChapterChange($event.target.value)" [value]="chapterName">
-                <option value="">Select Chapter</option>
-                <option *ngFor="let chapter of chapterList">{{chapter.displayName}}</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">
-              <i class="material-icons">search</i> Search
-            </button>
-          </form>
-        </div>
+          </div>						
+        </div> 
       </div>
-      <div class="body-content">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="" (click)="goToHome()"><strong>Home</strong></a></li>
-            <li class="breadcrumb-item"><a [routerLink]="" (click)="viewSubjectListForClass(className)"><strong>{{
-                  className | uppercase }}</strong></a></li>
-            <li class="breadcrumb-item"><a [routerLink]="" (click)="viewChapterListForSubject(subjectName)"><strong>{{
-                  subjectName | uppercase }}</strong></a></li>
-            <li class="breadcrumb-item"><a [routerLink]="" (click)="viewTopicListForChapter(chapterName)"><strong>{{
-                  chapterName | uppercase }}</strong></a></li>
-          </ol>
-        </nav>
-        <div class="content-area">
-          <div class="primary-action mb-3">
-            <div class="row clearfix">
-              <div class="col-md-7 col-lg-6">
-                <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Search for  class,subject,chapter and  topics " [matAutocomplete]="auto"
-                    [formControl]="searchCtrl">
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let search of filteredSearched | async" [value]="search.displayName">
-                      <img class="example-option-img" aria-hidden [src]="search.icon" height="25">
-                      <span>{{search.displayName}}</span> |
-                      <mat-chip color="search.color">{{search.type}}</mat-chip>
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-                <!--mat-icon>search</mat-icon>-->
-              </div>
-              <div class="col-md-5 col-lg-4 text-right">
-                <div class="example-button-row">
-                  <button mat-raised-button color="accent" (click)="viewMyFavorites()">My Favorites</button>
-                  <button mat-raised-button color="primary" (click)="mylastLesson()">Last Session</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-
-            <div class="col-md-12" *ngIf="displayView=='FAVTOPIC'">
-              <div class="wh-bg">
-                  <div class="row">
-                <div class="col-md-4 col-sm-6" *ngFor="let favTopic of favTopicList">
-                  <div class="book-tables waiter-list">
-                    <div class="media" (click)="playLessonForTopic(favTopic)">
-                      <div class="media-left">
-                        <img class="person-card-avatar" src="assets/images/class.jpg">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading"><strong> {{favTopic.displayName}}</strong></h4>
-                      </div>
-                    </div>
-                    <ul>
-                      <li>
-                        <div class="text-left btn-holder">
-                          <button mat-icon-button matTooltip="Play Lesson" (click)="playLessonForTopic(favTopic)">
-                            <mat-icon aria-label="Play Lesson" color="primary">play_circle_filled_white</mat-icon>
-                          </button>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="text-right btn-holder">
-                          <button mat-icon-button matTooltip="I loved it!" (click)="markFavorites(topic)">
-                            <mat-icon aria-label="I loved it!" color="accent">thumb_up</mat-icon>
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-
-
-
-
-            <div class="col-md-12" *ngIf="displayView=='TOPIC'">
-              <div class="wh-bg">
-                  <div class="row">
-                <div class="col-md-4 col-sm-6" *ngFor="let topic of topicList">
-                  <div class="book-tables waiter-list">
-                    <div class="media" (click)="playLessonForTopic(topic)">
-                      <div class="media-left">
-                        <img class="person-card-avatar" src="assets/images/class.jpg">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading"><strong> {{topic.displayName}}</strong></h4>
-                      </div>
-                    </div>
-                    <ul>
-                      <li>
-                        <div class="text-left btn-holder">
-                          <button mat-icon-button matTooltip="Play Lesson" (click)="playLessonForTopic(topic)">
-                            <mat-icon aria-label="Play Lesson" color="primary">play_circle_filled_white</mat-icon>
-                          </button>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="text-right btn-holder">
-                          <button mat-icon-button matTooltip="I loved it!" (click)="markFavorites(topic)">
-                            <mat-icon aria-label="I loved it!">thumb_up</mat-icon>
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-
-            <div class="col-md-12" *ngIf="displayView=='CHAPTER'">
-              <div class="wh-bg">
-                  <div class="row">
-                <div class="col-md-4 col-sm-6" *ngFor="let chapter of chapterList">
-                  <div class="book-tables waiter-list">
-                    <div class="media">
-                      <div class="media-left">
-                        <img class="person-card-avatar" src="assets/images/class.jpg">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading"><strong>{{chapter.displayName}}</strong></h4>
-                      </div>
-                    </div>
-                    <ul>
-                      <button mat-stroked-button color="accent">10 Topics
-                        <i class="material-icons"> search</i>
-                      </button>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-
-
-
-
-            <div class="col-md-12" *ngIf="displayView=='SUBJECT'">
-              <div class="wh-bg">
-                  <div class="row">
-                <div class="col-md-4 col-sm-6" *ngFor="let subject of classSubjectList">
-                  <div class="book-tables waiter-list">
-                    <div class="media">
-                      <div class="media-left">
-                        <img class="person-card-avatar" src="assets/images/class.jpg">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading"><strong>{{subject.displayName}}</strong>
-                          <span class="asigned-table available">6 Chapters</span> </h4>
-                      </div>
-
-                    </div>
-                    <ul>
-                      <li>Avilable Lesson : 60</li>
-                      <li>
-                        <div class="text-right btn-holder">
-                          <button mat-icon-button matTooltip="Search Chapters">
-                            <mat-icon aria-label="Search Chapters" color="primary">image_search</mat-icon>
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-
-
-
-            <div class="col-md-12" *ngIf="displayView=='CLASS'">
-              <div class="wh-bg">
-                  <div class="row">
-                <div class="col-md-4 col-sm-6" *ngFor="let class of classList">
-                  <div class="book-tables waiter-list">
-                    <div class="media">
-                      <div class="media-left">
-                        <img class="person-card-avatar" src="assets/images/class.jpg">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading"><strong>{{class.displayName}}</strong>
-                          <span class="asigned-table available">4 Subjects</span> </h4>
-                      </div>
-
-                    </div>
-                    <ul>
-                      <li>Avilable Videos : 60</li>
-                      <li>
-                        <div class="text-right btn-holder">
-                          <button mat-icon-button matTooltip="Search Subjects">
-                            <mat-icon aria-label="Search Subjects" color="primary">image_search</mat-icon>
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-          </div>
-        </div>
+  </section>
+<section class="container">
+  <div class="row">
+    <nav aria-label="breadcrumb" class="col-md-12">
+      <ol class="breadcrumb pl-0">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Class</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Subject</li>
+      </ol>
+    </nav>
+    <div class="clearfix"></div>
+    <div class="col-md-8 text-right mb-4 btn-class">
+      <button type="button" class="btn">My Favorites</button>
+    </div>
+  </div>
+  <div class="row">				
+    <div class="col-md-3" *ngFor="let topic of topicList">
+      <div class="class-box">
+        <p class="video-text"><a (click)="playLessonForTopic(topic)"><i class="fas fa-video"></i> {{topic.displayName}}</a></p>
+        <ul class="class-edit">
+          <li><a (click)="markFavorites(topic)"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+          <li><a><i class="fa fa-sticky-note" aria-hidden="true"></i></a></li>
+          <li><a><i class="fa fa-comment" aria-hidden="true"></i></a></li>
+        </ul>
       </div>
-   
-
+    </div>
+  </div>
 </section>

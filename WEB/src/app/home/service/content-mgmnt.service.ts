@@ -18,8 +18,40 @@ export class ContentMgmntService {
   public subjectDetail = new ReplaySubject<SubjectSetupDetail>(1);
   public ChapterSetupDetail = new ReplaySubject<ChapterSetupDetail>(1);
 
+  public classList = new ReplaySubject<ClassSetupDetail[]>(1);
+  public subjectList = new ReplaySubject<SubjectSetupDetail[]>(1);
+  public ChapterList = new ReplaySubject<ChapterSetupDetail[]>(1);
+
   constructor(private http: HttpClient) { }
 
+
+  getClassList() {
+    return this.classList.asObservable();
+  }
+
+  public changeClassList(classlist: ClassSetupDetail[]) {
+    this.classList.next(classlist);
+  }
+
+
+
+  getSubjectList() {
+    return this.subjectList.asObservable();
+  }
+
+  public changeSubjectList(subjectlist: SubjectSetupDetail[]) {
+    this.subjectList.next(subjectlist);
+  }
+
+
+
+  getChapterList() {
+    return this.ChapterList.asObservable();
+  }
+
+  public changeChapterList(chapterlist: ChapterSetupDetail[]) {
+    this.ChapterList.next(chapterlist);
+  }
 
 
 
