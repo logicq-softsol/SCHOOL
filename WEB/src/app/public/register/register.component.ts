@@ -17,14 +17,8 @@ export class RegisterComponent implements OnInit {
   productDetail: Activation = new Activation();
   user: UserDetail = new UserDetail();
   login: LoginDetail = new LoginDetail();
-  roles: any[] = [{
-    value: "TEACHER",
-    displayValue: "TEACHER"
-  }, {
-    value: "ADMIN",
-    displayValue: "ADMIN"
-  }];
-
+  roles: any[] = ["TEACHER","ADMIN"];
+  role:any;
 
   constructor(private authService: AuthenticationService, public snackBar: MatSnackBar, private router: Router) { }
 
@@ -32,9 +26,11 @@ export class RegisterComponent implements OnInit {
   
   }
 
+  onChangeRole(urole){
+    this.user.role=urole;
+  }
 
   confirmRegisterUser() {
-    this.user.role='TEACHER';
     this.productDetail.user = this.user;
     this.login.user = this.user;
     this.authService.registerUserForProduct(this.login).subscribe((data: any) => {
@@ -42,6 +38,9 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
         this.openSnackBar(data.message, data.messageCode);
       } else if (data.messageCode == "AREG") {
+        this.router.navigate(['/login']);
+        this.openSnackBar(data.message, data.messageCode);
+      }else if (data.messageCode == "AREGA") {
         this.router.navigate(['/login']);
         this.openSnackBar(data.message, data.messageCode);
       }

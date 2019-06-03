@@ -93,8 +93,8 @@ public class LoginController {
 			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName).getBody();
 			String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
 					+ licnkey.getParam4();
-			 ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
-			
+			ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
+
 //			ActivateKey activateKey = new ActivateKey();
 //			activateKey.setHostKey("CARfSPIL");
 //			activateKey.setHostKeySalt("FdQgZS4J");
@@ -198,6 +198,17 @@ public class LoginController {
 					sucessHandlerUtils.handleSucessMessage("AREG", "/api/userRegister", "User Already Exist."),
 					HttpStatus.OK);
 		}
+		if (StringUtils.isEmpty(login.getUser().getRole())) {
+			login.getUser().setRole("USER");
+		} else if ("ADMIN".equals(login.getUser().getRole())) {
+			User adminUser = userDetailsRepo.findByRole("ADMIN");
+			if (null != adminUser) {
+				return new ResponseEntity<Message>(sucessHandlerUtils.handleSucessMessage("AREGA", "/api/userRegister",
+						"More Than one Admin cannot be register.Please contact Admin"), HttpStatus.OK);
+			}
+
+		}
+
 		if (!StringUtils.isEmpty(login.getUserName())) {
 			login.getUser().setUserName(login.getUserName());
 			userDetailsRepo.save(login.getUser());
