@@ -3,25 +3,25 @@
     <div class="row clearfix">
       <div class="col-md-12">
         <div class="home-search pt-3">
-          <h3>Hello, {{user.firstname}} {{user.lastname}}  What you are looking for?</h3>
+          <h3>Hello, {{user.firstname | uppercase }} {{user.lastname | uppercase}}  What you are looking for?</h3>
         	<div class="d-flex justify-content-center">
               <div class="row">
                 <div class="col-md-4 form-group"> 
                   <input type="text" placeholder="Select or type a class" class="form-control"  list="classList" [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
                   <datalist id="classList">
-                      <option *ngFor="let classDetail of classList" [value]="classDetail.displayName" >{{classDetail?.displayName}}</option>
+                      <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName  | uppercase }}</strong></option>
                     </datalist>
                  </div>
                 <div class="col-md-4 form-group"> 
                   <input type="text" placeholder="Select or type a subject" class="form-control"  list="classSubjectList" [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)"/> 
                   <datalist id="classSubjectList">
-                      <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName" >{{classSubject?.displayName}}</option>
+                      <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName" ><strong>{{classSubject?.displayName  | uppercase }}</strong></option>
                     </datalist>
                 </div> 
                  <div class="col-md-4 form-group">
                   <input type="text" placeholder="Select or type a Chapter" class="form-control"  list="chapterList" [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)"/>  
                   <datalist id="chapterList">
-                      <option *ngFor="let chapter of chapterList" [value]="chapter.displayName" >{{chapter?.displayName}}</option>
+                      <option *ngFor="let chapter of chapterList" [value]="chapter.displayName" ><strong>{{chapter?.displayName  | uppercase }}</strong></option>
                     </datalist>
                 </div> 
               </div> 
@@ -35,19 +35,21 @@
 <div class="container mt-4"> 
   <div class="recent-search  topics mb-5">
     <h3 class="small-title mb-3">Favourite Topics </h3>
-    <div class="row clearfix">
+    <div class="row clearfix" *ngIf="favorites.length>0">
       <div class="col-md-4" *ngFor="let fav of favorites">
         <div class="card mb-15">
-          <div class="action">
-            <a href="#"><img src="{{fav.icon}}" alt=""></a> 
-          </div>
-          <img src="assets/images/image2.png" class="card-img-top" alt="">
-          <div class="card-body">
-            <a href="#"><h4> {{fav.displayName}}</h4>
-            <p class="card-text">{{fav.description}}</p></a>
-          </div>
+            <div class="action">
+								<a (click)="removeFavorites(fav)" style="cursor:pointer"><img src="assets/images/favorite-heart-button.png" alt=""></a> 
+							</div>
+							<div class="card-body">
+                  <a (click)="playLessonForTopic(fav)" class="video-text" style="cursor:pointer"><i class="fas fa-video"></i> <h4>{{fav.displayName}}</h4></a>
+								<p class="card-text">{{fav.description}}</p>
+							</div>
         </div>
       </div>
+    </div>
+    <div class="row clearfix" *ngIf="favorites.length==0">
+        <h5 class="small-title mb-3">No Favourite Topics Avilable</h5>
     </div>
   </div>
 </div>

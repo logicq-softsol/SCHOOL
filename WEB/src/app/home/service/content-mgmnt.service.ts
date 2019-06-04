@@ -22,7 +22,19 @@ export class ContentMgmntService {
   public subjectList = new ReplaySubject<SubjectSetupDetail[]>(1);
   public ChapterList = new ReplaySubject<ChapterSetupDetail[]>(1);
 
+  public displayView = new ReplaySubject<any>(1);
+
   constructor(private http: HttpClient) { }
+
+  
+  getDisplayView() {
+    return this.displayView.asObservable();
+  }
+
+  public changeDisplayView(display:any) {
+    this.displayView.next(display);
+  }
+
 
 
   getClassList() {

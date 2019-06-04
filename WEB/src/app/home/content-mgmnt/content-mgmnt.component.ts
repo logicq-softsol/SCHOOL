@@ -9,7 +9,6 @@ import { ChapterSetupDetail } from '../../public/model/chapter-setup-detail';
 import { ContentMgmntService } from '../../home/service/content-mgmnt.service';
 import { MatSnackBar } from "@angular/material";
 import { Router } from '@angular/router';
-import { ImageUploadDialog } from './upload-file/upload-image';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -74,9 +73,11 @@ export class ContentMgmntComponent implements OnInit {
 
 
   gotToHomepage() {
-    if (this.user.role == 'TEACHER') {
       this.router.navigate(['/home/teacher']);
-    }
+      this.classSubjectList=[];
+      this.chapterList=[];
+      this.topicList=[];
+
   }
 
 
@@ -87,6 +88,9 @@ export class ContentMgmntComponent implements OnInit {
       this.classSubjectList = data;
       this.contentMgmntService.changeClassSetupDetail(classDetail);
       this.contentMgmntService.changeSubjectList(data);
+      this.contentMgmntService.changeDisplayView('SUBJECT');
+      this.chapterList=[];
+      this.topicList=[];
     });
   }
 
@@ -97,6 +101,8 @@ export class ContentMgmntComponent implements OnInit {
       this.chapterList = data;
       this.contentMgmntService.changeSubjectDetail(subject);
       this.contentMgmntService.changeChapterList(data);
+      this.contentMgmntService.changeDisplayView('CHAPTER');
+      this.topicList=[];
     });
   }
 
@@ -104,14 +110,13 @@ export class ContentMgmntComponent implements OnInit {
     let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == chapterdisplayName);
     this.contentMgmntService.changeChapterSetupDetail(chapter);
     this.chapter=chapter;
-    this.contentMgmntService.changeChapterSetupDetail(chapter);
+    this.contentMgmntService.changeDisplayView('TOPIC');
+    this.showTopicList(this.chapter);
 
   }
 
   searchTopicDetails() {
-    if (this.user.role == 'TEACHER') {
       this.router.navigate(['/home/teacher/topics']);
-    }
   }
 
   showClassSubjectList(classSetup: ClassSetupDetail) {
@@ -142,6 +147,16 @@ export class ContentMgmntComponent implements OnInit {
   }
 
 
+  
+  playLessonForTopic(fave: Favorites) {
+    let topic:TopicDetail=new TopicDetail();
+    topic.id=fave.typeValue
+   this.contentMgmntService.playLesson(topic).subscribe((data) => {
+    let file = new Blob([data], { type: 'video/mp4' });
+      var fileURL = URL.createObjectURL(file);
+     window.open(fileURL);
+     });
+  }
 
   markFavorites(classDet: ClassSetupDetail) {
     let favorite: Favorites = new Favorites();
@@ -157,6 +172,9 @@ export class ContentMgmntComponent implements OnInit {
   removeFavorites(fav: Favorites) {
     this.contentMgmntService.removeFavorites(fav.type, fav.typeValue).subscribe((fav: Favorites) => {
       this.openErrorSnackBar("Topic  remove from your favorite.", "CLOSE");
+      this.contentMgmntService.getFavorites().subscribe((favorites: Favorites[]) => {
+        this.favorites = favorites;
+      });
     });
   }
 

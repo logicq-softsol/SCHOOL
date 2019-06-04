@@ -17,18 +17,13 @@ import { MatSnackBar } from '@angular/material';
 export class HomeComponent implements OnInit {
   user: UserDetail = new UserDetail();
   breadcurmblist: any;
-  today:Date=new Date();
+  today: Date = new Date();
 
   constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router, public snackBar: MatSnackBar) {
     if (this.authService.isAuthenticate) {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.user = user;
-        if(user.role=='TEACHER'){
-          this.router.navigate(['/home/teacher']);
-        }
-        if(user.role=='ADMIN'){
-          this.router.navigate(['/home/admin']);
-        }
+        this.router.navigate(['/home/teacher']);
       });
     }
   }
@@ -47,16 +42,12 @@ export class HomeComponent implements OnInit {
       this.openSnackBar("All Class,Subject,Chapter,Topic Setup sucessfully", "SUCESS");
     });
   }
- 
-  gotToHomepage(){
-    if(this.user.role=='TEACHER'){
-    this.router.navigate(['/home/teacher']);
-    }
-  }
-  viewSessionReport(){
-    if(this.user.role=='ADMIN'){
+
+  gotToHomepage() {
       this.router.navigate(['/home/teacher']);
-      }
+  }
+  viewSessionReport() {
+      this.router.navigate(['/home/teacher']);
   }
 
   openSnackBar(message: string, action: string) {

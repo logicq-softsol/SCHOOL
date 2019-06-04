@@ -8,17 +8,12 @@ import { LogicQIntercept } from '../core/logicqInterceptor';
 import { ContentMgmntComponent } from './content-mgmnt/content-mgmnt.component';
 import { CustomMaterialModule } from '../core/material.module';
 import { ImageCropperModule } from "ngx-image-cropper";
-import { ImageUploadDialog } from './content-mgmnt/upload-file/upload-image';
-import { WorkSpaceDialog } from './content-mgmnt/workspace/work-space.component';
-import { VideoUploadDialog } from './content-mgmnt/upload-file/upload-video';
-import { AdminComponent, ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, ChapterListDialog } from './admin/admin.component';
-import { TopicComponent } from './content-mgmnt/topics/topic.component';
+import { TopicComponent, TopicDetailDialog, ChapterDetailDialog, SubjectDetailDialog, ClassSetupDialog } from './content-mgmnt/topics/topic.component';
 
 @NgModule({
   imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule, ImageCropperModule],
-  declarations: [ContentMgmntComponent, HomeComponent,TopicComponent , ClassSetupDialog, ImageUploadDialog, SubjectDetailDialog, ChapterDetailDialog, WorkSpaceDialog, TopicDetailDialog, VideoUploadDialog
-    , AdminComponent,ChapterListDialog],
-  entryComponents: [ClassSetupDialog, ImageUploadDialog, SubjectDetailDialog, ChapterDetailDialog, WorkSpaceDialog, TopicDetailDialog, VideoUploadDialog,ChapterListDialog],
+  declarations: [ContentMgmntComponent, HomeComponent,TopicComponent , ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog,TopicDetailDialog],
+  entryComponents: [ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog],
   providers: [
     homeRoutingProviders,
     {

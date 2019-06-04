@@ -41,26 +41,92 @@
   <div class="row">
     <nav aria-label="breadcrumb" class="col-md-12">
       <ol class="breadcrumb pl-0">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Class</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Subject</li>
+      <li class="breadcrumb-item"><a>Home</a></li>
+      <li class="breadcrumb-item" *ngIf="displayView=='SUBJECT' || displayView=='CLASS' || displayView=='TOPIC' || displayView=='CHAPTER'"><a >Class</a></li>
+      <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='SUBJECT' || displayView=='CHAPTER'"><a >Subject</a></li>
+      <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='CHAPTER'"><a >Chapter</a></li>
+      <li class="breadcrumb-item" *ngIf="displayView=='TOPIC'"><a >Topic</a></li>
       </ol>
     </nav>
     <div class="clearfix"></div>
-    <div class="col-md-8 text-right mb-4 btn-class">
-      <button type="button" class="btn">My Favorites</button>
-    </div>
+    <div class="col-md-4" *ngIf="user.role=='ADMIN'">
+        <h3 class="all-cls mb-4">All Classes</h3>
+      </div>
+      <div class="col-md-8 text-right mb-4 btn-class" *ngIf="user.role=='ADMIN'">
+          <button type="button" class="btn" (click)="addClassDetails()">Add Class</button>
+        <button type="button" class="btn" (click)="addSubjectDetails()">Add Subject</button>
+        <button type="button" class="btn" (click)="addChapterDetails()">Add Chapter</button>
+        <button type="button" class="btn" (click)="addTopicDetails()">Add Topic</button>
+      </div>
   </div>
-  <div class="row">				
-    <div class="col-md-3" *ngFor="let topic of topicList">
+  
+<section class="container mt-4" *ngIf="displayView=='TOPIC'">
+    <div class="row">					
+    <div class="col-md-4" *ngFor="let topic of topicList">
       <div class="class-box">
-        <p class="video-text"><a (click)="playLessonForTopic(topic)"><i class="fas fa-video"></i> {{topic.displayName}}</a></p>
+        <p class="video-text"><a (click)="playLessonForTopic(topic)" style="cursor:pointer"><i class="fas fa-video"></i> {{topic.displayName}}</a></p>
         <ul class="class-edit">
+          	<div class="card-body">
+                <p class="card-text">{{topic.description}}</p>
+            </div>
           <li><a (click)="markFavorites(topic)"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-          <li><a><i class="fa fa-sticky-note" aria-hidden="true"></i></a></li>
-          <li><a><i class="fa fa-comment" aria-hidden="true"></i></a></li>
+          <li *ngIf="user.role=='ADMIN'"><a (click)="editTopicDetail(topic)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
+          <li *ngIf="user.role=='ADMIN'"><a (click)="deleteTopicDetail(topic)" style="cursor:pointer"><i class="fas fa-times"></i></a></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
+  
+
+<section class="container mt-4" *ngIf="displayView=='CHAPTER'">
+    <div class="row">		
+        <div class="col-md-4" *ngFor="let chapter of chapterList">
+        <div class="class-box">
+            <img src="{{chapter.icon}}" class="card-image" alt="">
+            <span>{{chapter.description}}</span>
+            <p class="video-text"><a (change)="onChapterChange(chapter.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{chapter.displayName}}</a></p>
+            <ul class="class-edit" *ngIf="user.role=='ADMIN'">
+              <li><a (click)="addTopicDetails(chapter)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
+              <li><a (click)="editChapterDetail(chapter)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
+              <li><a (click)="deleteChapterDetail(chapter)" style="cursor:pointer"><i class="fas fa-times"></i></a></li>
+            </ul>
+          </div>
+          </div>
+  </div>
+    </section>
+
+    <section class="container mt-4" *ngIf="displayView=='SUBJECT'">
+        <div class="row">		
+            <div class="col-md-4" *ngFor="let subject of classSubjectList">
+            <div class="class-box">
+                <img src="{{subject.icon}}" class="card-image" alt="">
+                <span>{{subject.description}}</span>
+                <p class="video-text"><a (change)="onSubjectChange(subject.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{subject.displayName}}</a></p>
+                <ul class="class-edit" *ngIf="user.role=='ADMIN'">
+                  <li><a (click)="addChapterDetails(subject)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
+                  <li><a (click)="editSubjectDetail(subject)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
+                  <li><a (click)="deleteSubjectDetail(subject)" style="cursor:pointer"><i class="fas fa-times"></i></a></li>
+                </ul>
+              </div>
+              </div>
+      </div>
+  </section>
+    <section class="container mt-4" *ngIf="displayView=='CLASS'">
+        <div class="row">		
+            <div class="col-md-4" *ngFor="let class of classList">
+            <div class="class-box">
+                <img src="{{class.icon}}" class="card-image" alt="">
+                <span>{{class.description}}</span>
+                <p class="video-text"><a (change)="onClassChange(class.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{class.displayName}}</a></p>
+                <ul class="class-edit" *ngIf="user.role=='ADMIN'">
+                  <li><a (click)="addSubjectDetails(class)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
+                  <li><a (click)="editClassDetails(class)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
+                  <li><a (click)="deleteClassDetails(class)" style="cursor:pointer"><i class="fas fa-times"></i></a></li>
+                </ul>
+              </div>
+              </div>
+      </div>
+   </section>
+  </section>
+
