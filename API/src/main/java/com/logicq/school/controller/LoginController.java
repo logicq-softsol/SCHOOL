@@ -86,7 +86,7 @@ public class LoginController {
 	Environment env;
 
 	@RequestMapping(value = "/activateProduct", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SucessMessage> registerPartner(@RequestBody LicenseKey licnkey) throws Exception {
+	public ResponseEntity<SucessMessage> activateProductForClient(@RequestBody LicenseKey licnkey) throws Exception {
 		if (!StringUtils.isEmpty(licnkey.getParam1()) && !StringUtils.isEmpty(licnkey.getParam2())
 				&& !StringUtils.isEmpty(licnkey.getParam3()) && !StringUtils.isEmpty(licnkey.getParam4())) {
 			String hostName = schoolSecurityUtils.getSystemHostName();
@@ -94,14 +94,8 @@ public class LoginController {
 			String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
 					+ licnkey.getParam4();
 			ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
-
-//			ActivateKey activateKey = new ActivateKey();
-//			activateKey.setHostKey("CARfSPIL");
-//			activateKey.setHostKeySalt("FdQgZS4J");
-
 			String licenseKey = schoolSecurityUtils.decrypt(licenseDetails.getLicenseKey(), activateKey.getHostKey(),
 					activateKey.getHostKeySalt());
-
 			if (inputkey.equals(licenseKey)) {
 				ActivationDetails activationDetail = new ActivationDetails();
 				activationDetail.setActivationDate(schoolDateUtils.currentDate());
@@ -114,6 +108,7 @@ public class LoginController {
 				activationDetail.setExpiryDate(schoolDateUtils.getExpiryDate(licenseDetails.getValidityDay()));
 				activationDetail.setProductVersion(env.getProperty("schoool.version"));
 				activationDetail.setActivationFor(hostName);
+				activationDetail.setActivationDays(licenseDetails.getValidityDay());
 				productActivationRepo.save(activationDetail);
 				return new ResponseEntity<SucessMessage>(
 						new SucessMessage(schoolDateUtils.currentDate(), "Products Activated Sucessfully", "SUCESS"),
@@ -129,7 +124,7 @@ public class LoginController {
 	public ResponseEntity<SucessMessage> login(@RequestBody LoginDetails login) throws Exception {
 		String hostName = schoolSecurityUtils.getSystemHostName();
 		ActivationDetails activationDeatils = productActivationRepo.findByActivationFor(hostName);
-		if (null != activationDeatils) {
+		if (null != activationDeatils && !"EXPIRED".equals(activationDeatils.getProductStatus())) {
 			if (!StringUtils.isEmpty(login.getUserName())) {
 				LoginDetails loginDetails = loginDetailsRepo.findByUserName(login.getUserName());
 				if (null != loginDetails) {
@@ -152,7 +147,14 @@ public class LoginController {
 						throw new ValidationException("ERROR-LOGIN");
 					}
 				}
+			} else {
+				return new ResponseEntity<SucessMessage>(
+						new SucessMessage(schoolDateUtils.currentDate(), "Invalid login", "ERROR"),
+						HttpStatus.BAD_REQUEST);
 			}
+		} else {
+			return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+					"Product Expried ,Please check with Vendor.", "ERROR"), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<SucessMessage>(
 				new SucessMessage(schoolDateUtils.currentDate(), "Invalid login", "ERROR"), HttpStatus.BAD_REQUEST);
@@ -172,6 +174,24 @@ public class LoginController {
 		}
 		return new ResponseEntity<SucessMessage>(
 				new SucessMessage(schoolDateUtils.currentDate(), "Unable to logout ", "ERROR"), HttpStatus.BAD_REQUEST);
+	}
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SucessMessage> forgetPassword(@RequestBody LoginVO loginVO) throws Exception {
+		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+			LoginDetails loginDetails = loginDetailsRepo.findByUserName(loginVO.getUserName());
+			if (null != loginDetails && !StringUtils.isEmpty(loginVO.getPassword())) {
+				loginDetails.setPassword(passwordEncoder.encode(loginVO.getPassword()));
+				loginDetails.setLoginStatus("IN_ACTIVE");
+				loginDetailsRepo.save(loginDetails);
+			}
+			return new ResponseEntity<SucessMessage>(
+					new SucessMessage(schoolDateUtils.currentDate(), "PCLOGIN", "Password Change Sucessfully"),
+					HttpStatus.OK);
+		}
+		return new ResponseEntity<SucessMessage>(
+				new SucessMessage(schoolDateUtils.currentDate(), "ERROR", "Unable to Change Password."),
+				HttpStatus.BAD_REQUEST);
 	}
 
 	@RequestMapping(value = "/load", method = RequestMethod.GET)
@@ -208,7 +228,6 @@ public class LoginController {
 			}
 
 		}
-
 		if (!StringUtils.isEmpty(login.getUserName())) {
 			login.getUser().setUserName(login.getUserName());
 			userDetailsRepo.save(login.getUser());

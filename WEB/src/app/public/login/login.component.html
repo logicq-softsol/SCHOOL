@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<div class="col-md-5">
-				<div class="login-form">
+				<div class="login-form" *ngIf="displayView=='LOGIN'">
 					<img src="assets/images/logo-edusure.png" alt="" />
 					<h3>Please sign in to start with.</h3>
 					<div class="filled-form">
@@ -19,7 +19,7 @@
 							<input matInput  type="text" class="form-control"  placeholder="Username" [(ngModel)]="username" name="username"  placeholder="Enter your Email/Phone Number" required>
 						</div>
 						<div class="form-group">
-							<label>Password</label><a href="#" class="forget-pass">Forgot Password?</a>
+							<label>Password</label><a (click)="resetPassword()"  class="forget-pass" style="cursor:pointer">Forgot Password?</a>
 							<input matInput type="password" class="form-control" placeholder="password" [(ngModel)]="password" name="password" placeholder="********" required>
 						</div>
 						<p class="text-center">
@@ -28,6 +28,29 @@
 						<p class="text-center"><a class="forget-pass dont" [routerLink]="['/registeruser']" (click)="registerUser()">Don't have an account? Sign Up</a></p>
 					</div>
 				</div>
+				<div class="login-form" *ngIf="displayView=='RPASSWORD'">
+						<img src="assets/images/logo-edusure.png" alt="" />
+						<h3>Please Reset Your Password..</h3>
+						<div class="filled-form">
+							<div class="form-group">
+								<label>User Name</label>
+								<input matInput  type="text" class="form-control"   [(ngModel)]="username" name="username"  placeholder="Enter your Email/Phone Number" required>
+							</div>
+							<div class="form-group">
+								<label>Password</label>
+								<input matInput type="password" class="form-control"  [(ngModel)]="password" name="password" placeholder="********" required>
+							</div>
+							<div class="form-group">
+									<label>Confirm Password</label>
+									<input matInput type="text" class="form-control"  [(ngModel)]="cpassword" name="password" placeholder="Confirm password" required>
+								</div>
+							<p class="text-center">
+								<button type="button" class="btn-login" (click)="confirmPasswordChange()">Confirm</button>	
+							</p>
+							<p class="text-center"><a class="forget-pass dont" [routerLink]="['/registeruser']" (click)="registerUser()">Don't have an account? Sign Up</a></p>
+						</div>
+					</div>
+
 				<div class="flex-footer">
 					<p>Copyrights, 2019 C2LBizAll Rights Reserved,</p> <a href="#" class="forget-pass">Terms and conditions</a>
 				</div>

@@ -5,13 +5,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 
 import com.logicq.school.vo.FileStorageProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ FileStorageProperties.class })
 @EnableAsync
+@EnableScheduling
 public class SchoolApplication extends SpringBootServletInitializer {
 
 	@Override
@@ -23,4 +29,9 @@ public class SchoolApplication extends SpringBootServletInitializer {
 		SpringApplication.run(SchoolApplication.class, args);
 	}
 
+	@Bean
+    public TaskScheduler taskScheduler() {
+        return new ConcurrentTaskScheduler();
+    }
+	
 }

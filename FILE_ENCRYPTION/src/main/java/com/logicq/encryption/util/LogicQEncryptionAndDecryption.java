@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Security;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
@@ -20,6 +21,7 @@ public class LogicQEncryptionAndDecryption {
 
 	private static void encryptFile(byte[] dataToEncrypt, File outputFile, String key, String salt) {
 		try {
+			Security.setProperty("crypto.policy", "unlimited");
 			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			IvParameterSpec ivspec = new IvParameterSpec(iv);
 
@@ -70,6 +72,7 @@ public class LogicQEncryptionAndDecryption {
 
 	public static String decrypt(String strToDecrypt, String key, String salt) {
 		try {
+			Security.setProperty("crypto.policy", "unlimited");
 			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			IvParameterSpec ivspec = new IvParameterSpec(iv);
 

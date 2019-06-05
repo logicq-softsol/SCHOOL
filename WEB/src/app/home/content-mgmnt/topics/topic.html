@@ -59,6 +59,14 @@
         <button type="button" class="btn" (click)="addTopicDetails()">Add Topic</button>
       </div>
   </div>
+
+  
+<section class="container mt-4" *ngIf="displayView=='PLAYLESSON'">
+    <button type="button" class="btn" (click)="closePlayVideo()">Exit</button>
+  <video id="lessonVideo" controls controlsList="nodownload" style="max-width: 90%;">
+    <source src="video.mp4" type="video/mp4" />
+</video>
+</section>
   
 <section class="container mt-4" *ngIf="displayView=='TOPIC'">
     <div class="row">					

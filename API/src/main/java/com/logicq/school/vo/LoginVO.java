@@ -7,6 +7,7 @@ public class LoginVO {
 	private String userName;
 	private String password;
 	private User user;
+	
 
 	public String getUserName() {
 		return userName;

@@ -21,7 +21,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
 
-  
+
   getUserDetail() {
     return this.userDetail.asObservable();
   }
@@ -37,6 +37,17 @@ export class AuthenticationService {
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
     return this.http.post(environment.baseUrl + 'api/login', loginDetail, httpOptions);
+  }
+
+
+
+
+  resetPassword(loginDetail: LoginDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.post(environment.baseUrl + 'api/changePassword', loginDetail, httpOptions);
   }
 
   logout() {
@@ -58,7 +69,7 @@ export class AuthenticationService {
     let httpOptions = { headers: headers };
     return this.http.post(environment.baseUrl + 'api/activateProduct', key, httpOptions);
   }
-  
+
   loadRole() {
     return this.http.get('assets/data/role.json');
   }
@@ -74,6 +85,6 @@ export class AuthenticationService {
     let httpOptions = { headers: headers };
     return this.http.post(environment.baseUrl + 'api/userRegister', login, httpOptions);
   }
-  
+
 
 }
