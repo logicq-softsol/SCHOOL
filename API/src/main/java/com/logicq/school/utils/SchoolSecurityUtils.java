@@ -1,13 +1,17 @@
 package com.logicq.school.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.security.Security;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -51,14 +55,30 @@ public class SchoolSecurityUtils {
 	}
 
 	public String getSystemHostName() throws Exception {
-		InetAddress ip = InetAddress.getLocalHost();
-		NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-		byte[] mac = network.getHardwareAddress();
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < mac.length; i++) {
-			sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+		String ethernetPhysicalAddr = "";
+		String command = "ipconfig /all";
+		Process p = Runtime.getRuntime().exec(command);
+		BufferedReader inn = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		Pattern pattern = Pattern.compile(".*Physical Addres.*: (.*)");
+		boolean checkFlag = false;
+		while (true) {
+			String line = inn.readLine();
+
+			if (line.toLowerCase().matches("ethernet adapter ethernet:")) {
+				checkFlag = true;
+			}
+			if (checkFlag) {
+				Matcher mm = pattern.matcher(line);
+				if (mm.matches()) {
+					ethernetPhysicalAddr = mm.group(1).replaceAll("-", "");
+					checkFlag = false;
+					break;
+				}
+
+			}
+
 		}
-		return sb.toString();
+		return ethernetPhysicalAddr;
 	}
 
 	public String decrypt(String strToDecrypt, String key, String salt) {
@@ -80,12 +100,12 @@ public class SchoolSecurityUtils {
 	}
 
 	public byte[] readFileAndDecryptFile(File fileToBeDecrypt, String key, String salt) throws IOException {
-		
+
 		FileInputStream fis = new FileInputStream(fileToBeDecrypt);
 		byte[] fbytes = new byte[(int) fileToBeDecrypt.length()];
 		fis.read(fbytes);
 		fis.close();
-		
+
 		return decryptFile(fbytes, key, salt);
 	}
 

@@ -1,6 +1,7 @@
 package com.logicq.license.utils;
 
 import java.net.InetAddress;
+import java.security.Security;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
@@ -57,7 +58,7 @@ public class LicenseSecurityUtils {
 
 	public String encryptText(String strToEncrypt, LicenseKey key) {
 		try {
-
+			Security.setProperty("crypto.policy", "unlimited");
 			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 			IvParameterSpec ivspec = new IvParameterSpec(iv);
 
@@ -66,7 +67,7 @@ public class LicenseSecurityUtils {
 			SecretKey tmp = factory.generateSecret(spec);
 			SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
 
-			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivspec);
 			return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
 		} catch (Exception ex) {

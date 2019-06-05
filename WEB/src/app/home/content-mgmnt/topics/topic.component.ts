@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Inject,ElementRef ,ViewChild} from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSnackBar } from "@angular/material";
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./topic.scss']
 })
 export class TopicComponent implements OnInit {
-
+  @ViewChild('lessonVideo') lessonVideo: ElementRef;
   user: UserDetail = new UserDetail();
   classList: ClassSetupDetail[] = [];
   classSetup: ClassSetupDetail = new ClassSetupDetail();
@@ -42,8 +42,6 @@ export class TopicComponent implements OnInit {
   subjectdisplayName: any;
   chapterdisplayName: any;
   displayView: any;
-
-  @ViewChild('lessonVideo') video: ElementRef;
 
 
   constructor(
@@ -111,7 +109,7 @@ export class TopicComponent implements OnInit {
       this.classList = data;
     });
     this.displayView = 'CLASS';
-    this.contentMgmntService.changeDisplayView( this.displayView);
+    this.contentMgmntService.changeDisplayView(this.displayView);
   }
 
 
@@ -122,7 +120,7 @@ export class TopicComponent implements OnInit {
       this.contentMgmntService.changeClassSetupDetail(classDetail);
       this.contentMgmntService.changeSubjectList(data);
       this.displayView = 'SUBJECT';
-      this.contentMgmntService.changeDisplayView( this.displayView);
+      this.contentMgmntService.changeDisplayView(this.displayView);
     });
   }
 
@@ -134,7 +132,7 @@ export class TopicComponent implements OnInit {
       this.contentMgmntService.changeSubjectDetail(subject);
       this.contentMgmntService.changeChapterList(data);
       this.displayView = 'CHAPTER';
-      this.contentMgmntService.changeDisplayView( this.displayView);
+      this.contentMgmntService.changeDisplayView(this.displayView);
     });
   }
 
@@ -146,7 +144,7 @@ export class TopicComponent implements OnInit {
     this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
       this.topicList = tdata;
       this.displayView = 'TOPIC';
-      this.contentMgmntService.changeDisplayView( this.displayView);
+      this.contentMgmntService.changeDisplayView(this.displayView);
     });
 
 
@@ -202,20 +200,18 @@ export class TopicComponent implements OnInit {
   playLessonForTopic(topic: TopicDetail) {
     this.contentMgmntService.playLesson(topic).subscribe((data) => {
       let file = new Blob([data], { type: 'video/mp4' });
-      if(file.size>0){
-        this.displayView='PLAYLESSON';
-        this.video.nativeElement.src =  URL.createObjectURL(file);
-        this.video.nativeElement.load();
-        this.video.nativeElement.play();
-      }else{
+      if (file.size > 0) {
+        var fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      } else {
         this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }
 
     });
   }
 
-  closePlayVideo(){
-    this.displayView='TOPIC';
+  closePlayVideo() {
+    this.displayView = 'TOPIC';
   }
 
 
