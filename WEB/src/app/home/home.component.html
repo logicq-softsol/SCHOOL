@@ -2,7 +2,7 @@
     <div class="w-100">
         <div class="row clearfix">
             <div class="col-lg-12 ">
-                <a class="logo " href="#"><img src="assets/images/logo-edusure.png" alt=""></a>
+                <a class="logo " href="#"><img src="assets/images/logo-edusure1.png" alt=""></a>
                 <ul class="login-info">
                       <li>  <button type="button" class="btn" *ngIf="user.role=='ADMIN'" (click)="setupDayZero()">DAYZERO</button></li>
                     <li>Last login {{ today | date:'MM/dd/yy h:mm:ss a'  | uppercase  }}</li>
@@ -27,6 +27,5 @@
         </div>
     </div>
 </header>
-<body> 
+
 <router-outlet></router-outlet>
-</body>
