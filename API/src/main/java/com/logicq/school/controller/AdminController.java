@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.env.Environment;
@@ -19,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -452,13 +452,15 @@ public class AdminController {
 				ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
 				String licenseKey = schoolSecurityUtils.decrypt(activationDetails.getActivationLicense(),
 						activationDetails.getActivationKey(), activationDetails.getActivationToken());
+				if (!StringUtils.isEmpty(licenseKey)) {
+					byte[] readData = schoolSecurityUtils.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
+							licenseKey, activationDetails.getActivationToken());
+					response.getOutputStream().write(readData);
+					response.setContentType("video/mp4");
+					response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
+					response.getOutputStream().flush();
+				}
 
-				byte[] readData = schoolSecurityUtils.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
-						licenseKey, activationDetails.getActivationToken());
-				response.getOutputStream().write(readData);
-				response.setContentType("video/mp4");
-				response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
-				response.getOutputStream().flush();
 			}
 		}
 

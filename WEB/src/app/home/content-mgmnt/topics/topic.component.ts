@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject,ElementRef ,ViewChild} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSnackBar } from "@angular/material";
 import { Router } from '@angular/router';
@@ -42,6 +42,8 @@ export class TopicComponent implements OnInit {
   subjectdisplayName: any;
   chapterdisplayName: any;
   displayView: any;
+
+  @ViewChild('lessonVideo') video: ElementRef;
 
 
   constructor(
@@ -200,9 +202,20 @@ export class TopicComponent implements OnInit {
   playLessonForTopic(topic: TopicDetail) {
     this.contentMgmntService.playLesson(topic).subscribe((data) => {
       let file = new Blob([data], { type: 'video/mp4' });
-      var fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
+      if(file.size>0){
+        this.displayView='PLAYLESSON';
+        this.video.nativeElement.src =  URL.createObjectURL(file);
+        this.video.nativeElement.load();
+        this.video.nativeElement.play();
+      }else{
+        this.openErrorSnackBar("No Video exist with content.", "CLOSE");
+      }
+
     });
+  }
+
+  closePlayVideo(){
+    this.displayView='TOPIC';
   }
 
 

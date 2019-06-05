@@ -1,6 +1,7 @@
 package com.logicq.encryption;
 
 import java.io.File;
+import java.security.Security;
 import java.util.Scanner;
 
 import com.logicq.encryption.model.LicenseDetails;
@@ -10,16 +11,12 @@ import com.logicq.encryption.util.LogicQEncryptionAndDecryption;
 public class VideoFileEncryption {
 
 	public static void main(String[] args) throws Exception {
-
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(" Enter HostName For Which Want to Encrypt : ");
 		String hostName = scanner.nextLine();
 		EncryptionRestClient encryptionRestCLient = new EncryptionRestClient();
 		LicenseDetails licenseDetails = encryptionRestCLient.getLicenseForHostName(hostName);
-		LicenseKey licenseKey =  encryptionRestCLient.getLicenseKeyForHostName(hostName);
-	//	licenseKey.setHostKey("CARfSPIL");
-	//	licenseKey.setHostKeySalt("FdQgZS4J");
-
+		LicenseKey licenseKey = encryptionRestCLient.getLicenseKeyForHostName(hostName);
 		String licensekey = LogicQEncryptionAndDecryption.decrypt(licenseDetails.getLicenseKey(),
 				licenseKey.getHostKey(), licenseKey.getHostKeySalt());
 		System.out.println(licensekey);

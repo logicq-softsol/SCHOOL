@@ -48,6 +48,9 @@ public class ActivationDetails {
 	@Column(name = "EXPIRY_DATE")
 	private Date expiryDate;
 
+	@Column(name = "ACTIVATION_DAYS")
+	private long activationDays;
+
 	public Long getId() {
 		return id;
 	}
@@ -134,6 +137,14 @@ public class ActivationDetails {
 
 	public void setActivationLicense(String activationLicense) {
 		this.activationLicense = activationLicense;
+	}
+
+	public long getActivationDays() {
+		return activationDays;
+	}
+
+	public void setActivationDays(long activationDays) {
+		this.activationDays = activationDays;
 	}
 
 }

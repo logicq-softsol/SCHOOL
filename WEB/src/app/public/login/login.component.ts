@@ -4,6 +4,7 @@ import { TokenStorage } from 'src/app/core/token.storage';
 import { Router } from '@angular/router';
 import { LoginDetail } from '../model/login-detail';
 import { UserDetail } from '../model/user-detail';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +15,13 @@ export class LoginComponent implements OnInit {
 
   username: string;
   password: string;
+  cpassword: string;
+  displayView: string = 'LOGIN';
 
-  constructor(private authService: AuthenticationService, private storage: TokenStorage, private router: Router) { }
+  constructor(private authService: AuthenticationService, private storage: TokenStorage, private router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.displayView = 'LOGIN';
     this.authService.checkValidateProduct().subscribe((data: any) => {
       if (data.messageCode == "NO_LICENSE") {
         this.router.navigate(['/license']);
@@ -35,9 +39,9 @@ export class LoginComponent implements OnInit {
       if (this.authService.isAuthenticate) {
         this.authService.loadUser().subscribe((user: UserDetail) => {
           this.authService.changeUserDetail(user);
-            this.router.navigate(['/home']);
+          this.router.navigate(['/home']);
         });
-        
+
       }
     });
 
@@ -53,8 +57,35 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  registerUser(){
+  registerUser() {
     this.router.navigate(['registeruser']);
+  }
+
+  resetPassword() {
+    this.displayView = 'RPASSWORD';
+  }
+
+  confirmPasswordChange() {
+    if (this.password === this.cpassword) {
+      let loginDetail: LoginDetail = new LoginDetail();
+      loginDetail.userName = this.username;
+      loginDetail.password = this.password;
+      this.authService.resetPassword(loginDetail).subscribe((res: any) => {
+        this.displayView = 'LOGIN';
+        this.router.navigate(['login']);
+        this.openSnackBar(res.messageCode, "CLOSE");
+      });
+    } else {
+      this.displayView = 'RPASSWORD';
+      this.openSnackBar("Password didn't Match,Please check ...", "CLOSE");
+    }
+  }
+
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 10000
+    });
   }
 
 }
