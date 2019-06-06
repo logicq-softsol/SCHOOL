@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
@@ -444,26 +445,18 @@ public class AdminController {
 
 	@GetMapping("/playlesson/{topicId}")
 	public void playLessonForTopic(@PathVariable String topicId, HttpServletResponse response) throws Exception {
-		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
-		if (null != loginDetail) {
-			TopicDetails topic = topicDetailsRepo.findOne(Long.valueOf(topicId));
-			if (null != topic) {
-				String hostName = schoolSecurityUtils.getSystemHostName();
-				ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
-				String licenseKey = schoolSecurityUtils.decrypt(activationDetails.getActivationLicense(),
-						activationDetails.getActivationKey(), activationDetails.getActivationToken());
-				if (!StringUtils.isEmpty(licenseKey)) {
-					byte[] readData = schoolSecurityUtils.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
-							licenseKey, activationDetails.getActivationToken());
-					response.getOutputStream().write(readData);
-					response.setContentType("video/mp4");
-					response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
-					response.getOutputStream().flush();
-				}
+		TopicDetails topic = topicDetailsRepo.findOne(Long.valueOf(topicId));
+		if (null != topic) {
+			String hostName = schoolSecurityUtils.getTokenHostName();
+			ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
+			byte[] readData = schoolSecurityUtils.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
+					activationDetails.getActivationLicense(), activationDetails.getActivationToken());
+			response.getOutputStream().write(readData);
+			response.setContentType("video/mp4");
+			response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
+			response.getOutputStream().flush();
 
-			}
 		}
-
 	}
 
 }

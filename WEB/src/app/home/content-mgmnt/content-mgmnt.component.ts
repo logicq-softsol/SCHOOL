@@ -42,9 +42,9 @@ export class ContentMgmntComponent implements OnInit {
   selectImage: File;
   imageUrl: string;
 
-  classdisplayName:any;
-  subjectdisplayName:any;
-  chapterdisplayName:any;
+  classdisplayName: any;
+  subjectdisplayName: any;
+  chapterdisplayName: any;
 
 
   constructor(private homeService: HomeService,
@@ -62,6 +62,9 @@ export class ContentMgmntComponent implements OnInit {
 
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
       this.classList = data;
+      this.classList.forEach(cls => {
+        cls.icon = 'assets/images/class.jpg'
+      });
       this.contentMgmntService.changeClassList(data);
     });
 
@@ -73,10 +76,10 @@ export class ContentMgmntComponent implements OnInit {
 
 
   gotToHomepage() {
-      this.router.navigate(['/home/teacher']);
-      this.classSubjectList=[];
-      this.chapterList=[];
-      this.topicList=[];
+    this.router.navigate(['/home/teacher']);
+    this.classSubjectList = [];
+    this.chapterList = [];
+    this.topicList = [];
 
   }
 
@@ -89,8 +92,8 @@ export class ContentMgmntComponent implements OnInit {
       this.contentMgmntService.changeClassSetupDetail(classDetail);
       this.contentMgmntService.changeSubjectList(data);
       this.contentMgmntService.changeDisplayView('SUBJECT');
-      this.chapterList=[];
-      this.topicList=[];
+      this.chapterList = [];
+      this.topicList = [];
     });
   }
 
@@ -102,21 +105,21 @@ export class ContentMgmntComponent implements OnInit {
       this.contentMgmntService.changeSubjectDetail(subject);
       this.contentMgmntService.changeChapterList(data);
       this.contentMgmntService.changeDisplayView('CHAPTER');
-      this.topicList=[];
+      this.topicList = [];
     });
   }
 
   onChapterChange(chapterdisplayName) {
     let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == chapterdisplayName);
     this.contentMgmntService.changeChapterSetupDetail(chapter);
-    this.chapter=chapter;
+    this.chapter = chapter;
     this.contentMgmntService.changeDisplayView('TOPIC');
     this.showTopicList(this.chapter);
 
   }
 
   searchTopicDetails() {
-      this.router.navigate(['/home/teacher/topics']);
+    this.router.navigate(['/home/teacher/topics']);
   }
 
   showClassSubjectList(classSetup: ClassSetupDetail) {
@@ -147,15 +150,18 @@ export class ContentMgmntComponent implements OnInit {
   }
 
 
-  
+
   playLessonForTopic(fave: Favorites) {
-    let topic:TopicDetail=new TopicDetail();
-    topic.id=fave.typeValue
-   this.contentMgmntService.playLesson(topic).subscribe((data) => {
-    let file = new Blob([data], { type: 'video/mp4' });
-      var fileURL = URL.createObjectURL(file);
-     window.open(fileURL);
-     });
+    let topic: TopicDetail = new TopicDetail();
+    topic.id = fave.typeValue
+    this.contentMgmntService.playLesson(topic).subscribe((data) => {
+      let file = new Blob([data], { type: 'video/mp4' });
+      if (file.size > 0) {
+        window.open(URL.createObjectURL(file), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+      } else {
+        this.openErrorSnackBar("No Video exist with content.", "CLOSE");
+      }
+    });
   }
 
   markFavorites(classDet: ClassSetupDetail) {

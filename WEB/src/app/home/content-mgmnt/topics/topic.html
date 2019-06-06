@@ -1,4 +1,4 @@
-<section class="search-container inner d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/home-banner.png) left bottom no-repeat'}">
+<section class="search-container inner d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/home-banner_1.jpg) left bottom no-repeat'}">
   <div class="container">
     <div class="row clearfix">
       <div class="col-md-12">
@@ -45,11 +45,10 @@
   <div class="row">
     <nav aria-label="breadcrumb" class="col-md-12">
       <ol class="breadcrumb pl-0">
-        <li class="breadcrumb-item"><a>Home</a></li>
-        <li class="breadcrumb-item" *ngIf="displayView=='SUBJECT' || displayView=='CLASS' || displayView=='TOPIC' || displayView=='CHAPTER'"><a>Class</a></li>
-        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='SUBJECT' || displayView=='CHAPTER'"><a>Subject</a></li>
-        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='CHAPTER'"><a>Chapter</a></li>
-        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC'"><a>Topic</a></li>
+        <li class="breadcrumb-item"><a (click)="goToHome()" style="cursor:pointer">Home</a></li>
+        <li class="breadcrumb-item" *ngIf="displayView=='SUBJECT' || displayView=='CLASS' || displayView=='TOPIC' || displayView=='CHAPTER'"><a (click)="onClassChange(classdisplayName)" style="cursor:pointer">Class({{classdisplayName}})</a></li>
+        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='SUBJECT' || displayView=='CHAPTER'"><a (click)="onSubjectChange(subjectdisplayName)" style="cursor:pointer">Subject({{subjectdisplayName}})</a></li>
+        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='CHAPTER'"><a (click)="onChapterChange(chapterdisplayName)" style="cursor:pointer">Chapter({{chapterdisplayName}})</a></li>
       </ol>
     </nav>
     <div class="clearfix"></div>
@@ -63,13 +62,6 @@
       <button type="button" class="btn" (click)="addTopicDetails()">Add Topic</button>
     </div>
   </div>
-
-
-  <section class="container" *ngIf="displayView=='PLAYLESSON'">
-    <button type="button" class="btn" (click)="closePlayVideo()">Exit</button>
-    <video #lessonVideo controls controlsList="nodownload">
-    </video>
-  </section>
 
 
   <section class="container mt-4" *ngIf="displayView=='TOPIC'">
@@ -98,7 +90,7 @@
         <div class="class-box">
           <img src="{{chapter.icon}}" class="card-image" alt="">
           <span>{{chapter.description}}</span>
-          <p class="video-text"><a (change)="onChapterChange(chapter.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{chapter.displayName}}</a></p>
+          <p class="video-text"><a (click)="onChapterChange(chapter.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{chapter.displayName}}</a></p>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addTopicDetails(chapter)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
             <li><a (click)="editChapterDetail(chapter)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
@@ -115,7 +107,7 @@
         <div class="class-box">
           <img src="{{subject.icon}}" class="card-image" alt="">
           <span>{{subject.description}}</span>
-          <p class="video-text"><a (change)="onSubjectChange(subject.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{subject.displayName}}</a></p>
+          <p class="video-text"><a (click)="onSubjectChange(subject.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{subject.displayName}}</a></p>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addChapterDetails(subject)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
             <li><a (click)="editSubjectDetail(subject)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
@@ -131,7 +123,7 @@
         <div class="class-box">
           <img src="{{class.icon}}" class="card-image" alt="">
           <span>{{class.description}}</span>
-          <p class="video-text"><a (change)="onClassChange(class.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{class.displayName}}</a></p>
+          <p class="video-text"><a (click)="onClassChange(class.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{class.displayName}}</a></p>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addSubjectDetails(class)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
             <li><a (click)="editClassDetails(class)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>

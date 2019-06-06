@@ -10,6 +10,7 @@ import java.net.NetworkInterface;
 import java.security.Security;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +47,17 @@ public class SchoolSecurityUtils {
 	@Autowired
 	private HttpServletRequest context;
 
+	@Autowired
+	Environment env;
+
+	public String getTokenHostName() throws Exception {
+		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+			return tokenProvider.getHostNameFromTokenParser(tokenProvider.getJwtFromRequest(context));
+		} else {
+			throw new Exception(" User is Not Authorized to acess ");
+		}
+	}
+
 	public LoginDetails getUserFromSecurityContext() throws Exception {
 		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
 			String userName = tokenProvider.getUserIdFromJWT(tokenProvider.getJwtFromRequest(context));
@@ -61,10 +74,10 @@ public class SchoolSecurityUtils {
 		BufferedReader inn = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		Pattern pattern = Pattern.compile(".*Physical Addres.*: (.*)");
 		boolean checkFlag = false;
+		String systemkey = env.getProperty("school.system.address");
 		while (true) {
 			String line = inn.readLine();
-
-			if (line.toLowerCase().matches("ethernet adapter ethernet:")) {
+			if (line.toLowerCase().matches(systemkey.toLowerCase())) {
 				checkFlag = true;
 			}
 			if (checkFlag) {
@@ -100,12 +113,10 @@ public class SchoolSecurityUtils {
 	}
 
 	public byte[] readFileAndDecryptFile(File fileToBeDecrypt, String key, String salt) throws IOException {
-
 		FileInputStream fis = new FileInputStream(fileToBeDecrypt);
 		byte[] fbytes = new byte[(int) fileToBeDecrypt.length()];
 		fis.read(fbytes);
 		fis.close();
-
 		return decryptFile(fbytes, key, salt);
 	}
 

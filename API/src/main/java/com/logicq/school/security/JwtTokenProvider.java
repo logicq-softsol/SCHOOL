@@ -1,15 +1,22 @@
 package com.logicq.school.security;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import com.logicq.school.model.ActivationDetails;
+import com.logicq.school.repository.ProductActivationRepo;
+import com.logicq.school.utils.SchoolSecurityUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -29,16 +36,21 @@ public class JwtTokenProvider {
 
 	@Value("${school.jwtExpirationInMs}")
 	private int jwtExpirationInMs;
+	@Autowired
+	ProductActivationRepo productActivationRepo;
 
-	public String generateToken(Authentication authentication) {
+	@Autowired
+	SchoolSecurityUtils schoolSecurityUtils;
 
+	public String generateToken(Authentication authentication) throws Exception {
+		String hostName = schoolSecurityUtils.getSystemHostName();
 		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-
-		return Jwts.builder().setSubject(userPrincipal.getUsername()).setIssuedAt(new Date()).setExpiration(expiryDate)
-				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+		Map<String, Object> body = new HashMap<>();
+		body.put("HOST_NAME", hostName);
+		return Jwts.builder().setSubject(userPrincipal.getUsername()).setIssuedAt(new Date()).addClaims(body)
+				.setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
 	public String getUserIdFromJWT(String token) {
@@ -65,12 +77,16 @@ public class JwtTokenProvider {
 		return false;
 	}
 
-	
 	public String getJwtFromRequest(HttpServletRequest request) {
 		String bearerToken = request.getHeader("Authorization");
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
 			return bearerToken.substring(7, bearerToken.length());
 		}
 		return null;
+	}
+
+	public String getHostNameFromTokenParser(String token) {
+		Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+		return claims.get("HOST_NAME", String.class);
 	}
 }

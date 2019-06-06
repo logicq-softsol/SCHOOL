@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Inject, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject, ElementRef, ViewChild,SecurityContext  } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSnackBar } from "@angular/material";
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { TopicDetail } from '../../../public/model/topic-detail';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ContentMgmntService } from '../../service/content-mgmnt.service';
 import { Favorites } from '../../../public/model/favorite';
-import { FormControl } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 
 
@@ -20,7 +20,9 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./topic.scss']
 })
 export class TopicComponent implements OnInit {
-  @ViewChild('lessonVideo') lessonVideo: ElementRef;
+  @ViewChild('videoPlayer') videoplayer: ElementRef;
+  videoSource: any;
+
   user: UserDetail = new UserDetail();
   classList: ClassSetupDetail[] = [];
   classSetup: ClassSetupDetail = new ClassSetupDetail();
@@ -49,7 +51,7 @@ export class TopicComponent implements OnInit {
     private authService: AuthenticationService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar, private router: Router) {
+    public snackBar: MatSnackBar, private _sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
@@ -114,47 +116,64 @@ export class TopicComponent implements OnInit {
 
 
   onClassChange(classdisplayName) {
-    let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == classdisplayName);
-    this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
-      this.classSubjectList = data;
-      this.contentMgmntService.changeClassSetupDetail(classDetail);
-      this.contentMgmntService.changeSubjectList(data);
-      this.displayView = 'SUBJECT';
-      this.contentMgmntService.changeDisplayView(this.displayView);
-    });
+    this.classdisplayName = classdisplayName;
+    if (this.classdisplayName.length>1) {
+      let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == classdisplayName);
+      this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
+        this.classSubjectList = data;
+        this.contentMgmntService.changeClassSetupDetail(classDetail);
+        this.contentMgmntService.changeSubjectList(data);
+        this.displayView = 'SUBJECT';
+        this.contentMgmntService.changeDisplayView(this.displayView);
+      });
+    }
   }
 
 
   onSubjectChange(subjectdisplayName) {
-    let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == subjectdisplayName);
-    this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
-      this.chapterList = data;
-      this.contentMgmntService.changeSubjectDetail(subject);
-      this.contentMgmntService.changeChapterList(data);
-      this.displayView = 'CHAPTER';
-      this.contentMgmntService.changeDisplayView(this.displayView);
-    });
+    this.subjectdisplayName = subjectdisplayName;
+    if (this.subjectdisplayName.length>1) {
+      let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == subjectdisplayName);
+      this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
+        this.chapterList = data;
+        this.contentMgmntService.changeSubjectDetail(subject);
+        this.contentMgmntService.changeChapterList(data);
+        this.displayView = 'CHAPTER';
+        this.contentMgmntService.changeDisplayView(this.displayView);
+      });
+    }
   }
 
   onChapterChange(chapterdisplayName) {
-    let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == chapterdisplayName);
-    this.contentMgmntService.changeChapterSetupDetail(chapter);
-    this.chapter = chapter;
-    this.contentMgmntService.changeChapterSetupDetail(chapter);
-    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
-      this.topicList = tdata;
-      this.displayView = 'TOPIC';
-      this.contentMgmntService.changeDisplayView(this.displayView);
-    });
+    this.chapterdisplayName = chapterdisplayName;
+    if (this.chapterdisplayName.length>1) {
+      let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == chapterdisplayName);
+      this.contentMgmntService.changeChapterSetupDetail(chapter);
+      this.chapter = chapter;
+      this.contentMgmntService.changeChapterSetupDetail(chapter);
+      this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
+        this.topicList = tdata;
+        this.displayView = 'TOPIC';
+        this.contentMgmntService.changeDisplayView(this.displayView);
+      });
+    }
+
 
 
   }
 
 
   searchTopicDetails() {
-    this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
-      this.topicList = tdata;
-    });
+    // this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
+    //   this.topicList = tdata;
+    // });
+    if (this.chapterdisplayName.length>1) {
+      this.onChapterChange(this.chapterdisplayName);
+    } else if (this.subjectdisplayName.length>1) {
+      this.onSubjectChange(this.subjectdisplayName);
+    } else if (this.classdisplayName.length>1) {
+      this.onClassChange(this.classdisplayName);
+    }
   }
 
   viewSubjectListForClass(value) {
@@ -164,7 +183,7 @@ export class TopicComponent implements OnInit {
 
   viewChapterListForSubject(value) {
     this.onSubjectChange(value);
-    this.displayView = 'CHAPTER';
+
   }
 
   viewTopicListForChapter(value) {
@@ -201,8 +220,7 @@ export class TopicComponent implements OnInit {
     this.contentMgmntService.playLesson(topic).subscribe((data) => {
       let file = new Blob([data], { type: 'video/mp4' });
       if (file.size > 0) {
-        var fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
+        window.open(URL.createObjectURL(file), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
       } else {
         this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }

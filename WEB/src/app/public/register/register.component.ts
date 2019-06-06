@@ -36,13 +36,13 @@ export class RegisterComponent implements OnInit {
     this.authService.registerUserForProduct(this.login).subscribe((data: any) => {
       if (data.messageCode == "SREG") {
         this.router.navigate(['/login']);
-        this.openSnackBar(data.message, data.messageCode);
+        this.openSnackBar(data.message, 'CLOSE');
       } else if (data.messageCode == "AREG") {
         this.router.navigate(['/login']);
-        this.openSnackBar(data.message, data.messageCode);
+        this.openSnackBar(data.message, 'CLOSE');
       }else if (data.messageCode == "AREGA") {
         this.router.navigate(['/login']);
-        this.openSnackBar(data.message, data.messageCode);
+        this.openSnackBar(data.message, 'CLOSE');
       }
     });
   }

@@ -99,8 +99,7 @@ public class LoginController {
 			if (inputkey.equals(licenseKey)) {
 				ActivationDetails activationDetail = new ActivationDetails();
 				activationDetail.setActivationDate(schoolDateUtils.currentDate());
-				activationDetail.setActivationLicense(licenseDetails.getLicenseKey());
-				activationDetail.setActivationKey(activateKey.getHostKey());
+				activationDetail.setActivationLicense(licenseKey);
 				activationDetail.setActivationToken(activateKey.getHostKeySalt());
 				activationDetail.setLastUpdate(schoolDateUtils.currentDate());
 				activationDetail.setProductName(licenseDetails.getProductName());

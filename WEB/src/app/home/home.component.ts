@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { UserDetail } from '../public/model/user-detail';
-import { ClassSetupDetail } from '../public/model/class-setup-detail';
-import { SubjectSetupDetail } from '../public/model/subject-setup-detail';
-import { ChapterSetupDetail } from '../public/model/chapter-setup-detail';
 import { ContentMgmntService } from '../home/service/content-mgmnt.service';
-import { TopicDetail } from '../public/model/topic-detail';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -16,7 +12,6 @@ import { MatSnackBar } from '@angular/material';
 })
 export class HomeComponent implements OnInit {
   user: UserDetail = new UserDetail();
-  breadcurmblist: any;
   today: Date = new Date();
 
   constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router, public snackBar: MatSnackBar) {
@@ -32,7 +27,10 @@ export class HomeComponent implements OnInit {
 
   }
 
-
+  navigateHome(){
+    this.router.navigate(['/home/teacher']);
+  }
+  
   logout() {
     this.router.navigate(['login']);
   }

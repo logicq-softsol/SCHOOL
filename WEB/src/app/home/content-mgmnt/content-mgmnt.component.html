@@ -1,4 +1,4 @@
-<section class="search-container d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/home-banner.png) left bottom no-repeat'}">
+<section class="search-container d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/home-banner.jpg) left bottom no-repeat'}">
   <div class="container">
     <div class="row clearfix">
       <div class="col-md-12">
@@ -34,9 +34,9 @@
 </section>
 <div class="container mt-4"> 
   <div class="recent-search  topics mb-5">
-    <h3 class="small-title mb-3">Favourite Topics </h3>
+    <h3 class="small-title mb-3">Favourite Topics <a  style="cursor:pointer" *ngIf="favorites.length>6">(View All)</a></h3>
     <div class="row clearfix" *ngIf="favorites.length>0">
-      <div class="col-md-4" *ngFor="let fav of favorites">
+      <div class="col-md-4" *ngFor="let fav of favorites | slice:0:6">
         <div class="card mb-15">
             <div class="action">
 								<a (click)="removeFavorites(fav)" style="cursor:pointer"><img src="assets/images/favorite-heart-button.png" alt=""></a> 
