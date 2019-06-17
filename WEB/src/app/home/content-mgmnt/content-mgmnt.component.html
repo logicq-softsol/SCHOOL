@@ -1,55 +1,118 @@
-<section class="search-container d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/home-banner.jpg) left bottom no-repeat'}">
+<section class="search-container d-flex align-items-center" [ngStyle]="{background: 'url(./assets/images/home-banner.jpg) left bottom no-repeat'}"
+  *ngIf="displayView=='SEARCH'">
   <div class="container">
     <div class="row clearfix">
       <div class="col-md-12">
         <div class="home-search pt-3">
-          <h3>Hello, {{user.firstname | uppercase }} {{user.lastname | uppercase}}  What you are looking for?</h3>
-        	<div class="d-flex justify-content-center">
-              <div class="row">
-                <div class="col-md-3 form-group"> 
-                  <input type="text" placeholder="Select or type a class" class="form-control"  list="classList" [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
-                  <datalist id="classList">
-                      <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName  | uppercase }}</strong></option>
-                    </datalist>
-                 </div>
-                <div class="col-md-3 form-group"> 
-                  <input type="text" placeholder="Select or type a subject" class="form-control"  list="classSubjectList" [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)"/> 
-                  <datalist id="classSubjectList">
-                      <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName" ><strong>{{classSubject?.displayName  | uppercase }}</strong></option>
-                    </datalist>
-                </div> 
-                 <div class="col-md-6 form-group">
-                  <input type="text" placeholder="Select or type a Chapter" class="form-control"  list="chapterList" [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)"/>  
-                  <datalist id="chapterList">
-                      <option *ngFor="let chapter of chapterList" [value]="chapter.displayName" ><strong>{{chapter?.displayName  | uppercase }}</strong></option>
-                    </datalist>
-                </div> 
-              </div> 
+          <h3>Hello, {{user.firstname | uppercase }} {{user.lastname | uppercase}} What you are looking for?</h3>
+          <div class="d-flex justify-content-center">
+            <div class="row">
+              <div class="col-md-3 form-group">
+                <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
+                  [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
+                <datalist id="classList">
+                  <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
+                      | uppercase }}</strong></option>
+                </datalist>
+              </div>
+              <div class="col-md-3 form-group">
+                <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
+                  [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
+                <datalist id="classSubjectList">
+                  <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
+                      | uppercase }}</strong></option>
+                </datalist>
+              </div>
+              <div class="col-md-6 form-group">
+                <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
+                  [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
+                <datalist id="chapterList">
+                  <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
+                      | uppercase }}</strong></option>
+                </datalist>
+              </div>
             </div>
+          </div>
         </div>
         <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">Search</button>
-      </div> 
+      </div>
     </div>
   </div>
 </section>
-<div class="container mt-4"> 
+
+<section class="search-container d-flex align-items-center" *ngIf="displayView=='PROFILE'">
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-md-6">
+        <div class="user-details p-3 text-center">
+          <div class="home-search pt-3">
+            <div class="form-group mb-4">
+              <input type="text" placeholder="Select or type a class" class="form-control" list="classList" [(ngModel)]="classdisplayName"
+                (change)="onClassChange(classdisplayName)" />
+              <datalist id="classList">
+                <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
+                    | uppercase }}</strong></option>
+              </datalist>
+            </div>
+            <div class="form-group mb-4">
+              <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
+                [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
+              <datalist id="classSubjectList">
+                <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
+                    | uppercase }}</strong></option>
+              </datalist>
+            </div>
+            <div class="form-group mb-4">
+              <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
+                [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
+              <datalist id="chapterList">
+                <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
+                    | uppercase }}</strong></option>
+              </datalist>
+            </div>
+            <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">Search</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="user-details p-3 text-center">
+          <a class="edit-info d-flex align-items-center justify-content-center"><i class="fas fa-pencil-alt"></i></a>
+          <span class="user-av d-flex align-items-center justify-content-center"><img src="assets/images/user.png" alt=""></span>
+          <strong>{{user.firstname | uppercase }} {{user.lastname | uppercase}}</strong>
+          <small>Role</small>
+          <p>{{user.role}}</p>
+          <small>Email</small>
+          <p>{{user.email}}</p>
+          <small>Mobile Number</small>
+          <p>{{user.mobileno}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="container mt-4">
   <div class="recent-search  topics mb-5">
-    <h3 class="small-title mb-3">Favourite Topics <a  style="cursor:pointer" *ngIf="favorites.length>6">(View All)</a></h3>
+    <h3 class="small-title mb-3">Favourite Topics <a style="cursor:pointer" *ngIf="favorites.length>6">(View All)</a></h3>
     <div class="row clearfix" *ngIf="favorites.length>0">
       <div class="col-md-4" *ngFor="let fav of favorites | slice:0:6">
-        <div class="card mb-15">
-            <div class="action">
-								<a (click)="removeFavorites(fav)" style="cursor:pointer"><img src="assets/images/favorite-heart-button.png" alt=""></a> 
-							</div>
-							<div class="card-body">
-                  <a (click)="playLessonForTopic(fav)" class="video-text" style="cursor:pointer"><i class="fas fa-video"></i> <h4>{{fav.displayName}}</h4></a>
-								<p class="card-text">{{fav.description}}</p>
-							</div>
+        <div class="card mb-15 card-border">
+          <div class="action">
+            <a (click)="removeFavorites(fav)" style="cursor:pointer"><img src="assets/images/favorite-heart-button.png"
+                alt=""></a>
+          </div>
+          <div class="card-body">
+            <a (click)="playLessonForTopic(fav)" class="video-text" style="cursor:pointer"><i class="fas fa-video"></i>
+              <h4>{{fav.displayName}}</h4>
+            </a>
+            <p class="card-text">{{fav.description}}</p>
+          </div>
         </div>
       </div>
     </div>
     <div *ngIf="favorites.length==0">
-        <h5 class="small-title mb-3 text-center">No Favourite Topics Avilable</h5>
+      <h5 class="small-title mb-3 text-center">No Favourite Topics Avilable</h5>
     </div>
   </div>
 </div>

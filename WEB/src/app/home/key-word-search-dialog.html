@@ -1,0 +1,20 @@
+<div class="class-box">
+  <p class="video-text"><a (click)="playLessonForTopic(topic)" style="cursor:pointer"><i class="fas fa-video"></i>
+      {{topic.displayName}}</a></p>
+  <ul class="class-edit">
+    <div class="card-body">
+      <ul>
+        <li> <Strong>Class Name : </Strong>
+          <p class="card-text">{{classSetupDetail.displayName}}</p>
+        </li>
+        <li> <Strong>Subject Name : </Strong>
+          <p class="card-text">{{subjectDetail.displayName}}</p>
+        </li>
+        <li> <Strong>Chapter Name : </Strong>
+          <p class="card-text">{{ChapterSetupDetail.displayName}}</p>
+        </li>
+      </ul>
+    </div>
+    <li><a (click)="markFavorites(topic)"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+  </ul>
+</div>

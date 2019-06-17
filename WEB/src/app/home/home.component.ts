@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject, ElementRef, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { UserDetail } from '../public/model/user-detail';
 import { ContentMgmntService } from '../home/service/content-mgmnt.service';
-import { MatSnackBar } from '@angular/material';
 import { TopicDetail } from 'src/app/public/model/topic-detail';
 import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
 import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
+import { Favorites } from '../public/model/favorite';
 
 @Component({
   selector: 'app-home',
@@ -23,12 +24,13 @@ export class HomeComponent implements OnInit {
   topicDisplayName: any;
 
 
-  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router, public snackBar: MatSnackBar) {
+
+  constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router, public snackBar: MatSnackBar, public dialog: MatDialog) {
     if (this.authService.isAuthenticate) {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.user = user;
         this.router.navigate(['/home/teacher']);
-
+        this.contentMgmntService.changeContentDisplayView('SEARCH');
       });
     }
   }
@@ -57,9 +59,15 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/home/teacher']);
   }
   viewSessionReport() {
-    this.router.navigate(['/home/teacher']);
+    this.contentMgmntService.changeContentDisplayView('SESSION');
+    this.router.navigate(['/home/teacher/session']);
   }
 
+
+  viewProfile() {
+    this.contentMgmntService.changeContentDisplayView('PROFILE');
+    this.router.navigate(['/home/teacher']);
+  }
 
   searchTopicDetails() {
 
@@ -67,17 +75,30 @@ export class HomeComponent implements OnInit {
 
   onTopicChange(topicDisplayName: any) {
     let topic: TopicDetail = this.topicList.find(x => x.displayName == topicDisplayName);
-    this.contentMgmntService.getClassDetails(topic.classId).subscribe((classDet: ClassSetupDetail) => {
-      this.contentMgmntService.changeClassSetupDetail(classDet);
+    const dialogRef = this.dialog.open(TopicDisplayDialog, {
+      width: '600px',
+      data: {
+        topic: topic
+      }
     });
 
-    this.contentMgmntService.getSubjectAndClass(topic.classId, topic.subjectId).subscribe((subjectDe: SubjectSetupDetail) => {
-      this.contentMgmntService.changeSubjectDetail(subjectDe);
+    dialogRef.componentInstance.topicEVentEmitter.subscribe((topic: TopicDetail) => {
+      if (null != topic) {
+        let favorite: Favorites = new Favorites();
+        favorite.type = "TOPIC";
+        favorite.typeValue = topic.id;
+        favorite.displayName = topic.displayName;
+        favorite.description = topic.description;
+        favorite.url = topic.playFileURL;
+        favorite.icon = topic.icon;
+
+        this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
+          this.openSnackBar("Topic " + topic.displayName + " marked favorite.", "CLOSE");
+        });
+      }
+
     });
 
-    this.contentMgmntService.getChapterForClassAndSubject(topic.classId, topic.subjectId, topic.chapterId).subscribe((chapter: ChapterSetupDetail) => {
-      this.contentMgmntService.changeChapterSetupDetail(chapter);
-    });
   }
 
 
@@ -86,8 +107,69 @@ export class HomeComponent implements OnInit {
       duration: 10000
     });
   }
+  clear() {
+    this.topicDisplayName = null;
+  }
 
 
 
+}
 
+
+
+@Component({
+  selector: 'topic-view-dialog',
+  templateUrl: 'key-word-search-dialog.html',
+  styleUrls: ['./home.component.scss']
+})
+export class TopicDisplayDialog {
+  topic: TopicDetail = new TopicDetail();
+  topicEVentEmitter = new EventEmitter();
+  classSetupDetail: ClassSetupDetail = new ClassSetupDetail();
+  subjectDetail: SubjectSetupDetail = new SubjectSetupDetail();
+  ChapterSetupDetail: ChapterSetupDetail = new ChapterSetupDetail();
+
+  constructor(public dialogRef: MatDialogRef<TopicDisplayDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService, public snackBar: MatSnackBar) {
+    this.topic = data.topic;
+    this.contentMgmntService.getClassDetails(this.topic.classId).subscribe((classDet: ClassSetupDetail) => {
+      this.contentMgmntService.changeClassSetupDetail(classDet);
+      this.classSetupDetail = classDet;
+    });
+
+    this.contentMgmntService.getSubjectAndClass(this.topic.classId, this.topic.subjectId).subscribe((subjectDe: SubjectSetupDetail) => {
+      this.contentMgmntService.changeSubjectDetail(subjectDe);
+      this.subjectDetail = subjectDe;
+    });
+    this.contentMgmntService.getChapterForClassAndSubject(this.topic.classId, this.topic.subjectId, this.topic.chapterId).subscribe((chapter: ChapterSetupDetail) => {
+      this.contentMgmntService.changeChapterSetupDetail(chapter);
+      this.ChapterSetupDetail = chapter;
+    });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  markFavorites(topic: TopicDetail) {
+    this.topicEVentEmitter.emit(topic);
+  }
+
+  playLessonForTopic(topic: TopicDetail) {
+    this.dialogRef.close();
+    this.contentMgmntService.playLesson(topic).subscribe((data) => {
+      let file = new Blob([data], { type: 'video/mp4' });
+      if (file.size > 0) {
+        window.open(URL.createObjectURL(file), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+      } else {
+        this.openErrorSnackBar("No Video exist with content.", "CLOSE");
+      }
+
+    });
+  }
+
+  openErrorSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 10000
+    });
+  }
 }

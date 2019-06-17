@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './public/login/login.component';
@@ -11,6 +11,9 @@ import { CustomMaterialModule } from './core/material.module';
 import { FormsModule } from '@angular/forms';
 import { TokenStorage } from './core/token.storage';
 import { LicenseComponent } from './public/license/license.component';
+import { createCustomElement } from '@angular/elements';
+import { SliderComponent } from './public/slider/slider.component';
+import { TopicDisplayDialog } from './home/home.component';
 
 
 
@@ -20,7 +23,9 @@ import { LicenseComponent } from './public/license/license.component';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    LicenseComponent
+    LicenseComponent,
+    SliderComponent,
+    TopicDisplayDialog
   ],
   imports: [
     BrowserModule,
@@ -30,6 +35,7 @@ import { LicenseComponent } from './public/license/license.component';
     CustomMaterialModule,
     HttpClientModule
   ],
+  entryComponents: [SliderComponent,TopicDisplayDialog],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: LogicQIntercept,
@@ -37,4 +43,10 @@ import { LicenseComponent } from './public/license/license.component';
   }, TokenStorage],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {
+    const slider = createCustomElement(SliderComponent, { injector });
+    customElements.define('motley-slider', slider);
+  }
+
+}

@@ -1,0 +1,8 @@
+{
+  "sliderArray":[
+   {"index":0,"img": "assets/images/login.jpg", "alt": "", "text": "No One can stop You , If You are determined"},
+   {"index":1,"img": "assets/images/login_slid1.jpg", "alt": "",  "text": "Its technology to make learning more effective"},
+   {"index":3,"img": "assets/images/login_slid2.jpg", "alt": "", "text": "Modeling excellence , Partnering innovation"},
+   {"index":3,"img": "assets/images/login_slid3.jpg", "alt": "", "text": "Modeling excellence , Partnering innovation"}
+  ]
+}

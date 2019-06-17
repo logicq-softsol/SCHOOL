@@ -45,7 +45,7 @@ export class ContentMgmntComponent implements OnInit {
   classdisplayName: any;
   subjectdisplayName: any;
   chapterdisplayName: any;
-
+  displayView:any;
 
   constructor(private homeService: HomeService,
     private contentMgmntService: ContentMgmntService,
@@ -55,7 +55,7 @@ export class ContentMgmntComponent implements OnInit {
     public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
-
+   
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
     });
@@ -67,6 +67,10 @@ export class ContentMgmntComponent implements OnInit {
 
     this.contentMgmntService.getFavorites().subscribe((favorites: Favorites[]) => {
       this.favorites = favorites;
+    });
+
+    this.contentMgmntService.getContentDisplayView().subscribe((view:any)=>{
+          this.displayView=view;
     });
 
   }
