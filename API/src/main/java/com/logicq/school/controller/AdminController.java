@@ -224,6 +224,19 @@ public class AdminController {
 		return new ResponseEntity<ClassDetails>(new ClassDetails(), HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/classes/{classId}", method = RequestMethod.GET)
+	public ResponseEntity<ClassDetails> getClassDetail(@PathVariable Long classId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		ClassDetails classDetail = classesDetailsRepo.findOne(classId);
+		if (null != classDetail) {
+			Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "CLASS",
+					classDetail.getId());
+			if (null != fav)
+				classDetail.setType("FAVORTIE");
+		}
+		return new ResponseEntity<ClassDetails>(classDetail, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/subjects", method = RequestMethod.GET)
 	public ResponseEntity<List<SubjectDetails>> getSubjectDetails() throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
@@ -261,6 +274,24 @@ public class AdminController {
 		}
 
 		return new ResponseEntity<List<SubjectDetails>>(subjectList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/subjects/{classId}/{subjectId}", method = RequestMethod.GET)
+	public ResponseEntity<SubjectDetails> getSubjectDetailForClasses(@PathVariable Long classId,
+			@PathVariable Long subjectId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		SubjectDetails subject = subjectDetailsRepo.findByClassIdAndId(classId, subjectId);
+		if (null != subject) {
+			Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "SUBJECT",
+					subject.getId());
+			if (null != fav) {
+				subject.setType("FAVORTIE");
+			} else {
+				subject.setType("NOT_FAVORTIE");
+			}
+		}
+
+		return new ResponseEntity<SubjectDetails>(subject, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/subjects", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -360,6 +391,11 @@ public class AdminController {
 		return new ResponseEntity<TopicDetails>(
 				topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId, topicId),
 				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/topics", method = RequestMethod.GET)
+	public ResponseEntity<List<TopicDetails>> getAllTopics() {
+		return new ResponseEntity<List<TopicDetails>>(topicDetailsRepo.findAll(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/topic", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

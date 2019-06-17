@@ -4,6 +4,13 @@
             <div class="col-lg-12 ">
                 <a class="logo" (click)="navigateHome()"><img src="assets/images/logo-edusure1.png" alt=""></a>
                 <ul class="login-info">
+                        <div class="col-md-6 form-group">
+                                <input type="text" placeholder="Type any key Words" class="form-control"  list="topicList" [(ngModel)]="topicDisplayName" (change)="onTopicChange(topicDisplayName)"/>  
+                                <datalist id="topicList">
+                                    <option *ngFor="let topic of topicList" [value]="topic.displayName" ><strong>{{topic?.displayName  | uppercase }}</strong></option>
+                                  </datalist>
+                              </div> 
+                      <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">Search</button>
                       <li>  <button type="button" class="btn" *ngIf="user.role=='ADMIN'" (click)="setupDayZero()">DAYZERO</button></li>
                     <li>Last login {{ today | date:'MM/dd/yy h:mm:ss a'  | uppercase  }}</li>
                     <li><a class="info"><i class="fas fa-info-circle"></i></a></li>

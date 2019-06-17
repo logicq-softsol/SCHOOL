@@ -286,6 +286,23 @@ export class ContentMgmntService {
     return this.http.post(environment.baseUrl + 'api/admin/day0/setup', httpOptions);
   }
 
+getAllTopics(){
+  return this.http.get(environment.baseUrl + 'api/admin/topics');
+}
 
+
+getClassDetails(classId:any){
+  return this.http.get(environment.baseUrl + 'api/admin/classes/'+classId);
+}
+
+
+getSubjectAndClass(classId: number, subjectId: number) {
+  return this.http.get(environment.baseUrl + 'api/admin/subjects/' + classId + "/" + subjectId);
+}
+
+
+getChapterForClassAndSubject(classId: number, subjectId: number,chapter:number) {
+  return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId+"/"+chapter);
+}
 
 }

@@ -32,13 +32,13 @@ export class LogicQIntercept implements HttpInterceptor {
       tap(
         event => {
           if (event instanceof HttpResponse) {
-            console.log("API return", event);
+           // console.log("API return", event);
 
           }
         },
         (err: any) => {
-          console.log(event);
-          this.openErrorSnackBar(err.message, "CLOSE");
+        //  console.log(event);
+          this.openErrorSnackBar(err.error.message, "CLOSE");
         }
       )
     );

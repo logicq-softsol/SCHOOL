@@ -62,9 +62,6 @@ export class ContentMgmntComponent implements OnInit {
 
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
       this.classList = data;
-      this.classList.forEach(cls => {
-        cls.icon = 'assets/images/class.jpg'
-      });
       this.contentMgmntService.changeClassList(data);
     });
 
