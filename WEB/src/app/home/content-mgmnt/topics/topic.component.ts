@@ -20,8 +20,6 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
   styleUrls: ['./topic.scss']
 })
 export class TopicComponent implements OnInit {
-  @ViewChild('videoPlayer') videoplayer: ElementRef;
-  videoSource: any;
 
   user: UserDetail = new UserDetail();
   classList: ClassSetupDetail[] = [];
@@ -51,7 +49,7 @@ export class TopicComponent implements OnInit {
     private authService: AuthenticationService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar, private _sanitizer: DomSanitizer,private elRef:ElementRef) {
+    public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -222,8 +220,10 @@ export class TopicComponent implements OnInit {
       if (file.size > 0) {
         const dialogRef = this.dialog.open(VideoDialog, {
           width: '600px',
+          hasBackdrop: false,
           data: {
-            url: URL.createObjectURL(file)
+            url: URL.createObjectURL(file),
+            topic:topic
           }
         });
     } else {
@@ -719,8 +719,10 @@ export class ClassSetupDialog {
 })
 export class VideoDialog {
   videoURL:any;
-  constructor(public dialogRef: MatDialogRef<ClassSetupDialog>, @Inject(MAT_DIALOG_DATA) private data: any,private _sanitizer: DomSanitizer) {
+  topic:TopicDetail=new TopicDetail();
+  constructor(public dialogRef: MatDialogRef<VideoDialog>, @Inject(MAT_DIALOG_DATA) private data: any,private _sanitizer: DomSanitizer) {
     this.videoURL = this._sanitizer.bypassSecurityTrustUrl(data.url);
+    this.topic=data.topic;
   }
 
   onNoClick(): void {

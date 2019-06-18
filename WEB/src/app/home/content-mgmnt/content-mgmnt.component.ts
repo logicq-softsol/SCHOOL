@@ -15,6 +15,7 @@ import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Favorites } from '../../public/model/favorite';
 import { TopicDetail } from '../../public/model/topic-detail';
+import { VideoDialog } from './topics/topic.component';
 
 @Component({
   selector: 'app-content-mgmnt',
@@ -158,7 +159,16 @@ export class ContentMgmntComponent implements OnInit {
     this.contentMgmntService.playLesson(topic).subscribe((data) => {
       let file = new Blob([data], { type: 'video/mp4' });
       if (file.size > 0) {
-        window.open(URL.createObjectURL(file), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+        topic.displayName=fave.displayName;
+        topic.description=fave.description;
+        const dialogRef = this.dialog.open(VideoDialog, {
+          width: '600px',
+          hasBackdrop: false,
+          data: {
+            url: URL.createObjectURL(file),
+            topic:topic
+          }
+        });
       } else {
         this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }

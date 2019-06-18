@@ -252,14 +252,7 @@ box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); text-align:center; margin-bottom:30
 	.search-container{background:#000;}
 }	 
  
-video::-internal-media-controls-download-button {
-    display:none;
-}
-
-video::-webkit-media-controls-enclosure {
-    overflow:hidden;
-}
-
-video::-webkit-media-controls-panel {
-    width: calc(100% + 30px); /* Adjust as needed */
-}
+video {
+	width: 100%;
+	height: auto;
+  }

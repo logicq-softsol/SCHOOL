@@ -26,7 +26,7 @@ public class LicenseKey implements Serializable {
 	@Column(name = "HOST_NAME", unique = true)
 	private String hostName;
 
-	@Column(name = "KEY", unique = true)
+	@Column(name = "EDUSURE_KEY", unique = true)
 	private String key;
 
 	public Long getId() {

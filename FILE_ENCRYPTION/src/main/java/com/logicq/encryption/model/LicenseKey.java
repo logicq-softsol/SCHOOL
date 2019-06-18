@@ -1,49 +1,56 @@
 package com.logicq.encryption.model;
 
-public class LicenseKey {
+import java.io.Serializable;
 
+public class LicenseKey implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5519781455295835950L;
+	
 	private Long id;
 	private String hostName;
-	private String hostKey;
-	private String hostKeySalt;
 	private String key;
 
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the hostName
+	 */
 	public String getHostName() {
 		return hostName;
 	}
 
+	/**
+	 * @param hostName the hostName to set
+	 */
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
 	}
 
-	public String getHostKey() {
-		return hostKey;
-	}
-
-	public void setHostKey(String hostKey) {
-		this.hostKey = hostKey;
-	}
-
-	public String getHostKeySalt() {
-		return hostKeySalt;
-	}
-
-	public void setHostKeySalt(String hostKeySalt) {
-		this.hostKeySalt = hostKeySalt;
-	}
-
+	/**
+	 * @return the key
+	 */
 	public String getKey() {
 		return key;
 	}
 
+	/**
+	 * @param key the key to set
+	 */
 	public void setKey(String key) {
 		this.key = key;
 	}

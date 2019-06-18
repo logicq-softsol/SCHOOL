@@ -13,6 +13,10 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class LogicQEncryptionAndDecryption {
 
 	private static SecretKeySpec secretKey;

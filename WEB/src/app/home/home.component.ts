@@ -9,6 +9,7 @@ import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
 import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 import { Favorites } from '../public/model/favorite';
+import { VideoDialog } from './content-mgmnt/topics/topic.component';
 
 @Component({
   selector: 'app-home',
@@ -129,7 +130,7 @@ export class TopicDisplayDialog {
   subjectDetail: SubjectSetupDetail = new SubjectSetupDetail();
   ChapterSetupDetail: ChapterSetupDetail = new ChapterSetupDetail();
 
-  constructor(public dialogRef: MatDialogRef<TopicDisplayDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService, public snackBar: MatSnackBar) {
+  constructor(public dialogRef: MatDialogRef<TopicDisplayDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService, public snackBar: MatSnackBar,    public dialog: MatDialog) {
     this.topic = data.topic;
     this.contentMgmntService.getClassDetails(this.topic.classId).subscribe((classDet: ClassSetupDetail) => {
       this.contentMgmntService.changeClassSetupDetail(classDet);
@@ -159,8 +160,16 @@ export class TopicDisplayDialog {
     this.contentMgmntService.playLesson(topic).subscribe((data) => {
       let file = new Blob([data], { type: 'video/mp4' });
       if (file.size > 0) {
-        window.open(URL.createObjectURL(file), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
-        var video = document.getElementById("video");
+        const dialogRef = this.dialog.open(VideoDialog, {
+          width: '600px',
+          hasBackdrop: false,
+          data: {
+            url: URL.createObjectURL(file),
+            topic:topic
+          }
+        });
+        // window.open(URL.createObjectURL(file), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+        // var video = document.getElementById("video");
       } else {
         this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }
