@@ -1,4 +1,4 @@
-package com.logicq.encryption.util;
+package com.logicq.license.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,19 +7,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
-import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-
-import com.logicq.encryption.model.LicenseKey;
 
 public class LogicQEncryptionAndDecryption {
 
@@ -109,24 +101,4 @@ public class LogicQEncryptionAndDecryption {
 		return null;
 	}
 
-	public static byte[] readFileAndDecryptFile(File fileToBeDecrypt, String key) throws IOException {
-		FileInputStream fis = new FileInputStream(fileToBeDecrypt);
-		byte[] fbytes = new byte[(int) fileToBeDecrypt.length()];
-		fis.read(fbytes);
-		fis.close();
-		return decryptFile(fbytes, key);
-	}
-
-	private static byte[] decryptFile(byte[] dataToDecrypt, String secret) {
-		try {
-			setKey(secret);
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-			cipher.init(Cipher.DECRYPT_MODE, secretKey);
-
-			return cipher.doFinal(dataToDecrypt);
-		} catch (Exception ex) {
-			System.out.println("Error while decrypting: " + ex);
-		}
-		return null;
-	}
 }

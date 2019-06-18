@@ -4,8 +4,7 @@ public class ActivateKey {
 
 	private Long id;
 	private String hostName;
-	private String hostKey;
-	private String hostKeySalt;
+	private String key;
 
 	public Long getId() {
 		return id;
@@ -23,19 +22,12 @@ public class ActivateKey {
 		this.hostName = hostName;
 	}
 
-	public String getHostKey() {
-		return hostKey;
+	public String getKey() {
+		return key;
 	}
 
-	public void setHostKey(String hostKey) {
-		this.hostKey = hostKey;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
-	public String getHostKeySalt() {
-		return hostKeySalt;
-	}
-
-	public void setHostKeySalt(String hostKeySalt) {
-		this.hostKeySalt = hostKeySalt;
-	}
 }

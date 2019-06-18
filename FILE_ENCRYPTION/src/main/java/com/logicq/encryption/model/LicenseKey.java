@@ -6,6 +6,7 @@ public class LicenseKey {
 	private String hostName;
 	private String hostKey;
 	private String hostKeySalt;
+	private String key;
 
 	public Long getId() {
 		return id;
@@ -37,6 +38,14 @@ public class LicenseKey {
 
 	public void setHostKeySalt(String hostKeySalt) {
 		this.hostKeySalt = hostKeySalt;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 }

@@ -51,12 +51,7 @@ public class LicenseSecurityUtils {
 		}
 	}
 
-	public String getSystemHostName() throws Exception {
-		InetAddress ip = InetAddress.getLocalHost();
-		return ip.getHostName();
-	}
-
-	public String encryptText(String strToEncrypt, LicenseKey key) {
+	/*public String encryptText(String strToEncrypt, LicenseKey key) {
 		try {
 			Security.setProperty("crypto.policy", "unlimited");
 			byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -74,5 +69,5 @@ public class LicenseSecurityUtils {
 			LOG.error("Unable to Encrypt data.", ex);
 		}
 		return null;
-	}
+	}*/
 }

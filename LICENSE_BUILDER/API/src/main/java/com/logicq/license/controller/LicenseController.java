@@ -1,10 +1,7 @@
 package com.logicq.license.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -12,13 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.logicq.license.exception.SucessMessage;
 import com.logicq.license.model.LicenseDetails;
@@ -26,12 +21,10 @@ import com.logicq.license.model.LicenseKey;
 import com.logicq.license.model.LoginDetails;
 import com.logicq.license.repository.LicenseDetailRepo;
 import com.logicq.license.repository.LicenseKeyRepo;
-import com.logicq.license.service.FileStorageService;
 import com.logicq.license.utils.LicenseBuildUtil;
 import com.logicq.license.utils.LicenseSecurityUtils;
 import com.logicq.license.utils.SchoolDateUtils;
 import com.logicq.license.vo.LicenseVO;
-import com.logicq.license.vo.UploadFileResponse;
 
 @RestController
 @EnableAutoConfiguration

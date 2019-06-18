@@ -51,7 +51,7 @@ export class TopicComponent implements OnInit {
     private authService: AuthenticationService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar, private _sanitizer: DomSanitizer) {
+    public snackBar: MatSnackBar, private _sanitizer: DomSanitizer,private elRef:ElementRef) {
   }
 
   ngOnInit() {
@@ -220,8 +220,13 @@ export class TopicComponent implements OnInit {
     this.contentMgmntService.playLesson(topic).subscribe((data) => {
       let file = new Blob([data], { type: 'video/mp4' });
       if (file.size > 0) {
-        window.open(URL.createObjectURL(file), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
-      } else {
+        const dialogRef = this.dialog.open(VideoDialog, {
+          width: '600px',
+          data: {
+            url: URL.createObjectURL(file)
+          }
+        });
+    } else {
         this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }
 
@@ -703,6 +708,27 @@ export class ClassSetupDialog {
 
 }
 
+
+
+
+
+@Component({
+  selector: 'video-play-dialog',
+  templateUrl: 'video-dialog.html',
+  styleUrls: ['./topic.scss']
+})
+export class VideoDialog {
+  videoURL:any;
+  constructor(public dialogRef: MatDialogRef<ClassSetupDialog>, @Inject(MAT_DIALOG_DATA) private data: any,private _sanitizer: DomSanitizer) {
+    this.videoURL = this._sanitizer.bypassSecurityTrustUrl(data.url);
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+
+}
 
 
 

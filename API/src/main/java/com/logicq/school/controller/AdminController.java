@@ -1,13 +1,10 @@
 package com.logicq.school.controller;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +38,7 @@ import com.logicq.school.repository.SubjectDetailsRepo;
 import com.logicq.school.repository.TopicDetailsRepo;
 import com.logicq.school.repository.UserFavortiesRepo;
 import com.logicq.school.repository.WorkSpaceDetailsRepo;
+import com.logicq.school.utils.LogicQEncryptionAndDecryption;
 import com.logicq.school.utils.SchoolSecurityUtils;
 
 @RestController
@@ -75,6 +72,9 @@ public class AdminController {
 
 	@Autowired
 	Environment env;
+
+	@Autowired
+	LogicQEncryptionAndDecryption logicQEncryptionAndDecryption;
 
 	@RequestMapping(value = "/day0/setup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TopicDetails>> setupDayZeroForTopic() throws Exception {
@@ -485,13 +485,12 @@ public class AdminController {
 		if (null != topic) {
 			String hostName = schoolSecurityUtils.getTokenHostName();
 			ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
-			byte[] readData = schoolSecurityUtils.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
-					activationDetails.getActivationLicense(), activationDetails.getActivationToken());
+			byte[] readData = logicQEncryptionAndDecryption.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
+					activationDetails.getActivationToken());
 			response.getOutputStream().write(readData);
 			response.setContentType("video/mp4");
 			response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
 			response.getOutputStream().flush();
-
 		}
 	}
 

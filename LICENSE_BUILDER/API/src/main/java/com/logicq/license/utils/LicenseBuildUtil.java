@@ -1,8 +1,6 @@
 package com.logicq.license.utils;
 
 import java.io.FileOutputStream;
-import java.security.SecureRandom;
-import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,9 @@ public class LicenseBuildUtil {
 
 	@Autowired
 	LicenseSecurityUtils licenseSecurityUtils;
+
+	@Autowired
+	LogicQEncryptionAndDecryption logicQEncryptionAndDecryption;
 
 	@Autowired
 	LicenseKeyRepo licenseKeyRepo;
@@ -56,7 +57,7 @@ public class LicenseBuildUtil {
 	public String buildproductKey(LicenseDetails licenseDetail) throws Exception {
 		String licenseKey = buildKey(licenseDetail);
 		LicenseKey secretkey = buildSecretKey(licenseDetail);
-		String licenseText = licenseSecurityUtils.encryptText(licenseKey, secretkey);
+		String licenseText = logicQEncryptionAndDecryption.encrypt(licenseKey, secretkey.getKey());
 		licenseDetail.setLicenseKey(licenseText);
 		generateLicenseFile(licenseKey, licenseDetail.getHostName());
 		return licenseKey;
@@ -68,8 +69,7 @@ public class LicenseBuildUtil {
 		if (null == secretkey) {
 			secretkey = new LicenseKey();
 			secretkey.setHostName(licenseDetail.getHostName());
-			secretkey.setHostKeySalt(numberGeneratorUtils.generateSalt());
-			secretkey.setHostKey(numberGeneratorUtils.generateKey());
+			secretkey.setKey(numberGeneratorUtils.getEduSureKey());
 			licenseKeyRepo.save(secretkey);
 		}
 

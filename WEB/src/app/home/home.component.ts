@@ -160,6 +160,7 @@ export class TopicDisplayDialog {
       let file = new Blob([data], { type: 'video/mp4' });
       if (file.size > 0) {
         window.open(URL.createObjectURL(file), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+        var video = document.getElementById("video");
       } else {
         this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }

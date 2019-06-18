@@ -27,4 +27,8 @@ public class NumberGeneratorUtils {
 		return RandomStringUtils.randomAlphabetic(4).toUpperCase();
 	}
 
+	public String getEduSureKey() {
+		return env.getProperty("school.key");
+	}
+
 }

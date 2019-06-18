@@ -3,7 +3,6 @@ package com.logicq.school.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
@@ -34,6 +33,7 @@ import com.logicq.school.repository.ProductActivationRepo;
 import com.logicq.school.repository.UserDetailsRepo;
 import com.logicq.school.security.JwtTokenProvider;
 import com.logicq.school.security.UserPrincipal;
+import com.logicq.school.utils.LogicQEncryptionAndDecryption;
 import com.logicq.school.utils.SchoolDateUtils;
 import com.logicq.school.utils.SchoolRestClient;
 import com.logicq.school.utils.SchoolSecurityUtils;
@@ -42,7 +42,6 @@ import com.logicq.school.vo.ActivateKey;
 import com.logicq.school.vo.LicenseDetails;
 import com.logicq.school.vo.LicenseKey;
 import com.logicq.school.vo.LoginVO;
-import com.logicq.school.vo.RecoverVO;
 
 @RestController
 @EnableAutoConfiguration
@@ -80,6 +79,9 @@ public class LoginController {
 	SchoolSecurityUtils schoolSecurityUtils;
 
 	@Autowired
+	LogicQEncryptionAndDecryption logicQEncryptionAndDecryption;
+
+	@Autowired
 	SchoolRestClient schoolRestClient;
 
 	@Autowired
@@ -94,13 +96,13 @@ public class LoginController {
 			String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
 					+ licnkey.getParam4();
 			ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
-			String licenseKey = schoolSecurityUtils.decrypt(licenseDetails.getLicenseKey(), activateKey.getHostKey(),
-					activateKey.getHostKeySalt());
-			if (inputkey.equals(licenseKey)) {
+			String licenseKey = logicQEncryptionAndDecryption.decrypt(licenseDetails.getLicenseKey(),
+					activateKey.getKey());
+			if (inputkey.equals(licenseKey) && !StringUtils.isEmpty(activateKey.getKey())) {
 				ActivationDetails activationDetail = new ActivationDetails();
 				activationDetail.setActivationDate(schoolDateUtils.currentDate());
 				activationDetail.setActivationLicense(licenseKey);
-				activationDetail.setActivationToken(activateKey.getHostKeySalt());
+				activationDetail.setActivationToken(activateKey.getKey());
 				activationDetail.setLastUpdate(schoolDateUtils.currentDate());
 				activationDetail.setProductName(licenseDetails.getProductName());
 				activationDetail.setProductStatus("ACTIVE");
@@ -126,25 +128,32 @@ public class LoginController {
 		if (null != activationDeatils && !"EXPIRED".equals(activationDeatils.getProductStatus())) {
 			if (!StringUtils.isEmpty(login.getUserName())) {
 				LoginDetails loginDetails = loginDetailsRepo.findByUserName(login.getUserName());
-				if (null != loginDetails) {
-					User userDetails = userDetailsRepo.findByUserName(login.getUserName());
-					UserPrincipal usrPrincipal = UserPrincipal.create(userDetails, loginDetails);
-					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-							usrPrincipal, null, usrPrincipal.getAuthorities());
 
-					SecurityContextHolder.getContext().setAuthentication(authentication);
-					if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-						String jwt = tokenProvider.generateToken(authentication);
-						if (null != loginDetails) {
-							loginDetails.setLoginTime(schoolDateUtils.currentDate());
-							loginDetails.setLoginStatus("ACTIVE");
-							loginDetailsRepo.save(loginDetails);
+				if (null != loginDetails) {
+					boolean result = passwordEncoder.matches(login.getPassword(), loginDetails.getPassword());
+					if (result) {
+						User userDetails = userDetailsRepo.findByUserName(login.getUserName());
+						UserPrincipal usrPrincipal = UserPrincipal.create(userDetails, loginDetails);
+						UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+								usrPrincipal, null, usrPrincipal.getAuthorities());
+
+						SecurityContextHolder.getContext().setAuthentication(authentication);
+						if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+							String jwt = tokenProvider.generateToken(authentication);
+							if (null != loginDetails) {
+								loginDetails.setLoginTime(schoolDateUtils.currentDate());
+								loginDetails.setLoginStatus("ACTIVE");
+								loginDetailsRepo.save(loginDetails);
+							}
+							return new ResponseEntity<SucessMessage>(
+									new SucessMessage(schoolDateUtils.currentDate(), jwt, "acess_token"),
+									HttpStatus.OK);
+						} else {
+							throw new ValidationException("ERROR-LOGIN");
 						}
-						return new ResponseEntity<SucessMessage>(
-								new SucessMessage(schoolDateUtils.currentDate(), jwt, "acess_token"), HttpStatus.OK);
-					} else {
-						throw new ValidationException("ERROR-LOGIN");
 					}
+					return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+							"Invalid login Check your password or user name", "ERROR"), HttpStatus.BAD_REQUEST);
 				}
 			} else {
 				return new ResponseEntity<SucessMessage>(

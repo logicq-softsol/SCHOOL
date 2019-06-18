@@ -1,5 +1,7 @@
 package com.logicq.license.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "LICENSE_KEY")
-public class LicenseKey {
+public class LicenseKey implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3836140120541140301L;
 
 	@Id
 	@Column(name = "ID")
@@ -19,11 +26,8 @@ public class LicenseKey {
 	@Column(name = "HOST_NAME", unique = true)
 	private String hostName;
 
-	@Column(name = "HOST_KEY", unique = true)
-	private String hostKey;
-
-	@Column(name = "HOST_KEY_SALT", unique = true)
-	private String hostKeySalt;
+	@Column(name = "KEY", unique = true)
+	private String key;
 
 	public Long getId() {
 		return id;
@@ -41,20 +45,12 @@ public class LicenseKey {
 		this.hostName = hostName;
 	}
 
-	public String getHostKey() {
-		return hostKey;
+	public String getKey() {
+		return key;
 	}
 
-	public void setHostKey(String hostKey) {
-		this.hostKey = hostKey;
-	}
-
-	public String getHostKeySalt() {
-		return hostKeySalt;
-	}
-
-	public void setHostKeySalt(String hostKeySalt) {
-		this.hostKeySalt = hostKeySalt;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 }
