@@ -9,6 +9,7 @@
                 <label>Class</label>
                 <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
                   [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
+                  <i *ngIf="classdisplayName != null" class="fas fa-times search-icon" (click)="classClear()"></i>
                 <datalist id="classList">
                   <option *ngFor="let classDetail of classList" [value]="classDetail.displayName">{{classDetail?.displayName}}</option>
                 </datalist>
@@ -17,6 +18,7 @@
                 <label>Subject</label>
                 <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
                   [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
+                  <i *ngIf="subjectdisplayName != null" class="fas fa-times search-icon" (click)="subjectClear()"></i>
                 <datalist id="classSubjectList">
                   <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName">{{classSubject?.displayName}}</option>
                 </datalist>
@@ -25,6 +27,7 @@
                 <label>Chapter</label>
                 <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
                   [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
+                  <i *ngIf="chapterdisplayName != null" class="fas fa-times search-icon" (click)="chapterClear()"></i>
                 <datalist id="chapterList">
                   <option *ngFor="let chapter of chapterList" [value]="chapter.displayName">{{chapter?.displayName}}</option>
                 </datalist>
@@ -74,9 +77,11 @@
             <div class="card-body">
               <p class="card-text">{{topic.description}}</p>
             </div>
-            <li><a (click)="markFavorites(topic)"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-            <li *ngIf="user.role=='ADMIN'"><a (click)="editTopicDetail(topic)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
-            <li *ngIf="user.role=='ADMIN'"><a (click)="deleteTopicDetail(topic)" style="cursor:pointer"><i class="fas fa-times"></i></a></li>
+            <li><a (click)="markFavorites(topic)"><i class="fa fa-heart like-icon" aria-hidden="true"></i></a></li>
+            <li *ngIf="user.role=='ADMIN'" class="borders"><a (click)="editTopicDetail(topic)" style="cursor:pointer">
+              <i class="fas fa-pen edit-icon"></i></a></li>
+            <li *ngIf="user.role=='ADMIN'"><a (click)="deleteTopicDetail(topic)" style="cursor:pointer">
+              <i class="fas fa-times close-icon"></i></a></li>
           </ul>
         </div>
       </div>

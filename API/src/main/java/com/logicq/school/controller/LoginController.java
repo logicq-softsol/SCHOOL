@@ -18,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,9 +28,13 @@ import com.logicq.school.exception.SucessMessage;
 import com.logicq.school.model.ActivationDetails;
 import com.logicq.school.model.LoginDetails;
 import com.logicq.school.model.Message;
+import com.logicq.school.model.SessionTracker;
+import com.logicq.school.model.TopicDetails;
 import com.logicq.school.model.User;
 import com.logicq.school.repository.LoginDetailsRepo;
 import com.logicq.school.repository.ProductActivationRepo;
+import com.logicq.school.repository.SessionTrackerRepo;
+import com.logicq.school.repository.TopicDetailsRepo;
 import com.logicq.school.repository.UserDetailsRepo;
 import com.logicq.school.security.JwtTokenProvider;
 import com.logicq.school.security.UserPrincipal;
@@ -39,6 +44,7 @@ import com.logicq.school.utils.SchoolRestClient;
 import com.logicq.school.utils.SchoolSecurityUtils;
 import com.logicq.school.utils.SucessHandlerUtils;
 import com.logicq.school.vo.ActivateKey;
+import com.logicq.school.vo.ActivationVO;
 import com.logicq.school.vo.LicenseDetails;
 import com.logicq.school.vo.LicenseKey;
 import com.logicq.school.vo.LoginVO;
@@ -86,6 +92,12 @@ public class LoginController {
 
 	@Autowired
 	Environment env;
+
+	@Autowired
+	SessionTrackerRepo sessionTrackerRepo;
+
+	@Autowired
+	TopicDetailsRepo topicDetailsRepo;
 
 	@RequestMapping(value = "/activateProduct", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> activateProductForClient(@RequestBody LicenseKey licnkey) throws Exception {
@@ -267,6 +279,103 @@ public class LoginController {
 		return new ResponseEntity<SucessMessage>(
 				new SucessMessage(schoolDateUtils.currentDate(), "Product is Not Valid For this System", "NO_LICENSE"),
 				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/checkProductActivationDate", method = RequestMethod.GET)
+	public ResponseEntity<ActivationVO> productDate() throws Exception {
+		String hostName = schoolSecurityUtils.getSystemHostName();
+		ActivationDetails activationDeatils = productActivationRepo.findByActivationFor(hostName);
+		ActivationVO activation = new ActivationVO();
+		activation.setActivationDate(activationDeatils.getActivationDate());
+		activation.setExpiryDate(activationDeatils.getExpiryDate());
+		activation.setRemaningDays(new Long(activationDeatils.getActivationDays()).intValue());
+		return new ResponseEntity<ActivationVO>(activation, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/session", method = RequestMethod.GET)
+	public ResponseEntity<List<SessionTracker>> getSessionForTodayForUser() throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<SessionTracker> sessionList = sessionTrackerRepo.findByStartTimeGreaterThanEqualAndUserName(
+				schoolDateUtils.findTodayStartDate(), loginDetail.getUserName());
+		return new ResponseEntity<List<SessionTracker>>(sessionList, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/sessions", method = RequestMethod.GET)
+	public ResponseEntity<List<SessionTracker>> getAllSessionForToday() throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		List<SessionTracker> sessionList = sessionTrackerRepo
+				.findByStartTimeGreaterThanEqual(schoolDateUtils.findTodayStartDate());
+		return new ResponseEntity<List<SessionTracker>>(sessionList, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "/session/{sessionId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SucessMessage> updateSessionTracker(@PathVariable Long sessionId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		SessionTracker sessnionTracker = sessionTrackerRepo.findOne(sessionId);
+		if (null != sessnionTracker) {
+			sessionTrackerRepo.delete(sessnionTracker);
+			return new ResponseEntity<SucessMessage>(
+					new SucessMessage(schoolDateUtils.currentDate(), "Your Session Delete Sucess Fully", "LESSON_PLAY"),
+					HttpStatus.OK);
+		}
+		return new ResponseEntity<SucessMessage>(
+				new SucessMessage(schoolDateUtils.currentDate(), "No Session Exist For this Lesson", "LESSON_PLAY"),
+				HttpStatus.BAD_REQUEST);
+
+	}
+
+	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SucessMessage> updateSessionTracker(@PathVariable Long classId, @PathVariable Long subjectId,
+			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		SessionTracker sessnionTracker = sessionTrackerRepo.findByUserNameAndClassIdAndSubjectIdAndChapterIdAndTopicId(
+				loginDetail.getUserName(), classId, subjectId, chapterId, topicId);
+		if (null != sessnionTracker) {
+			sessnionTracker.setEndTime(schoolDateUtils.currentDate());
+			long diff = sessnionTracker.getStartTime().getTime() - sessnionTracker.getEndTime().getTime();
+			int diffmin = (int) (diff / (60 * 1000));
+			if (diffmin >= sessnionTracker.getTopicRequiredTime() - 1) {
+				sessnionTracker.setStatus("COMPLETE");
+			} else {
+				sessnionTracker.setStatus("PENDING");
+			}
+			sessionTrackerRepo.save(sessnionTracker);
+			return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+					"Your Session Closed For This Lesson", "LESSON_PLAY"), HttpStatus.OK);
+		}
+		return new ResponseEntity<SucessMessage>(
+				new SucessMessage(schoolDateUtils.currentDate(), "No Session Exist For this Lesson", "LESSON_PLAY"),
+				HttpStatus.BAD_REQUEST);
+
+	}
+
+	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SucessMessage> createSessionTracker(@PathVariable Long classId, @PathVariable Long subjectId,
+			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId,
+				topicId);
+		if (null != topic && !StringUtils.isEmpty(topic.getPlayFileURL())) {
+			SessionTracker sessionTracker = new SessionTracker();
+			sessionTracker.setClassId(classId);
+			sessionTracker.setSubjectId(subjectId);
+			sessionTracker.setChapterId(chapterId);
+			sessionTracker.setTopicId(topicId);
+			sessionTracker.setUserName(loginDetail.getUserName());
+			sessionTracker.setStartTime(schoolDateUtils.currentDate());
+			sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
+			sessionTracker.setEndTime(sessionTracker.getStartTime());
+			sessionTracker.setStatus("PENDING");
+			sessionTrackerRepo.save(sessionTracker);
+			return new ResponseEntity<SucessMessage>(
+					new SucessMessage(schoolDateUtils.currentDate(), "Your Lesson Started Now", "LESSON_PLAY"),
+					HttpStatus.OK);
+		}
+		return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+				"Unable To Start Session,Check Video File", "LESSON_PLAY"), HttpStatus.BAD_REQUEST);
 	}
 
 }

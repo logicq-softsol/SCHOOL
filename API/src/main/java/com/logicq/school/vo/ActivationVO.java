@@ -12,6 +12,7 @@ public class ActivationVO {
 	private String license;
 	private UserVO user;
 	private LoginVO login;
+	private Integer remaningDays;
 
 	public String getProductName() {
 		return productName;
@@ -76,5 +77,21 @@ public class ActivationVO {
 	public void setLogin(LoginVO login) {
 		this.login = login;
 	}
+
+	/**
+	 * @return the remaningDays
+	 */
+	public Integer getRemaningDays() {
+		return remaningDays;
+	}
+
+	/**
+	 * @param remaningDays the remaningDays to set
+	 */
+	public void setRemaningDays(Integer remaningDays) {
+		this.remaningDays = remaningDays;
+	}
+	
+	
 
 }

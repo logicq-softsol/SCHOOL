@@ -15,23 +15,29 @@
                 <ul class="login-info">
                       
                       <li>  <button type="button" class="btn" *ngIf="user.role=='ADMIN'" (click)="setupDayZero()">DAYZERO</button></li>
-                    <li>Last login {{ today | date:'MM/dd/yy h:mm:ss a'  | uppercase  }}</li>
-                    <li><a class="info"><i class="fas fa-info-circle"></i></a></li>
+                    <li>Last login: {{ today | date:'fullDate' }} {{today | date:'shortTime'}}</li>
+                    <li><a class="info" [matMenuTriggerFor]="info" (click)="setupRemainTime()"><i class="fas fa-info-circle"></i></a></li>
                     <li><a class="user" [matMenuTriggerFor]="menu"><i class="fas fa-user"></i></a></li>
                 </ul>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="viewProfile()">
-                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <i class="fa fa-user drop-icon" aria-hidden="true"></i>
                       <span>View Profile</span>
                     </button>
                     <button mat-menu-item (click)="viewSessionReport()">
-                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                      <span>View Session</span>
+                     <i class="fa fa-calendar drop-icon" aria-hidden="true"></i>
+                      <span>View Favorites</span>
                     </button>
                     <button mat-menu-item (click)="logout()">
-                      <i class="fa fa-sign-out" aria-hidden="true"></i>
+                      <i class="fa fa-sign-out drop-icon" aria-hidden="true"></i>
                       <span>Logout</span>
                     </button>
+                  </mat-menu>
+                  <mat-menu #info="matMenu">
+                      <div class="timer-container">
+                            <img src="assets/images/blue-hourglass.gif" alt="">
+                       <p class="timer">{{timeLeft}} Days</p>
+                      </div>
                   </mat-menu>
             </div>
         </div>

@@ -11,6 +11,7 @@ import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 import { Favorites } from '../public/model/favorite';
 import { VideoDialog } from './content-mgmnt/topics/topic.component';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit {
   topicList: TopicDetail[] = [];
   topic: TopicDetail = new TopicDetail();
   topicDisplayName: any;
-
+  timeLeft:any;
 
 
   constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router, public snackBar: MatSnackBar, public dialog: MatDialog) {
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit {
     this.contentMgmntService.getAllTopics().subscribe((topics: TopicDetail[]) => {
       this.topicList = topics;
     })
+   
   }
 
   navigateHome() {
@@ -112,6 +114,16 @@ export class HomeComponent implements OnInit {
     this.topicDisplayName = null;
   }
 
+  setupRemainTime() {
+    var oneDay = 24*60*60*1000; 
+    this.contentMgmntService.getRemaingLicenseDays().subscribe((data:any)=>{
+   //   var firstDate = new Date(data.activationDate);
+     // var secondDate = new Date(data.expiryDate);
+     // var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+      this.timeLeft=data.remaningDays;
+    });
+
+  }
 
 
 }
@@ -182,4 +194,6 @@ export class TopicDisplayDialog {
       duration: 10000
     });
   }
+
+
 }

@@ -37,6 +37,7 @@ public class SchoolSchduleUtil {
 				} else {
 					activationDetails.setProductStatus("EXPIRED");
 				}
+				productActivationRepo.save(activationDetails);
 			}
 
 		}

@@ -208,8 +208,15 @@ padding-right: 15px;
 .add-more{border:1px solid #D3D3D3; color:#252525; font-size:13px;}
 
 
-.class-box{background:#fff; border:1px solid #DDDDDD; -webkit-box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); -moz-box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2);
-box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); text-align:center; margin-bottom:30px; display:block}
+.class-box{
+    background:#fff; border:1px solid #DDDDDD;
+     -webkit-box-shadow: none; /*  1px 5px 5px 0px rgba(0,0,0,0.2); */
+      -moz-box-shadow: none;/*  1px 5px 5px 0px rgba(0,0,0,0.2); */
+    box-shadow: none;/*  1px 5px 5px 0px rgba(0,0,0,0.2); */
+ text-align:center;
+  margin-bottom:0px;
+   display:block;
+}
 .class-box img{}
 .class-box span{ display:block; background:rgba(0, 0, 0, .67); font-size:18px; color:#fff;  padding:10px;}
 .class-box p span{ display:inline-block; background:none; font-size:16px; color:#252525; font-weight:500;}
@@ -274,3 +281,30 @@ box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); text-align:center; margin-bottom:30
 	line-height: 5px;
 	transform: none;
  }
+ .drop-icon {
+     margin-right: 5px;
+ }
+ .mat-dialog-container {
+     padding: 15px;
+ }
+ .close {
+    position: relative;
+    top: 8px;
+    right: 10px;
+  }
+  .timer-container {
+      padding: 15px;
+  }
+  .timer {
+    text-align: center;
+    padding: 0 20px;
+    font-weight: 600;
+    margin: 0;
+    display: inline-block;  
+  }
+  .timer-icon {
+    font-size: 18px;
+    color: darkgoldenrod;
+    position: relative;
+    left: 12px;
+  }

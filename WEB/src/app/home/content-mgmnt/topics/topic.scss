@@ -225,7 +225,7 @@ box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); text-align:center; margin-bottom:30
 .class-edit{padding:0; margin:0; list-style-type:none; padding:5px 0; border-top:1px solid #DDDDDD;}
 .class-edit li{display:inline-block; width:32%; text-align:center; vertical-align:middle; }
 .class-edit li a{font-size:24px; display:block; padding:10px 0}
-.class-edit li:nth-child(2){border-left:1px solid #ddd; border-right:1px solid #ddd;}
+.class-edit li:nth-child(1){border-left:1px solid #ddd; border-right:1px solid #ddd;}
 .card-image {margin-top:15px; height:130px;}
 
 
@@ -255,4 +255,31 @@ box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); text-align:center; margin-bottom:30
 video {
 	width: 100%;
 	height: auto;
+  }
+  .card-text {
+	color: #a5a5a5;
+  }
+  h5 {
+	background: lightgray;
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  .close {
+    position: relative;
+    top: 8px;
+    right: 10px;
+  }
+  .like-icon {
+	  color: #ff50d6;
+  }
+  .edit-icon {
+	color: #d64444;
+  }
+  .close-icon {
+	color: #FD1746;
+  }
+  .borders {
+	  border-left: 1px solid #ddd;
+	  border-right: 1px solid #ddd;
   }

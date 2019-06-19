@@ -1,7 +1,7 @@
-import { DataService } from '../slider/data.service';
-import { Component, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
-import {Result} from './result';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
+import { DataService } from '../slider/data.service';
+import { Result } from './result';
 
 
 const source = interval(10000);
@@ -32,6 +32,10 @@ export class SliderComponent implements OnInit ,OnDestroy{
       this.sliderArray = result.sliderArray;
     });
     this.subscription = source.subscribe(() => this.selected(this.selectedIndex));
+    this.downSelected(1);
+    setInterval(() => {
+      this.downSelected(this.selectedIndex);
+  }, 5000);
   }
 
  
@@ -49,7 +53,7 @@ export class SliderComponent implements OnInit ,OnDestroy{
    downSelected(i) {
    this.transform =  100 - (i) * 50;
      this.selectedIndex = this.selectedIndex + 1;
-     if (this.selectedIndex > 4) {
+     if (this.selectedIndex > 3) {
        this.selectedIndex = 0;
      }
    }

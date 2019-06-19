@@ -201,6 +201,15 @@ export class ContentMgmntComponent implements OnInit {
       duration: 10000
     });
   }
+  classClear() {
+    this.classdisplayName = null;
+  }
+  subjectClear() {
+    this.subjectdisplayName = null;
+  }
+  chapterClear() {
+    this.chapterdisplayName = null;
+  }
 }
 
 

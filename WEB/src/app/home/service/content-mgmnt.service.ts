@@ -315,4 +315,10 @@ getChapterForClassAndSubject(classId: number, subjectId: number,chapter:number) 
   return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId+"/"+chapter);
 }
 
+
+
+getRemaingLicenseDays() {
+  return this.http.get(environment.baseUrl + 'api/checkProductActivationDate');
+}
+
 }

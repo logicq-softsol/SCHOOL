@@ -173,9 +173,10 @@ public class AdminController {
 				topicDetails.setDescription("About Topic for chapter" + chapter.getDisplayName() + " for Subject "
 						+ subejctDetail.getDisplayName() + " of class " + classDetails.getDisplayName());
 				topicDetails.setSubjectId(subejctDetail.getId());
+				topicDetails.setChapterId(chapter.getId());
 				topicDetails.setPlayFileType("mp4");
 				topicDetails.setPlayFileURL(wordList[4]);
-				topicDetails.setChapterId(chapter.getId());
+				topicDetails.setPlayFileTime(Long.valueOf(wordList[5]));
 				topicDetails.setType("TOPIC");
 				allTopicDetail.add(topicDetails);
 

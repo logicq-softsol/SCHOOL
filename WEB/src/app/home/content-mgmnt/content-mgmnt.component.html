@@ -10,6 +10,7 @@
               <div class="col-md-3 form-group">
                 <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
                   [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
+                  <i *ngIf="classdisplayName != null" class="fas fa-times search-icon" (click)="classClear()"></i>
                 <datalist id="classList">
                   <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
                       | uppercase }}</strong></option>
@@ -18,6 +19,7 @@
               <div class="col-md-3 form-group">
                 <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
                   [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
+                  <i *ngIf="subjectdisplayName != null" class="fas fa-times search-icon" (click)="subjectClear()"></i>
                 <datalist id="classSubjectList">
                   <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
                       | uppercase }}</strong></option>
@@ -26,6 +28,7 @@
               <div class="col-md-6 form-group">
                 <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
                   [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
+                  <i *ngIf="chapterdisplayName != null" class="fas fa-times search-icon" (click)="chapterClear()"></i>
                 <datalist id="chapterList">
                   <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
                       | uppercase }}</strong></option>
@@ -40,52 +43,100 @@
   </div>
 </section>
 
-<section class="search-container d-flex align-items-center" *ngIf="displayView=='PROFILE'">
+<section class="search-container d-flex align-items-center" style="background: whitesmoke;" *ngIf="displayView=='PROFILE'">
   <div class="container">
     <div class="row clearfix">
-      <div class="col-md-6">
-        <div class="user-details p-3 text-center">
-          <div class="home-search pt-3">
-            <div class="form-group mb-4">
-              <input type="text" placeholder="Select or type a class" class="form-control" list="classList" [(ngModel)]="classdisplayName"
-                (change)="onClassChange(classdisplayName)" />
-              <datalist id="classList">
-                <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
-                    | uppercase }}</strong></option>
-              </datalist>
+        <div class="col-md-5">
+            <div class="user-details p-3" style="margin-bottom: 20px;">
+              <a class="edit-info d-flex align-items-center justify-content-center"><i class="fas fa-pencil-alt"></i></a>
+              <div class="row">
+                <div class="col-md-4">
+                    <span class="user-av d-flex align-items-center justify-content-center"><img src="assets/images/user.png" alt=""></span>
+                </div>
+                <div class="col-md-8" style="padding-left: 0;">
+                    <strong>{{user.firstname | uppercase }} {{user.lastname | uppercase}}</strong>
+                    <p class="email">{{user.email}}</p>
+                   <p class="contact">{{user.mobileno}}</p>
+                    <small class="role-head">Role:</small>
+                    <p class="role">{{user.role}}</p>
+                </div>
+              </div>
+              
             </div>
-            <div class="form-group mb-4">
-              <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
-                [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
-              <datalist id="classSubjectList">
-                <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
-                    | uppercase }}</strong></option>
-              </datalist>
-            </div>
-            <div class="form-group mb-4">
-              <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
-                [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
-              <datalist id="chapterList">
-                <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
-                    | uppercase }}</strong></option>
-              </datalist>
-            </div>
-            <button type="submit" class="btn btn-search" (click)="searchTopicDetails()">Search</button>
+            <div class="user-details p-3 text-center">
+                <div class="p-home-search pt-3 text-center">
+                  <div class="form-group mb-4">
+                    <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
+                     [(ngModel)]="classdisplayName"
+                      (change)="onClassChange(classdisplayName)" />
+                      <i *ngIf="classdisplayName != null" class="fas fa-times search-icon" (click)="classClear()"></i>
+                    <datalist id="classList">
+                      <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
+                          | uppercase }}</strong></option>
+                    </datalist>
+                  </div>
+                  <div class="form-group mb-4">
+                    <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
+                      [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
+                      <i *ngIf="subjectdisplayName != null" class="fas fa-times search-icon" (click)="subjectClear()"></i>
+                    <datalist id="classSubjectList">
+                      <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
+                          | uppercase }}</strong></option>
+                    </datalist>
+                  </div>
+                  <div class="form-group mb-4">
+                    <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
+                      [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
+                      <i *ngIf="chapterdisplayName != null" class="fas fa-times search-icon" (click)="chapterClear()"></i>
+                    <datalist id="chapterList">
+                      <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
+                          | uppercase }}</strong></option>
+                    </datalist>
+                  </div>
+                  <button type="submit" class="btn p-btn-search" (click)="searchTopicDetails()">Search</button>
+                </div>
+              </div>
           </div>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="user-details p-3 text-center">
-          <a class="edit-info d-flex align-items-center justify-content-center"><i class="fas fa-pencil-alt"></i></a>
-          <span class="user-av d-flex align-items-center justify-content-center"><img src="assets/images/user.png" alt=""></span>
-          <strong>{{user.firstname | uppercase }} {{user.lastname | uppercase}}</strong>
-          <small>Role</small>
-          <p>{{user.role}}</p>
-          <small>Email</small>
-          <p>{{user.email}}</p>
-          <small>Mobile Number</small>
-          <p>{{user.mobileno}}</p>
-        </div>
+      <!-- <div class="col-md-4">
+       
+      </div> -->
+      <div class="col-md-7">
+          <div class="user-details p-3 text-center tabled">
+            <table>
+              <thead>
+                <td>
+                Session Date
+                </td>
+                <td>
+                    Topic Name
+                    </td>
+                    <td>
+                       Time
+                        </td>
+              </thead>
+              <tr>
+                <td>17 June, 19</td>
+                <td>Human Skeleton
+                  <small>Std. III, Biology, Human body</small>
+                </td>
+                <td>3 hrs</td>
+              </tr>
+              <tr>
+                  <td>17 June, 19</td>
+                  <td>Verb
+                    <small>Std. III, English, Grammer</small>
+                  </td>
+                  <td>2 hrs</td>
+                </tr>
+                <tr>
+                    <td>18 June, 19</td>
+                    <td>Summation
+                      <small>Std. III, Math, Alzebra</small>
+                    </td>
+                    <td>5 hrs</td>
+                  </tr>
+            </table>
+          </div>
       </div>
     </div>
   </div>

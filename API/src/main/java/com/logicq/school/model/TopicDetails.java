@@ -39,6 +39,9 @@ public class TopicDetails extends AttributeDetails {
 	@Column(name = "PLAY_FILE_TYPE")
 	private String playFileType;
 
+	@Column(name = "PLAY_FILE_TIME")
+	private Long playFileTime;
+
 	public Long getId() {
 		return id;
 	}
@@ -93,6 +96,20 @@ public class TopicDetails extends AttributeDetails {
 
 	public void setPlayFileType(String playFileType) {
 		this.playFileType = playFileType;
+	}
+
+	/**
+	 * @return the playFileTime
+	 */
+	public Long getPlayFileTime() {
+		return playFileTime;
+	}
+
+	/**
+	 * @param playFileTime the playFileTime to set
+	 */
+	public void setPlayFileTime(Long playFileTime) {
+		this.playFileTime = playFileTime;
 	}
 
 }
