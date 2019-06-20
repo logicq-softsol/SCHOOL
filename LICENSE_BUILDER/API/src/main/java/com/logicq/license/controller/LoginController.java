@@ -66,6 +66,8 @@ public class LoginController {
 		if (!StringUtils.isEmpty(login.getUserName())) {
 			LoginDetails loginDetails = loginDetailsRepo.findByUserName(login.getUserName());
 			if (null != loginDetails) {
+				boolean result = passwordEncoder.matches(login.getPassword(), loginDetails.getPassword());
+				if (result) {
 				User userDetails = userDetailsRepo.findByUserName(login.getUserName());
 				UserPrincipal usrPrincipal = UserPrincipal.create(userDetails, loginDetails);
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
@@ -83,6 +85,10 @@ public class LoginController {
 							new SucessMessage(schoolDateUtils.currentDate(), jwt, "acess_token"), HttpStatus.OK);
 				} else {
 					throw new ValidationException("ERROR-LOGIN");
+				}
+				}else {
+					return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+							"Invalid login Check your password or user name", "ERROR"), HttpStatus.BAD_REQUEST);
 				}
 			}
 		}

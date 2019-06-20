@@ -11,31 +11,46 @@ import com.sun.jersey.api.json.JSONConfiguration;
 
 public class EncryptionRestClient {
 
-	public LicenseDetails  getLicenseForHostName(String hostName) {
-		ClientConfig clientConfig = new DefaultClientConfig();
-		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-		Client client = Client.create(clientConfig);
-		WebResource webResource = client.resource("http://35.225.43.18:8080/license/api/school/license/" + hostName);
-		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+	public LicenseDetails getLicenseForHostName(String hostName) {
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+			Client client = Client.create(clientConfig);
+			WebResource webResource = client
+					.resource("http://35.225.43.18:8080/license/api/school/license/" + hostName);
+			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+			if (response.getStatus() != 200) {
+				throw new Exception("Failed : HTTP error code : " + response.getStatus());
+			} else {
+				return response.getEntity(LicenseDetails.class);
+			}
+		} catch (Throwable ex) {
+			System.out.println("No valid license exist for this host : " + hostName);
 		}
-		return response.getEntity(LicenseDetails.class);
+		return null;
+
 	}
 
 	public LicenseKey getLicenseKeyForHostName(String hostName) {
-		ClientConfig clientConfig = new DefaultClientConfig();
-		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-		Client client = Client.create(clientConfig);
-		WebResource webResource = client
-				.resource("http://35.225.43.18:8080/license/api/school/licenseKey/" + hostName);
-		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+			Client client = Client.create(clientConfig);
+			WebResource webResource = client
+					.resource("http://35.225.43.18:8080/license/api/school/licenseKey/" + hostName);
+			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+			if (response.getStatus() != 200) {
+				throw new Exception("Failed : HTTP error code : " + response.getStatus());
+			} else {
+				return response.getEntity(LicenseKey.class);
+			}
+		} catch (Throwable ex) {
+			System.out.println("No valid license exist for this host : " + hostName);
 		}
-		return response.getEntity(LicenseKey.class);
+		return null;
+
 	}
 
 }
