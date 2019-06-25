@@ -161,7 +161,6 @@ public class AdminController {
 
 			topicList.stream().distinct().forEach(lin -> {
 				String[] wordList = lin.split("#");
-				System.out.println(lin);
 				ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
 				SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
 						wordList[1].toLowerCase().trim());

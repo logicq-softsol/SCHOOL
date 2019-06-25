@@ -104,7 +104,7 @@
         <button class="btn period-btn" (click)="downloadReport('30')">Last 1 month</button>
         <button class="btn period-btn" (click)="downloadReport('365')">Last 1 year</button>
         </div>
-          <div class="user-details p-3 text-center tabled" id="sessionTable">
+          <div class="user-details p-3 text-center tabled" id="sessionTable" #sessionTable>
             <table>
               <thead>
                 <td *ngIf="user.role == 'ADMIN'">User Name</td>

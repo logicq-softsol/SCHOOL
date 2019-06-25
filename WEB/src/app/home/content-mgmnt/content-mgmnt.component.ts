@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject, ViewChild, ElementRef } from '@angular/core';
 import { HomeService } from '../service/home.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserDetail } from '../../public/model/user-detail';
@@ -16,7 +16,7 @@ import { startWith, map } from 'rxjs/operators';
 import { Favorites } from '../../public/model/favorite';
 import { TopicDetail } from '../../public/model/topic-detail';
 import { VideoDialog } from './topics/topic.component';
-
+declare var jsPDF: any;
 
 @Component({
   selector: 'app-content-mgmnt',
@@ -24,6 +24,8 @@ import { VideoDialog } from './topics/topic.component';
   styleUrls: ['./content-mgmnt.component.scss']
 })
 export class ContentMgmntComponent implements OnInit {
+
+  @ViewChild('sessionTable') sessionTable: ElementRef;
 
   user: UserDetail = new UserDetail();
   classList: ClassSetupDetail[] = [];
@@ -47,8 +49,8 @@ export class ContentMgmntComponent implements OnInit {
   classdisplayName: any;
   subjectdisplayName: any;
   chapterdisplayName: any;
-  displayView:any;
-  sessionData:any[]=[];
+  displayView: any;
+  sessionData: any[] = [];
 
 
   constructor(private homeService: HomeService,
@@ -59,17 +61,17 @@ export class ContentMgmntComponent implements OnInit {
     public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
-   
+
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
-      if(this.user.role=='ADMIN'){
-        this.contentMgmntService.getAllSessions().subscribe((data:any[])=>{
-            this.sessionData=data;
+      if (this.user.role == 'ADMIN') {
+        this.contentMgmntService.getAllSessions().subscribe((data: any[]) => {
+          this.sessionData = data;
         });
-      }else{
-        this.contentMgmntService.getUserSession().subscribe((data:any[])=>{
-          this.sessionData=data;
-      });
+      } else {
+        this.contentMgmntService.getUserSession().subscribe((data: any[]) => {
+          this.sessionData = data;
+        });
       }
     });
 
@@ -82,8 +84,8 @@ export class ContentMgmntComponent implements OnInit {
       this.favorites = favorites;
     });
 
-    this.contentMgmntService.getContentDisplayView().subscribe((view:any)=>{
-          this.displayView=view;
+    this.contentMgmntService.getContentDisplayView().subscribe((view: any) => {
+      this.displayView = view;
     });
 
   }
@@ -111,9 +113,19 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
-  downloadReport(interval){
-   
- 
+  downloadReport(interval) {
+    let doc = new jsPDF();
+    let specialElementHandlers = {
+      '#editor': function (element, renderer) {
+        return true;
+      }
+    };
+    let sessionTable = this.sessionTable.nativeElement;
+    doc.fromHTML(sessionTable.innerHTML, 10, 10, {
+      'width': '100%',
+      'elementHandlers': specialElementHandlers
+    });
+    doc.save('SessionReport.pdf');
   }
 
 
@@ -176,14 +188,14 @@ export class ContentMgmntComponent implements OnInit {
     this.contentMgmntService.playLesson(topic).subscribe((data) => {
       let file = new Blob([data], { type: 'video/mp4' });
       if (file.size > 0) {
-        topic.displayName=fave.displayName;
-        topic.description=fave.description;
+        topic.displayName = fave.displayName;
+        topic.description = fave.description;
         const dialogRef = this.dialog.open(VideoDialog, {
           width: '600px',
           hasBackdrop: false,
           data: {
             url: URL.createObjectURL(file),
-            topic:topic
+            topic: topic
           }
         });
       } else {
