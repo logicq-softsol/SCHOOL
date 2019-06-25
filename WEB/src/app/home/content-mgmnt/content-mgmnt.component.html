@@ -99,25 +99,19 @@
           </div>
       <div class="col-md-7">
         <div class="pull-right text-center">
-        <button class="btn period-btn" (click)="downloadReport('1')">Today</button> 
-        <button class="btn period-btn"  (click)="downloadReport('7')">Last 7 days</button>
-        <button class="btn period-btn" (click)="downloadReport('30')">Last 1 month</button>
-        <button class="btn period-btn" (click)="downloadReport('365')">Last 1 year</button>
+        <button class="btn period-btn"  (click)="viewReport(7)">Last 7 days</button>
+        <button class="btn period-btn" (click)="viewReport(30)">Last 1 month</button>
+        <button class="btn period-btn" (click)="downloadReport()"><i class="fa fa-download"></i>Download</button>
         </div>
-          <div class="user-details p-3 text-center tabled" id="sessionTable" #sessionTable>
-            <table>
+          <div class="user-details p-3 text-center tabled">
+            <table id="sessionTable" #sessionTable>
               <thead>
                 <td *ngIf="user.role == 'ADMIN'">User Name</td>
-                <td>
-                 Date
-                </td>
-                <td>
-                    Topic Name
-                    </td>
-                    <td>
-                        Time
-                        </td>
+                <td>Date</td>
+                <td>Topic Name</td>
+                <td>Time</td>
               </thead>
+              <tbody>
               <tr *ngFor="let session of sessionData">
                 <td *ngIf="user.role == 'ADMIN'">
                   {{session.userName}}
@@ -128,6 +122,7 @@
                 </td>
                 <td>{{session.startTime | date:"HH:mm"}} - {{session.endTime | date:"HH:mm"}}</td>
               </tr>
+              </tbody>
             </table>
           </div>
       </div>

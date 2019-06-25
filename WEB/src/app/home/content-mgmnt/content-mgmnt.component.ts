@@ -64,15 +64,7 @@ export class ContentMgmntComponent implements OnInit {
 
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
-      if (this.user.role == 'ADMIN') {
-        this.contentMgmntService.getAllSessions().subscribe((data: any[]) => {
-          this.sessionData = data;
-        });
-      } else {
-        this.contentMgmntService.getUserSession().subscribe((data: any[]) => {
-          this.sessionData = data;
-        });
-      }
+      this.viewReport(7);
     });
 
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
@@ -113,22 +105,30 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
-  downloadReport(interval) {
+  viewReport(interval){
+    if (this.user.role == 'ADMIN') {
+      this.contentMgmntService.getAllSessions(interval).subscribe((data: any[]) => {
+        this.sessionData = data;
+      });
+    } else {
+      this.contentMgmntService.getUserSession(interval).subscribe((data: any[]) => {
+        this.sessionData = data;
+      });
+    }
+  }
+
+  downloadReport() {
     let doc = new jsPDF();
-    let specialElementHandlers = {
-      '#editor': function (element, renderer) {
-        return true;
-      }
-    };
-    let sessionTable = this.sessionTable.nativeElement;
-    doc.fromHTML(sessionTable.innerHTML, 10, 10, {
-      'width': '100%',
-      'elementHandlers': specialElementHandlers
-    });
+    doc.page=1; 
+    doc.autoTable({html: '#sessionTable'});
+    this.footer(doc);
     doc.save('SessionReport.pdf');
   }
 
-
+  footer(doc){ 
+    doc.text(150,285, 'Copyright, 2019  EduSure Rights Reserved,Terms and conditions'); 
+    doc.page ++;
+};
   onSubjectChange(subjectdisplayName) {
     let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == subjectdisplayName);
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {

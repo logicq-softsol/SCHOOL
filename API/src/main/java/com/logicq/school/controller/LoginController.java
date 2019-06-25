@@ -312,20 +312,20 @@ public class LoginController {
 
 	}
 
-	@RequestMapping(value = "/session", method = RequestMethod.GET)
-	public ResponseEntity<List<SessionTracker>> getSessionForTodayForUser() throws Exception {
+	@RequestMapping(value = "/session/{day}", method = RequestMethod.GET)
+	public ResponseEntity<List<SessionTracker>> getSessionForTodayForUser(@PathVariable Long day) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		List<SessionTracker> sessionList = sessionTrackerRepo.findByStartTimeGreaterThanEqualAndUserName(
-				schoolDateUtils.findTodayStartDate(), loginDetail.getUserName());
+				schoolDateUtils.findLastDayDateAccordingToType(day), loginDetail.getUserName());
 		return new ResponseEntity<List<SessionTracker>>(sessionList, HttpStatus.OK);
 
 	}
 
-	@RequestMapping(value = "/sessions", method = RequestMethod.GET)
-	public ResponseEntity<List<SessionTracker>> getAllSessionForToday() throws Exception {
+	@RequestMapping(value = "/sessions/{day}", method = RequestMethod.GET)
+	public ResponseEntity<List<SessionTracker>> getAllSessionForToday(@PathVariable Long day) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		List<SessionTracker> sessionList = sessionTrackerRepo
-				.findByStartTimeGreaterThanEqual(schoolDateUtils.findTodayStartDate());
+				.findByStartTimeGreaterThanEqual(schoolDateUtils.findLastDayDateAccordingToType(day));
 		return new ResponseEntity<List<SessionTracker>>(sessionList, HttpStatus.OK);
 
 	}

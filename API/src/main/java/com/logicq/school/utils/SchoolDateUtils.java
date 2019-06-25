@@ -33,6 +33,13 @@ public class SchoolDateUtils {
 
 	}
 
+	public Date findLastDayDateAccordingToType(long day) {
+		LocalDateTime endDateTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid"))).minusDays(day)
+				.with(LocalTime.MIN);
+		return Date.from(endDateTime.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());
+
+	}
+
 	public Date currentDate() {
 		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid")));
 		return Date.from(currentTime.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());

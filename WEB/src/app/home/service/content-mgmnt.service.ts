@@ -334,10 +334,10 @@ endSession(topic: TopicDetail) {
   let httpOptions = { headers: headers };
   return this.http.put(environment.baseUrl +  `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
 }
-getUserSession() {
-  return this.http.get(environment.baseUrl + 'api/session');
+getUserSession(interval) {
+  return this.http.get(environment.baseUrl + 'api/session/'+interval);
 }
-getAllSessions() {
-  return this.http.get(environment.baseUrl + 'api/sessions');
+getAllSessions(interval) {
+  return this.http.get(environment.baseUrl + 'api/sessions/'+interval);
 }
 }
