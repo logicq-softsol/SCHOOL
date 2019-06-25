@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Inject, ElementRef, ViewChild,SecurityContext  } from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject, ElementRef, ViewChild, SecurityContext } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSnackBar } from "@angular/material";
 import { Router } from '@angular/router';
@@ -115,7 +115,7 @@ export class TopicComponent implements OnInit {
 
   onClassChange(classdisplayName) {
     this.classdisplayName = classdisplayName;
-    if (this.classdisplayName.length>1) {
+    if (this.classdisplayName.length > 1) {
       let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == classdisplayName);
       this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
         this.classSubjectList = data;
@@ -130,7 +130,7 @@ export class TopicComponent implements OnInit {
 
   onSubjectChange(subjectdisplayName) {
     this.subjectdisplayName = subjectdisplayName;
-    if (this.subjectdisplayName.length>1) {
+    if (this.subjectdisplayName.length > 1) {
       let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == subjectdisplayName);
       this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
         this.chapterList = data;
@@ -144,7 +144,7 @@ export class TopicComponent implements OnInit {
 
   onChapterChange(chapterdisplayName) {
     this.chapterdisplayName = chapterdisplayName;
-    if (this.chapterdisplayName.length>1) {
+    if (this.chapterdisplayName.length > 1) {
       let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == chapterdisplayName);
       this.contentMgmntService.changeChapterSetupDetail(chapter);
       this.chapter = chapter;
@@ -165,11 +165,11 @@ export class TopicComponent implements OnInit {
     // this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
     //   this.topicList = tdata;
     // });
-    if (this.chapterdisplayName.length>1) {
+    if (this.chapterdisplayName.length > 1) {
       this.onChapterChange(this.chapterdisplayName);
-    } else if (this.subjectdisplayName.length>1) {
+    } else if (this.subjectdisplayName.length > 1) {
       this.onSubjectChange(this.subjectdisplayName);
-    } else if (this.classdisplayName.length>1) {
+    } else if (this.classdisplayName.length > 1) {
       this.onClassChange(this.classdisplayName);
     }
   }
@@ -223,15 +223,10 @@ export class TopicComponent implements OnInit {
           hasBackdrop: false,
           data: {
             url: URL.createObjectURL(file),
-            topic:topic
+            topic: topic
           }
         });
-        dialogRef.componentInstance.videoEmmiter.subscribe((topic: TopicDetail) => {
-          this.contentMgmntService.endSession(topic).subscribe(data => {
-            console.log('Session ended successfully', data);
-          });
-        });
-    } else {
+      } else {
         this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }
 
@@ -731,23 +726,28 @@ export class ClassSetupDialog {
   templateUrl: 'video-dialog.html',
   styleUrls: ['./topic.scss']
 })
-export class VideoDialog{
-  videoURL:any;
-  topic:TopicDetail=new TopicDetail();
-  videoEmmiter = new EventEmitter();
-  constructor(public dialogRef: MatDialogRef<VideoDialog>,
-     @Inject(MAT_DIALOG_DATA) private data: any,
-     private _sanitizer: DomSanitizer,
-     private contentMgmntService: ContentMgmntService) {
+export class VideoDialog {
+  videoURL: any;
+  topic: TopicDetail = new TopicDetail();
+  constructor(public dialogRef: MatDialogRef<VideoDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private _sanitizer: DomSanitizer, public snackBar: MatSnackBar, private contentMgmntService: ContentMgmntService) {
     this.videoURL = this._sanitizer.bypassSecurityTrustUrl(data.url);
-    this.topic=data.topic;
-    this.contentMgmntService.startSession(this.topic).subscribe(data => {
-      console.log('Session started successfully', data);
+    this.topic = data.topic;
+    this.contentMgmntService.startSession(this.topic).subscribe((message: any) => {
+      this.openErrorSnackBar("Session Started..", "CLOSE");
     });
   }
+
   onNoClick(): void {
-    this.videoEmmiter.emit(this.topic);
     this.dialogRef.close();
+    this.contentMgmntService.endSession(this.topic).subscribe((message: any) => {
+      this.openErrorSnackBar("Session Closed..", "CLOSE");
+    });
+  }
+
+  openErrorSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 10000
+    });
   }
 
 

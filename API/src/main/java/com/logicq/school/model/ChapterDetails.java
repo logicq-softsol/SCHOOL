@@ -38,6 +38,11 @@ public class ChapterDetails extends AttributeDetails {
 
 	@Column(name = "HAS_CHAPTER")
 	private Boolean hasSubChapter;
+	
+	@Column(name = "TIME_REQUIRED")
+	private Long timeRequired=0l;
+	
+	
 
 	public Long getId() {
 		return id;
@@ -94,5 +99,15 @@ public class ChapterDetails extends AttributeDetails {
 	public void setHasSubChapter(Boolean hasSubChapter) {
 		this.hasSubChapter = hasSubChapter;
 	}
+
+	public Long getTimeRequired() {
+		return timeRequired;
+	}
+
+	public void setTimeRequired(Long timeRequired) {
+		this.timeRequired = timeRequired;
+	}
+	
+	
 
 }

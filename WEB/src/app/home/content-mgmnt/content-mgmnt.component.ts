@@ -17,6 +17,7 @@ import { Favorites } from '../../public/model/favorite';
 import { TopicDetail } from '../../public/model/topic-detail';
 import { VideoDialog } from './topics/topic.component';
 
+
 @Component({
   selector: 'app-content-mgmnt',
   templateUrl: './content-mgmnt.component.html',
@@ -47,7 +48,9 @@ export class ContentMgmntComponent implements OnInit {
   subjectdisplayName: any;
   chapterdisplayName: any;
   displayView:any;
-  sessionData;
+  sessionData:any[]=[];
+
+
   constructor(private homeService: HomeService,
     private contentMgmntService: ContentMgmntService,
     private authService: AuthenticationService,
@@ -59,11 +62,14 @@ export class ContentMgmntComponent implements OnInit {
    
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
-      if(this.user.role == 'ADMIN') {
-        this.getAllSessions();
-      }
-      else {
-        this.getSession();
+      if(this.user.role=='ADMIN'){
+        this.contentMgmntService.getAllSessions().subscribe((data:any[])=>{
+            this.sessionData=data;
+        });
+      }else{
+        this.contentMgmntService.getUserSession().subscribe((data:any[])=>{
+          this.sessionData=data;
+      });
       }
     });
 
@@ -103,6 +109,11 @@ export class ContentMgmntComponent implements OnInit {
       this.chapterList = [];
       this.topicList = [];
     });
+  }
+
+  downloadReport(interval){
+   
+ 
   }
 
 
@@ -215,18 +226,6 @@ export class ContentMgmntComponent implements OnInit {
   }
   chapterClear() {
     this.chapterdisplayName = null;
-  }
-  getSession() {
-    this.contentMgmntService.getUserSession().subscribe(data => {
-      console.log('User session data: ', data);
-      this.sessionData = data;
-    });
-  }
-  getAllSessions() {
-    this.contentMgmntService.getAllSessions().subscribe(data => {
-      console.log('All session data: ', data);
-      this.sessionData = data;
-    });
   }
 }
 

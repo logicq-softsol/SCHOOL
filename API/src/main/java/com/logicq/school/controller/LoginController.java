@@ -120,27 +120,31 @@ public class LoginController {
 				&& !StringUtils.isEmpty(licnkey.getParam3()) && !StringUtils.isEmpty(licnkey.getParam4())) {
 			String hostName = schoolSecurityUtils.getSystemHostName();
 			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName).getBody();
-			String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
-					+ licnkey.getParam4();
-			ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
-			String licenseKey = logicQEncryptionAndDecryption.decrypt(licenseDetails.getLicenseKey(),
-					activateKey.getKey());
-			if (inputkey.equals(licenseKey) && !StringUtils.isEmpty(activateKey.getKey())) {
-				ActivationDetails activationDetail = new ActivationDetails();
-				activationDetail.setActivationDate(schoolDateUtils.currentDate());
-				activationDetail.setActivationLicense(licenseKey);
-				activationDetail.setActivationToken(activateKey.getKey());
-				activationDetail.setLastUpdate(schoolDateUtils.currentDate());
-				activationDetail.setProductName(licenseDetails.getProductName());
-				activationDetail.setProductStatus("ACTIVE");
-				activationDetail.setExpiryDate(schoolDateUtils.getExpiryDate(licenseDetails.getValidityDay()));
-				activationDetail.setProductVersion(env.getProperty("schoool.version"));
-				activationDetail.setActivationFor(hostName);
-				activationDetail.setActivationDays(licenseDetails.getValidityDay());
-				productActivationRepo.save(activationDetail);
-				return new ResponseEntity<SucessMessage>(
-						new SucessMessage(schoolDateUtils.currentDate(), "Products Activated Sucessfully", "SUCESS"),
-						HttpStatus.OK);
+			if (null != licenseDetails) {
+				String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
+						+ licnkey.getParam4();
+				ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
+				String licenseKey = logicQEncryptionAndDecryption.decrypt(licenseDetails.getLicenseKey(),
+						activateKey.getKey());
+				if (inputkey.equals(licenseKey) && !StringUtils.isEmpty(activateKey.getKey())) {
+					ActivationDetails activationDetail = new ActivationDetails();
+					activationDetail.setActivationDate(schoolDateUtils.currentDate());
+					activationDetail.setActivationLicense(licenseKey);
+					activationDetail.setActivationToken(activateKey.getKey());
+					activationDetail.setLastUpdate(schoolDateUtils.currentDate());
+					activationDetail.setProductName(licenseDetails.getProductName());
+					activationDetail.setProductStatus("ACTIVE");
+					activationDetail.setExpiryDate(schoolDateUtils.getExpiryDate(licenseDetails.getValidityDay()));
+					activationDetail.setProductVersion(env.getProperty("schoool.version"));
+					activationDetail.setActivationFor(hostName);
+					activationDetail.setActivationDays(licenseDetails.getValidityDay());
+					productActivationRepo.save(activationDetail);
+					return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+							"Products Activated Sucessfully", "SUCESS"), HttpStatus.OK);
+				}
+			} else {
+				return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+						"No License Regisetr For This System", "ERROR"), HttpStatus.OK);
 			}
 		}
 		return new ResponseEntity<SucessMessage>(
@@ -343,54 +347,55 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SucessMessage> updateSessionTracker(@PathVariable Long classId, @PathVariable Long subjectId,
+	public ResponseEntity<SucessMessage> startSessionTracker(@PathVariable Long classId, @PathVariable Long subjectId,
+			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId,
+				topicId);
+		ClassDetails classDetails = classesDetailsRepo.findOne(classId);
+		SubjectDetails subject = subjectDetailsRepo.findByClassIdAndId(classId, subjectId);
+		ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId);
+		if (null != topic && !StringUtils.isEmpty(topic.getPlayFileURL())) {
+			SessionTracker sessionTracker = new SessionTracker();
+			sessionTracker.setClassId(classId);
+			sessionTracker.setSubjectId(subjectId);
+			sessionTracker.setChapterId(chapterId);
+			sessionTracker.setTopicId(topicId);
+			sessionTracker.setClassName(classDetails.getDisplayName());
+			sessionTracker.setSubjectName(subject.getDisplayName());
+			sessionTracker.setChapterName(chapter.getDisplayName());
+			sessionTracker.setTopicName(topic.getDisplayName());
+			sessionTracker.setUserName(loginDetail.getUserName());
+			sessionTracker.setStartTime(schoolDateUtils.currentDate());
+			sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
+			sessionTracker.setEndTime(sessionTracker.getStartTime());
+			sessionTracker.setStatus("PENDING");
+			sessionTrackerRepo.save(sessionTracker);
+			return new ResponseEntity<SucessMessage>(
+					new SucessMessage(schoolDateUtils.currentDate(), "Your Lesson Started Now", "LESSON_PLAY"),
+					HttpStatus.OK);
+
+		}
+		return new ResponseEntity<SucessMessage>(
+				new SucessMessage(schoolDateUtils.currentDate(), "No Video File exist For this Lesson", "LESSON_PLAY"),
+				HttpStatus.BAD_REQUEST);
+	}
+
+	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SucessMessage> endSessionTracker(@PathVariable Long classId, @PathVariable Long subjectId,
 			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		SessionTracker sessnionTracker = sessionTrackerRepo.findByUserNameAndClassIdAndSubjectIdAndChapterIdAndTopicId(
 				loginDetail.getUserName(), classId, subjectId, chapterId, topicId);
 		if (null != sessnionTracker) {
 			sessnionTracker.setEndTime(schoolDateUtils.currentDate());
-			long diff = sessnionTracker.getEndTime().getTime()-sessnionTracker.getStartTime().getTime();
-			int diffmin = (int) (diff / (60 * 1000));
-			if (diffmin >= sessnionTracker.getTopicRequiredTime() - 1) {
-				sessnionTracker.setStatus("COMPLETE");
-			} else {
-				sessnionTracker.setStatus("PENDING");
-			}
 			sessionTrackerRepo.save(sessnionTracker);
 			return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
 					"Your Session Closed For This Lesson", "LESSON_PLAY"), HttpStatus.OK);
-		} else {
-			TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId,
-					chapterId, topicId);
-			ClassDetails classDetails = classesDetailsRepo.findOne(classId);
-			SubjectDetails subject = subjectDetailsRepo.findByClassIdAndId(classId, subjectId);
-			ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId);
-			if (null != topic && !StringUtils.isEmpty(topic.getPlayFileURL())) {
-				SessionTracker sessionTracker = new SessionTracker();
-				sessionTracker.setClassId(classId);
-				sessionTracker.setSubjectId(subjectId);
-				sessionTracker.setChapterId(chapterId);
-				sessionTracker.setTopicId(topicId);
-				sessionTracker.setClassName(classDetails.getDisplayName());
-				sessionTracker.setSubjectName(subject.getDisplayName());
-				sessionTracker.setChapterName(chapter.getDisplayName());
-				sessionTracker.setTopicName(topic.getDisplayName());
-				sessionTracker.setUserName(loginDetail.getUserName());
-				sessionTracker.setStartTime(schoolDateUtils.currentDate());
-				sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
-				sessionTracker.setEndTime(sessionTracker.getStartTime());
-				sessionTracker.setStatus("PENDING");
-				sessionTrackerRepo.save(sessionTracker);
-				return new ResponseEntity<SucessMessage>(
-						new SucessMessage(schoolDateUtils.currentDate(), "Your Lesson Started Now", "LESSON_PLAY"),
-						HttpStatus.OK);
-			}
 		}
 		return new ResponseEntity<SucessMessage>(
-				new SucessMessage(schoolDateUtils.currentDate(), "No Session Exist For this Lesson", "LESSON_PLAY"),
+				new SucessMessage(schoolDateUtils.currentDate(), "No Video File exist For this Lesson", "LESSON_PLAY"),
 				HttpStatus.BAD_REQUEST);
-
 	}
 
 }

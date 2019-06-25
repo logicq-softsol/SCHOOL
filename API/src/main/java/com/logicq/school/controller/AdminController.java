@@ -161,12 +161,13 @@ public class AdminController {
 
 			topicList.stream().distinct().forEach(lin -> {
 				String[] wordList = lin.split("#");
+				System.out.println(lin);
 				ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
 				SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
 						wordList[1].toLowerCase().trim());
 				ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndName(classDetails.getId(),
 						subejctDetail.getId(), wordList[2].toLowerCase().trim());
-
+              
 				TopicDetails topicDetails = new TopicDetails();
 				topicDetails.setClassId(classDetails.getId());
 				topicDetails.setName(wordList[3].toLowerCase().trim());
@@ -177,9 +178,18 @@ public class AdminController {
 				topicDetails.setChapterId(chapter.getId());
 				topicDetails.setPlayFileType("mp4");
 				topicDetails.setPlayFileURL(wordList[4]);
-				topicDetails.setPlayFileTime(5l);
+				if (!StringUtils.isEmpty(wordList[5]))
+					topicDetails.setPlayFileTime(Long.valueOf(wordList[5]));
+				else
+					topicDetails.setPlayFileTime(1l);
+				
 				topicDetails.setType("TOPIC");
 				allTopicDetail.add(topicDetails);
+				chapter.setTimeRequired(Math.addExact(chapter.getTimeRequired(), topicDetails.getPlayFileTime()));
+				subejctDetail.setTimeRequired(
+						Math.addExact(subejctDetail.getTimeRequired(), topicDetails.getPlayFileTime()));
+				chapterDetailsRepo.save(chapter);
+				subjectDetailsRepo.save(subejctDetail);
 
 			});
 			if (!allTopicDetail.isEmpty())

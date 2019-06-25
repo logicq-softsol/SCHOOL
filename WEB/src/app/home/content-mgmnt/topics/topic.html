@@ -77,6 +77,7 @@
             <div class="card-body">
               <p class="card-text">{{topic.description}}</p>
             </div>
+            <li class="borders"><i  class="fa fa-clock" aria-hidden="true"></i> {{topic.playFileTime}} Mins.</li>
             <li><a (click)="markFavorites(topic)"><i class="fa fa-heart like-icon" aria-hidden="true"></i></a></li>
             <li *ngIf="user.role=='ADMIN'" class="borders"><a (click)="editTopicDetail(topic)" style="cursor:pointer">
               <i class="fas fa-pen edit-icon"></i></a></li>
@@ -96,6 +97,9 @@
           <img src="{{chapter.icon}}" class="card-image" alt="">
           <span>{{chapter.description}}</span>
           <p class="video-text"><a (click)="onChapterChange(chapter.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{chapter.displayName}}</a></p>
+          <ul class="class-edit">
+              <li><i class="fa fa-clock" aria-hidden="true"></i> {{chapter.timeRequired}} Mins.</li>
+          </ul>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addTopicDetails(chapter)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
             <li><a (click)="editChapterDetail(chapter)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
@@ -113,6 +117,9 @@
           <img src="{{subject.icon}}" class="card-image" alt="">
           <span>{{subject.description}}</span>
           <p class="video-text"><a (click)="onSubjectChange(subject.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{subject.displayName}}</a></p>
+          <ul class="class-edit">
+              <li class="borders"><i class="fa fa-clock" aria-hidden="true"></i> {{subject.timeRequired}} Mins.</li>
+          </ul>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addChapterDetails(subject)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
             <li><a (click)="editSubjectDetail(subject)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>

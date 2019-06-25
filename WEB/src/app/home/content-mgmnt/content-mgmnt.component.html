@@ -99,23 +99,23 @@
           </div>
       <div class="col-md-7">
         <div class="pull-right text-center">
-        <button class="btn period-btn">Today</button> 
-        <button class="btn period-btn">Last 7 days</button>
-        <button class="btn period-btn">Last 1 month</button>
-        <button class="btn period-btn">Last 1 year</button>
+        <button class="btn period-btn" (click)="downloadReport('1')">Today</button> 
+        <button class="btn period-btn"  (click)="downloadReport('7')">Last 7 days</button>
+        <button class="btn period-btn" (click)="downloadReport('30')">Last 1 month</button>
+        <button class="btn period-btn" (click)="downloadReport('365')">Last 1 year</button>
         </div>
-          <div class="user-details p-3 text-center tabled">
+          <div class="user-details p-3 text-center tabled" id="sessionTable">
             <table>
               <thead>
                 <td *ngIf="user.role == 'ADMIN'">User Name</td>
                 <td>
-                Session Date
+                 Date
                 </td>
                 <td>
                     Topic Name
                     </td>
                     <td>
-                       Status
+                        Time
                         </td>
               </thead>
               <tr *ngFor="let session of sessionData">
@@ -126,23 +126,8 @@
                 <td>{{session.topicName}}
                   <small>{{session.className}}, {{session.subjectName}}, {{session.chapterName}}</small>
                 </td>
-                <td *ngIf="session.status == 'PENDING'" style="color:red">{{session.status}}</td>
-                <td *ngIf="session.status == 'COMPLETE'" style="color:forestgreen">{{session.status}}</td>
+                <td>{{session.startTime | date:"HH:mm"}} - {{session.endTime | date:"HH:mm"}}</td>
               </tr>
-             <!--  <tr>
-                  <td>17 June, 19</td>
-                  <td>Verb
-                    <small>Std. III, English, Grammer</small>
-                  </td>
-                  <td>2 hrs</td>
-                </tr>
-                <tr>
-                    <td>18 June, 19</td>
-                    <td>Summation
-                      <small>Std. III, Math, Alzebra</small>
-                    </td>
-                    <td>5 hrs</td>
-                  </tr> -->
             </table>
           </div>
       </div>

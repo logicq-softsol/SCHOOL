@@ -33,6 +33,9 @@ public class SubjectDetails extends AttributeDetails {
 	@Column(name = "PLAY_FILE_TYPE")
 	private String playFileType;
 
+	@Column(name = "TIME_REQUIRED")
+	private Long timeRequired=0l;
+
 	public Long getId() {
 		return id;
 	}
@@ -71,6 +74,14 @@ public class SubjectDetails extends AttributeDetails {
 
 	public void setPlayFileType(String playFileType) {
 		this.playFileType = playFileType;
+	}
+
+	public Long getTimeRequired() {
+		return timeRequired;
+	}
+
+	public void setTimeRequired(Long timeRequired) {
+		this.timeRequired = timeRequired;
 	}
 
 }

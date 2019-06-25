@@ -332,7 +332,7 @@ endSession(topic: TopicDetail) {
   headers.set('Content-Type', 'application/json');
   headers.set('Access-Control-Allow-Origin', '*');
   let httpOptions = { headers: headers };
-  return this.http.post(environment.baseUrl +  `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
+  return this.http.put(environment.baseUrl +  `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
 }
 getUserSession() {
   return this.http.get(environment.baseUrl + 'api/session');

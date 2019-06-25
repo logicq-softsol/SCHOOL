@@ -21,9 +21,6 @@ public class ClassDetails extends AttributeDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "USER_ID")
-	private Long userId;
-
 	@Column(name = "IMAGE_URL")
 	private String icon;
 
@@ -33,14 +30,6 @@ public class ClassDetails extends AttributeDetails {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public String getIcon() {
