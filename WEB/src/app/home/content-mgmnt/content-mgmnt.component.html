@@ -69,7 +69,7 @@
                     <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
                      [(ngModel)]="classdisplayName"
                       (change)="onClassChange(classdisplayName)" />
-                      <i *ngIf="classdisplayName != null" class="fas fa-times search-icon" (click)="classClear()"></i>
+                      <i *ngIf="classdisplayName != null" class="fas fa-times p-close-icon" (click)="classClear()"></i>
                     <datalist id="classList">
                       <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
                           | uppercase }}</strong></option>
@@ -78,7 +78,7 @@
                   <div class="form-group mb-4">
                     <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
                       [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
-                      <i *ngIf="subjectdisplayName != null" class="fas fa-times search-icon" (click)="subjectClear()"></i>
+                      <i *ngIf="subjectdisplayName != null" class="fas fa-times p-close-icon" (click)="subjectClear()"></i>
                     <datalist id="classSubjectList">
                       <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
                           | uppercase }}</strong></option>
@@ -87,7 +87,7 @@
                   <div class="form-group mb-4">
                     <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
                       [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
-                      <i *ngIf="chapterdisplayName != null" class="fas fa-times search-icon" (click)="chapterClear()"></i>
+                      <i *ngIf="chapterdisplayName != null" class="fas fa-times p-close-icon" (click)="chapterClear()"></i>
                     <datalist id="chapterList">
                       <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
                           | uppercase }}</strong></option>
@@ -97,13 +97,17 @@
                 </div>
               </div>
           </div>
-      <!-- <div class="col-md-4">
-       
-      </div> -->
       <div class="col-md-7">
+        <div class="pull-right text-center">
+        <button class="btn period-btn">Today</button> 
+        <button class="btn period-btn">Last 7 days</button>
+        <button class="btn period-btn">Last 1 month</button>
+        <button class="btn period-btn">Last 1 year</button>
+        </div>
           <div class="user-details p-3 text-center tabled">
             <table>
               <thead>
+                <td *ngIf="user.role == 'ADMIN'">User Name</td>
                 <td>
                 Session Date
                 </td>
@@ -111,17 +115,21 @@
                     Topic Name
                     </td>
                     <td>
-                       Time
+                       Status
                         </td>
               </thead>
-              <tr>
-                <td>17 June, 19</td>
-                <td>Human Skeleton
-                  <small>Std. III, Biology, Human body</small>
+              <tr *ngFor="let session of sessionData">
+                <td *ngIf="user.role == 'ADMIN'">
+                  {{session.userName}}
                 </td>
-                <td>3 hrs</td>
+                <td>{{session.startTime | date: 'dd MMM,yy'}}</td>
+                <td>{{session.topicName}}
+                  <small>{{session.className}}, {{session.subjectName}}, {{session.chapterName}}</small>
+                </td>
+                <td *ngIf="session.status == 'PENDING'" style="color:red">{{session.status}}</td>
+                <td *ngIf="session.status == 'COMPLETE'" style="color:forestgreen">{{session.status}}</td>
               </tr>
-              <tr>
+             <!--  <tr>
                   <td>17 June, 19</td>
                   <td>Verb
                     <small>Std. III, English, Grammer</small>
@@ -134,7 +142,7 @@
                       <small>Std. III, Math, Alzebra</small>
                     </td>
                     <td>5 hrs</td>
-                  </tr>
+                  </tr> -->
             </table>
           </div>
       </div>

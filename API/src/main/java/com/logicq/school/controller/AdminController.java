@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.env.Environment;
@@ -176,7 +177,7 @@ public class AdminController {
 				topicDetails.setChapterId(chapter.getId());
 				topicDetails.setPlayFileType("mp4");
 				topicDetails.setPlayFileURL(wordList[4]);
-				topicDetails.setPlayFileTime(Long.valueOf(wordList[5]));
+				topicDetails.setPlayFileTime(5l);
 				topicDetails.setType("TOPIC");
 				allTopicDetail.add(topicDetails);
 

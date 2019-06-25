@@ -1,4 +1,9 @@
-﻿STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-1).lq
+﻿Nursery#Moral Stories in English#Moral Stories#BIRBAL STORY#F:\EDUSURE\CONTENT\Nursery\Moral Stories in English\BIRBAL STORY.lq
+Nursery#Moral Stories in English#Moral Stories#BIRBAL STORY#F:\EDUSURE\CONTENT\Nursery\Moral Stories in English\BIRBAL STORY.lq
+Nursery#Moral Stories in English#Moral Stories#The Gift Of Honesty#F:\EDUSURE\CONTENT\Nursery\Moral Stories in English\The Gift Of Honesty.lq
+Nursery#Moral Stories in English#Moral Stories#The Wise Mother#F:\EDUSURE\CONTENT\Nursery\Moral Stories in English\The Wise Mother.lq
+Nursery#Moral Stories in English#Moral Stories#Ugly Spinner#F:\EDUSURE\CONTENT\Nursery\Moral Stories in English\Ugly Spinner.lq
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-1).lq
 STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-1).lq
 STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-2).lq
 STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-3)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-3).lq
@@ -59,6 +64,66 @@ STD-I#Mathematics#Numbers and number names#Numbers and number names(Part-1)#F:\E
 STD-I#Mathematics#Numbers and number names#Numbers and number names(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Numbersandnumbernames\Numbers and number names(Part-2).lq
 STD-I#Mathematics#Ordinal Numbers#Ordinal Numbers(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\OrdinalNumbers\Ordinal Numbers(Part-1).lq
 STD-I#Mathematics#Subtraction#Subtraction#F:\EDUSURE\CONTENT\STD-I\Mathematics\Subtraction\Subtraction.lq
+STD-I#Computer#The Computer#A MACHINE- COMPUTE#F:\EDUSURE\CONTENT\STD-I\Computer\The Computer\A MACHINE- COMPUTE.lq
+STD-I#Computer#Do’s and Don’ts of using a Computer#Do’s and Don’ts of using a Computer#F:\EDUSURE\CONTENT\STD-I\Computer\Do’s and Don’ts of using a Computer\Do’s and Don’ts of using a Computer.lq
+STD-I#Computer#Parts Of Computer#Parts Of Computer#F:\EDUSURE\CONTENT\STD-I\Computer\Parts Of Computer\Parts Of Computer.lq
+STD-I#Computer#The Keyboard#The Keyboard and  its Keys#F:\EDUSURE\CONTENT\STD-I\Computer\The Keyboard\The Keyboard and  its Keys.lq
+STD-I#Computer#The Mouse#Computer Mouse#F:\EDUSURE\CONTENT\STD-I\Computer\The Mouse\Computer Mouse.lq
+STD-I#Computer#The Storage Device#Storage Devices#F:\EDUSURE\CONTENT\STD-I\Computer\The Storage Device\Storage Devices.lq
+STD-I#English#Action Word#Action Or Doing Words#F:\EDUSURE\CONTENT\STD-I\English\Action Word\Action Or Doing Words.lq
+STD-I#English#Adjective#Describing Words Adjectives#F:\EDUSURE\CONTENT\STD-I\English\Adjective\Describing Words Adjectives.lq
+STD-I#English#Article#Articles A, An And The#F:\EDUSURE\CONTENT\STD-I\English\Article\Articles A, An And The.lq
+STD-I#English#Naming word#Naming Words#F:\EDUSURE\CONTENT\STD-I\English\Naming word\Naming Words.lq
+STD-I#English#Pronoun#Pronouns#F:\EDUSURE\CONTENT\STD-I\English\Pronoun\Pronouns.lq
+STD-I#English#Use of Am, Is, Are#Use Of Am, Is, Are With Pronouns#F:\EDUSURE\CONTENT\STD-I\English\Use of Am, Is, Are\Use Of Am, Is, Are With Pronouns.lq
+STD-I#English#Use of Has and Have#Understanding The Use Of Has And Have#F:\EDUSURE\CONTENT\STD-I\English\Use of Has and Have\Understanding The Use Of Has And Have.lq
+STD-I#English#Use of This - These, That - Those#Using This - These - That - Those#F:\EDUSURE\CONTENT\STD-I\English\Use of This - These, That - Those\Using This - These - That - Those.lq
+STD-I#Environmental Science#Good Habits#Good Habits#F:\EDUSURE\CONTENT\STD-I\Environmental Science\Good Habits\Good Habits.lq
+STD-I#Environmental Science#My Family and Neighbourhood#My Family and Neighbourhood#F:\EDUSURE\CONTENT\STD-I\Environmental Science\My Family and Neighbourhood\My Family and Neighbourhood.lq
+STD-I#Environmental Science#Our clothes#Our Clothes#F:\EDUSURE\CONTENT\STD-I\Environmental Science\Our clothes\Our Clothes.lq
+STD-I#Environmental Science#Trafic Light#Traffic Lights#F:\EDUSURE\CONTENT\STD-I\Environmental Science\Trafic Light\Traffic Lights.lq
+STD-II#Computer#Basic of Computer#Computer Basics and use of computer#F:\EDUSURE\CONTENT\STD-II\Computer\Basic of Computer\Computer Basics and use of computer.lq
+STD-II#Computer#Do’s and Don’ts of using a Computer#Do’s and Don’ts of using a Computer#F:\EDUSURE\CONTENT\STD-II\Computer\Do’s and Don’ts of using a Computer\Do’s and Don’ts of using a Computer.lq
+STD-II#Computer#Parts Of Computer#Parts Of Computer#F:\EDUSURE\CONTENT\STD-II\Computer\Parts Of Computer\Parts Of Computer.lq
+STD-II#Computer#The Keyboard#The Keyboard and  its Keys#F:\EDUSURE\CONTENT\STD-II\Computer\The Keyboard\The Keyboard and  its Keys.lq
+STD-II#Computer#The Mouse#Computer Mouse#F:\EDUSURE\CONTENT\STD-II\Computer\The Mouse\Computer Mouse.lq
+STD-II#English#Action word#Action Or Doing Words#F:\EDUSURE\CONTENT\STD-II\English\Action word\Action Or Doing Words.lq
+STD-II#English#Adjective#Describing Words Adjectives#F:\EDUSURE\CONTENT\STD-II\English\Adjective\Describing Words Adjectives.lq
+STD-II#English#Adjective#Possessive Adjectives - My , His , Her, Its , Our, Their , Your#F:\EDUSURE\CONTENT\STD-II\English\Adjective\Possessive Adjectives - My , His , Her, Its , Our, Their , Your.lq
+STD-II#English#Article#Articles A, An And The#F:\EDUSURE\CONTENT\STD-II\English\Article\Articles A, An And The.lq
+STD-II#English#Degree of Comparison#Degrees Of Comparison#F:\EDUSURE\CONTENT\STD-II\English\Degree of Comparison\Degrees Of Comparison.lq
+STD-II#English#Naming Word#Naming Words#F:\EDUSURE\CONTENT\STD-II\English\Naming Word\Naming Words.lq
+STD-II#English#Pronoun#Pronouns#F:\EDUSURE\CONTENT\STD-II\English\Pronoun\Pronouns.lq
+STD-II#English#Pronoun#Use Of Me, Us , You , Him ,her , It , Them#F:\EDUSURE\CONTENT\STD-II\English\Pronoun\Use Of Me, Us , You , Him ,her , It , Them.lq
+STD-II#English#Use of Am, Is, Are#Use Of Am, Is, Are With Pronouns#F:\EDUSURE\CONTENT\STD-II\English\Use of Am, Is, Are\Use Of Am, Is, Are With Pronouns.lq
+STD-II#English#Use of Have and Has#Understanding The Use Of Has And Have#F:\EDUSURE\CONTENT\STD-II\English\Use of Have and Has\Understanding The Use Of Has And Have.lq
+STD-II#English#Use of This - These, That - Those#Using This - These - That - Those#F:\EDUSURE\CONTENT\STD-II\English\Use of This - These, That - Those\Using This - These - That - Those.lq
+STD-II#Mathemetics#Addition#Addition game#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Addition\Addition game.lq
+STD-II#Mathemetics#Addition#Addition(Part-1)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Addition\Addition(Part-1).lq
+STD-II#Mathemetics#Addition#Addition(Part-2)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Addition\Addition(Part-2).lq
+STD-II#Mathemetics#Building number#Building number upto 200#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Building number\Building number upto 200.lq
+STD-II#Mathemetics#Comparison of Numbers#Comparison of Numbers(Part-1)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Comparison of Numbers\Comparison of Numbers(Part-1).lq
+STD-II#Mathemetics#Comparison of Numbers#Comparison of Numbers(Part-2)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Comparison of Numbers\Comparison of Numbers(Part-2).lq
+STD-II#Mathemetics#Comparison of Numbers#Comparison of Numbers(Part-3)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Comparison of Numbers\Comparison of Numbers(Part-3).lq
+STD-II#Mathemetics#Division#Division(Part-1)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Division\Division(Part-1).lq
+STD-II#Mathemetics#Division#Division(Part-2)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Division\Division(Part-2).lq
+STD-II#Mathemetics#Division#Word Problems Involving Division#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Division\Word Problems Involving Division.lq
+STD-II#Mathemetics#Fractions#Fraction(Part-1)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Fractions\Fraction(Part-1).lq
+STD-II#Mathemetics#Fractions#Fraction(Part-2)#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Fractions\Fraction(Part-2).lq
+STD-II#Mathemetics#Geometry-Shapes#basic geometric shapes#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Geometry-Shapes\basic geometric shapes.lq
+STD-II#Mathemetics#Geometry-Shapes#Geometric Shapes#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Geometry-Shapes\Geometric Shapes .lq
+STD-II#Mathemetics#Metric measures#Different Units of Weight#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Metric measures\Different Units of Weight.lq
+STD-II#Mathemetics#Metric measures#Measurement#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Metric measures\Measurement.lq
+STD-II#Mathemetics#Metric measures#Metric Measures#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Metric measures\Metric Measures.lq
+STD-II#Mathemetics#Multiplication#multiplication table of number 4#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Multiplication\multiplication table of number 4.lq
+STD-II#Mathemetics#Multiplication#Multiplication#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Multiplication\Multiplication.lq
+STD-II#Mathemetics#Pattern#Pattern#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Pattern\Pattern.lq
+STD-II#Mathemetics#Subtraction#Addition and Subtraction#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Subtraction\Addition and Subtraction.lq
+STD-II#Mathemetics#Subtraction#Learn Subtraction#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Subtraction\Learn Subtraction.lq
+STD-II#Mathemetics#Subtraction#Subtracting Two Digit Numbers#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Subtraction\Subtracting Two Digit Numbers.lq
+STD-II#Mathemetics#Time#Concept Of Time#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Time\Concept Of Time.lq
+STD-II#Mathemetics#Time#Telling Time to the Half Hour#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Time\Telling Time to the Half Hour.lq
+STD-II#Mathemetics#Time#Time#F:\EDUSURE\CONTENT\STD-II\Mathemetics\Time\Time.lq
 STD-II#Environmental Science#Air#Air#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Air\Air.lq
 STD-II#Environmental Science#Air#Air Part 2#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Air\Air Part 2.lq
 STD-II#Environmental Science#Birds#Body Parts of Birds#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Birds\Body Parts of Birds.lq
@@ -96,7 +161,7 @@ STD-II#Environmental Science#Seasons#SEASONS Part-1#F:\EDUSURE\CONTENT\STD-II\En
 STD-II#Environmental Science#Seasons#SEASONS Part-2#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Seasons\SEASONS Part-2.lq
 STD-II#Environmental Science#Soil, Rock and Minerals#Soil, Rock and Minerals Part-1#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Soil, Rock and Minerals\Soil, Rock and Minerals Part-1.lq
 STD-II#Environmental Science#Soil, Rock and Minerals#Soil, Rock and Minerals Part-2#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Soil, Rock and Minerals\Soil, Rock and Minerals Part-2.lq
-STD-II#Environmental Science#The Animal Kingdom#The Animal Kingdom Part-1#F:\EDUSURE\CONTENT\STD-II\Environmental Science\The Animal Kingdom\The Animal Kingdom Part-1.lq
+STD-II#Environmental Science#The Animal Kingdom#The Animal Kingdom#F:\EDUSURE\CONTENT\STD-II\Environmental Science\The Animal Kingdom\The Animal Kingdom Part-1.lq
 STD-II#Environmental Science#The World of Plants#The World of Plants#F:\EDUSURE\CONTENT\STD-II\Environmental Science\The World of Plants\The World of Plants.lq
 STD-II#Environmental Science#Time#Concept of Time Part-1#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Time\Concept of Time Part-1.lq
 STD-II#Environmental Science#Time#Concept of Time Part-2#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Time\Concept of Time Part-2.lq
@@ -110,7 +175,6 @@ STD-II#Environmental Science#Wheel#Story of the Wheels Part-1#F:\EDUSURE\CONTENT
 STD-II#Environmental Science#Wheel#Story of the Wheels Part-2#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Wheel\Story of the Wheels Part-2.lq
 STD-II#Environmental Science#Wheel#Story of the Wheels Part-3#F:\EDUSURE\CONTENT\STD-II\Environmental Science\Wheel\Story of the Wheels Part-3.lq
 STD-III#English#Adjective#Adjective#F:\EDUSURE\CONTENT\STD-III\English\Adjective\Adjective.lq
-STD-III#English#Adjective#Common Adjectives#F:\EDUSURE\CONTENT\STD-III\English\Adjective\Common Adjectives.lq
 STD-III#English#Adjective#Comparetive Adjective#F:\EDUSURE\CONTENT\STD-III\English\Adjective\Comparetive Adjective.lq
 STD-III#English#Adjective#The Adjective#F:\EDUSURE\CONTENT\STD-III\English\Adjective\The Adjective.lq
 STD-III#English#Adverb#Adverbs and its type#F:\EDUSURE\CONTENT\STD-III\English\Adverb\Adverbs and its type.lq
@@ -127,7 +191,6 @@ STD-III#English#Noun#Noun(Part-1)#F:\EDUSURE\CONTENT\STD-III\English\Noun\Noun(P
 STD-III#English#Noun#Noun(Part-2)#F:\EDUSURE\CONTENT\STD-III\English\Noun\Noun(Part-2).lq
 STD-III#English#Noun#Noun(Part-3)#F:\EDUSURE\CONTENT\STD-III\English\Noun\Noun(Part-3).lq
 STD-III#English#Phrasal verb#Phrasal verb(Part-1)#F:\EDUSURE\CONTENT\STD-III\English\Phrasalverb\Phrasal verb(Part-1).lq
-STD-III#English#Phrasal verb#Phrasal verb(Part-2)#F:\EDUSURE\CONTENT\STD-III\English\Phrasalverb\Phrasal verb(Part-2).lq
 STD-III#English#Poem-Bird Talk#The Bird Talk(Version-1)#F:\EDUSURE\CONTENT\STD-III\English\Poem-Bird Talk\The Bird Talk(Version-1).lq
 STD-III#English#Poem-Bird Talk#The Bird Talk(Version-2)#F:\EDUSURE\CONTENT\STD-III\English\Poem-Bird Talk\The Bird Talk(Version-2).lq
 STD-III#English#Poem-Don't tell#Don't Tell#F:\EDUSURE\CONTENT\STD-III\English\Poem-Don't tell\Don't Tell.lq
@@ -146,7 +209,6 @@ STD-III#English#Punctuaion#Punctuaion(Part-1)#F:\EDUSURE\CONTENT\STD-III\English
 STD-III#English#Punctuaion#Punctuaion(Part-2)#F:\EDUSURE\CONTENT\STD-III\English\Punctuaion\Punctuaion(Part-2).lq
 STD-III#English#Punctuaion#Punctuaion(Part-3)#F:\EDUSURE\CONTENT\STD-III\English\Punctuaion\Punctuaion(Part-3).lq
 STD-III#English#Rhyming word#Rhyming Words(Part-1)#F:\EDUSURE\CONTENT\STD-III\English\Rhyming word\Rhyming Words(Part-1).lq
-STD-III#English#Rhyming word#Rhyming Words(Part-2)#F:\EDUSURE\CONTENT\STD-III\English\Rhyming word\Rhyming Words(Part-2).lq
 STD-III#English#Sentence#Sentence#F:\EDUSURE\CONTENT\STD-III\English\Sentence\Sentence.lq
 STD-III#English#Story-He Is My Brother#New Baby Brother#F:\EDUSURE\CONTENT\STD-III\English\Story-He Is My Brother\New Baby Brother.lq
 STD-III#English#Story-The Enormous Turnip#The Enormous Turnip(Version-1)#F:\EDUSURE\CONTENT\STD-III\English\Story-The Enormous Turnip\The Enormous Turnip(Version-1).lq
@@ -234,12 +296,62 @@ STD-III#Environmental Science#Solar system#Our Solar System(Part-3)#F:\EDUSURE\C
 STD-III#Environmental Science#Solar system#Our Solar System(Part-4)#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Solarsystem\Our Solar System(Part-4).lq
 STD-III#Environmental Science#Sound and light#Sounds#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Soundandlight\Sounds.lq
 STD-III#Environmental Science#Sound and light#Lights(Part-1)#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Soundandlight\Lights(Part-1).lq
-STD-III#Environmental Science#Soun dand light#Lights(Part-2)#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Soundandlight\Lights(Part-2).lq
+STD-III#Environmental Science#Sound and light#Lights(Part-2)#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Soundandlight\Lights(Part-2).lq
 STD-III#Environmental Science#States matter#States Of Matter#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Statesmatter\States Of Matter.lq
 STD-III#Environmental Science#Water#Rainwater Harvesting#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Water\Rainwater Harvesting.lq
 STD-III#Environmental Science#Water#Water(Part-1)#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Water\Water(Part-1).lq
 STD-III#Environmental Science#Water#Water(Part-2)#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Water\Water(Part-2).lq
 STD-III#Environmental Science#Water cycle#Water Cycle#F:\EDUSURE\CONTENT\STD-III\EnvironmentalScience\Watercycle\Water Cycle.lq
+STD-III#Computer#The Computer#Computer Devices#F:\EDUSURE\CONTENT\STD-III\Computer\The Computer\Computer Devices.lq
+STD-III#Computer#Input Device#Input Devices#F:\EDUSURE\CONTENT\STD-III\Computer\Input Device\Input Devices.lq
+STD-III#Computer#Uses of Computer#Uses of Computer#F:\EDUSURE\CONTENT\STD-III\Computer\Uses of Computer\Uses of Computer.lq
+STD-III#Computer#The Operating System#The Operating System- MS Windows 10#F:\EDUSURE\CONTENT\STD-III\Computer\The Operating System\The Operating System- MS Windows 10.lq
+STD-III#General Science#Birds#More About Birds#F:\EDUSURE\CONTENT\STD-III\General Science\Birds\More About Birds.lq
+STD-III#General Science#Heavenly Bodies#Heavenly Bodies#F:\EDUSURE\CONTENT\STD-III\General Science\Heavenly Bodies\Heavenly Bodies.lq
+STD-III#General Science#Living And Non-living Things#Characteristics Of Living And Non-living Things#F:\EDUSURE\CONTENT\STD-III\General Science\Living And Non-living Things\Characteristics Of Living And Non-living Things.lq
+STD-III#General Science#Plant And Their Function#Plant and Their Function#F:\EDUSURE\CONTENT\STD-III\General Science\Plant And Their Function\Plant and Their Function.lq
+STD-III#General Science#Safty And First Aid#Safty and First Aid#F:\EDUSURE\CONTENT\STD-III\General Science\Safty And First Aid\Safty and First Aid.lq
+STD-III#General Science#Soil Formation#Soil Formation#F:\EDUSURE\CONTENT\STD-III\General Science\Soil Formation\Soil Formation.lq
+STD-III#Mathematics#Addition#Addition#F:\EDUSURE\CONTENT\STD-III\Mathematics\Addition\Addition.lq
+STD-III#Mathematics#Division#Division#F:\EDUSURE\CONTENT\STD-III\Mathematics\Division\Division.lq
+STD-III#Mathematics#Metric System#Metric System#F:\EDUSURE\CONTENT\STD-III\Mathematics\Metric System\Metric System.lq
+STD-III#Mathematics#Money#Money#F:\EDUSURE\CONTENT\STD-III\Mathematics\Money\Money.lq
+STD-III#Mathematics#Multiplication#Multiplication#F:\EDUSURE\CONTENT\STD-III\Mathematics\Multiplication\Multiplication.lq
+STD-III#Mathematics#Pattern#Patterns#F:\EDUSURE\CONTENT\STD-III\Mathematics\Pattern\Patterns.lq
+STD-III#Mathematics#Subtraction#Subtraction#F:\EDUSURE\CONTENT\STD-III\Mathematics\Subtraction\Subtraction.lq
+STD-III#Social Study#Foodgrains and Pulses#Foodgrains and Pulses#F:\EDUSURE\CONTENT\STD-III\Social Study\Foodgrains and Pulses\Foodgrains and Pulses.lq
+STD-III#Social Study#Sound, Light and Force#Sound, Light and Force#F:\EDUSURE\CONTENT\STD-III\Social Study\Sound, Light and Force\Sound, Light and Force.lq
+STD-III#Social Study#The Earth In The Universe#The Earth In The Universe#F:\EDUSURE\CONTENT\STD-III\Social Study\The Earth In The Universe\The Earth In The Universe.lq
+STD-III#Social Study#Our Country - India#Physical Features and Political Divisions#F:\EDUSURE\CONTENT\STD-III\Social Study\Our Country - India\Physical Features and Political Divisions.lq
+STD-III#Social Study#Delhi#DELHI#F:\EDUSURE\CONTENT\STD-III\Social Study\Delhi\DELHI.lq
+STD-III#Social Study#Mumbai#MUMBAI#F:\EDUSURE\CONTENT\STD-III\Social Study\Mumbai\MUMBAI.lq
+STD-III#Social Study#Our Occupations#Our Occupations#F:\EDUSURE\CONTENT\STD-III\Social Study\Our Occupations\Our Occupations.lq
+STD-IV#Computer#Storage and Memory Device#Storage And Memory Device#F:\EDUSURE\CONTENT\STD-IV\Computer\Storage and Memory Device\Storage And Memory Device.lq
+STD-IV#Computer#Internet Services#Internet Services#F:\EDUSURE\CONTENT\STD-IV\Computer\Internet Services\Internet Services.lq
+STD-IV#English#Continuous Form Of Verb#Continuous Form Of Verbs- (verb Ing)#F:\EDUSURE\CONTENT\STD-IV\English\Continuous Form Of Verb\Continuous Form Of Verbs- (verb Ing).lq
+STD-IV#English#Degrees Of Comparison#Degrees Of Comparison#F:\EDUSURE\CONTENT\STD-IV\English\Degrees Of Comparison\Degrees Of Comparison.lq
+STD-IV#English#Noun#Compound Nouns#F:\EDUSURE\CONTENT\STD-IV\English\Noun\Compound Nouns.lq
+STD-IV#English#Noun#Countable And Uncountable Nouns#F:\EDUSURE\CONTENT\STD-IV\English\Noun\Countable And Uncountable Nouns.lq
+STD-IV#English#Phrase#Have Phrases#F:\EDUSURE\CONTENT\STD-IV\English\Phrase\Have Phrases.lq
+STD-IV#English#Possessive Adjectives and Pronouns#Possessive Adjectives And Pronouns#F:\EDUSURE\CONTENT\STD-IV\English\Possessive Adjectives and Pronouns\Possessive Adjectives And Pronouns.lq
+STD-IV#English#Preposition#Preposition - Words Used For Location, Time Or Direction#F:\EDUSURE\CONTENT\STD-IV\English\Preposition\Preposition - Words Used For Location, Time Or Direction.lq
+STD-IV#English#Pronoun#Personal Pronouns#F:\EDUSURE\CONTENT\STD-IV\English\Pronoun\Personal Pronouns.lq
+STD-IV#English#Subject - Verb Agreement#Subject - Verb Agreement#F:\EDUSURE\CONTENT\STD-IV\English\Subject - Verb Agreement\Subject - Verb Agreement.lq
+STD-IV#English#Tense#When To Use The Present Perfect Tense#F:\EDUSURE\CONTENT\STD-IV\English\Tense\When To Use The Present Perfect Tense.lq
+STD-IV#English#The Adjective#The Adjective#F:\EDUSURE\CONTENT\STD-IV\English\The Adjective\The Adjective.lq
+STD-IV#Mathematics#Addition#Addition#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Addition\Addition.lq
+STD-IV#Mathematics#Area And Perimeter#Introduction To Mensuration#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Area And Perimeter\Introduction To Mensuration.lq
+STD-IV#Mathematics#Data Handling#Data Handling#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Data Handling\Data Handling.lq
+STD-IV#Mathematics#Decimals Of Fraction#Decimals Of Fraction#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Decimals Of Fraction\Decimals Of Fraction.lq
+STD-IV#Mathematics#Division#Division#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Division\Division.lq
+STD-IV#Mathematics#Factor#Factors#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Factor\Factors.lq
+STD-IV#Mathematics#Fraction#Fractions#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Fraction\Fractions.lq
+STD-IV#Mathematics#Large Numbers#Large Numbers#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Large Numbers\Large Numbers.lq
+STD-IV#Mathematics#Metric System#Metric System#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Metric System\Metric System.lq
+STD-IV#Mathematics#Multiplication#Multiplication#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Multiplication\Multiplication.lq
+STD-IV#Mathematics#Roman Numerals#Roman Numerals#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Roman Numerals\Roman Numerals.lq
+STD-IV#Mathematics#Symmetry#Symmetry#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Symmetry\Symmetry.lq
+STD-IV#Mathematics#Time#Time#F:\EDUSURE\CONTENT\STD-IV\Mathematics\Time\Time.lq
 STD-IV#Science#Adaptation in Animals#Adaptation In Animals#F:\EDUSURE\CONTENT\STD-IV\Science\AdaptationinAnimals\Adaptation In Animals.lq
 STD-IV#Science#Adaptation in Plants#Adaptations In Plants#F:\EDUSURE\CONTENT\STD-IV\Science\AdaptationsinPlants\Adaptations In Plants.lq
 STD-IV#Science#Air & Water#Impurity In Water#F:\EDUSURE\CONTENT\STD-IV\Science\Air&Water\Impurity In Water.lq
@@ -341,11 +453,18 @@ STD-IV#Social Science#The story of early man#The Story Of Early Man#F:\EDUSURE\C
 STD-IV#Social Science#The Western desert#The Western Desert#F:\EDUSURE\CONTENT\STD-IV\SocialScience\TheWesterndesert\The Western Desert.lq
 STD-IV#Social Science#Kabaddi rules#Kabaddi Rules  The Basics#F:\EDUSURE\CONTENT\STD-IV\SocialScience\Tradtinalsportofkabadi\kabaddi rules\Kabaddi Rules  The Basics.lq
 STD-IV#Social Science#Weather and Air#Air, Water & Weather#F:\EDUSURE\CONTENT\STD-IV\SocialScience\WeatherandAir\Air, Water & Weather.lq
+STD-V#Computer#Evolution Of Computer#Evolution Of Computers#F:\EDUSURE\CONTENT\STD-V\Computer\Evolution Of Computer\Evolution Of Computers.lq
+STD-V#Computer#Hardware And Software#Hardware And Software#F:\EDUSURE\CONTENT\STD-V\Computer\Hardware And Software\Hardware And Software.lq
+STD-V#Computer#Internet Services#Internet Services#F:\EDUSURE\CONTENT\STD-V\Computer\Internet Services\Internet Services.lq
+STD-V#Computer#Scratch Programming Concepts#Scratch Programming Concepts#F:\EDUSURE\CONTENT\STD-V\Computer\Scratch Programming Concepts\Scratch Programming Concepts.lq
 STD-V#English#Adjectives#Describing Words Adjectives#F:\EDUSURE\CONTENT\STD-V\English\Adjectives\Describing Words Adjectives.lq
+STD-V#English#Adjectives#Comparison Of Adjectives#F:\EDUSURE\CONTENT\STD-V\English\Adjectives\Comparison Of Adjectives.lq
 STD-V#English#Adverbs#Adverbs#F:\EDUSURE\CONTENT\STD-V\English\Adverbs\Adverbs.lq
+STD-V#English#Adverbs#What is Adverb#F:\EDUSURE\CONTENT\STD-V\English\Adverbs\What is Adverb.lq
 STD-V#English#Adverbs#What Are Adverbs   Type Of Adverbs   Four Types Of Adverbs#F:\EDUSURE\CONTENT\STD-V\English\Adverbs\What Are Adverbs   Type Of Adverbs   Four Types Of Adverbs.lq
 STD-V#English#Alliteration#Alliteration In English Grammar#F:\EDUSURE\CONTENT\STD-V\English\Alliteration\Alliteration In English Grammar.lq
 STD-V#English#Antonyms#Antonyms Opposite Words#F:\EDUSURE\CONTENT\STD-V\English\Antonyms\Antonyms Opposite Words.lq
+STD-V#English#Article#Articles#F:\EDUSURE\CONTENT\STD-V\English\Article\Articles.lq
 STD-V#English#Clauses#Types Of Clauses   Two Main Types   Three Dependent Types   What Is Clause#F:\EDUSURE\CONTENT\STD-V\English\Clauses\Types Of Clauses   Two Main Types   Three Dependent Types   What Is Clause.lq
 STD-V#English#Clauses#Understand Clauses - Main-Subordinate, Dependent-Independent Clause#F:\EDUSURE\CONTENT\STD-V\English\Clauses\Understand Clauses - Main-Subordinate, Dependent-Independent Clause.lq
 STD-V#English#Clauses#Adverb Clause#F:\EDUSURE\CONTENT\STD-V\English\Clauses\Adverb Clause.lq
@@ -366,6 +485,7 @@ STD-V#English#Homophones#Homophone(Part-1)#F:\EDUSURE\CONTENT\STD-V\English\Homo
 STD-V#English#Homophones#Homophone(Part-2)#F:\EDUSURE\CONTENT\STD-V\English\Homophones\Homophone(Part-2).lq
 STD-V#English#Homophones#Nessy Spelling Strategy Homophones#F:\EDUSURE\CONTENT\STD-V\English\Homophones\Nessy Spelling Strategy Homophones.lq
 STD-V#English#Infinitives#Gerund And Infinitive#F:\EDUSURE\CONTENT\STD-V\English\Infinitives\Gerund And Infinitive.lq
+STD-V#English#Noun#Gender Of Nouns#F:\EDUSURE\CONTENT\STD-V\English\Noun\Gender Of Nouns.lq
 STD-V#English#Notice Writing#Notice Writing#F:\EDUSURE\CONTENT\STD-V\English\NoticeWriting\Notice Writing.lq
 STD-V#English#Poem-Class Discussion#Class Discussion#F:\EDUSURE\CONTENT\STD-V\English\Poem-Class Discussion.lq
 STD-V#English#Poem-Crying#Poem - Crying#F:\EDUSURE\CONTENT\STD-V\English\Poem-Crying\Poem - Crying.lq
@@ -378,6 +498,7 @@ STD-V#English#Poem-Topsy-turvy Land_Add title#Topsy Turvy Land Poem(Version-2)#F
 STD-V#English#Prepositions#English Preposition(Part-1)#F:\EDUSURE\CONTENT\STD-V\English\Prepositions\'English Preposition(Part-1).lq
 STD-V#English#Prepositions#English Preposition(Part-2)#F:\EDUSURE\CONTENT\STD-V\English\Prepositions\English Preposition(Part-2).lq
 STD-V#English#Pronoun#Pronoun-Definition With Examples#F:\EDUSURE\CONTENT\STD-V\English\Pronouns\Pronoun-Definition With Examples.lq
+STD-V#English#Pronouns#Kinds Of Pronouns#F:\EDUSURE\CONTENT\STD-V\English\Pronouns\Kinds Of Pronouns.lq
 STD-V#English#Pronoun#Pronouns(Part-1)#F:\EDUSURE\CONTENT\STD-V\English\Pronouns\Pronouns(Part-1).lq
 STD-V#English#Pronoun#Pronouns(Part-2)#F:\EDUSURE\CONTENT\STD-V\English\Pronouns\Pronouns(Part-2).lq
 STD-V#English#Pronoun#Pronouns(Part-3)#F:\EDUSURE\CONTENT\STD-V\English\Pronouns\Pronouns(Part-3).lq
@@ -391,7 +512,9 @@ STD-V#English#Similies#Figurative Language  Simile#F:\EDUSURE\CONTENT\STD-V\Engl
 STD-V#English#Similies#Similes, Metaphors & Hyperboles  Differences, Examples#F:\EDUSURE\CONTENT\STD-V\English\Similies\Similes, Metaphors & Hyperboles  Differences, Examples.lq
 STD-V#English#Story completion#The Honest Girl  English Stories#F:\EDUSURE\CONTENT\STD-V\English\Storycompletion\The Honest Girl  English Stories.lq
 STD-V#English#Story-Who Will be Ningthou#Who Will Be Ningthou#F:\EDUSURE\CONTENT\STD-V\English\Story-Who Will be Ningthou\Who Will Be Ningthou.lq
+STD-V#English#Sentence#Types Of Sentences#F:\EDUSURE\CONTENT\STD-V\English\Sentence\Types Of Sentences.lq
 STD-V#English#Subject-Verb Agreement#Subject - Verb Agreement   English Grammar#F:\EDUSURE\CONTENT\STD-V\English\Subject-VerbAgreement\Subject - Verb Agreement   English Grammar.lq
+STD-V#English#Subject and Predicate#Subject and Predicate#F:\EDUSURE\CONTENT\STD-V\English\Subject and Predicate\Subject and Predicate.lq
 STD-V#English#Suffix and Prefix#Prefixes And Suffixes#F:\EDUSURE\CONTENT\STD-V\English\SuffixandPrefix\Prefixes And Suffixes.lq
 STD-V#English#Suffix and Prefix#What Are Suffixes    English Grammar#F:\EDUSURE\CONTENT\STD-V\English\SuffixandPrefix\What Are Suffixes    English Grammar.lq
 STD-V#English#Synonyms#Synonyms#F:\EDUSURE\CONTENT\STD-V\English\Synonyms\Synonyms.lq
@@ -409,6 +532,13 @@ STD-V#English#Wh questions#English Grammar WH question words#F:\EDUSURE\CONTENT\
 STD-V#English#Wh questions#Question Words Grammar#F:\EDUSURE\CONTENT\STD-V\English\Whquestions\Question Words Grammar.lq
 STD-V#English#Word Formation#Word Formation Process#F:\EDUSURE\CONTENT\STD-V\English\WordFormation\Word Formation Process.lq
 STD-V#English#Writing Skills#Writing Alphabet Letters#F:\EDUSURE\CONTENT\STD-V\English\WritingSkills\Writing Alphabet Letters.lq
+STD-V#Mathematics#Area and Perimeter#Introduction to Mensuration#F:\EDUSURE\CONTENT\STD-V\Mathematics\Area and Perimeter\Introduction to Mensuration.lq
+STD-V#Mathematics#Decimals#Decimals#F:\EDUSURE\CONTENT\STD-V\Mathematics\Decimals\Decimals.lq
+STD-V#Mathematics#Factors and Multiples#Factors And Multiples#F:\EDUSURE\CONTENT\STD-V\Mathematics\Factors and Multiples\Factors And Multiples.lq
+STD-V#Mathematics#Fraction#Fractions#F:\EDUSURE\CONTENT\STD-V\Mathematics\Fraction\Fractions.lq
+STD-V#Mathematics#Large Numbers#Large Numbers#F:\EDUSURE\CONTENT\STD-V\Mathematics\Large Numbers\Large Numbers.lq
+STD-V#Mathematics#Pattern in numbers#Pattern in numbers#F:\EDUSURE\CONTENT\STD-V\Mathematics\Pattern in numbers\Pattern in numbers.lq
+STD-V#Mathematics#Time#Time#F:\EDUSURE\CONTENT\STD-V\Mathematics\Time\Time.lq
 STD-V#Science#Animal Life#Animal Life Cycles#F:\EDUSURE\CONTENT\STD-V\Science\AnimalLife\Animal Life Cycles.lq
 STD-V#Science#Animal Life#Reproduction In Animals - Life Cycle Of Animals#F:\EDUSURE\CONTENT\STD-V\Science\AnimalLife\Reproduction In Animals - Life Cycle Of Animals.lq
 STD-V#Science#Diseases#Common Diseases and their Prevention#F:\EDUSURE\CONTENT\STD-V\Science\Diseases\Common Diseases and their Prevention.lq
@@ -541,6 +671,26 @@ STD-V#Social Science#Transport#Water Transport  Transport  Communication#F:\EDUS
 STD-V#Social Science#United Nations and its function#The United Nations Organisation#F:\EDUSURE\CONTENT\STD-V\SocialScience\UnitedNationsanditsfunction\The United Nations Organisation.lq
 STD-V#Social Science#Weather & Climate#Weather And Climate#F:\EDUSURE\CONTENT\STD-V\SocialScience\Weather&Climate\Weather And Climate.lq
 STD-V#Social Science#Weather & Climate#Climate Zones Of The Earth#F:\EDUSURE\CONTENT\STD-V\SocialScience\Weather&Climate\Climate Zones Of The Earth.lq
+STD-VI#English#Articles#Articles#F:\EDUSURE\CONTENT\STD-VI\English\Articles\Articles.lq
+STD-VI#English#conjuction and interconjuction#conjuction and interconjuction#F:\EDUSURE\CONTENT\STD-VI\English\conjuction and interconjuction\conjuction and interconjuction.lq
+STD-VI#English#Direct and Indirect speech#Direct and Indirect speech#F:\EDUSURE\CONTENT\STD-VI\English\Direct and Indirect speech\Direct and Indirect speech.lq
+STD-VI#English#Gender Of Nouns#Gender Of Nouns#F:\EDUSURE\CONTENT\STD-VI\English\Gender Of Nouns\Gender Of Nouns.lq
+STD-VI#English#Noun#Singular And Plural Nouns#F:\EDUSURE\CONTENT\STD-VI\English\Noun\Singular And Plural Nouns.lq
+STD-VI#English#Pronoun#Kinds Of Pronouns#F:\EDUSURE\CONTENT\STD-VI\English\Pronoun\Kinds Of Pronouns.lq
+STD-VI#English#Pronoun#Learn Pronouns#F:\EDUSURE\CONTENT\STD-VI\English\Pronoun\Learn Pronouns.lq
+STD-VI#English#Sentence#Types Of Sentence#F:\EDUSURE\CONTENT\STD-VI\English\Sentence\Types Of Sentence.lq
+STD-VI#English#Subject and Predicate#Subject and Predicate#F:\EDUSURE\CONTENT\STD-VI\English\Subject and Predicate\Subject and Predicate.lq
+STD-VI#English#Tense#Simple Present Tense#F:\EDUSURE\CONTENT\STD-VI\English\Tense\Simple Present Tense.lq
+STD-VI#English#Verb#Transitive And Intransitive Verbs#F:\EDUSURE\CONTENT\STD-VI\English\Verb\Transitive And Intransitive Verbs.lq
+STD-VI#Mathematics#Basic Geometrical Ideas#Basic Geometrical Ideas#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Basic Geometrical Ideas\Basic Geometrical Ideas.lq
+STD-VI#Mathematics#Concept of Algebra#Concept Of Algebra#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Concept of Algebra\Concept Of Algebra.lq
+STD-VI#Mathematics#Integers#Integers#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Integers\Integers.lq
+STD-VI#Mathematics#Lines and Angels#lines and angels#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Lines and Angels\lines and angels.lq
+STD-VI#Mathematics#Perimeter and Area#Plane Figures#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Perimeter and Area\Plane Figures.lq
+STD-VI#Mathematics#Proportions, Continued Proportions And Unitary Method#Proportions, Continued Proportions And Unitary Method#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Proportions, Continued Proportions And Unitary Method\Proportions, Continued Proportions And Unitary Method.lq
+STD-VI#Mathematics#Ratio And Proportion#Ratio And Proportion#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Ratio And Proportion\Ratio And Proportion.lq
+STD-VI#Mathematics#Set#set#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Set\set.lq
+STD-VI#Mathematics#Types Of Fraction#Types Of Fraction#F:\EDUSURE\CONTENT\STD-VI\Mathematics\Types Of Fraction\Types Of Fraction.lq
 STD-VI#Biology#Adaptation#Adaptation in Aquatic Animal#F:\EDUSURE\CONTENT\STD-VI\Biology\Adaptation\Adaptation in Aquatic Animal.lq
 STD-VI#Biology#Adaptation#Adaptation in Aquatic Plants#F:\EDUSURE\CONTENT\STD-VI\Biology\Adaptation\Adaptation in Aquatic Plants.lq
 STD-VI#Biology#Adaptation#Adpation in Air#F:\EDUSURE\CONTENT\STD-VI\Biology\Adaptation\Adpation in Air.lq
@@ -1179,3 +1329,69 @@ STD-X#Physics#Sound#Free, Damped And Forced Vibrations#F:\EDUSURE\CONTENT\STD-X\
 STD-X#Physics#Sound#Noise And Music#F:\EDUSURE\CONTENT\STD-X\Physics\Sound\Noise And Music.lq
 STD-X#Physics#Sound#Reflection Of Sound And Echo#F:\EDUSURE\CONTENT\STD-X\Physics\Sound\Reflection Of Sound And Echo.lq
 STD-X#Physics#Sound#Resonance#F:\EDUSURE\CONTENT\STD-X\Physics\Sound\Resonance.lq
+STD-VII#English#Adjective#Adjectives And Kinds Of Adjectives#F:\EDUSURE\CONTENT\STD-VII\English\Adjective\Adjectives And Kinds Of Adjectives.lq
+STD-VII#English#Adverb#Position Of Adverbs#F:\EDUSURE\CONTENT\STD-VII\English\Adverb\Position Of Adverbs.lq
+STD-VII#English#Determiners#Determiners#F:\EDUSURE\CONTENT\STD-VII\English\Determiners\Determiners.lq
+STD-VII#English#Difference Between Gerund And Participle#Non-finite Verbs#F:\EDUSURE\CONTENT\STD-VII\English\Difference Between Gerund And Participle\Non-finite Verbs.lq
+STD-VII#English#Direct and Indirect Speech#Direct and Indirect Speech#F:\EDUSURE\CONTENT\STD-VII\English\Direct and Indirect Speech\Direct and Indirect Speech.lq
+STD-VII#English#Purpose Of Prepositions#Purpose Of Prepositions#F:\EDUSURE\CONTENT\STD-VII\English\Purpose Of Prepositions\Purpose Of Prepositions.lq
+STD-VII#English#Subject - verb agrement#Subject - verb agrement#F:\EDUSURE\CONTENT\STD-VII\English\Subject - verb agrement\Subject - verb agrement.lq
+STD-VII#English#Verb#Transitive and Intransitive Verbs#F:\EDUSURE\CONTENT\STD-VII\English\Verb\Transitive and Intransitive Verbs.lq
+STD-VII#English#Voice#Active And Passive Voices#F:\EDUSURE\CONTENT\STD-VII\English\Voice\Active And Passive Voices.lq
+STD-VII#English#Adjective#Adjectives And Kinds Of Adjectives#F:\EDUSURE\CONTENT\STD-VII\English\Adjective\Adjectives And Kinds Of Adjectives.lq
+STD-VII#English#Adverb#Position Of Adverbs#F:\EDUSURE\CONTENT\STD-VII\English\Adverb\Position Of Adverbs.lq
+STD-VII#English#Determiners#Determiners#F:\EDUSURE\CONTENT\STD-VII\English\Determiners\Determiners.lq
+STD-VII#English#Difference Between Gerund And Participle#Non-finite Verbs#F:\EDUSURE\CONTENT\STD-VII\English\Difference Between Gerund And Participle\Non-finite Verbs.lq
+STD-VII#English#Direct and Indirect Speech#Direct and Indirect Speech#F:\EDUSURE\CONTENT\STD-VII\English\Direct and Indirect Speech\Direct and Indirect Speech.lq
+STD-VII#English#Purpose Of Prepositions#Purpose Of Prepositions#F:\EDUSURE\CONTENT\STD-VII\English\Purpose Of Prepositions\Purpose Of Prepositions.lq
+STD-VII#English#Subject - verb agrement#Subject - verb agrement#F:\EDUSURE\CONTENT\STD-VII\English\Subject - verb agrement\Subject - verb agrement.lq
+STD-VII#English#Verb#Transitive and Intransitive Verbs#F:\EDUSURE\CONTENT\STD-VII\English\Verb\Transitive and Intransitive Verbs.lq
+STD-VII#English#Voice#Active And Passive Voices#F:\EDUSURE\CONTENT\STD-VII\English\Voice\Active And Passive Voices.lq
+STD-VII#Chemistry#Air and Atmosphere#Air and Atmosphere#F:\EDUSURE\CONTENT\STD-VII\Chemistry\Air and Atmosphere\Air and Atmosphere.lq
+STD-VII#Chemistry#Atomic Structure#Atomic Structure#F:\EDUSURE\CONTENT\STD-VII\Chemistry\Atomic Structure\Atomic Structure.lq
+STD-VII#Chemistry#Atomic Structure#Sub-atomic Particles#F:\EDUSURE\CONTENT\STD-VII\Chemistry\Atomic Structure\Sub-atomic Particles.lq
+STD-VII#Chemistry#Elements, Compounds and Mixture#Elements, Compounds and Mixture#F:\EDUSURE\CONTENT\STD-VII\Chemistry\Elements, Compounds and Mixture\Elements, Compounds and Mixture.lq
+STD-VII#Chemistry#Matter#Matter and its Composition#F:\EDUSURE\CONTENT\STD-VII\Chemistry\Matter\Matter and its Composition.lq
+STD-VII#Mathematics#Angle#The Different Angles Formed By A Transversal With Two Parallel Lines#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Angle\The Different Angles Formed By A Transversal With Two Parallel Lines.lq
+STD-VII#Mathematics#Basic Geometrial Concepts#Basic Geometrial Concepts#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Basic Geometrial Concepts\Basic Geometrial Concepts.lq
+STD-VII#Mathematics#Data Handling#Data Handling#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Data Handling\Data Handling.lq
+STD-VII#Mathematics#Equation#Linear Equation And Solving Linear Equation With Single Variable#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Equation\Linear Equation And Solving Linear Equation With Single Variable.lq
+STD-VII#Mathematics#Exponents#What are Exponents#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Exponents\What are Exponents.lq
+STD-VII#Mathematics#Integers#Integers#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Integers\Integers.lq
+STD-VII#Mathematics#Mensuration Formulas#Understand Mensuration Formulas#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Mensuration Formulas\Understand Mensuration Formulas.lq
+STD-VII#Mathematics#Profit And Loss#Profit And Loss#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Profit And Loss\Profit And Loss.lq
+STD-VII#Mathematics#Ratio And Proportion#Ratio And Proportion#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Ratio And Proportion\Ratio And Proportion.lq
+STD-VII#Mathematics#Rational Numbers#What are Rational Numbers#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Rational Numbers\What are Rational Numbers.lq
+STD-VII#Mathematics#Set#Set#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Set\Set.lq
+STD-VII#Mathematics#Shape#2D 3D Shape#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Shape\2D 3D Shape.lq
+STD-VII#Mathematics#Statistics#Introduction To Statistics#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Statistics\Introduction To Statistics.lq
+STD-VII#Mathematics#Time and Work#Time and Work#F:\EDUSURE\CONTENT\STD-VII\Mathematics\Time and Work\Time and Work.lq
+STD-VIII#Chemistry#Atomic Structure#Atomic Structure#F:\EDUSURE\CONTENT\STD-VIII\Chemistry\Atomic Structure\Atomic Structure.lq
+STD-VIII#English#Adverb#Position Of Adverbs#F:\EDUSURE\CONTENT\STD-VIII\English\Adverb\Position Of Adverbs.lq
+STD-VIII#English#Determiners#Determiners#F:\EDUSURE\CONTENT\STD-VIII\English\Determiners\Determiners.lq
+STD-VIII#English#Difference Between Gerund And Participle#Non-finite Verbs#F:\EDUSURE\CONTENT\STD-VIII\English\Difference Between Gerund And Participle\Non-finite Verbs.lq
+STD-VIII#English#Parts Of Speech#Gerunds, Infinitives, And Participles#F:\EDUSURE\CONTENT\STD-VIII\English\Parts Of Speech\Gerunds, Infinitives, And Participles.lq
+STD-VIII#English#Purpose Of Preposition#Purpose Of Prepositions#F:\EDUSURE\CONTENT\STD-VIII\English\Purpose Of Preposition\Purpose Of Prepositions.lq
+STD-VIII#English#Subject - verb agrement#Subject - verb agrement#F:\EDUSURE\CONTENT\STD-VIII\English\Subject - verb agrement\Subject - verb agrement.lq
+STD-VIII#English#Voice#Active And Passive Voice#F:\EDUSURE\CONTENT\STD-VIII\English\Voice\Active And Passive Voice.lq
+STD-VIII#Mathematics#Angle#The Different Angles Formed By A Transversal With Two Parallel Lines#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Angle\The Different Angles Formed By A Transversal With Two Parallel Lines.lq
+STD-VIII#Mathematics#Cube and Cube Root#Cube and Cube Root#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Cube and Cube Root\Cube and Cube Root.lq
+STD-VIII#Mathematics#Data Handling#Data Handling#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Data Handling\Data Handling.lq
+STD-VIII#Mathematics#Exponents#What Are Exponents#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Exponents\What Are Exponents.lq
+STD-VIII#Mathematics#Mensuration Formula#Understand Mensuration Formulas#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Mensuration Formula\Understand Mensuration Formulas.lq
+STD-VIII#Mathematics#Perimeter And Area#Perimeter And Area#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Perimeter And Area\Perimeter And Area.lq
+STD-VIII#Mathematics#Profit And Loss#Profit And Loss#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Profit And Loss\Profit And Loss.lq
+STD-VIII#Mathematics#Ratio And Proportion#Ratio And Proportion#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Ratio And Proportion\Ratio And Proportion.lq
+STD-VIII#Mathematics#Rational Numbers#What are Rational Numbers#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Rational Numbers\What are Rational Numbers.lq
+STD-VIII#Mathematics#Shape#2D 3D Shape#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Shape\2D 3D Shape.lq
+STD-VIII#Mathematics#Square and Square Roots#Square and Square Roots#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Square and Square Roots\Square and Square Roots.lq
+STD-VIII#Mathematics#Statistics#Introduction To Statistics#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Statistics\Introduction To Statistics.lq
+STD-VIII#Mathematics#Time And Work#Time And Work#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Time And Work\Time And Work.lq
+STD-VIII#Mathematics#Unitary Method#Unitary Method#F:\EDUSURE\CONTENT\STD-VIII\Mathematics\Unitary Method\Unitary Method.lq
+STD-VIII#Physics#Electricity#Electricity#F:\EDUSURE\CONTENT\STD-VIII\Physics\Electricity\Electricity.lq
+STD-VIII#Physics#Force#Force#F:\EDUSURE\CONTENT\STD-VIII\Physics\Force\Force.lq
+STD-VIII#Physics#Heat Transfer#Heat Transfer#F:\EDUSURE\CONTENT\STD-VIII\Physics\Heat Transfer\Heat Transfer.lq
+STD-VIII#Physics#Light Energy#Light Energy#F:\EDUSURE\CONTENT\STD-VIII\Physics\Light Energy\Light Energy.lq
+STD-VIII#Physics#Matter#Matter#F:\EDUSURE\CONTENT\STD-VIII\Physics\Matter\Matter.lq
+STD-VIII#Physics#Physical Quantities and Measurement#Physical Quantities and Measurement#F:\EDUSURE\CONTENT\STD-VIII\Physics\Physical Quantities and Measurement\Physical Quantities and Measurement.lq
+STD-VIII#Physics#Sound#Sound#F:\EDUSURE\CONTENT\STD-VIII\Physics\Sound\Sound.lq

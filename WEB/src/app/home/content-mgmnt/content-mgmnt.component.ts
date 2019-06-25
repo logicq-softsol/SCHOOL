@@ -47,7 +47,7 @@ export class ContentMgmntComponent implements OnInit {
   subjectdisplayName: any;
   chapterdisplayName: any;
   displayView:any;
-
+  sessionData;
   constructor(private homeService: HomeService,
     private contentMgmntService: ContentMgmntService,
     private authService: AuthenticationService,
@@ -59,6 +59,12 @@ export class ContentMgmntComponent implements OnInit {
    
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
       this.user = user;
+      if(this.user.role == 'ADMIN') {
+        this.getAllSessions();
+      }
+      else {
+        this.getSession();
+      }
     });
 
     this.contentMgmntService.getClassDetailList().subscribe((data: ClassSetupDetail[]) => {
@@ -209,6 +215,18 @@ export class ContentMgmntComponent implements OnInit {
   }
   chapterClear() {
     this.chapterdisplayName = null;
+  }
+  getSession() {
+    this.contentMgmntService.getUserSession().subscribe(data => {
+      console.log('User session data: ', data);
+      this.sessionData = data;
+    });
+  }
+  getAllSessions() {
+    this.contentMgmntService.getAllSessions().subscribe(data => {
+      console.log('All session data: ', data);
+      this.sessionData = data;
+    });
   }
 }
 

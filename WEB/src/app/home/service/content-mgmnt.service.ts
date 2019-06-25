@@ -296,7 +296,7 @@ export class ContentMgmntService {
     return this.http.post(environment.baseUrl + 'api/admin/day0/setup', httpOptions);
   }
 
-getAllTopics(){
+getAllTopics() {
   return this.http.get(environment.baseUrl + 'api/admin/topics');
 }
 
@@ -320,5 +320,24 @@ getChapterForClassAndSubject(classId: number, subjectId: number,chapter:number) 
 getRemaingLicenseDays() {
   return this.http.get(environment.baseUrl + 'api/checkProductActivationDate');
 }
-
+startSession(topic: TopicDetail) {
+  let headers = new HttpHeaders();
+  headers.set('Content-Type', 'application/json');
+  headers.set('Access-Control-Allow-Origin', '*');
+  let httpOptions = { headers: headers };
+  return this.http.post(environment.baseUrl +  `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
+}
+endSession(topic: TopicDetail) {  
+  let headers = new HttpHeaders();
+  headers.set('Content-Type', 'application/json');
+  headers.set('Access-Control-Allow-Origin', '*');
+  let httpOptions = { headers: headers };
+  return this.http.post(environment.baseUrl +  `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
+}
+getUserSession() {
+  return this.http.get(environment.baseUrl + 'api/session');
+}
+getAllSessions() {
+  return this.http.get(environment.baseUrl + 'api/sessions');
+}
 }

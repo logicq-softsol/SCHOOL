@@ -12,14 +12,18 @@ img {
   position: absolute;
   left: 0;
   opacity: 0;
-  height: auto !important;
+ /*  height: auto !important; */
   background-size: cover;
   background-position: center;
   will-change: opacity;
   transition: opacity .3s;
   cursor: pointer;
+  height: 100%!important;
+  overflow: hidden;
 }
-
+.img-container  img {
+  height: auto;
+}
 
 
 .slide-button:hover, .slide-button-select {

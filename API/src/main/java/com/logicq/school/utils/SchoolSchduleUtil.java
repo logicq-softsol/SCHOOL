@@ -31,11 +31,11 @@ public class SchoolSchduleUtil {
 			ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
 			if (null != activationDetails) {
 				if (activationDetails.getActivationDays() >= 0
-						&& activationDetails.getLastUpdate().compareTo(schoolDateUtils.currentDate()) < 0) {
+						&& activationDetails.getLastUpdate().compareTo(schoolDateUtils.findTodayStartDate()) < 0) {
 					activationDetails.setLastUpdate(schoolDateUtils.currentDate());
 					activationDetails.setActivationDays(activationDetails.getActivationDays() - 1);
 				} else {
-					activationDetails.setProductStatus("EXPIRED");
+					//activationDetails.setProductStatus("EXPIRED");
 				}
 				productActivationRepo.save(activationDetails);
 			}

@@ -226,6 +226,11 @@ export class TopicComponent implements OnInit {
             topic:topic
           }
         });
+        dialogRef.componentInstance.videoEmmiter.subscribe((topic: TopicDetail) => {
+          this.contentMgmntService.endSession(topic).subscribe(data => {
+            console.log('Session ended successfully', data);
+          });
+        });
     } else {
         this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }
@@ -726,15 +731,22 @@ export class ClassSetupDialog {
   templateUrl: 'video-dialog.html',
   styleUrls: ['./topic.scss']
 })
-export class VideoDialog {
+export class VideoDialog{
   videoURL:any;
   topic:TopicDetail=new TopicDetail();
-  constructor(public dialogRef: MatDialogRef<VideoDialog>, @Inject(MAT_DIALOG_DATA) private data: any,private _sanitizer: DomSanitizer) {
+  videoEmmiter = new EventEmitter();
+  constructor(public dialogRef: MatDialogRef<VideoDialog>,
+     @Inject(MAT_DIALOG_DATA) private data: any,
+     private _sanitizer: DomSanitizer,
+     private contentMgmntService: ContentMgmntService) {
     this.videoURL = this._sanitizer.bypassSecurityTrustUrl(data.url);
     this.topic=data.topic;
+    this.contentMgmntService.startSession(this.topic).subscribe(data => {
+      console.log('Session started successfully', data);
+    });
   }
-
   onNoClick(): void {
+    this.videoEmmiter.emit(this.topic);
     this.dialogRef.close();
   }
 

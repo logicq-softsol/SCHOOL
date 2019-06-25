@@ -26,14 +26,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.logicq.school.exception.SucessMessage;
 import com.logicq.school.model.ActivationDetails;
+import com.logicq.school.model.ChapterDetails;
+import com.logicq.school.model.ClassDetails;
 import com.logicq.school.model.LoginDetails;
 import com.logicq.school.model.Message;
 import com.logicq.school.model.SessionTracker;
+import com.logicq.school.model.SubjectDetails;
 import com.logicq.school.model.TopicDetails;
 import com.logicq.school.model.User;
+import com.logicq.school.repository.ChapterDetailsRepo;
+import com.logicq.school.repository.ClassesDetailsRepo;
 import com.logicq.school.repository.LoginDetailsRepo;
 import com.logicq.school.repository.ProductActivationRepo;
 import com.logicq.school.repository.SessionTrackerRepo;
+import com.logicq.school.repository.SubjectDetailsRepo;
 import com.logicq.school.repository.TopicDetailsRepo;
 import com.logicq.school.repository.UserDetailsRepo;
 import com.logicq.school.security.JwtTokenProvider;
@@ -98,6 +104,15 @@ public class LoginController {
 
 	@Autowired
 	TopicDetailsRepo topicDetailsRepo;
+
+	@Autowired
+	ClassesDetailsRepo classesDetailsRepo;
+
+	@Autowired
+	SubjectDetailsRepo subjectDetailsRepo;
+
+	@Autowired
+	ChapterDetailsRepo chapterDetailsRepo;
 
 	@RequestMapping(value = "/activateProduct", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> activateProductForClient(@RequestBody LicenseKey licnkey) throws Exception {
@@ -327,7 +342,7 @@ public class LoginController {
 
 	}
 
-	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> updateSessionTracker(@PathVariable Long classId, @PathVariable Long subjectId,
 			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
@@ -335,7 +350,7 @@ public class LoginController {
 				loginDetail.getUserName(), classId, subjectId, chapterId, topicId);
 		if (null != sessnionTracker) {
 			sessnionTracker.setEndTime(schoolDateUtils.currentDate());
-			long diff = sessnionTracker.getStartTime().getTime() - sessnionTracker.getEndTime().getTime();
+			long diff = sessnionTracker.getEndTime().getTime()-sessnionTracker.getStartTime().getTime();
 			int diffmin = (int) (diff / (60 * 1000));
 			if (diffmin >= sessnionTracker.getTopicRequiredTime() - 1) {
 				sessnionTracker.setStatus("COMPLETE");
@@ -345,37 +360,37 @@ public class LoginController {
 			sessionTrackerRepo.save(sessnionTracker);
 			return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
 					"Your Session Closed For This Lesson", "LESSON_PLAY"), HttpStatus.OK);
+		} else {
+			TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId,
+					chapterId, topicId);
+			ClassDetails classDetails = classesDetailsRepo.findOne(classId);
+			SubjectDetails subject = subjectDetailsRepo.findByClassIdAndId(classId, subjectId);
+			ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId);
+			if (null != topic && !StringUtils.isEmpty(topic.getPlayFileURL())) {
+				SessionTracker sessionTracker = new SessionTracker();
+				sessionTracker.setClassId(classId);
+				sessionTracker.setSubjectId(subjectId);
+				sessionTracker.setChapterId(chapterId);
+				sessionTracker.setTopicId(topicId);
+				sessionTracker.setClassName(classDetails.getDisplayName());
+				sessionTracker.setSubjectName(subject.getDisplayName());
+				sessionTracker.setChapterName(chapter.getDisplayName());
+				sessionTracker.setTopicName(topic.getDisplayName());
+				sessionTracker.setUserName(loginDetail.getUserName());
+				sessionTracker.setStartTime(schoolDateUtils.currentDate());
+				sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
+				sessionTracker.setEndTime(sessionTracker.getStartTime());
+				sessionTracker.setStatus("PENDING");
+				sessionTrackerRepo.save(sessionTracker);
+				return new ResponseEntity<SucessMessage>(
+						new SucessMessage(schoolDateUtils.currentDate(), "Your Lesson Started Now", "LESSON_PLAY"),
+						HttpStatus.OK);
+			}
 		}
 		return new ResponseEntity<SucessMessage>(
 				new SucessMessage(schoolDateUtils.currentDate(), "No Session Exist For this Lesson", "LESSON_PLAY"),
 				HttpStatus.BAD_REQUEST);
 
-	}
-
-	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SucessMessage> createSessionTracker(@PathVariable Long classId, @PathVariable Long subjectId,
-			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
-		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
-		TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId,
-				topicId);
-		if (null != topic && !StringUtils.isEmpty(topic.getPlayFileURL())) {
-			SessionTracker sessionTracker = new SessionTracker();
-			sessionTracker.setClassId(classId);
-			sessionTracker.setSubjectId(subjectId);
-			sessionTracker.setChapterId(chapterId);
-			sessionTracker.setTopicId(topicId);
-			sessionTracker.setUserName(loginDetail.getUserName());
-			sessionTracker.setStartTime(schoolDateUtils.currentDate());
-			sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
-			sessionTracker.setEndTime(sessionTracker.getStartTime());
-			sessionTracker.setStatus("PENDING");
-			sessionTrackerRepo.save(sessionTracker);
-			return new ResponseEntity<SucessMessage>(
-					new SucessMessage(schoolDateUtils.currentDate(), "Your Lesson Started Now", "LESSON_PLAY"),
-					HttpStatus.OK);
-		}
-		return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
-				"Unable To Start Session,Check Video File", "LESSON_PLAY"), HttpStatus.BAD_REQUEST);
 	}
 
 }

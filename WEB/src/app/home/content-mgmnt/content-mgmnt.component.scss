@@ -298,6 +298,12 @@ box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); text-align:center; margin-bottom:30
     bottom: 41px;
     right: 35px;
  }
+ .p-close-icon {
+	float: right;
+    position: relative;
+    bottom: 25px;
+    right: 35px;
+ }
  .mat-dialog-container {
 	 padding: 15px;
  }
@@ -315,7 +321,18 @@ box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); text-align:center; margin-bottom:30
  }
  .tabled {
 	 height: 100%;
+	 max-height: 383px;
  }
  small {
 	 font-size: 13px;
  }
+ .period-btn {
+	background: #ED683D;
+	color: #fff;
+	padding: 0 35px;
+	font-size: 15px;
+	height: 25px;
+	line-height: 25px;
+	text-transform: capitalize;
+	margin: 0 5px 10px 5px;
+}

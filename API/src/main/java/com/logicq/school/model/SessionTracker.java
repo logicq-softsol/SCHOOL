@@ -33,6 +33,18 @@ public class SessionTracker {
 	@Column(name = "TOPIC_ID")
 	private Long topicId;
 
+	@Column(name = "CLASS_NAME")
+	private String className;
+
+	@Column(name = "SUBJECT_NAME")
+	private String subjectName;
+
+	@Column(name = "CHAPTER_NAME")
+	private String chapterName;
+
+	@Column(name = "TOPIC_NAME")
+	private String topicName;
+
 	@Column(name = "START_TIME")
 	private Date startTime;
 
@@ -183,6 +195,62 @@ public class SessionTracker {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	/**
+	 * @return the className
+	 */
+	public String getClassName() {
+		return className;
+	}
+
+	/**
+	 * @param className the className to set
+	 */
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	/**
+	 * @return the subjectName
+	 */
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+	/**
+	 * @param subjectName the subjectName to set
+	 */
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
+
+	/**
+	 * @return the chapterName
+	 */
+	public String getChapterName() {
+		return chapterName;
+	}
+
+	/**
+	 * @param chapterName the chapterName to set
+	 */
+	public void setChapterName(String chapterName) {
+		this.chapterName = chapterName;
+	}
+
+	/**
+	 * @return the topicName
+	 */
+	public String getTopicName() {
+		return topicName;
+	}
+
+	/**
+	 * @param topicName the topicName to set
+	 */
+	public void setTopicName(String topicName) {
+		this.topicName = topicName;
 	}
 
 }
