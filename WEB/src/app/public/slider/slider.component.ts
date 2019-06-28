@@ -53,7 +53,7 @@ export class SliderComponent implements OnInit ,OnDestroy{
    downSelected(i) {
    this.transform =  100 - (i) * 50;
      this.selectedIndex = this.selectedIndex + 1;
-     if (this.selectedIndex > this.sliderArray.length) {
+     if (this.selectedIndex > this.sliderArray.length-1) {
        this.selectedIndex = 0;
      }
    }
