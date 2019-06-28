@@ -1,8 +1,7 @@
 {
   "sliderArray":[
-   {"index":0,"img": "assets/images/login.jpg", "alt": "", "text": ""},
-   {"index":1,"img": "assets/images/edusure 1.jpg", "alt": "",  "text": ""},
-   {"index":3,"img": "assets/images/edusure 2.jpg", "alt": "", "text": ""},
-   {"index":3,"img": "assets/images/edusure 3.jpg", "alt": "", "text": ""}
+   {"index":0,"img": "assets/images/edusure1.jpg", "alt": "",  "text": ""},
+   {"index":1,"img": "assets/images/edusure2.jpg", "alt": "", "text": ""},
+   {"index":2,"img": "assets/images/edusure3.jpg", "alt": "", "text": ""}
   ]
 }
