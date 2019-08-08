@@ -13,4 +13,7 @@ public interface TopicDetailsRepo extends JpaRepository<TopicDetails, Long> {
 	List<TopicDetails> findByClassIdAndSubjectIdAndChapterId(Long classId, Long subjectId, Long chapterId);
 
 	TopicDetails findByClassIdAndSubjectIdAndChapterIdAndId(Long classId, Long subjectId, Long chapterId, Long id);
+
+	TopicDetails findByClassIdAndSubjectIdAndChapterIdAndName(Long classId, Long subjectId, Long chapterId,
+			String name);
 }

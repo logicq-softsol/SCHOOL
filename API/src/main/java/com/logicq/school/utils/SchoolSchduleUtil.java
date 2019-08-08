@@ -1,5 +1,8 @@
 package com.logicq.school.utils;
 
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -11,8 +14,7 @@ import com.logicq.school.repository.ProductActivationRepo;
 
 @Component
 public class SchoolSchduleUtil {
-	
-	
+
 	@Autowired
 	SchoolSecurityUtils schoolSecurityUtils;
 
@@ -21,7 +23,6 @@ public class SchoolSchduleUtil {
 
 	@Autowired
 	SchoolDateUtils schoolDateUtils;
-	
 
 	@Async
 	@Scheduled(cron = "0 0/15 * * * ?")
@@ -30,14 +31,19 @@ public class SchoolSchduleUtil {
 		if (!StringUtils.isEmpty(hostName)) {
 			ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
 			if (null != activationDetails) {
-				if (activationDetails.getActivationDays() >= 0
-						&& activationDetails.getLastUpdate().compareTo(schoolDateUtils.findTodayStartDate()) < 0) {
-					activationDetails.setLastUpdate(schoolDateUtils.currentDate());
-					activationDetails.setActivationDays(activationDetails.getActivationDays() - 1);
+				activationDetails.setLastUpdate(schoolDateUtils.findTodayStartDate());
+				if (activationDetails.getExpiryDate().compareTo(activationDetails.getLastUpdate()) >= 0) {
+					long diff = activationDetails.getExpiryDate().getTime()
+							- activationDetails.getLastUpdate().getTime();
+					long day = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+					activationDetails.setActivationDays(day);
+					activationDetails.setProductStatus("ACTIVE");
+					productActivationRepo.save(activationDetails);
 				} else {
-					//activationDetails.setProductStatus("EXPIRED");
+					activationDetails.setProductStatus("EXPIRED");
+					activationDetails.setActivationDays(0);
+					productActivationRepo.save(activationDetails);
 				}
-				productActivationRepo.save(activationDetails);
 			}
 
 		}

@@ -128,10 +128,10 @@ public class LoginController {
 						activateKey.getKey());
 				if (inputkey.equals(licenseKey) && !StringUtils.isEmpty(activateKey.getKey())) {
 					ActivationDetails activationDetail = new ActivationDetails();
-					activationDetail.setActivationDate(schoolDateUtils.currentDate());
+					activationDetail.setActivationDate(schoolDateUtils.findTodayStartDate());
 					activationDetail.setActivationLicense(licenseKey);
 					activationDetail.setActivationToken(activateKey.getKey());
-					activationDetail.setLastUpdate(schoolDateUtils.currentDate());
+					activationDetail.setLastUpdate(schoolDateUtils.findTodayStartDate());
 					activationDetail.setProductName(licenseDetails.getProductName());
 					activationDetail.setProductStatus("ACTIVE");
 					activationDetail.setExpiryDate(schoolDateUtils.getExpiryDate(licenseDetails.getValidityDay()));
