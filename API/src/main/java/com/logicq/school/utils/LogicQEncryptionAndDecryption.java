@@ -96,12 +96,17 @@ public class LogicQEncryptionAndDecryption {
 		return null;
 	}
 
-	public byte[] readFileAndDecryptFile(File fileToBeDecrypt, String key) throws IOException {
-		FileInputStream fis = new FileInputStream(fileToBeDecrypt);
-		byte[] fbytes = new byte[(int) fileToBeDecrypt.length()];
-		fis.read(fbytes);
-		fis.close();
-		return decryptFile(fbytes, key);
+	public byte[] readFileAndDecryptFile(File fileToBeDecrypt, String key) throws Exception {
+		try {
+			FileInputStream fis = new FileInputStream(fileToBeDecrypt);
+			byte[] fbytes = new byte[(int) fileToBeDecrypt.length()];
+			fis.read(fbytes);
+			fis.close();
+			return decryptFile(fbytes, key);
+		} catch (Exception ex) {
+			throw new Exception("No Video exist with content.");
+		}
+
 	}
 
 	private byte[] decryptFile(byte[] dataToDecrypt, String secret) {

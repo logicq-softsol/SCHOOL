@@ -20,7 +20,7 @@ public class SchoolExceptionHandler extends ResponseEntityExceptionHandler {
 	public final ResponseEntity<ErrorDetails> handleAllExceptions(Exception ex, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(schoolDateUtils.currentDate(), ex.getMessage(), request.getDescription(false),
 				ex.getMessage());
-		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

@@ -20,4 +20,38 @@ public class ErrorDetails  implements Serializable{
 		this.details = details;
 		this.messageCode = messageCode;
 	}
+
+	/**
+	 * @return the timestamp
+	 */
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+
+	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	
+	/**
+	 * @return the details
+	 */
+	public String getDetails() {
+		return details;
+	}
+
+	
+	/**
+	 * @return the messageCode
+	 */
+	public String getMessageCode() {
+		return messageCode;
+	}
+
+
+	
 }

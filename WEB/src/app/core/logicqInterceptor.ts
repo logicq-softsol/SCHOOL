@@ -37,8 +37,15 @@ export class LogicQIntercept implements HttpInterceptor {
           }
         },
         (err: any) => {
-        //  console.log(event);
+        if(err.error instanceof ArrayBuffer){
+          var decoder = new TextDecoder("utf-8");
+          var msg=decoder.decode(new Uint8Array(err.error));
+          var errorMsg=JSON.parse(msg);
+         this.openErrorSnackBar(errorMsg.message, "CLOSE");
+        }else{
           this.openErrorSnackBar(err.error.message, "CLOSE");
+        }
+         
         }
       )
     );

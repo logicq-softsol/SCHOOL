@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -88,28 +89,28 @@ public class AdminController {
 	public ResponseEntity<List<TopicDetails>> setupDayZeroForTopic() throws Exception {
 		List<TopicDetails> allTopicDetail = new ArrayList<>();
 		File file = ResourceUtils.getFile("classpath:topic.txt");
-		Set<String> topicLines = Files.lines(Paths.get(file.getAbsolutePath())).distinct().collect(Collectors.toSet());
-
-		topicDetailsRepo.deleteAll();
-		chapterDetailsRepo.deleteAll();
-		subjectDetailsRepo.deleteAll();
-		classesDetailsRepo.deleteAll();
-
-		Set<String> classList = new HashSet<>();
+		List<String> classList = new ArrayList<>();
 		Set<String> subjectList = new HashSet<>();
 		Set<String> chapterList = new HashSet<>();
 		Set<String> topicList = new HashSet<>();
-		topicLines.forEach(lin -> {
+
+		Files.lines(Paths.get(file.getAbsolutePath())).skip(1).forEach(lin -> {
 			String[] wordList = lin.split("#");
 			classList.add(wordList[0]);
 			subjectList.add(wordList[0] + "#" + wordList[1]);
 			chapterList.add(wordList[0] + "#" + wordList[1] + "#" + wordList[2]);
 			topicList.add(lin);
 		});
+		;
+
+		topicDetailsRepo.deleteAll();
+		chapterDetailsRepo.deleteAll();
+		subjectDetailsRepo.deleteAll();
+		classesDetailsRepo.deleteAll();
 
 		if (!classList.isEmpty()) {
-			Set<ClassDetails> allClass = new HashSet<>();
-			classList.forEach(lin -> {
+			List<ClassDetails> allClass = new ArrayList<>();
+			classList.stream().distinct().forEach(lin -> {
 				ClassDetails classresult = new ClassDetails();
 				classresult.setDisplayName(lin);
 				classresult.setName(classresult.getDisplayName().toLowerCase().trim());
@@ -122,42 +123,43 @@ public class AdminController {
 
 			if (!subjectList.isEmpty()) {
 				Set<SubjectDetails> allSubject = new HashSet<>();
-				Map<String, ClassDetails> allClassMap = classesDetailsRepo.findAll().stream()
-						.collect(Collectors.toMap(ClassDetails::getName, e -> e));
-
-				subjectList.forEach(lin -> {
-					String[] wordList = lin.split("#");
-					ClassDetails classDetails = allClassMap.get(wordList[0].toLowerCase().trim());// classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
-					SubjectDetails subejctDetail = new SubjectDetails();
-					subejctDetail.setClassId(classDetails.getId());
-					subejctDetail.setName(wordList[1].toLowerCase().trim());
-					subejctDetail.setDisplayName(wordList[1]);
-					subejctDetail.setDescription(
-							"About Subject" + subejctDetail.getDisplayName() + " for " + classDetails.getDisplayName());
-					subejctDetail.setType("SUBJECT");
-					allSubject.add(subejctDetail);
+				subjectList.forEach(sub -> {
+					String[] wordList = sub.split("#");
+					if (wordList.length > 1) {
+						ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+						SubjectDetails subejctDetail = new SubjectDetails();
+						subejctDetail.setClassId(classDetails.getId());
+						subejctDetail.setName(wordList[1].toLowerCase().trim());
+						subejctDetail.setDisplayName(wordList[1]);
+						subejctDetail.setDescription("About Subject" + subejctDetail.getDisplayName() + " for "
+								+ classDetails.getDisplayName());
+						subejctDetail.setType("SUBJECT");
+						allSubject.add(subejctDetail);
+					}
 				});
+
 				if (!allSubject.isEmpty())
 					subjectDetailsRepo.save(allSubject);
 
 				if (!chapterList.isEmpty()) {
 					Set<ChapterDetails> allChapter = new HashSet<>();
-					Map<String, SubjectDetails> allSubjectMap = subjectDetailsRepo.findAll().stream()
-							.collect(Collectors.toMap(e -> (e.getClassId() + "#" + e.getName()), e -> e));
-
-					chapterList.forEach(lin -> {
-						String[] wordList = lin.split("#");
-						SubjectDetails subejctDetail = allSubjectMap
-								.get(wordList[0].toLowerCase().trim() + "#" + wordList[1].toLowerCase().trim());
-						ChapterDetails chapterDetails = new ChapterDetails();
-						chapterDetails.setClassId(subejctDetail.getClassId());
-						chapterDetails.setName(wordList[2].toLowerCase().trim());
-						chapterDetails.setDisplayName(wordList[2]);
-						chapterDetails.setDescription("This Chapter decribes more about " + wordList[2]
-								+ " And belongs to Subject " + subejctDetail.getDisplayName());
-						chapterDetails.setSubjectId(subejctDetail.getId());
-						chapterDetails.setType("CHAPTER");
-						allChapter.add(chapterDetails);
+					chapterList.forEach(chp -> {
+						String[] wordList = chp.split("#");
+						if (wordList.length > 2) {
+							ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+							SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
+									wordList[1].toLowerCase().trim());
+							ChapterDetails chapterDetails = new ChapterDetails();
+							chapterDetails.setClassId(subejctDetail.getClassId());
+							chapterDetails.setName(wordList[2].toLowerCase().trim());
+							chapterDetails.setDisplayName(wordList[2]);
+							chapterDetails.setDescription("This Chapter decribes more about " + wordList[2]
+									+ " And belongs to Subject " + subejctDetail.getDisplayName() + " for class "
+									+ classDetails.getDisplayName());
+							chapterDetails.setSubjectId(subejctDetail.getId());
+							chapterDetails.setType("CHAPTER");
+							allChapter.add(chapterDetails);
+						}
 
 					});
 					if (!allChapter.isEmpty())
@@ -169,37 +171,37 @@ public class AdminController {
 		}
 
 		if (!topicList.isEmpty()) {
+			topicList.forEach(top -> {
+				String[] wordList = top.split("#");
+				if (wordList.length > 3) {
+					ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+					SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
+							wordList[1].toLowerCase().trim());
+					ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndName(classDetails.getId(),
+							subejctDetail.getId(), wordList[2].toLowerCase().trim());
+					TopicDetails topicDetails = new TopicDetails();
+					topicDetails.setClassId(classDetails.getId());
+					topicDetails.setName(wordList[3].toLowerCase().trim());
+					topicDetails.setDisplayName(wordList[3]);
+					topicDetails.setDescription("About Topic for chapter" + chapter.getDisplayName() + " for Subject "
+							+ subejctDetail.getDisplayName() + " of class " + classDetails.getDisplayName());
+					topicDetails.setSubjectId(subejctDetail.getId());
+					topicDetails.setChapterId(chapter.getId());
+					topicDetails.setPlayFileType("mp4");
+					topicDetails.setPlayFileURL(wordList[4]);
+					if (!StringUtils.isEmpty(wordList[5]))
+						topicDetails.setPlayFileTime(Long.valueOf(wordList[5]));
+					else
+						topicDetails.setPlayFileTime(1l);
 
-			topicList.forEach(lin -> {
-				String[] wordList = lin.split("#");
-				ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
-				SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
-						wordList[1].toLowerCase().trim());
-				ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndName(classDetails.getId(),
-						subejctDetail.getId(), wordList[2].toLowerCase().trim());
-
-				TopicDetails topicDetails = new TopicDetails();
-				topicDetails.setClassId(classDetails.getId());
-				topicDetails.setName(wordList[3].toLowerCase().trim());
-				topicDetails.setDisplayName(wordList[3]);
-				topicDetails.setDescription("About Topic for chapter" + chapter.getDisplayName() + " for Subject "
-						+ subejctDetail.getDisplayName() + " of class " + classDetails.getDisplayName());
-				topicDetails.setSubjectId(subejctDetail.getId());
-				topicDetails.setChapterId(chapter.getId());
-				topicDetails.setPlayFileType("mp4");
-				topicDetails.setPlayFileURL(wordList[4]);
-				if (!StringUtils.isEmpty(wordList[5]))
-					topicDetails.setPlayFileTime(Long.valueOf(wordList[5]));
-				else
-					topicDetails.setPlayFileTime(1l);
-
-				topicDetails.setType("TOPIC");
-				allTopicDetail.add(topicDetails);
-				chapter.setTimeRequired(Math.addExact(chapter.getTimeRequired(), topicDetails.getPlayFileTime()));
-				subejctDetail.setTimeRequired(
-						Math.addExact(subejctDetail.getTimeRequired(), topicDetails.getPlayFileTime()));
-				chapterDetailsRepo.save(chapter);
-				subjectDetailsRepo.save(subejctDetail);
+					topicDetails.setType("TOPIC");
+					allTopicDetail.add(topicDetails);
+					chapter.setTimeRequired(Math.addExact(chapter.getTimeRequired(), topicDetails.getPlayFileTime()));
+					subejctDetail.setTimeRequired(
+							Math.addExact(subejctDetail.getTimeRequired(), topicDetails.getPlayFileTime()));
+					chapterDetailsRepo.save(chapter);
+					subjectDetailsRepo.save(subejctDetail);
+				}
 
 			});
 			if (!allTopicDetail.isEmpty())
@@ -509,10 +511,13 @@ public class AdminController {
 			ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
 			byte[] readData = logicQEncryptionAndDecryption.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
 					activationDetails.getActivationToken());
-			response.getOutputStream().write(readData);
-			response.setContentType("video/mp4");
-			response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
-			response.getOutputStream().flush();
+			if (readData.length > 0) {
+				response.getOutputStream().write(readData);
+				response.setContentType("video/mp4");
+				response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
+				response.getOutputStream().flush();
+			}
+
 		}
 	}
 

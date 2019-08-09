@@ -9,7 +9,7 @@
                 <label>Class</label>
                 <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
                   [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
-                  <i *ngIf="classdisplayName != null" class="fas fa-times search-icon" (click)="classClear()"></i>
+                  <i  class="fas fa-times search-icon" (click)="classClear()"></i>
                 <datalist id="classList">
                   <option *ngFor="let classDetail of classList" [value]="classDetail.displayName">{{classDetail?.displayName}}</option>
                 </datalist>
@@ -18,7 +18,7 @@
                 <label>Subject</label>
                 <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
                   [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
-                  <i *ngIf="subjectdisplayName != null" class="fas fa-times search-icon" (click)="subjectClear()"></i>
+                  <i  class="fas fa-times search-icon" (click)="subjectClear()"></i>
                 <datalist id="classSubjectList">
                   <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName">{{classSubject?.displayName}}</option>
                 </datalist>
@@ -27,7 +27,7 @@
                 <label>Chapter</label>
                 <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
                   [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
-                  <i *ngIf="chapterdisplayName != null" class="fas fa-times search-icon" (click)="chapterClear()"></i>
+                  <i  class="fas fa-times search-icon" (click)="chapterClear()"></i>
                 <datalist id="chapterList">
                   <option *ngFor="let chapter of chapterList" [value]="chapter.displayName">{{chapter?.displayName}}</option>
                 </datalist>

@@ -5,7 +5,7 @@ import { Result } from './result';
 
 
 const source = interval(10000);
-const subscribe = source.subscribe(val => console.log(val));
+//const subscribe = source.subscribe(val => console.log(val));
 
 @Component({
   selector: 'app-slider',
