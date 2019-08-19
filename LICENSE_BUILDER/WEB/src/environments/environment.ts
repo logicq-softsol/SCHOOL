@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
- // baseUrl: 'http://127.0.0.1:8080/license/',
+   baseUrl: 'http://127.0.0.1:8080/license/',
  // socketUrl: 'http://127.0.0.1:8080/license/socket'
-  baseUrl: "http://101.53.144.190:8080/license/",
-  socketUrl: "http://101.53.144.190:8080/license/socket"
+  //baseUrl: "http://101.53.144.190:8080/license/",
+  //socketUrl: "http://101.53.144.190:8080/license/socket"
 };

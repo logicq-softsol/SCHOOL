@@ -54,10 +54,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
+		http.headers().frameOptions().sameOrigin();
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.anonymous().and().servletApi().and().authorizeRequests()
 				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
-						"/**/*.css", "/**/*.js")
+						"/**/*.css", "/**/*.js", "/h2-console/**")
 				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				// Allow anonymous logins
 				.antMatchers("/api/login", "/api/school/license/{hostname}","/api/school/licenseKey/{hostname}").permitAll()
