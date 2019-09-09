@@ -1,0 +1,14 @@
+[
+  {
+    "value":"TEACHER",
+    "displayValue": "TEACHER"
+   },
+   {
+    "value":"PRINCIPAL",
+    "displayValue": "PRINCIPAL"
+   },
+   {
+    "value":"ADMIN",
+    "displayValue": "ADMIN"
+   }
+]

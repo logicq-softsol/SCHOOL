@@ -17,7 +17,7 @@ public class EncryptionRestClient {
 			clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 			Client client = Client.create(clientConfig);
 			WebResource webResource = client
-					.resource("http://35.225.43.18:8080/license/api/school/license/" + hostName);
+					.resource("http://35.226.104.219:8080/license/api/school/license/" + hostName);
 			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
@@ -38,7 +38,7 @@ public class EncryptionRestClient {
 			clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 			Client client = Client.create(clientConfig);
 			WebResource webResource = client
-					.resource("http://35.225.43.18:8080/license/api/school/licenseKey/" + hostName);
+					.resource("http://35.226.104.219:8080/license/api/school/licenseKey/" + hostName);
 			ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {

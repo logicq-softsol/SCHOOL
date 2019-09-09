@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, EventEmitter } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { License } from '../model/license';
@@ -19,7 +19,7 @@ export class LicenseComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private authService: AuthenticationService, public snackBar: MatSnackBar, private router: Router) { }
+  constructor(private authService: AuthenticationService, public snackBar: MatSnackBar, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -31,8 +31,23 @@ export class LicenseComponent implements OnInit {
     }
   }
 
-  downloadLicenseFile(license: License) {
+  editLicense(license: License) {
+    const dialogRef = this.dialog.open(DateChangeDialog, {
+      width: "650px",
+      data: license
+    });
 
+    dialogRef.componentInstance.numberofDays.subscribe((days: string) => {
+      this.authService.updateLicense(license,days).subscribe((data: any) => {
+        this.snackBar.open(license.hostName,
+          "License Extended Sucessfully for more  "+days+"  days" ,
+          {
+            duration: 5000
+          }
+        );
+
+      });
+    });
   }
 
   applyFilter(filterValue: string) {
@@ -45,5 +60,32 @@ export class LicenseComponent implements OnInit {
   registerNewLicense() {
     this.router.navigate(['/register']);
   }
+}
+
+@Component({
+  selector: 'change-date-dialog',
+  templateUrl: 'change-date-dialog.html',
+})
+export class DateChangeDialog {
+  numberofDays = new EventEmitter();
+  license: License;
+  days: string;
+  constructor(
+    public dialogRef: MatDialogRef<DateChangeDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: License) {
+    this.license = data;
+
+  }
+
+  confirmDays() {
+    this.numberofDays.emit(this.days);
+    this.onNoClick();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }
+
+

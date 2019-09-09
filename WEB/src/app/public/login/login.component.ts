@@ -32,11 +32,11 @@ export class LoginComponent implements OnInit {
 
   activateProduct(){
     this.authService.checkValidateProduct().subscribe((data: any) => {
-      if (data.messageCode == "NO_LICENSE") {
-          this.router.navigate(['/license']);
-      }else{
-        this.openSnackBar("Your Product already register with this system", "CLOSE");
-      }
+       if (data.messageCode == "NO_LICENSE" || data.messageCode == "PE_LICENSE") {
+           this.router.navigate(['/license']);
+       }else{
+         this.openSnackBar("Your Product already register with this system", "CLOSE");
+       }
   });
   }
 

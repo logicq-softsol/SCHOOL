@@ -15,6 +15,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,6 +26,7 @@ public class LogicQEncryptionAndDecryption {
 
 	private static SecretKeySpec secretKey;
 	private static byte[] key;
+
 
 	private static void setKey(String myKey) {
 		try {
@@ -84,7 +87,7 @@ public class LogicQEncryptionAndDecryption {
 		encryptFile(fbytes, outputFile, key);
 	}
 
-	public static String decrypt(String strToDecrypt, String secret) {
+	public  String decrypt(String strToDecrypt, String secret) {
 		try {
 			setKey(secret);
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");

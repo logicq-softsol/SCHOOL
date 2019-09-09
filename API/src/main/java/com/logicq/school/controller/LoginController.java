@@ -119,18 +119,18 @@ public class LoginController {
 		if (!StringUtils.isEmpty(licnkey.getParam1()) && !StringUtils.isEmpty(licnkey.getParam2())
 				&& !StringUtils.isEmpty(licnkey.getParam3()) && !StringUtils.isEmpty(licnkey.getParam4())) {
 			String hostName = schoolSecurityUtils.getSystemHostName();
-			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName).getBody();
+			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName);
 			if (null != licenseDetails) {
 				String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
 						+ licnkey.getParam4();
-				ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
+				// ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
 				String licenseKey = logicQEncryptionAndDecryption.decrypt(licenseDetails.getLicenseKey(),
-						activateKey.getKey());
-				if (inputkey.equals(licenseKey) && !StringUtils.isEmpty(activateKey.getKey())) {
+						env.getProperty("school.key"));
+				if (inputkey.equals(licenseKey)) {
 					ActivationDetails activationDetail = new ActivationDetails();
 					activationDetail.setActivationDate(schoolDateUtils.findTodayStartDate());
 					activationDetail.setActivationLicense(licenseKey);
-					activationDetail.setActivationToken(activateKey.getKey());
+					activationDetail.setActivationToken(env.getProperty("school.key"));
 					activationDetail.setLastUpdate(schoolDateUtils.findTodayStartDate());
 					activationDetail.setProductName(licenseDetails.getProductName());
 					activationDetail.setProductStatus("ACTIVE");
@@ -291,9 +291,13 @@ public class LoginController {
 	public ResponseEntity<SucessMessage> checkProductValidity() throws Exception {
 		String hostName = schoolSecurityUtils.getSystemHostName();
 		ActivationDetails activationDeatils = productActivationRepo.findByActivationFor(hostName);
-		if (null != activationDeatils) {
+		if (null != activationDeatils && !("EXPIRED".equals(activationDeatils.getProductStatus()))) {
 			return new ResponseEntity<SucessMessage>(
 					new SucessMessage(schoolDateUtils.currentDate(), "Product Validated", "LICENSED"), HttpStatus.OK);
+		}
+		if (null != activationDeatils && "EXPIRED".equals(activationDeatils.getProductStatus())) {
+			return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+					"Product Expired ,Please renew Your License", "PE_LICENSE"), HttpStatus.OK);
 		}
 		return new ResponseEntity<SucessMessage>(
 				new SucessMessage(schoolDateUtils.currentDate(), "Product is Not Valid For this System", "NO_LICENSE"),

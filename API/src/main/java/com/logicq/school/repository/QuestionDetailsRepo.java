@@ -10,7 +10,6 @@ import com.logicq.school.model.Question;
 @Repository
 public interface QuestionDetailsRepo extends JpaRepository<Question, Long> {
 
-	List<Question> findByQuestionFor(String questionFor);
+	List<Question> findByQuestionForAndName(Long questionFor, String name);
 
-	List<Question> findByQuestionForAndQuestionForValue(String questionFor, String questionForValue);
 }

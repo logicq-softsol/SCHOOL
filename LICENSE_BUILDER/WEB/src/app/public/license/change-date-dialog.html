@@ -1,0 +1,25 @@
+<div class="wh-bg">
+    <h2 class="modal-header">Change License Expiry Date for {{license.hostName}}</h2>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>License Extended Days</mat-label>
+                <input matInput placeholder=" Extended Days" [(ngModel)]="days" name="days" required>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="col-md-10 col-sm-10">
+                <mat-label>Current Days : <b>{{license.validityDay}}</b></mat-label>
+            </div>
+            <div class="col-md-11 col-sm-12">
+                <mat-label>Activation Day : <b>{{license.activationDate | date }}</b></mat-label>
+            </div>
+            <div class="col-md-10 col-sm-12">
+                <mat-label>Current Status : <b>{{license.status}}</b></mat-label>
+            </div>
+        </div>
+        <button mat-raised-button color="warn" (click)='confirmDays()'>CONFIRM</button>
+        <button mat-raised-button (click)='onNoClick()'> NO THANKS</button>
+    </div>
+
+</div>

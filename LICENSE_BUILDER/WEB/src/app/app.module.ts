@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomMaterialModule } from './core/material.module';
 import { FormsModule } from '@angular/forms';
 import { TokenStorage } from './core/token.storage';
-import { LicenseComponent } from './public/license/license.component';
+import { LicenseComponent, DateChangeDialog } from './public/license/license.component';
 
 
 
@@ -20,8 +20,10 @@ import { LicenseComponent } from './public/license/license.component';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    LicenseComponent
+    LicenseComponent,
+    DateChangeDialog
   ],
+  entryComponents: [DateChangeDialog],
   imports: [
     BrowserModule,
     AppRoutingModule,

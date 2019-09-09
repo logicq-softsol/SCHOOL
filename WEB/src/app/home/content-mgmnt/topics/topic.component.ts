@@ -190,6 +190,10 @@ export class TopicComponent implements OnInit {
   }
 
 
+  viewQuestions(topic: TopicDetail){
+
+  }
+
 
 
   markFavorites(topic: TopicDetail) {

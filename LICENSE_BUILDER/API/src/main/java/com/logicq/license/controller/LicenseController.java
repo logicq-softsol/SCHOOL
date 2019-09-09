@@ -55,8 +55,36 @@ public class LicenseController {
 				licenseDetails.setCreationTime(schoolDateUtils.currentDate());
 				licenseDetails.setCreatedBy(loginDetail.getUserName());
 				licenseDetails.setStatus("IN_ACTIVE");
-				licenseBuildUtil.buildproductKey(licenseDetails);
+				String key = licenseBuildUtil.buildproductKey(licenseDetails);
+				licenseDetails.setLicenseKey(key);
 				licenseDetailRepo.save(licenseDetails);
+				licenseBuildUtil.generateLicenseFile(licenseDetails);
+				return new ResponseEntity<SucessMessage>(
+						new SucessMessage(schoolDateUtils.currentDate(), "Sucess Fully Registered", "SUCESS"),
+						HttpStatus.OK);
+			} else {
+				licenseBuildUtil.generateLicenseFile(licenseDetails);
+				return new ResponseEntity<SucessMessage>(
+						new SucessMessage(schoolDateUtils.currentDate(), "Licese exist for Host Name", "LICENSE_EXIST"),
+						HttpStatus.BAD_REQUEST);
+			}
+		}
+		return new ResponseEntity<SucessMessage>(
+				new SucessMessage(schoolDateUtils.currentDate(), "Unable to logout ", "ERROR"), HttpStatus.BAD_REQUEST);
+	}
+
+	@RequestMapping(value = "/license/extend/{days}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SucessMessage> updateLicenseLicense(@PathVariable String days,
+			@RequestBody LicenseDetails license) throws Exception {
+		LoginDetails loginDetail = licenseSecurityUtils.getUserFromSecurityContext();
+		if (null != loginDetail) {
+			LicenseDetails fetchLicensed = licenseDetailRepo.findByHostName(license.getHostName());
+			if (null != fetchLicensed) {
+				Integer vlidateDays = fetchLicensed.getValidityDay() + Integer.parseInt(days);
+				fetchLicensed.setValidityDay(vlidateDays);
+				fetchLicensed.setStatus("ACTIVE");
+				licenseDetailRepo.save(fetchLicensed);
+				licenseBuildUtil.generateLicenseFile(fetchLicensed);
 				return new ResponseEntity<SucessMessage>(
 						new SucessMessage(schoolDateUtils.currentDate(), "Sucess Fully Registered", "SUCESS"),
 						HttpStatus.OK);

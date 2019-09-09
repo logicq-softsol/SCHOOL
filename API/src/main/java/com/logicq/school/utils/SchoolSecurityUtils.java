@@ -70,29 +70,6 @@ public class SchoolSecurityUtils {
 			throw new Exception(" User is Not Authorized to acess ");
 		}
 	}
-	/*
-	 * public String getSystemHostName() throws Exception { List<String>
-	 * ethernetPhysicalList = new ArrayList<>(); String command = "ipconfig /all";
-	 * Process p = Runtime.getRuntime().exec(command); BufferedReader inn = new
-	 * BufferedReader(new InputStreamReader(p.getInputStream())); Pattern pattern =
-	 * Pattern.compile(".*Physical Addres.*: (.*)"); String systemkey =
-	 * env.getProperty("school.system.address");
-	 * 
-	 * while (true) { String line = inn.readLine(); if
-	 * (line.toLowerCase().matches(systemkey.toLowerCase())) { checkFlag = true; }
-	 * if (checkFlag) { Matcher mm = pattern.matcher(line); if (mm.matches()) {
-	 * ethernetPhysicalAddr = mm.group(1).replaceAll("-", ""); checkFlag = false;
-	 * break; }
-	 * 
-	 * }
-	 * 
-	 * }
-	 */
-	// return ethernetPhysicalAddr;
-	// else
-	// throw new Exception("Please check with school.system.address Physical Addres
-	// in CMD..");
-	// }
 
 	public String getSystemHostName() throws Exception {
 		String ethernetPhysicalAddr=null;

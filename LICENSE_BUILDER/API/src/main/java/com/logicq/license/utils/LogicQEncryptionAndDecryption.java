@@ -54,7 +54,7 @@ public class LogicQEncryptionAndDecryption {
 
 	}
 
-	private static File changeExtension(File f, String newExtension) {
+	public static File changeExtension(File f, String newExtension) {
 		int i = f.getName().lastIndexOf('.');
 		String name = f.getName().substring(0, i);
 		return new File(f.getParent() + "/" + name + "." + newExtension);
@@ -73,7 +73,7 @@ public class LogicQEncryptionAndDecryption {
 		}
 	}
 
-	private static void readFileAndEncryptFile(File fileToBeEncrypted, File outputFile, String key) throws IOException {
+	public static void readFileAndEncryptFile(File fileToBeEncrypted, File outputFile, String key) throws IOException {
 		FileInputStream fis = new FileInputStream(fileToBeEncrypted);
 		byte[] fbytes = new byte[(int) fileToBeEncrypted.length()];
 		fis.read(fbytes);

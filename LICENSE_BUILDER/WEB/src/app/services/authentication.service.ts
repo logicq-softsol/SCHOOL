@@ -66,6 +66,12 @@ export class AuthenticationService {
     return this.http.get(environment.baseUrl + 'api/school/license');
   }
 
-  
+  updateLicense( license:License,day:string){
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.put(environment.baseUrl + 'api/school/license/extend/'+day,license, httpOptions);
+  }
 
 }

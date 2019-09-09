@@ -12,12 +12,7 @@ import com.logicq.license.vo.FileStorageProperties;
 @SpringBootApplication
 @EnableConfigurationProperties({ FileStorageProperties.class })
 @EnableAsync
-public class LicenseApplication extends SpringBootServletInitializer {
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(LicenseApplication.class);
-	}
+public class LicenseApplication {
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(LicenseApplication.class, args);
