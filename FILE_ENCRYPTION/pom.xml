@@ -55,7 +55,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.logicq.encryption.VideoFileEncryption</mainClass>
+							<mainClass>com.logicq.encryption.FindLicenseKey</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

@@ -24,8 +24,18 @@ export class ContentMgmntService {
 
   public displayView = new ReplaySubject<any>(1);
   public contentDisplayView=new ReplaySubject<any>(1); 
+  public topic=new ReplaySubject<TopicDetail>(1); 
 
   constructor(private http: HttpClient) { }
+
+
+  getTopic() {
+    return this.topic.asObservable();
+  }
+
+  public changeTopic(topic:any) {
+    this.topic.next(topic);
+  }
 
 
   getContentDisplayView() {
@@ -339,5 +349,10 @@ getUserSession(interval) {
 }
 getAllSessions(interval) {
   return this.http.get(environment.baseUrl + 'api/sessions/'+interval);
+}
+
+
+getQuestionList(name:string,questionFor:string) {
+  return this.http.get(environment.baseUrl + 'api/question/'+name+"/"+questionFor);
 }
 }

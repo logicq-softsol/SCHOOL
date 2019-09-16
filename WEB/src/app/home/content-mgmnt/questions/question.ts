@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ContentMgmntService } from '../../service/content-mgmnt.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { TopicDetail } from 'src/app/public/model/topic-detail';
+import { QuestionDetails } from './question-detail';
 
 
 @Component({
@@ -10,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./question.scss']
 })
 export class QuestionComponent implements OnInit {
+  public questionList: QuestionDetails[] = [];
 
   constructor(private contentMgmntService: ContentMgmntService,
     public dialog: MatDialog,
@@ -18,6 +21,12 @@ export class QuestionComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.contentMgmntService.getTopic().subscribe((topic: TopicDetail) => {
+      this.contentMgmntService.getQuestionList(topic.name, "" + topic.id).subscribe((qusts: QuestionDetails[]) => {
+        this.questionList = qusts;
+      });
+    });
 
   }
 }

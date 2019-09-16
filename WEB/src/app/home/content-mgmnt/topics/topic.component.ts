@@ -49,7 +49,8 @@ export class TopicComponent implements OnInit {
     private authService: AuthenticationService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar) {
+    public snackBar: MatSnackBar,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -191,7 +192,8 @@ export class TopicComponent implements OnInit {
 
 
   viewQuestions(topic: TopicDetail){
-
+    this.contentMgmntService.changeTopic(topic);
+    this.router.navigate(['/home/teacher/question']);
   }
 
 
