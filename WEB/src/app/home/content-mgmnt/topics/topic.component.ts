@@ -43,6 +43,8 @@ export class TopicComponent implements OnInit {
   chapterdisplayName: any;
   displayView: any;
 
+  questionPath: any = 'assets/question';
+
 
   constructor(
     private contentMgmntService: ContentMgmntService,
@@ -191,12 +193,24 @@ export class TopicComponent implements OnInit {
   }
 
 
-  viewQuestions(topic: TopicDetail){
+  viewQuestions(topic: TopicDetail) {
+    this.buildQuestionPathForTopic(topic);
+    topic.questionPath = this.questionPath;
     this.contentMgmntService.changeTopic(topic);
     this.router.navigate(['/home/teacher/question']);
   }
 
 
+
+  private buildQuestionPathForTopic(topic: TopicDetail) {
+
+    var className = this.classSetup.name.replace(/\s/g, "");
+    var subjectName = this.subjectSetup.name.replace(/\s/g, "");
+    var chapterName = this.chapter.name.replace(/\s/g, "");
+    var topicName = topic.name.replace(/\s/g, "");
+    this.questionPath = this.questionPath + "/" + className + "/" +
+      subjectName + "/" + chapterName + "/" + topicName;
+  }
 
   markFavorites(topic: TopicDetail) {
     let favorite: Favorites = new Favorites();

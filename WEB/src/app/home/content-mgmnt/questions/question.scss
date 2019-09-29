@@ -340,3 +340,21 @@ box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.2); text-align:center; margin-bottom:30
 	text-transform: capitalize;
 	margin: 0 5px 10px 5px;
 }
+
+
+mat-radio-button {
+	display: block;
+}
+.correct {
+	color: forestgreen;
+	float: right;
+}
+.wrong {
+	color: red;	
+	float: right;
+}
+
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}

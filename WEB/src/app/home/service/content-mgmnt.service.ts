@@ -23,8 +23,8 @@ export class ContentMgmntService {
   public ChapterList = new ReplaySubject<ChapterSetupDetail[]>(1);
 
   public displayView = new ReplaySubject<any>(1);
-  public contentDisplayView=new ReplaySubject<any>(1); 
-  public topic=new ReplaySubject<TopicDetail>(1); 
+  public contentDisplayView = new ReplaySubject<any>(1);
+  public topic = new ReplaySubject<TopicDetail>(1);
 
   constructor(private http: HttpClient) { }
 
@@ -33,7 +33,7 @@ export class ContentMgmntService {
     return this.topic.asObservable();
   }
 
-  public changeTopic(topic:any) {
+  public changeTopic(topic: any) {
     this.topic.next(topic);
   }
 
@@ -42,16 +42,16 @@ export class ContentMgmntService {
     return this.contentDisplayView.asObservable();
   }
 
-  public changeContentDisplayView(display:any) {
+  public changeContentDisplayView(display: any) {
     this.contentDisplayView.next(display);
   }
 
-  
+
   getDisplayView() {
     return this.displayView.asObservable();
   }
 
-  public changeDisplayView(display:any) {
+  public changeDisplayView(display: any) {
     this.displayView.next(display);
   }
 
@@ -288,11 +288,11 @@ export class ContentMgmntService {
     return this.http.get<any>(environment.baseUrl + 'api/admin/readvideofile', httpOptions);
   }
 
-  playLesson(topic:TopicDetail) {
+  playLesson(topic: TopicDetail) {
     const httpOptions = {
       'responseType': 'arraybuffer' as 'json'
     };
-    return this.http.get<any>(environment.baseUrl + 'api/admin/playlesson/'+topic.id, httpOptions);
+    return this.http.get<any>(environment.baseUrl + 'api/admin/playlesson/' + topic.id, httpOptions);
 
   }
 
@@ -306,53 +306,58 @@ export class ContentMgmntService {
     return this.http.post(environment.baseUrl + 'api/admin/day0/setup', httpOptions);
   }
 
-getAllTopics() {
-  return this.http.get(environment.baseUrl + 'api/admin/topics');
-}
+  getAllTopics() {
+    return this.http.get(environment.baseUrl + 'api/admin/topics');
+  }
 
 
-getClassDetails(classId:any){
-  return this.http.get(environment.baseUrl + 'api/admin/classes/'+classId);
-}
+  getClassDetails(classId: any) {
+    return this.http.get(environment.baseUrl + 'api/admin/classes/' + classId);
+  }
 
 
-getSubjectAndClass(classId: number, subjectId: number) {
-  return this.http.get(environment.baseUrl + 'api/admin/subjects/' + classId + "/" + subjectId);
-}
+  getSubjectAndClass(classId: number, subjectId: number) {
+    return this.http.get(environment.baseUrl + 'api/admin/subjects/' + classId + "/" + subjectId);
+  }
 
 
-getChapterForClassAndSubject(classId: number, subjectId: number,chapter:number) {
-  return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId+"/"+chapter);
-}
+  getChapterForClassAndSubject(classId: number, subjectId: number, chapter: number) {
+    return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId + "/" + chapter);
+  }
 
 
 
-getRemaingLicenseDays() {
-  return this.http.get(environment.baseUrl + 'api/checkProductActivationDate');
-}
-startSession(topic: TopicDetail) {
-  let headers = new HttpHeaders();
-  headers.set('Content-Type', 'application/json');
-  headers.set('Access-Control-Allow-Origin', '*');
-  let httpOptions = { headers: headers };
-  return this.http.post(environment.baseUrl +  `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
-}
-endSession(topic: TopicDetail) {  
-  let headers = new HttpHeaders();
-  headers.set('Content-Type', 'application/json');
-  headers.set('Access-Control-Allow-Origin', '*');
-  let httpOptions = { headers: headers };
-  return this.http.put(environment.baseUrl +  `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
-}
-getUserSession(interval) {
-  return this.http.get(environment.baseUrl + 'api/session/'+interval);
-}
-getAllSessions(interval) {
-  return this.http.get(environment.baseUrl + 'api/sessions/'+interval);
-}
+  getRemaingLicenseDays() {
+    return this.http.get(environment.baseUrl + 'api/checkProductActivationDate');
+  }
+  startSession(topic: TopicDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.post(environment.baseUrl + `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
+  }
+  endSession(topic: TopicDetail) {
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.put(environment.baseUrl + `api/session/${topic.classId}/${topic.subjectId}/${topic.chapterId}/${topic.id}`, httpOptions);
+  }
+  getUserSession(interval) {
+    return this.http.get(environment.baseUrl + 'api/session/' + interval);
+  }
+  getAllSessions(interval) {
+    return this.http.get(environment.baseUrl + 'api/sessions/' + interval);
+  }
 
 
-getQuestionList(name:string,questionFor:string) {
-  return this.http.get(environment.baseUrl + 'api/question/'+name+"/"+questionFor);
-}
+  getQuestionList(topic: TopicDetail) {
+    var name = topic.displayName.replace(/\s/g, "");;
+    return this.http.get(topic.questionPath + "/mcq/" + name + ".json");  
+  }
+  getPdfList(topic: TopicDetail) {
+    var name = topic.displayName.replace(/\s/g, "");;
+    return this.http.get(topic.questionPath + "/pdf/" + name + ".json");  
+  }
 }

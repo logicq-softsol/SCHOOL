@@ -1,6 +1,8 @@
 export class QuestionDetails {
-    public type: string;
+    public qno: number;
+    public id: number;
     public question: string;
-    public options: string;
-    public correct: string;
+    public option: any[] = [];
+    public coption: string;
+    public ansflag: string = 'N';
 }

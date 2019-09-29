@@ -1,67 +1,82 @@
 <mat-tab-group>
-  <mat-tab label="MCQ"> <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          1
-        </mat-panel-title>
-        <mat-panel-description>
-          In math questions answers each questions are solved with explanation. The questions are based from different topics.
-           Care has been taken to solve the questions in such a way that students can understand each and every step.
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
-      <mat-form-field>
-        
-      </mat-form-field>
-  
-      <mat-form-field>
-        <input matInput placeholder="Age">
-      </mat-form-field>
-    </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Self aware panel
-        </mat-panel-title>
-        <mat-panel-description>
-          Currently I am {{panelOpenState ? 'open' : 'closed'}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>I'm visible because I am open</p>
-    </mat-expansion-panel>
-  </mat-accordion></mat-tab>
-  <mat-tab label="Previous Year">  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Personal data
-        </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-  
-      <mat-form-field>
-        <input matInput placeholder="First name">
-      </mat-form-field>
-  
-      <mat-form-field>
-        <input matInput placeholder="Age">
-      </mat-form-field>
-    </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Self aware panel
-        </mat-panel-title>
-        <mat-panel-description>
-          Currently I am {{panelOpenState ? 'open' : 'closed'}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>I'm visible because I am open</p>
-    </mat-expansion-panel>
-  </mat-accordion></mat-tab>
+  <mat-tab label="MCQ">
+
+    <mat-horizontal-stepper #stepper>
+      <mat-step *ngFor="let question of questionList | slice:0:1">
+        <div class="col-md-12">
+          <div class="col-md-7">
+            <mat-panel-title>
+               <h6 color="blue"><b>{{question.question}}?</b></h6>
+            </mat-panel-title>
+            <mat-radio-group [(ngModel)]="selectedOpt">
+              <mat-radio-button class="example-radio-button" *ngFor="let opt of question.option" [value]="opt" (change)="onChangeQusetionOption($event,question)"><strong>{{opt}}</strong></mat-radio-button>
+            </mat-radio-group>
+            <button mat-raised-button (click)="viewCorrectAnswer(question)">View Answer</button>
+          </div>
+          <div class="col-md-3">
+            <div *ngIf="question.ansflag=='C'"> <img src="assets/images/correctans.gif" /></div>
+            <div *ngIf="question.ansflag=='W'"> <img src="assets/images/wrongans.gif" /></div>
+            <div *ngIf="question.ansflag=='N'"></div>
+          </div>
+          <div>
+          </div>
+          <button mat-raised-button matStepperNext (click)="resetQuestionAnswer(question)">Next</button>
+        </div>
+      </mat-step>
+      <mat-step *ngFor="let mquestion of questionList | slice:1:questionList.length-1">
+        <div class="col-md-12">
+          <div class="col-md-7">
+            <mat-panel-title>
+              <h6 color="blue">{{mquestion.question}}?</h6>
+            </mat-panel-title>
+            <mat-radio-group [(ngModel)]="selectedOpt">
+              <mat-radio-button class="example-radio-button" *ngFor="let opt of mquestion.option" [value]="opt"
+                (change)="onChangeQusetionOption($event,mquestion)"><strong>{{opt}}</strong></mat-radio-button>
+            </mat-radio-group>
+            <button mat-raised-button (click)="viewCorrectAnswer(mquestion)">View Answer</button>
+          </div>
+          <div class="col-md-3">
+            <div *ngIf="mquestion.ansflag=='C'"> <img src="assets/images/correctans.gif" /></div>
+            <div *ngIf="mquestion.ansflag=='W'"> <img src="assets/images/wrongans.gif" /></div>
+            <div *ngIf="mquestion.ansflag=='N'"></div>
+          </div>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious (click)="resetQuestionAnswer(mquestion)">Back</button>
+          <button mat-button matStepperNext (click)="resetQuestionAnswer(mquestion)">Next</button>
+        </div>
+
+      </mat-step>
+      <mat-step *ngFor="let lquestion of questionList | slice:questionList.length-1:questionList.length">
+        <div class="col-md-12">
+          <div class="col-md-7">
+            <mat-panel-title>
+              <h6 color="blue">{{lquestion.question}}?</h6>
+            </mat-panel-title>
+            <mat-radio-group [(ngModel)]="selectedOpt">
+              <mat-radio-button class="example-radio-button" *ngFor="let opt of lquestion.option" [value]="opt"
+                (change)="onChangeQusetionOption($event,lquestion)"><strong>{{opt}}</strong></mat-radio-button>
+            </mat-radio-group>
+            <button mat-raised-button (click)="viewCorrectAnswer(lquestion)">View Answer</button>
+          </div>
+          <div class="col-md-3">
+            <div *ngIf="lquestion.ansflag=='C'"> <img src="assets/images/correctans.gif" /></div>
+            <div *ngIf="lquestion.ansflag=='W'"> <img src="assets/images/wrongans.gif" /></div>
+            <div *ngIf="lquestion.ansflag=='N'"></div>
+          </div>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious (click)="resetQuestionAnswer(lquestion)">Back</button>
+          <button mat-button (click)="stepper.reset()" (click)="resetQuestionAnswer(lquestion)">Reset</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-tab>
+  <mat-tab label="Previous Year">
+    <mat-accordion>
+      <div class="example-button-row" *ngFor="let pdf of pdfList">
+        <button mat-stroked-button color="warn" (click)="downloadPDf(pdf)"><strong>{{pdf.name}}</strong></button>
+      </div>
+    </mat-accordion>
+  </mat-tab>
 </mat-tab-group>

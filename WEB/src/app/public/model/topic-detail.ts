@@ -10,4 +10,5 @@ export class TopicDetail {
     public icon: string;
     public playFileURL: string;
     public playFileType: string;
+    public questionPath:string;
 }

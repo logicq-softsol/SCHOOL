@@ -1,0 +1,11 @@
+<h6 mat-dialog-title>Correct Answer For This is Question is</h6>
+<div mat-dialog-content>
+
+  <mat-form-field>
+  <h5>{{question.coption}} </h5>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="onNoClick()" cdkFocusInitial>Ok</button>
+</div>
