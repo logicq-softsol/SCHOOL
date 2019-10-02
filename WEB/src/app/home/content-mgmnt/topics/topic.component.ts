@@ -43,7 +43,7 @@ export class TopicComponent implements OnInit {
   chapterdisplayName: any;
   displayView: any;
 
-  questionPath: any = 'assets/question';
+  questionPath: any = '';
 
 
   constructor(
@@ -168,11 +168,11 @@ export class TopicComponent implements OnInit {
     // this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
     //   this.topicList = tdata;
     // });
-    if (this.chapterdisplayName.length > 1) {
+    if (null != this.chapterdisplayName && this.chapterdisplayName.length > 1) {
       this.onChapterChange(this.chapterdisplayName);
-    } else if (this.subjectdisplayName.length > 1) {
+    } else if (null != this.subjectdisplayName && this.subjectdisplayName.length > 1) {
       this.onSubjectChange(this.subjectdisplayName);
-    } else if (this.classdisplayName.length > 1) {
+    } else if (null != this.classdisplayName && this.classdisplayName.length > 1) {
       this.onClassChange(this.classdisplayName);
     }
   }
@@ -191,19 +191,54 @@ export class TopicComponent implements OnInit {
     this.onChapterChange(value);
     this.displayView = 'TOPIC';
   }
+  viewQuestionsForChapter(chapter: ChapterSetupDetail) {
+    this.buildQuestionPathForChapter(chapter);
+    chapter.questionPath = this.questionPath;
+    this.contentMgmntService.changeChapterSetupDetail(chapter);
+    this.contentMgmntService.changeQuestionView('CHAPTER');
+    this.router.navigate(['/home/teacher/question']);
+  }
 
+  viewQuestionsForSubject(subject: SubjectSetupDetail) {
+    this.buildQuestionPathForSubject(subject);
+    subject.questionPath = this.questionPath;
+    this.contentMgmntService.changeSubjectDetail(subject);
+    this.contentMgmntService.changeQuestionView('SUBJECT');
+    this.router.navigate(['/home/teacher/question']);
+
+  }
+
+  private buildQuestionPathForChapter(subject: ChapterSetupDetail) {
+    this.questionPath = '';
+    this.questionPath = 'assets/question';
+    var className = this.classSetup.name.replace(/\s/g, "");
+    var subjectName = subject.name.replace(/\s/g, "");
+    var chapterName = this.chapter.name.replace(/\s/g, "");
+    this.questionPath = this.questionPath + "/" + className + "/" + subjectName + "/" + chapterName;
+  }
+
+
+  private buildQuestionPathForSubject(subject: SubjectSetupDetail) {
+    this.questionPath = '';
+    this.questionPath = 'assets/question';
+    var className = this.classSetup.name.replace(/\s/g, "");
+    var subjectName = subject.name.replace(/\s/g, "");
+    this.questionPath = this.questionPath + "/" + className + "/" + subjectName;
+  }
 
   viewQuestions(topic: TopicDetail) {
     this.buildQuestionPathForTopic(topic);
     topic.questionPath = this.questionPath;
     this.contentMgmntService.changeTopic(topic);
+    this.contentMgmntService.changeQuestionView('TOPIC');
     this.router.navigate(['/home/teacher/question']);
   }
 
 
 
   private buildQuestionPathForTopic(topic: TopicDetail) {
-
+    this.questionPath = '';
+    this.questionPath = 'assets/question';
     var className = this.classSetup.name.replace(/\s/g, "");
     var subjectName = this.subjectSetup.name.replace(/\s/g, "");
     var chapterName = this.chapter.name.replace(/\s/g, "");

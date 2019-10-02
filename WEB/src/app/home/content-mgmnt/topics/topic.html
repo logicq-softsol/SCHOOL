@@ -100,6 +100,7 @@
           <p class="video-text"><a (click)="onChapterChange(chapter.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{chapter.displayName}}</a></p>
           <ul class="class-edit">
               <li><i class="fa fa-clock" aria-hidden="true"></i> {{chapter.timeRequired}} Mins.</li>
+              <li><a (click)="viewQuestionsForChapter(chapter)"><i class="fa fa-question-circle" aria-hidden="true"></i></a></li>
           </ul>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addTopicDetails(chapter)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
@@ -120,6 +121,7 @@
           <p class="video-text"><a (click)="onSubjectChange(subject.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{subject.displayName}}</a></p>
           <ul class="class-edit">
               <li class="borders"><i class="fa fa-clock" aria-hidden="true"></i> {{subject.timeRequired}} Mins.</li>
+              <li><a (click)="viewQuestionsForSubject(subject)"><i class="fa fa-question-circle" aria-hidden="true"></i></a></li>
           </ul>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addChapterDetails(subject)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>

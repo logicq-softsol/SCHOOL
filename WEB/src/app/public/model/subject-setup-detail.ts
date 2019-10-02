@@ -8,5 +8,6 @@ export class SubjectSetupDetail {
     public icon: string;
     public playFileURL: string;
     public playFileType: string;
+    public questionPath:string;
 
 }

@@ -10,4 +10,5 @@ export class ChapterSetupDetail {
     public playFileURL: string;
     public playFileType: string;
     public hasSubChapter: boolean = false;
+    public questionPath:string;
 }

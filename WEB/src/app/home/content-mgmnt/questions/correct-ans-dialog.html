@@ -1,9 +1,6 @@
 <h6 mat-dialog-title>Correct Answer For This is Question is</h6>
 <div mat-dialog-content>
-
-  <mat-form-field>
-  <h5>{{question.coption}} </h5>
-  </mat-form-field>
+  <h5><strong [ngStyle]="correct">{{question.coption}}</strong></h5>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Close</button>

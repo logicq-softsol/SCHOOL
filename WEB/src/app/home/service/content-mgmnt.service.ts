@@ -25,8 +25,19 @@ export class ContentMgmntService {
   public displayView = new ReplaySubject<any>(1);
   public contentDisplayView = new ReplaySubject<any>(1);
   public topic = new ReplaySubject<TopicDetail>(1);
+  public questionView = new ReplaySubject<string>(1);
+
 
   constructor(private http: HttpClient) { }
+
+
+  getQuestionView() {
+    return this.questionView.asObservable();
+  }
+
+  public changeQuestionView(questionView: string) {
+    this.questionView.next(questionView);
+  }
 
 
   getTopic() {
@@ -354,10 +365,30 @@ export class ContentMgmntService {
 
   getQuestionList(topic: TopicDetail) {
     var name = topic.displayName.replace(/\s/g, "");;
-    return this.http.get(topic.questionPath + "/mcq/" + name + ".json");  
+    return this.http.get(topic.questionPath + "/mcq/" + name + ".json");
   }
   getPdfList(topic: TopicDetail) {
     var name = topic.displayName.replace(/\s/g, "");;
-    return this.http.get(topic.questionPath + "/pdf/" + name + ".json");  
+    return this.http.get(topic.questionPath + "/pdf/" + name + ".json");
   }
+
+  getQuestionForSubject(subject: SubjectSetupDetail) {
+    var name = subject.displayName.replace(/\s/g, "");;
+    return this.http.get(subject.questionPath + "/mcq/" + name + ".json");
+  }
+  getPdfListForSubject(subject: SubjectSetupDetail) {
+    var name = subject.displayName.replace(/\s/g, "");;
+    return this.http.get(subject.questionPath + "/pdf/" + name + ".json");
+  }
+
+
+  getQuestionForChapter(chapter: ChapterSetupDetail) {
+    var name = chapter.displayName.replace(/\s/g, "");;
+    return this.http.get(chapter.questionPath + "/mcq/" + name + ".json");
+  }
+  getPdfListForChapter(chapter: ChapterSetupDetail) {
+    var name = chapter.displayName.replace(/\s/g, "");;
+    return this.http.get(chapter.questionPath + "/pdf/" + name + ".json");
+  }
+
 }
