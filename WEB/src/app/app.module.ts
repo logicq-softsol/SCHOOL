@@ -14,6 +14,7 @@ import { LicenseComponent } from './public/license/license.component';
 import { createCustomElement } from '@angular/elements';
 import { SliderComponent } from './public/slider/slider.component';
 import { TopicDisplayDialog } from './home/home.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -33,7 +34,8 @@ import { TopicDisplayDialog } from './home/home.component';
     BrowserAnimationsModule,
     FormsModule,
     CustomMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    PdfViewerModule
   ],
   entryComponents: [SliderComponent,TopicDisplayDialog],
   providers: [{

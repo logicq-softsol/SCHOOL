@@ -11,7 +11,7 @@ import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
 import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
+import { defaultOptions } from 'ngx-extended-pdf-viewer';
 
 @Component({
   selector: 'app-question',
@@ -47,6 +47,7 @@ export class QuestionComponent implements OnInit {
 
   public correctAudio = new Audio();
   public wrongAudio = new Audio();
+  public pdfsrc: string = "";
 
   constructor(private contentMgmntService: ContentMgmntService,
     public dialog: MatDialog,
@@ -82,13 +83,13 @@ export class QuestionComponent implements OnInit {
 
 
     this.contentMgmntService.getChapterSetupDetail().subscribe((data: ChapterSetupDetail) => {
-      if(null!=data){
+      if (null != data) {
         this.chapter = data;
         this.chapterdisplayName = data.displayName;
         this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
           this.topicList = tdata;
         });
-  
+
       }
 
     });
@@ -113,6 +114,9 @@ export class QuestionComponent implements OnInit {
             });
             this.contentMgmntService.getPdfList(topic).subscribe((pdfs: PdfDetail[]) => {
               this.pdfList = pdfs;
+              if (null != this.pdfList && this.pdfList.length > 0) {
+                this.pdfsrc = this.pdfList[0].link;
+              }
             });
           }
         });
@@ -125,6 +129,9 @@ export class QuestionComponent implements OnInit {
             });
             this.contentMgmntService.getPdfListForSubject(subject).subscribe((pdfs: PdfDetail[]) => {
               this.pdfList = pdfs;
+              if (null != this.pdfList && this.pdfList.length > 0) {
+                this.pdfsrc = this.pdfList[0].link;
+              }
             });
           }
         });
@@ -138,6 +145,9 @@ export class QuestionComponent implements OnInit {
             });
             this.contentMgmntService.getPdfListForChapter(chapter).subscribe((pdfs: PdfDetail[]) => {
               this.pdfList = pdfs;
+              if (null != this.pdfList && this.pdfList.length > 0) {
+                this.pdfsrc = this.pdfList[0].link;
+              }
             });
           }
         });
@@ -243,10 +253,10 @@ export class QuestionComponent implements OnInit {
 
   private buildQuestionPathForTopic(topic: TopicDetail) {
 
-    var className = this.classSetup.name.replace(/\s/g, "");
-    var subjectName = this.subjectSetup.name.replace(/\s/g, "");
-    var chapterName = this.chapter.name.replace(/\s/g, "");
-    var topicName = topic.name.replace(/\s/g, "");
+    var className = this.classSetup.displayName.replace(/\s/g, "");
+    var subjectName = this.subjectSetup.displayName.replace(/\s/g, "");
+    var chapterName = this.chapter.displayName.replace(/\s/g, "");
+    var topicName = topic.displayName.replace(/\s/g, "");
     this.questionPath = this.questionPath + "/" + className + "/" +
       subjectName + "/" + chapterName + "/" + topicName;
   }
@@ -290,12 +300,14 @@ export class QuestionComponent implements OnInit {
   }
 
   downloadPDf(pdf: PdfDetail) {
-    // let link = document.createElement("a");
-    // link.download = pdf.name;
-    // link.href = pdf.link;
-    // link.click();
-    const fileURL = URL.createObjectURL(pdf.link);
-    window.open(fileURL, '_blank');
+    let link = document.createElement("a");
+    link.download = pdf.name;
+    link.href = pdf.link;
+    link.click();
+    // const fhttp://127.0.0.1:4200/ileURL = URL.createObjectURL(pdf.link);
+    // pdf.link="http://127.0.0.1:4200/assets/question/nursery/pdf/Nursery-2012.pdf";
+    //  window.open(pdf.link);
+    this.pdfsrc = pdf.link;
   }
 }
 

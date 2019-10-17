@@ -208,12 +208,12 @@ export class TopicComponent implements OnInit {
 
   }
 
-  private buildQuestionPathForChapter(subject: ChapterSetupDetail) {
+  private buildQuestionPathForChapter(chpater: ChapterSetupDetail) {
     this.questionPath = '';
     this.questionPath = 'assets/question';
-    var className = this.classSetup.name.replace(/\s/g, "");
-    var subjectName = subject.name.replace(/\s/g, "");
-    var chapterName = this.chapter.name.replace(/\s/g, "");
+    var className = this.classSetup.displayName.replace(/\s/g, "");
+    var subjectName = this.subjectSetup.displayName.replace(/\s/g, "");
+    var chapterName = chpater.displayName.replace(/\s/g, "");
     this.questionPath = this.questionPath + "/" + className + "/" + subjectName + "/" + chapterName;
   }
 
@@ -221,8 +221,8 @@ export class TopicComponent implements OnInit {
   private buildQuestionPathForSubject(subject: SubjectSetupDetail) {
     this.questionPath = '';
     this.questionPath = 'assets/question';
-    var className = this.classSetup.name.replace(/\s/g, "");
-    var subjectName = subject.name.replace(/\s/g, "");
+    var className = this.classSetup.displayName.replace(/\s/g, "");
+    var subjectName = subject.displayName.replace(/\s/g, "");
     this.questionPath = this.questionPath + "/" + className + "/" + subjectName;
   }
 
@@ -239,10 +239,10 @@ export class TopicComponent implements OnInit {
   private buildQuestionPathForTopic(topic: TopicDetail) {
     this.questionPath = '';
     this.questionPath = 'assets/question';
-    var className = this.classSetup.name.replace(/\s/g, "");
-    var subjectName = this.subjectSetup.name.replace(/\s/g, "");
-    var chapterName = this.chapter.name.replace(/\s/g, "");
-    var topicName = topic.name.replace(/\s/g, "");
+    var className = this.classSetup.displayName.replace(/\s/g, "");
+    var subjectName = this.subjectSetup.displayName.replace(/\s/g, "");
+    var chapterName = this.chapter.displayName.replace(/\s/g, "");
+    var topicName = topic.displayName.replace(/\s/g, "");
     this.questionPath = this.questionPath + "/" + className + "/" +
       subjectName + "/" + chapterName + "/" + topicName;
   }

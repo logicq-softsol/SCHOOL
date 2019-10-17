@@ -134,9 +134,15 @@
         </mat-horizontal-stepper>
       </mat-tab>
       <mat-tab label="Previous Year">
-        <div class="example-button-row col-md-6" *ngFor="let pdf of pdfList">
-          <button mat-raised-button (click)="downloadPDf(pdf)" color="accent">{{pdf.name}}</button>
+        <div class="row">
+          <div class="example-button-row col-md-3" *ngFor="let pdf of pdfList">
+            <button mat-raised-button (click)="downloadPDf(pdf)" color="accent">{{pdf.name}}</button>
+          </div>
         </div>
+        <!--div class="col-md-7">
+          <ngx-extended-pdf-viewer [src]="'assets/question/Nursery/MoralStoriesinEnglish/MoralStories/pdf/Nursery-2011.pdf'" useBrowserLocale="false" type="application/pdf" width="100%"></ngx-extended-pdf-viewer>
+        </div-->
+
       </mat-tab>
     </mat-tab-group>
   </section>

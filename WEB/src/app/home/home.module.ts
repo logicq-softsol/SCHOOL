@@ -11,15 +11,16 @@ import { ImageCropperModule } from "ngx-image-cropper";
 import { TopicComponent, TopicDetailDialog, ChapterDetailDialog, SubjectDetailDialog, ClassSetupDialog, VideoDialog } from './content-mgmnt/topics/topic.component';
 import { QuestionComponent, CorrectAnswerDialog } from './content-mgmnt/questions/question';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule,
     ImageCropperModule,
     MatExpansionModule,
-    MatRadioModule  ],
-  declarations: [ContentMgmntComponent, HomeComponent,TopicComponent , ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog,TopicDetailDialog,VideoDialog,QuestionComponent,CorrectAnswerDialog],
-  entryComponents: [ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog,VideoDialog,CorrectAnswerDialog],
+    MatRadioModule, NgxExtendedPdfViewerModule],
+  declarations: [ContentMgmntComponent, HomeComponent, TopicComponent, ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, QuestionComponent, CorrectAnswerDialog],
+  entryComponents: [ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, CorrectAnswerDialog],
   providers: [
     homeRoutingProviders,
     {
