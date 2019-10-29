@@ -1,7 +1,11 @@
 {
   "sliderArray":[
    {"index":0,"img": "assets/images/edusure1.jpg", "alt": "",  "text": ""},
+
    {"index":1,"img": "assets/images/edusure2.jpg", "alt": "", "text": ""},
-   {"index":2,"img": "assets/images/edusure3.jpg", "alt": "", "text": ""}
-  ]
+  
+   {"index":2,"img": "assets/images/edusure3.jpg", "alt": "", "text": ""},
+
+   {"index":3,"img": "assets/images/JYOTHI1.jpg", "alt": "", "text": ""},
+   {"index":4,"img": "assets/images/JYOTHI2.jpg", "alt": "", "text": ""}   ]
 }

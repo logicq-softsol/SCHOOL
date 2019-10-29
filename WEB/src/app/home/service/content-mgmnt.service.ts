@@ -8,6 +8,7 @@ import { SubjectSetupDetail } from '../../public/model/subject-setup-detail';
 import { ChapterSetupDetail } from '../../public/model/chapter-setup-detail';
 import { ReplaySubject } from 'rxjs';
 import { TopicDetail } from 'src/app/public/model/topic-detail';
+import { PdfDetail } from '../content-mgmnt/questions/pdf-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -389,6 +390,10 @@ export class ContentMgmntService {
   getPdfListForChapter(chapter: ChapterSetupDetail) {
     var name = chapter.displayName.replace(/\s/g, "");;
     return this.http.get(chapter.questionPath + "/pdf/" + name + ".json");
+  }
+
+  getPdfData(pdf: PdfDetail) {
+    return this.http.get(pdf.link);
   }
 
 }

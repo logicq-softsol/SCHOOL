@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { ContentMgmntService } from '../../service/content-mgmnt.service';
 import { MatDialog, MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
@@ -12,7 +12,9 @@ import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { defaultOptions } from 'ngx-extended-pdf-viewer';
-
+import { SimplePdfViewerComponent } from 'simple-pdf-viewer';
+import { DomSanitizer } from '@angular/platform-browser';
+import{environment} from '../../../../environments/environment';
 @Component({
   selector: 'app-question',
   templateUrl: './question.html',
@@ -47,12 +49,14 @@ export class QuestionComponent implements OnInit {
 
   public correctAudio = new Audio();
   public wrongAudio = new Audio();
-  public pdfsrc: string = "";
+  public pdfsrc: any;
+  public displayPDF: boolean = false;
+
 
   constructor(private contentMgmntService: ContentMgmntService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar, private router: Router, private authService: AuthenticationService) {
+    public snackBar: MatSnackBar, private router: Router, private authService: AuthenticationService, private _sanitizer: DomSanitizer) {
 
   }
 
@@ -299,15 +303,17 @@ export class QuestionComponent implements OnInit {
     });
   }
 
+  viewPDFDocument(pdf: PdfDetail) {
+    this.displayPDF = true;
+    //this.contentMgmntService.getPdfData(pdf).subscribe(data => {
+    //   let url = URL.createObjectURL(data);
+    this.pdfsrc = environment.localurl+pdf.link;//this._sanitizer.bypassSecurityTrustUrl(pdf.link);
+    // });
+
+  }
+
   downloadPDf(pdf: PdfDetail) {
-    let link = document.createElement("a");
-    link.download = pdf.name;
-    link.href = pdf.link;
-    link.click();
-    // const fhttp://127.0.0.1:4200/ileURL = URL.createObjectURL(pdf.link);
-    // pdf.link="http://127.0.0.1:4200/assets/question/nursery/pdf/Nursery-2012.pdf";
-    //  window.open(pdf.link);
-    this.pdfsrc = pdf.link;
+
   }
 }
 

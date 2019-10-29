@@ -30,9 +30,10 @@
     "ngx-bootstrap": "^3.3.0",
     "ngx-editor": "^4.1.0",
     "ngx-embed-video": "^1.0.4",
-    "ngx-extended-pdf-viewer": "^1.6.0",
+    "ngx-extended-pdf-viewer": "^1.7.2",
     "ngx-image-cropper": "^1.4.1",
     "rxjs": "~6.3.3",
+    "simple-pdf-viewer": "^2.0.3",
     "tslib": "^1.10.0",
     "videogular2": "^6.4.0",
     "zone.js": "~0.8.26"

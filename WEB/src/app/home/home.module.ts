@@ -14,11 +14,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
+
 @NgModule({
   imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule,
     ImageCropperModule,
     MatExpansionModule,
-    MatRadioModule, NgxExtendedPdfViewerModule],
+    MatRadioModule,NgxExtendedPdfViewerModule],
   declarations: [ContentMgmntComponent, HomeComponent, TopicComponent, ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, QuestionComponent, CorrectAnswerDialog],
   entryComponents: [ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, CorrectAnswerDialog],
   providers: [
