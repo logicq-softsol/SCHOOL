@@ -13,7 +13,7 @@
                           </datalist>
                       </div> 
                 <ul class="login-info">
-                      
+                        <li>  <button mat-stroked-button color="accent" *ngIf="user.role=='ADMIN'">{{schoolType}}}</button></li>
                       <li>  <button type="button" class="btn" *ngIf="user.role=='ADMIN'" (click)="setupDayZero()">DAYZERO</button></li>
                     <li>Last login: {{ today | date:'fullDate' }} {{today | date:'shortTime'}}</li>
                     <li><a class="info" [matMenuTriggerFor]="info" (click)="setupRemainTime()"><i class="fas fa-info-circle"></i></a></li>
@@ -45,7 +45,7 @@
 </header>
 
 <router-outlet></router-outlet>
-<footer class="footer-container">
+ <footer class="footer-container">
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-12 text-center">

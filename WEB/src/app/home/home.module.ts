@@ -13,14 +13,15 @@ import { QuestionComponent, CorrectAnswerDialog } from './content-mgmnt/question
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { PDFViewComponent } from './content-mgmnt/pdfview/pdf-view.component';
 
 
 @NgModule({
   imports: [CommonModule, routing, HttpClientModule, FormsModule, CustomMaterialModule, ReactiveFormsModule,
     ImageCropperModule,
     MatExpansionModule,
-    MatRadioModule,NgxExtendedPdfViewerModule],
-  declarations: [ContentMgmntComponent, HomeComponent, TopicComponent, ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, QuestionComponent, CorrectAnswerDialog],
+    MatRadioModule, NgxExtendedPdfViewerModule],
+  declarations: [ContentMgmntComponent, HomeComponent, TopicComponent, PDFViewComponent, ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, QuestionComponent, CorrectAnswerDialog],
   entryComponents: [ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, CorrectAnswerDialog],
   providers: [
     homeRoutingProviders,

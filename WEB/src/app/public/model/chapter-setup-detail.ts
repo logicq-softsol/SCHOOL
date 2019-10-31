@@ -11,4 +11,5 @@ export class ChapterSetupDetail {
     public playFileType: string;
     public hasSubChapter: boolean = false;
     public questionPath:string;
+    public isEBookAvilable:boolean=false;
 }

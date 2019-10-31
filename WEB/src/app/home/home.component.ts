@@ -24,13 +24,17 @@ export class HomeComponent implements OnInit {
   topicList: TopicDetail[] = [];
   topic: TopicDetail = new TopicDetail();
   topicDisplayName: any;
-  timeLeft:any;
-
+  timeLeft: any;
+  schoolType: string;
 
   constructor(private authService: AuthenticationService, private contentMgmntService: ContentMgmntService, private router: Router, public snackBar: MatSnackBar, public dialog: MatDialog) {
     if (this.authService.isAuthenticate) {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.user = user;
+        this.contentMgmntService.loadSchoolType().subscribe(typeData => {
+          this.schoolType = typeData['type'];
+          this.contentMgmntService.changeSchoolType(this.schoolType);
+        });
         this.router.navigate(['/home/teacher']);
         this.contentMgmntService.changeContentDisplayView('SEARCH');
       });
@@ -41,7 +45,7 @@ export class HomeComponent implements OnInit {
     this.contentMgmntService.getAllTopics().subscribe((topics: TopicDetail[]) => {
       this.topicList = topics;
     })
-   
+
   }
 
   navigateHome() {
@@ -115,12 +119,12 @@ export class HomeComponent implements OnInit {
   }
 
   setupRemainTime() {
-    var oneDay = 24*60*60*1000; 
-    this.contentMgmntService.getRemaingLicenseDays().subscribe((data:any)=>{
-   //   var firstDate = new Date(data.activationDate);
-     // var secondDate = new Date(data.expiryDate);
-     // var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-      this.timeLeft=data.remaningDays;
+    var oneDay = 24 * 60 * 60 * 1000;
+    this.contentMgmntService.getRemaingLicenseDays().subscribe((data: any) => {
+      //   var firstDate = new Date(data.activationDate);
+      // var secondDate = new Date(data.expiryDate);
+      // var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+      this.timeLeft = data.remaningDays;
     });
 
   }
@@ -142,7 +146,7 @@ export class TopicDisplayDialog {
   subjectDetail: SubjectSetupDetail = new SubjectSetupDetail();
   ChapterSetupDetail: ChapterSetupDetail = new ChapterSetupDetail();
 
-  constructor(public dialogRef: MatDialogRef<TopicDisplayDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService, public snackBar: MatSnackBar,    public dialog: MatDialog) {
+  constructor(public dialogRef: MatDialogRef<TopicDisplayDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private contentMgmntService: ContentMgmntService, public snackBar: MatSnackBar, public dialog: MatDialog) {
     this.topic = data.topic;
     this.contentMgmntService.getClassDetails(this.topic.classId).subscribe((classDet: ClassSetupDetail) => {
       this.contentMgmntService.changeClassSetupDetail(classDet);
@@ -177,7 +181,7 @@ export class TopicDisplayDialog {
           hasBackdrop: false,
           data: {
             url: URL.createObjectURL(file),
-            topic:topic
+            topic: topic
           }
         });
       } else {

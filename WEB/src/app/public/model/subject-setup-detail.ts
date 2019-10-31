@@ -9,5 +9,5 @@ export class SubjectSetupDetail {
     public playFileURL: string;
     public playFileType: string;
     public questionPath:string;
-
+    public isEBookAvilable:boolean=false;
 }

@@ -97,6 +97,16 @@ export class ContentMgmntComponent implements OnInit {
     let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == classdisplayName);
     this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
       this.classSubjectList = data;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        this.classSubjectList.forEach(subject => {
+          if ("ICSE" == sType) {
+            subject.isEBookAvilable = false;
+          } else {
+            subject.isEBookAvilable = true;
+          }
+        });
+      });
+
       this.contentMgmntService.changeClassSetupDetail(classDetail);
       this.contentMgmntService.changeSubjectList(data);
       this.contentMgmntService.changeDisplayView('SUBJECT');
@@ -105,7 +115,7 @@ export class ContentMgmntComponent implements OnInit {
     });
   }
 
-  viewReport(interval){
+  viewReport(interval) {
     if (this.user.role == 'ADMIN') {
       this.contentMgmntService.getAllSessions(interval).subscribe((data: any[]) => {
         this.sessionData = data;
@@ -119,16 +129,16 @@ export class ContentMgmntComponent implements OnInit {
 
   downloadReport() {
     let doc = new jsPDF();
-    doc.page=1; 
-    doc.autoTable({html: '#sessionTable'});
+    doc.page = 1;
+    doc.autoTable({ html: '#sessionTable' });
     this.footer(doc);
     doc.save('SessionReport.pdf');
   }
 
-  footer(doc){ 
-    doc.text(150,285, 'Copyright, 2019  EduSure Rights Reserved,Terms and conditions'); 
-    doc.page ++;
-};
+  footer(doc) {
+    doc.text(150, 285, 'Copyright, 2019  EduSure Rights Reserved,Terms and conditions');
+    doc.page++;
+  };
   onSubjectChange(subjectdisplayName) {
     let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == subjectdisplayName);
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
@@ -136,6 +146,16 @@ export class ContentMgmntComponent implements OnInit {
       this.contentMgmntService.changeSubjectDetail(subject);
       this.contentMgmntService.changeChapterList(data);
       this.contentMgmntService.changeDisplayView('CHAPTER');
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        this.chapterList.forEach(chapter => {
+          if ("ICSE" == sType) {
+            chapter.isEBookAvilable = false;
+          } else {
+            chapter.isEBookAvilable = true;
+          }
+        });
+      });
+
       this.topicList = [];
     });
   }
@@ -156,6 +176,15 @@ export class ContentMgmntComponent implements OnInit {
   showClassSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.classSubjectList = subjectList;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        this.classSubjectList.forEach(subject => {
+          if ("ICSE" == sType) {
+            subject.isEBookAvilable = false;
+          } else {
+            subject.isEBookAvilable = true;
+          }
+        });
+      });
       this.contentMgmntService.changeSubjectDetail(this.subjectSetup);
       this.viewChapterList(this.subjectSetup);
     });
@@ -164,6 +193,15 @@ export class ContentMgmntComponent implements OnInit {
   viewChapterList(subject: SubjectSetupDetail) {
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
       this.chapterList = chapters;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        this.chapterList.forEach(chapter => {
+          if ("ICSE" == sType) {
+            chapter.isEBookAvilable = false;
+          } else {
+            chapter.isEBookAvilable = true;
+          }
+        });
+      });
       this.contentMgmntService.changeChapterSetupDetail(this.chapter);
       this.showTopicList(this.chapter);
     });

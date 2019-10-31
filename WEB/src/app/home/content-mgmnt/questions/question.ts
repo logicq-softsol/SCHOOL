@@ -11,10 +11,9 @@ import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
 import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { defaultOptions } from 'ngx-extended-pdf-viewer';
-import { SimplePdfViewerComponent } from 'simple-pdf-viewer';
-import { DomSanitizer } from '@angular/platform-browser';
-import{environment} from '../../../../environments/environment';
+import { environment } from 'src/environments/environment';
+
+
 @Component({
   selector: 'app-question',
   templateUrl: './question.html',
@@ -56,13 +55,12 @@ export class QuestionComponent implements OnInit {
   constructor(private contentMgmntService: ContentMgmntService,
     public dialog: MatDialog,
     public dialogProfileImage: MatDialog,
-    public snackBar: MatSnackBar, private router: Router, private authService: AuthenticationService, private _sanitizer: DomSanitizer) {
+    public snackBar: MatSnackBar, private router: Router, private authService: AuthenticationService) {
 
   }
 
 
   ngOnInit() {
-
     this.displayView = 'CLASS';
     this.contentMgmntService.getDisplayView().subscribe((dview: any) => {
       this.displayView = dview;
@@ -117,10 +115,10 @@ export class QuestionComponent implements OnInit {
               this.questionList = qusts;
             });
             this.contentMgmntService.getPdfList(topic).subscribe((pdfs: PdfDetail[]) => {
-              this.pdfList = pdfs;
-              if (null != this.pdfList && this.pdfList.length > 0) {
-                this.pdfsrc = this.pdfList[0].link;
+              if (this.pdfList.length == 0) {
+                this.pdfList = pdfs;
               }
+
             });
           }
         });
@@ -132,9 +130,8 @@ export class QuestionComponent implements OnInit {
               this.questionList = qusts;
             });
             this.contentMgmntService.getPdfListForSubject(subject).subscribe((pdfs: PdfDetail[]) => {
-              this.pdfList = pdfs;
-              if (null != this.pdfList && this.pdfList.length > 0) {
-                this.pdfsrc = this.pdfList[0].link;
+              if (this.pdfList.length == 0) {
+                this.pdfList = pdfs;
               }
             });
           }
@@ -148,9 +145,8 @@ export class QuestionComponent implements OnInit {
               this.questionList = qusts;
             });
             this.contentMgmntService.getPdfListForChapter(chapter).subscribe((pdfs: PdfDetail[]) => {
-              this.pdfList = pdfs;
-              if (null != this.pdfList && this.pdfList.length > 0) {
-                this.pdfsrc = this.pdfList[0].link;
+              if (this.pdfList.length == 0) {
+                this.pdfList = pdfs;
               }
             });
           }
@@ -305,16 +301,16 @@ export class QuestionComponent implements OnInit {
 
   viewPDFDocument(pdf: PdfDetail) {
     this.displayPDF = true;
-    //this.contentMgmntService.getPdfData(pdf).subscribe(data => {
-    //   let url = URL.createObjectURL(data);
-    this.pdfsrc = environment.localurl+pdf.link;//this._sanitizer.bypassSecurityTrustUrl(pdf.link);
-    // });
+    // //this.contentMgmntService.getPdfData(pdf).subscribe(data => {
+    // //   let url = URL.createObjectURL(data);
+    //  this.pdfsrc = environment.localurl + pdf.link;//this._sanitizer.bypassSecurityTrustUrl(pdf.link);
+    // // });
+    this.contentMgmntService.changePdfData(pdf);
+    this.router.navigate(['/home/teacher/pdf']);
 
   }
 
-  downloadPDf(pdf: PdfDetail) {
 
-  }
 }
 
 

@@ -1,0 +1,8 @@
+<section class="container">
+  <div class="pull-right">
+    <button mat-flat-button (click)="viewDocument()" color="warn" class="period-btn">Reload</button>
+    <button mat-flat-button (click)="goToPrevious()" color="primary">Back or Close</button>
+  </div>
+</section>
+<ngx-extended-pdf-viewer *ngIf="displayPDF" [src]="pdfsrc" useBrowserLocale="true" [delayFirstView]="1000"
+  [showHandToolButton]="true" [handTool]=false> </ngx-extended-pdf-viewer>

@@ -11,6 +11,8 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { ContentMgmntService } from '../../service/content-mgmnt.service';
 import { Favorites } from '../../../public/model/favorite';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { PdfDetail } from '../questions/pdf-detail';
+import { PDFWorker } from 'pdfjs-dist';
 
 
 
@@ -75,6 +77,13 @@ export class TopicComponent implements OnInit {
     this.contentMgmntService.getSubjectDetail().subscribe((data: SubjectSetupDetail) => {
       this.subjectSetup = data;
       this.subjectdisplayName = data.displayName;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+          if ("ICSE" == sType) {
+            this.subjectSetup.isEBookAvilable = false;
+          } else {
+            this.subjectSetup.isEBookAvilable = true;
+          }
+      });
     });
 
 
@@ -82,6 +91,13 @@ export class TopicComponent implements OnInit {
     this.contentMgmntService.getChapterSetupDetail().subscribe((data: ChapterSetupDetail) => {
       this.chapter = data;
       this.chapterdisplayName = data.displayName;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        if ("ICSE" == sType) {
+          this.chapter.isEBookAvilable = false;
+        } else {
+          this.chapter.isEBookAvilable = true;
+        }
+    });
       this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
         this.topicList = tdata;
       });
@@ -94,9 +110,27 @@ export class TopicComponent implements OnInit {
 
     this.contentMgmntService.getSubjectList().subscribe((data: SubjectSetupDetail[]) => {
       this.classSubjectList = data;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        this.classSubjectList.forEach(subject => {
+          if ("ICSE" == sType) {
+            subject.isEBookAvilable = false;
+          } else {
+            subject.isEBookAvilable = true;
+          }
+        });
+      });
     });
     this.contentMgmntService.getChapterList().subscribe((data: ChapterSetupDetail[]) => {
       this.chapterList = data;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        this.chapterList.forEach(chapter => {
+          if ("ICSE" == sType) {
+            chapter.isEBookAvilable = false;
+          } else {
+            chapter.isEBookAvilable = true;
+          }
+        });
+      });
     });
 
   }
@@ -246,6 +280,47 @@ export class TopicComponent implements OnInit {
     this.questionPath = this.questionPath + "/" + className + "/" +
       subjectName + "/" + chapterName + "/" + topicName;
   }
+
+
+
+  viewEBookForChapter(chapter: ChapterSetupDetail) {
+    this.buildEBookPathForChapter(chapter);
+    this.contentMgmntService.getEbookDetails(chapter.displayName, this.questionPath).subscribe((ebookLink: PdfDetail) => {
+      this.contentMgmntService.changePdfData(ebookLink);
+      this.router.navigate(['/home/teacher/pdf']);
+    });
+  }
+
+
+  viewEBookForSubject(subject: SubjectSetupDetail) {
+    this.buildEBookPathForSubject(subject);
+    this.contentMgmntService.getEbookDetails(subject.displayName, this.questionPath).subscribe((ebookLink: PdfDetail) => {
+      this.contentMgmntService.changePdfData(ebookLink);
+      this.router.navigate(['/home/teacher/pdf']);
+    });
+
+  }
+
+
+
+  private buildEBookPathForChapter(chpater: ChapterSetupDetail) {
+    this.questionPath = '';
+    this.questionPath = 'assets/question';
+    var className = this.classSetup.displayName.replace(/\s/g, "");
+    var subjectName = this.subjectSetup.displayName.replace(/\s/g, "");
+    var chapterName = chpater.displayName.replace(/\s/g, "");
+    this.questionPath = this.questionPath + "/" + className + "/" + subjectName + "/" + chapterName;
+  }
+
+
+  private buildEBookPathForSubject(subject: SubjectSetupDetail) {
+    this.questionPath = '';
+    this.questionPath = 'assets/question';
+    var className = this.classSetup.displayName.replace(/\s/g, "");
+    var subjectName = subject.displayName.replace(/\s/g, "");
+    this.questionPath = this.questionPath + "/" + className + "/" + subjectName;
+  }
+
 
   markFavorites(topic: TopicDetail) {
     let favorite: Favorites = new Favorites();
@@ -524,6 +599,7 @@ export class TopicComponent implements OnInit {
   }
 
 
+
   openErrorSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 10000
@@ -769,6 +845,7 @@ export class ClassSetupDialog {
     this.classesEmmiter.emit(this.classSetup);
     this.onNoClick();
   }
+
 
 }
 

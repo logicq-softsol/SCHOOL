@@ -27,9 +27,33 @@ export class ContentMgmntService {
   public contentDisplayView = new ReplaySubject<any>(1);
   public topic = new ReplaySubject<TopicDetail>(1);
   public questionView = new ReplaySubject<string>(1);
+  public pdfData = new ReplaySubject<PdfDetail>(1);
 
+  public schoolType = new ReplaySubject<string>(1);
 
   constructor(private http: HttpClient) { }
+
+
+  public changeSchoolType(schoolType: string) {
+    this.schoolType.next(schoolType);
+  }
+
+
+
+  getSchoolType() {
+    return this.schoolType.asObservable();
+  }
+
+
+
+  getPdfData() {
+    return this.pdfData.asObservable();
+  }
+
+  public changePdfData(pdfData: PdfDetail) {
+    this.pdfData.next(pdfData);
+  }
+
 
 
   getQuestionView() {
@@ -392,8 +416,15 @@ export class ContentMgmntService {
     return this.http.get(chapter.questionPath + "/pdf/" + name + ".json");
   }
 
-  getPdfData(pdf: PdfDetail) {
-    return this.http.get(pdf.link);
+  loadSchoolType() {
+    return this.http.get("assets/config/school_type.json");
   }
+
+
+  getEbookDetails(name: string,eBookPath:string) {
+    var name = name.replace(/\s/g, "");;
+    return this.http.get(eBookPath + "/ebook/" + name + ".json");
+  }
+
 
 }

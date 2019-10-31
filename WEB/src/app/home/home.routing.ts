@@ -4,6 +4,7 @@ import { HomeComponent } from './home.component';
 import { ContentMgmntComponent } from './content-mgmnt/content-mgmnt.component';
 import { TopicComponent } from './content-mgmnt/topics/topic.component';
 import { QuestionComponent } from './content-mgmnt/questions/question';
+import { PDFViewComponent } from './content-mgmnt/pdfview/pdf-view.component';
 
 
 export const homeRoutes: Routes = [
@@ -11,6 +12,7 @@ export const homeRoutes: Routes = [
     path: '', component: HomeComponent,
     children: [
       { path: 'teacher', component: ContentMgmntComponent },
+      { path: 'teacher/pdf', component: PDFViewComponent },
       { path: 'teacher/topics', component: TopicComponent },
       { path: 'teacher/question', component: QuestionComponent }
     ]
