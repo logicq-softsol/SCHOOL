@@ -8,15 +8,15 @@ import org.springframework.stereotype.Repository;
 import com.logicq.school.model.UserWorkSpace;
 
 @Repository
-public interface WorkSpaceDetailsRepo extends JpaRepository<UserWorkSpace, Long> {
+public interface WorkSpaceDetailsRepo extends JpaRepository<UserWorkSpace, String> {
 
 	List<UserWorkSpace> findByUserName(String userName);
 
-	List<UserWorkSpace> findByClassIdAndSubjectIdAndUserName(Long classId, Long subjectId, String userName);
+	List<UserWorkSpace> findByClassIdAndSubjectIdAndUserName(String classId, String subjectId, String userName);
 
-	List<UserWorkSpace> findByClassIdAndSubjectIdAndChapterIdAndUserName(Long classId, Long subjectId, Long chapterId,
+	List<UserWorkSpace> findByClassIdAndSubjectIdAndChapterIdAndUserName(String classId, String subjectId, String chapterId,
 			String userName);
 
-	List<UserWorkSpace> findByClassIdAndSubjectIdAndChapterIdAndUserNameAndTopicId(Long classId, Long subjectId,
-			Long chapterId, String userName, Long topicId);
+	List<UserWorkSpace> findByClassIdAndSubjectIdAndChapterIdAndUserNameAndTopicId(String classId, String subjectId,
+			String chapterId, String userName, String topicId);
 }

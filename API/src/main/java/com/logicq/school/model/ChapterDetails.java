@@ -23,92 +23,173 @@ public class ChapterDetails extends AttributeDetails {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	@Column(name = "CLASS_ID")
-	private Long classId;
+	private String classId;
 
 	@Column(name = "SUBJECT_ID")
-	private Long subjectId;
+	private String subjectId;
 
 	@Column(name = "IMAGE_URL")
-	private String icon;
+	private String imgURL;
 
-	@Column(name = "PLAY_FILE_URL")
-	private String playFileURL;
+	@Column(name = "IS_VIDEO")
+	private Boolean isVideo;
 
-	@Column(name = "PLAY_FILE_TYPE")
-	private String playFileType;
+	@Column(name = "IS_PPT")
+	private Boolean isPPt;
 
-	@Column(name = "HAS_CHAPTER")
-	private Boolean hasSubChapter;
+	@Column(name = "IS_PDF")
+	private Boolean isPDF;
 
-	@Column(name = "TIME_REQUIRED")
-	private Long timeRequired = 0l;
+	@Column(name = "IS_MCQ")
+	private Boolean isMCQ;
 
-	public Long getId() {
+	@Column(name = "IS_SAMPLE_QUESTION")
+	private Boolean isSampleQuest;
+
+	@Column(name = "IS_EXAM_QUESTION")
+	private Boolean isExamQuest;
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getClassId() {
+	/**
+	 * @return the classId
+	 */
+	public String getClassId() {
 		return classId;
 	}
 
-	public void setClassId(Long classId) {
+	/**
+	 * @param classId the classId to set
+	 */
+	public void setClassId(String classId) {
 		this.classId = classId;
 	}
 
-	public Long getSubjectId() {
+	/**
+	 * @return the subjectId
+	 */
+	public String getSubjectId() {
 		return subjectId;
 	}
 
-	public void setSubjectId(Long subjectId) {
+	/**
+	 * @param subjectId the subjectId to set
+	 */
+	public void setSubjectId(String subjectId) {
 		this.subjectId = subjectId;
 	}
 
-	public String getIcon() {
-		return icon;
+	/**
+	 * @return the imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
 	}
 
-	public void setIcon(String icon) {
-		this.icon = icon;
+	/**
+	 * @param imgURL the imgURL to set
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
 	}
 
-	public String getPlayFileURL() {
-		return playFileURL;
+	/**
+	 * @return the isVideo
+	 */
+	public Boolean getIsVideo() {
+		return isVideo;
 	}
 
-	public void setPlayFileURL(String playFileURL) {
-		this.playFileURL = playFileURL;
+	/**
+	 * @param isVideo the isVideo to set
+	 */
+	public void setIsVideo(Boolean isVideo) {
+		this.isVideo = isVideo;
 	}
 
-	public String getPlayFileType() {
-		return playFileType;
+	/**
+	 * @return the isPPt
+	 */
+	public Boolean getIsPPt() {
+		return isPPt;
 	}
 
-	public void setPlayFileType(String playFileType) {
-		this.playFileType = playFileType;
+	/**
+	 * @param isPPt the isPPt to set
+	 */
+	public void setIsPPt(Boolean isPPt) {
+		this.isPPt = isPPt;
 	}
 
-	public Boolean getHasSubChapter() {
-		return hasSubChapter;
+	/**
+	 * @return the isPDF
+	 */
+	public Boolean getIsPDF() {
+		return isPDF;
 	}
 
-	public void setHasSubChapter(Boolean hasSubChapter) {
-		this.hasSubChapter = hasSubChapter;
+	/**
+	 * @param isPDF the isPDF to set
+	 */
+	public void setIsPDF(Boolean isPDF) {
+		this.isPDF = isPDF;
 	}
 
-	public Long getTimeRequired() {
-		return timeRequired;
+	/**
+	 * @return the isMCQ
+	 */
+	public Boolean getIsMCQ() {
+		return isMCQ;
 	}
 
-	public void setTimeRequired(Long timeRequired) {
-		this.timeRequired = timeRequired;
+	/**
+	 * @param isMCQ the isMCQ to set
+	 */
+	public void setIsMCQ(Boolean isMCQ) {
+		this.isMCQ = isMCQ;
+	}
+
+	/**
+	 * @return the isSampleQuest
+	 */
+	public Boolean getIsSampleQuest() {
+		return isSampleQuest;
+	}
+
+	/**
+	 * @param isSampleQuest the isSampleQuest to set
+	 */
+	public void setIsSampleQuest(Boolean isSampleQuest) {
+		this.isSampleQuest = isSampleQuest;
+	}
+
+	/**
+	 * @return the isExamQuest
+	 */
+	public Boolean getIsExamQuest() {
+		return isExamQuest;
+	}
+
+	/**
+	 * @param isExamQuest the isExamQuest to set
+	 */
+	public void setIsExamQuest(Boolean isExamQuest) {
+		this.isExamQuest = isExamQuest;
 	}
 
 }

@@ -62,6 +62,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  setupMCQQuestion() {
+    this.contentMgmntService.setupMCQQuestionForSchool().subscribe(data => {
+      this.openSnackBar("All MCQ Questions  Setup sucessfully", "SUCESS");
+    });
+  }
+
   gotToHomepage() {
     this.router.navigate(['/home/teacher']);
   }

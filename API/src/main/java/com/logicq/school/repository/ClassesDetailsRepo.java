@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.logicq.school.model.ClassDetails;
 
 @Repository
-public interface ClassesDetailsRepo extends JpaRepository<ClassDetails, Long> {
+public interface ClassesDetailsRepo extends JpaRepository<ClassDetails, String> {
 
 	ClassDetails findByName(String name);
 

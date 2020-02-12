@@ -18,26 +18,40 @@ public class ClassDetails extends AttributeDetails {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	@Column(name = "IMAGE_URL")
-	private String icon;
+	private String imgURL;
 
-	public Long getId() {
+	/**
+	 * @return the id
+	 */
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public String getIcon() {
-		return icon;
+	/**
+	 * @return the imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
 	}
 
-	public void setIcon(String icon) {
-		this.icon = icon;
+	/**
+	 * @param imgURL the imgURL to set
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
 	}
+
+	
+	
 
 }

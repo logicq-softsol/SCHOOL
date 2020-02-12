@@ -9,7 +9,7 @@
                 <label>Class</label>
                 <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
                   [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
-                  <i  class="fas fa-times search-icon" (click)="classClear()"></i>
+                <i class="fas fa-times search-icon" (click)="classClear()"></i>
                 <datalist id="classList">
                   <option *ngFor="let classDetail of classList" [value]="classDetail.displayName">{{classDetail?.displayName}}</option>
                 </datalist>
@@ -18,7 +18,7 @@
                 <label>Subject</label>
                 <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
                   [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
-                  <i  class="fas fa-times search-icon" (click)="subjectClear()"></i>
+                <i class="fas fa-times search-icon" (click)="subjectClear()"></i>
                 <datalist id="classSubjectList">
                   <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName">{{classSubject?.displayName}}</option>
                 </datalist>
@@ -27,7 +27,7 @@
                 <label>Chapter</label>
                 <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
                   [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
-                  <i  class="fas fa-times search-icon" (click)="chapterClear()"></i>
+                <i class="fas fa-times search-icon" (click)="chapterClear()"></i>
                 <datalist id="chapterList">
                   <option *ngFor="let chapter of chapterList" [value]="chapter.displayName">{{chapter?.displayName}}</option>
                 </datalist>
@@ -49,9 +49,12 @@
     <nav aria-label="breadcrumb" class="col-md-12">
       <ol class="breadcrumb pl-0">
         <li class="breadcrumb-item"><a (click)="goToHome()" style="cursor:pointer">Home</a></li>
-        <li class="breadcrumb-item" *ngIf="displayView=='SUBJECT' || displayView=='CLASS' || displayView=='TOPIC' || displayView=='CHAPTER'"><a (click)="onClassChange(classdisplayName)" style="cursor:pointer">Class({{classdisplayName}})</a></li>
-        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='SUBJECT' || displayView=='CHAPTER'"><a (click)="onSubjectChange(subjectdisplayName)" style="cursor:pointer">Subject({{subjectdisplayName}})</a></li>
-        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='CHAPTER'"><a (click)="onChapterChange(chapterdisplayName)" style="cursor:pointer">Chapter({{chapterdisplayName}})</a></li>
+        <li class="breadcrumb-item" *ngIf="displayView=='SUBJECT' || displayView=='CLASS' || displayView=='TOPIC' || displayView=='CHAPTER'"><a
+            (click)="onClassChange(classdisplayName)" style="cursor:pointer">Class({{classdisplayName}})</a></li>
+        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='SUBJECT' || displayView=='CHAPTER'"><a
+            (click)="onSubjectChange(subjectdisplayName)" style="cursor:pointer">Subject({{subjectdisplayName}})</a></li>
+        <li class="breadcrumb-item" *ngIf="displayView=='TOPIC' || displayView=='CHAPTER'"><a (click)="onChapterChange(chapterdisplayName)"
+            style="cursor:pointer">Chapter({{chapterdisplayName}})</a></li>
       </ol>
     </nav>
     <div class="clearfix"></div>
@@ -68,41 +71,232 @@
 
 
   <section class="container mt-4" *ngIf="displayView=='TOPIC'">
-    <div class="row">
-      <div class="col-md-4" *ngFor="let topic of topicList">
-        <div class="class-box">
-          <p class="video-text"><a (click)="playLessonForTopic(topic)" style="cursor:pointer"><i class="fas fa-video"></i>
-              {{topic.displayName}}</a></p>
-          <ul class="class-edit">
-            <div class="card-body">
-              <p class="card-text">{{topic.description}}</p>
-            </div>
-            <li class="borders"><i  class="fa fa-clock" aria-hidden="true"></i> {{topic.playFileTime}} Mins.</li>
-            <li><a (click)="markFavorites(topic)"><i class="fa fa-heart like-icon" aria-hidden="true"></i></a></li>
-            <li><a (click)="viewQuestions(topic)"><span class="text-size">Question</span></a></li>
-            <li *ngIf="user.role=='ADMIN'" class="borders"><a (click)="editTopicDetail(topic)" style="cursor:pointer">
-              <i class="fas fa-pen edit-icon"></i></a></li>
-            <li *ngIf="user.role=='ADMIN'"><a (click)="deleteTopicDetail(topic)" style="cursor:pointer">
-              <i class="fas fa-times close-icon"></i></a></li>
-          </ul>
-        </div>
-      </div>
+    <div class="box-title" *ngIf="animationtopicList.length>0">
+      <p class="no-margin">Animation</p>
     </div>
+    <mat-card class="example-card" *ngIf="animationtopicList.length>0">
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-4" *ngFor="let topic of animationtopicList" style="margin-bottom: 30px">
+            <div class="class-box">
+              <span>
+                <p class="video-text"><a>{{topic.displayName}}</a></p>
+              </span>
+              <div class="row">
+                <div class="col-md-6" style="padding-right: 0; border-right: 1px solid #0000005c">
+                  <button mat-button type="button" class="btn custom-btn" (click)="playLessonForTopic(topic)" style="font-weight: 700">Start
+                    Lession</button>
+                </div>
+                <div class="col-md-6" style="padding-left: 0">
+                  <button mat-button type="button" class="btn custom-btn" (click)="markFavorites(topic)" style="font-weight: 700">Mark
+                    Favorite</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="box-title" *ngIf="ppttopicList.length>0">
+      <p class="no-margin">Teaching Slides</p>
+    </div>
+    <mat-card class="example-card" *ngIf="ppttopicList.length>0">
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-4" *ngFor="let topic of ppttopicList" style="margin-bottom: 30px">
+            <div class="class-box">
+              <span>
+                <p class="video-text"><a>{{topic.displayName}}</a></p>
+              </span>
+              <div class="row">
+                <div class="col-md-6" style="padding-right: 0; border-right: 1px solid #0000005c">
+                  <button mat-button type="button" class="btn custom-btn" (click)="playLessonForTopic(topic)" style="font-weight: 700">Start
+                    Lession</button>
+                </div>
+                <div class="col-md-6" style="padding-left: 0">
+                  <button mat-button type="button" class="btn custom-btn" (click)="markFavorites(topic)" style="font-weight: 700">Mark
+                    Favorite</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
+    <div class="box-title" *ngIf="pdftopicList.length>0">
+      <p class="no-margin">E-BOOKS</p>
+    </div>
+    <mat-card class="example-card" *ngIf="pdftopicList.length>0">
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-4" *ngFor="let topic of pdftopicList" style="margin-bottom: 30px">
+            <div class="class-box">
+              <span>
+                <p class="video-text"><a>{{topic.displayName}}</a></p>
+              </span>
+              <div class="row">
+                <div class="col-md-6" style="padding-right: 0; border-right: 1px solid #0000005c">
+                  <button mat-button type="button" class="btn custom-btn" (click)="playLessonForTopic(topic)" style="font-weight: 700">Start
+                    Lession</button>
+                </div>
+                <div class="col-md-6" style="padding-left: 0">
+                  <button mat-button type="button" class="btn custom-btn" (click)="markFavorites(topic)" style="font-weight: 700">Mark
+                    Favorite</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
   </section>
 
 
+  <section class="container mt-4" *ngIf="displayView=='MCQ'" #tabsection>
+    <div class="row">
+      <div class="col-md-6" style="display: flex; align-items: center;">
+        <div class="box-title" *ngIf="mcqQuestions.length>0">
+          <p class="no-margin">MCQ</p>
+        </div>
+      </div>
+      <div class="col-md-6" style="display: flex; justify-content: space-evenly">
+        <div class="box-title custom-title">
+          <p class="no-margin">Your Score {{examResult.totalCorrectCount}}/ {{examResult.totalQuestionCount}}</p>
+        </div>
+      </div>
+    </div>
+
+
+    <mat-horizontal-stepper #stepper color="primary" [linear]="isLinear">
+      <mat-step *ngFor="let question of mcqQuestions; index as i" [completed]="false">
+        <div class="row">
+          <div class="col-md-12" style="display: flex; align-items: center;">
+            <h6 color="blue"><b>{{question.question}}</b></h6>
+            <button mat-button (click)="playQuestionAudio(question)" color="accent" style="positiion: relative; bottom: 4px">🔊 Play</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <mat-radio-group [(ngModel)]="question.selectedOpt" class="topic-radio-group" [disabled]="question.isDisable">
+              <mat-radio-button class="example-radio-button" [value]="question.option1" (change)="onOptionSelection($event,question)"><strong>{{question.option1}}</strong></mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="question.option2" (change)="onOptionSelection($event,question)"><strong>{{question.option2}}</strong></mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="question.option3" (change)="onOptionSelection($event,question)"><strong>{{question.option3}}</strong></mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="question.option4" (change)="onOptionSelection($event,question)"><strong>{{question.option4}}</strong></mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="col-md-4" *ngIf="question.isDisable">
+            <div *ngIf="question.correctAns==question.selectedOpt"> <img src="assets/images/correctans.gif" style="width: 70%" /></div>
+            <div *ngIf="question.correctAns !== question.selectedOpt"> <img src="assets/images/wrongans.gif" style="width: 60%" /></div>
+         </div>
+        </div>
+        <div class="topic-button-row pull-right">
+          <div>
+              <mat-accordion>
+                  <mat-expansion-panel  [disabled]="question.isViewAnsDisable == null? true : question.isViewAnsDisable">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title style="color: rgb(82, 179, 92);font-weight: 700;">
+                        View Answer
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <h6 color="red"><b>{{question.correctAns}}</b></h6>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+          <div style="display: flex;">
+              <button mat-raised-button class="next-btn" matStepperNext (click)="viewNextQuestion(i,question)">{{mcqStepperButtonText}}</button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+  </section>
+
   <section class="container mt-4" *ngIf="displayView=='CHAPTER'">
+
     <div class="row">
       <div class="col-md-4" *ngFor="let chapter of chapterList">
+
         <div class="class-box">
-          <img src="{{chapter.icon}}" class="card-image" alt="">
-          <span>{{chapter.description}}</span>
-          <p class="video-text"><a (click)="onChapterChange(chapter.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{chapter.displayName}}</a></p>
-          <ul class="class-edit">
-              <li><i class="fa fa-clock" aria-hidden="true"></i> {{chapter.timeRequired}} Mins.</li>
-              <li><a (click)="viewQuestionsForChapter(chapter)" ><span class="text-size">Question</span></a></li>
-              <li><a (click)="viewEBookForChapter(chapter)" *ngIf="chapter.isEBookAvilable"><span class="text-size">E-Book</span></a></li>
-          </ul>
+          <span>
+            <p class="video-text"><a>{{chapter.displayName}}</a></p>
+          </span>
+          <div class="example-button-row">
+            <div class="box-title">
+              <p class="no-margin">LEARN</p>
+            </div>
+            <mat-card class="example-card">
+              <mat-card-content>
+                <div class="row">
+                  <div class="col-md-4" *ngIf="chapter.isVideo" (click)="viewAllTopicWithType(chapter,'VIDEO')">
+                    <div class="learn-box">
+                      <mat-icon class="custom-icon">videocam</mat-icon>
+                    </div>
+                    <div class="learn-text-container">
+                      <p class="learn-text">Animation</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4" *ngIf="chapter.isPPt" (click)="viewAllTopicWithType(chapter,'PPT')">
+                    <div class="learn-box">
+                      <mat-icon class="custom-icon">personal_video</mat-icon>
+                    </div>
+                    <div class="learn-text-container">
+                      <p class="learn-text">Teacher Slides</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4" *ngIf="chapter.isPDF" (click)="viewAllTopicWithType(chapter,'PDF')">
+                    <div class="learn-box">
+                      <mat-icon class="custom-icon">picture_as_pdf</mat-icon>
+                    </div>
+                    <div class="learn-text-container">
+                      <p class="learn-text">E-BOOKS</p>
+                    </div>
+                  </div>
+                </div>
+
+              </mat-card-content>
+            </mat-card>
+
+            <div class="box-title green" *ngIf="chapter.isMCQ || chapter.isSampleQuest">
+              <p class="no-margin">TEST</p>
+            </div>
+            <mat-card class="example-card" *ngIf="chapter.isMCQ || chapter.isSampleQuest">
+              <!-- <mat-card-header>
+                                <div mat-card-avatar class="example-header-image"></div>
+                                <mat-card-title>LEARN</mat-card-title>
+                              </mat-card-header> -->
+              <mat-card-content>
+                <div class="row">
+                  <div class="col-md-4" *ngIf="chapter.isMCQ" (click)="viewMCQForChapters(chapter)">
+                    <div class="learn-box learn-box-green">
+                      <mat-icon class="custom-icon">view_list</mat-icon>
+                    </div>
+                    <div class="learn-text-container">
+                      <p class="learn-text">MCQ</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4" *ngIf="chapter.isSampleQuest">
+                    <div class="learn-box">
+                      <mat-icon class="custom-icon">library_books</mat-icon>
+                    </div>
+                    <div class="learn-text-container">
+                      <p class="learn-text">Samples</p>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <!-- <mat-card class="example-card">
+                  <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>TEST</mat-card-title>
+                  </mat-card-header>
+                </mat-card> -->
+          </div>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addTopicDetails(chapter)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
             <li><a (click)="editChapterDetail(chapter)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
@@ -113,18 +307,36 @@
     </div>
   </section>
 
+
+
   <section class="container mt-4" *ngIf="displayView=='SUBJECT'">
     <div class="row">
       <div class="col-md-4" *ngFor="let subject of classSubjectList">
         <div class="class-box">
-          <img src="{{subject.icon}}" class="card-image" alt="">
-          <span>{{subject.description}}</span>
-          <p class="video-text"><a (click)="onSubjectChange(subject.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{subject.displayName}}</a></p>
-          <ul class="class-edit">
-              <li class="borders"><i class="fa fa-clock" aria-hidden="true"></i> {{subject.timeRequired}} Mins.</li>
-              <li><a (click)="viewQuestionsForSubject(subject)"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="text-size">Question</span></a></li>
-              <li><a (click)="viewEBookForSubject(subject)" *ngIf="subject.isEBookAvilable"><span class="text-size">E-Book</span></a></li>
-          </ul>
+          <span>
+            <p class="video-text"><a>{{subject.displayName}}</a></p>
+          </span>
+          <div class="example-button-row">
+
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>LEARN</mat-card-title>
+              </mat-card-header>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>PRACTICES</mat-card-title>
+              </mat-card-header>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>TEST</mat-card-title>
+              </mat-card-header>
+            </mat-card>
+          </div>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addChapterDetails(subject)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
             <li><a (click)="editSubjectDetail(subject)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>
@@ -139,8 +351,32 @@
       <div class="col-md-4" *ngFor="let class of classList">
         <div class="class-box">
           <img src="{{class.icon}}" class="card-image" alt="">
-          <span>{{class.description}}</span>
-          <p class="video-text"><a (click)="onClassChange(class.displayName)" style="cursor:pointer"><i class="fas fa-video"></i>{{class.displayName}}</a></p>
+          <!-- <span>{{class.description}}</span> -->
+          <span>
+            <p class="video-text"><a>{{class.displayName}}</a></p>
+          </span>
+          <div class="example-button-row">
+
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="learn"></div>
+                <mat-card-title>LEARN</mat-card-title>
+
+              </mat-card-header>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="pratics"></div>
+                <mat-card-title>PRACTICES</mat-card-title>
+              </mat-card-header>
+            </mat-card>
+            <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="test"></div>
+                <mat-card-title>TEST</mat-card-title>
+              </mat-card-header>
+            </mat-card>
+          </div>
           <ul class="class-edit" *ngIf="user.role=='ADMIN'">
             <li><a (click)="addSubjectDetails(class)" style="cursor:pointer"><i class="fas fa-plus"></i></a></li>
             <li><a (click)="editClassDetails(class)" style="cursor:pointer"><i class="fas fa-pen"></i></a></li>

@@ -22,16 +22,16 @@ public class SessionTracker {
 	private String userName;
 
 	@Column(name = "CLASS_ID")
-	private Long classId;
+	private String classId;
 
 	@Column(name = "SUBJECT_ID")
-	private Long subjectId;
+	private String subjectId;
 
 	@Column(name = "CHAPTER_ID")
-	private Long chapterId;
+	private String chapterId;
 
 	@Column(name = "TOPIC_ID")
-	private Long topicId;
+	private String topicId;
 
 	@Column(name = "CLASS_NAME")
 	private String className;
@@ -85,62 +85,7 @@ public class SessionTracker {
 		this.userName = userName;
 	}
 
-	/**
-	 * @return the classId
-	 */
-	public Long getClassId() {
-		return classId;
-	}
-
-	/**
-	 * @param classId the classId to set
-	 */
-	public void setClassId(Long classId) {
-		this.classId = classId;
-	}
-
-	/**
-	 * @return the subjectId
-	 */
-	public Long getSubjectId() {
-		return subjectId;
-	}
-
-	/**
-	 * @param subjectId the subjectId to set
-	 */
-	public void setSubjectId(Long subjectId) {
-		this.subjectId = subjectId;
-	}
-
-	/**
-	 * @return the chapterId
-	 */
-	public Long getChapterId() {
-		return chapterId;
-	}
-
-	/**
-	 * @param chapterId the chapterId to set
-	 */
-	public void setChapterId(Long chapterId) {
-		this.chapterId = chapterId;
-	}
-
-	/**
-	 * @return the topicId
-	 */
-	public Long getTopicId() {
-		return topicId;
-	}
-
-	/**
-	 * @param topicId the topicId to set
-	 */
-	public void setTopicId(Long topicId) {
-		this.topicId = topicId;
-	}
-
+	
 	/**
 	 * @return the startTime
 	 */
@@ -251,6 +196,62 @@ public class SessionTracker {
 	 */
 	public void setTopicName(String topicName) {
 		this.topicName = topicName;
+	}
+
+	/**
+	 * @return the classId
+	 */
+	public String getClassId() {
+		return classId;
+	}
+
+	/**
+	 * @param classId the classId to set
+	 */
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
+
+	/**
+	 * @return the subjectId
+	 */
+	public String getSubjectId() {
+		return subjectId;
+	}
+
+	/**
+	 * @param subjectId the subjectId to set
+	 */
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	/**
+	 * @return the chapterId
+	 */
+	public String getChapterId() {
+		return chapterId;
+	}
+
+	/**
+	 * @param chapterId the chapterId to set
+	 */
+	public void setChapterId(String chapterId) {
+		this.chapterId = chapterId;
+	}
+
+	/**
+	 * @return the topicId
+	 */
+	public String getTopicId() {
+		return topicId;
+	}
+
+	/**
+	 * @param topicId the topicId to set
+	 */
+	public void setTopicId(String topicId) {
+		this.topicId = topicId;
 	}
 
 }

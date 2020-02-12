@@ -10,6 +10,6 @@ export class TopicDetail {
     public icon: string;
     public playFileURL: string;
     public playFileType: string;
-    public questionPath:string;
-    public isEBookAvilable:boolean=false;
+    public contentType:string;
+    public contentURL:string;
 }

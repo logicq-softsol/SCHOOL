@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.logicq.school.model.Question;
+import com.logicq.school.model.ChapterDetails;
+import com.logicq.school.model.QuestionDetails;
 
 @Repository
-public interface QuestionDetailsRepo extends JpaRepository<Question, Long> {
+public interface QuestionDetailsRepo extends JpaRepository<QuestionDetails, String> {
 
-	List<Question> findByQuestionForAndName(Long questionFor, String name);
+	List<QuestionDetails> findByClassIdAndSubjectIdAndChapterId(String classId, String subjectId, String chapterId);
 
 }

@@ -11,10 +11,11 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { ContentMgmntService } from '../../service/content-mgmnt.service';
 import { Favorites } from '../../../public/model/favorite';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { PdfDetail } from '../questions/pdf-detail';
-import { PDFWorker } from 'pdfjs-dist';
+import { QuestionDetails } from '../../../public/model/question-detail';
+import { ExamResult } from '../../../public/model/exam-result';
 
 
+declare const responsiveVoice: any;
 
 @Component({
   selector: 'app-content-topic',
@@ -22,6 +23,9 @@ import { PDFWorker } from 'pdfjs-dist';
   styleUrls: ['./topic.scss']
 })
 export class TopicComponent implements OnInit {
+
+  //@ViewChild('tabsection', {read: ElementRef}) public tabDiv: ElementRef;
+
 
   user: UserDetail = new UserDetail();
   classList: ClassSetupDetail[] = [];
@@ -36,6 +40,10 @@ export class TopicComponent implements OnInit {
   topicList: TopicDetail[] = [];
   topic: TopicDetail = new TopicDetail();
 
+  animationtopicList: TopicDetail[] = [];
+  ppttopicList: TopicDetail[] = [];
+  pdftopicList: TopicDetail[] = [];
+
   favorites: Favorites[] = [];
   favTopicList: TopicDetail[] = [];
 
@@ -45,8 +53,12 @@ export class TopicComponent implements OnInit {
   chapterdisplayName: any;
   displayView: any;
 
-  questionPath: any = '';
-
+  mcqQuestions: QuestionDetails[] = [];
+  
+  mcqStepperButtonText: any = "NEXT";
+  correctAudio = new Audio();
+  wrongAudio = new Audio();
+  examResult: ExamResult = new ExamResult();
 
   constructor(
     private contentMgmntService: ContentMgmntService,
@@ -77,13 +89,6 @@ export class TopicComponent implements OnInit {
     this.contentMgmntService.getSubjectDetail().subscribe((data: SubjectSetupDetail) => {
       this.subjectSetup = data;
       this.subjectdisplayName = data.displayName;
-      this.contentMgmntService.getSchoolType().subscribe(sType => {
-          if ("ICSE" == sType) {
-            this.subjectSetup.isEBookAvilable = false;
-          } else {
-            this.subjectSetup.isEBookAvilable = true;
-          }
-      });
     });
 
 
@@ -91,15 +96,25 @@ export class TopicComponent implements OnInit {
     this.contentMgmntService.getChapterSetupDetail().subscribe((data: ChapterSetupDetail) => {
       this.chapter = data;
       this.chapterdisplayName = data.displayName;
-      this.contentMgmntService.getSchoolType().subscribe(sType => {
-        if ("ICSE" == sType) {
-          this.chapter.isEBookAvilable = false;
-        } else {
-          this.chapter.isEBookAvilable = true;
-        }
-    });
+
       this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
         this.topicList = tdata;
+        this.animationtopicList = [];
+        this.ppttopicList = [];
+        this.pdftopicList = [];
+
+        this.topicList.forEach((topic: TopicDetail) => {
+          if ("VIDEO" == topic.contentType) {
+            this.animationtopicList.push(topic);
+          }
+          if ("PPT" == topic.contentType) {
+            this.ppttopicList.push(topic);
+          }
+          if ("PDF" == topic.contentType) {
+            this.pdftopicList.push(topic);
+          }
+
+        });
       });
 
     });
@@ -110,33 +125,63 @@ export class TopicComponent implements OnInit {
 
     this.contentMgmntService.getSubjectList().subscribe((data: SubjectSetupDetail[]) => {
       this.classSubjectList = data;
-      this.contentMgmntService.getSchoolType().subscribe(sType => {
-        this.classSubjectList.forEach(subject => {
-          if ("ICSE" == sType) {
-            subject.isEBookAvilable = false;
-          } else {
-            subject.isEBookAvilable = true;
-          }
-        });
-      });
     });
     this.contentMgmntService.getChapterList().subscribe((data: ChapterSetupDetail[]) => {
       this.chapterList = data;
-      this.contentMgmntService.getSchoolType().subscribe(sType => {
-        this.chapterList.forEach(chapter => {
-          if ("ICSE" == sType) {
-            chapter.isEBookAvilable = false;
-          } else {
-            chapter.isEBookAvilable = true;
-          }
-        });
-      });
     });
 
   }
 
+  viewNextQuestion( index,question:QuestionDetails) {
+    var lindex = index + 2;
+     if( this.mcqStepperButtonText==  'CLOSE' ){
+      this.onSubjectChange(this.subjectdisplayName);
+      this.examResult=new ExamResult();
+     }
 
-  viewMyFavorites() {
+    if (lindex == this.mcqQuestions.length) {
+      this.mcqStepperButtonText = 'CLOSE';
+    } else {
+      this.mcqStepperButtonText = 'NEXT';
+    }
+  }
+
+  onOptionSelection(event, question: QuestionDetails) {
+    if (null != question) {
+      question.isDisable = true;
+      question.isViewAnsDisable=false;
+      if (event.value == question.correctAns) {
+        this.correctAudio.src = "assets/mp3/correct.mp3";
+        this.correctAudio.load();
+        this.correctAudio.play();
+        this.examResult.totalCorrectCount=this.examResult.totalCorrectCount+1;
+      } else {
+        this.wrongAudio.src = "assets/mp3/wrong.mp3";
+        this.wrongAudio.load();
+        this.wrongAudio.play();
+        this.examResult.totalWrongCount=this.examResult.totalWrongCount+1;
+      }
+
+    }
+
+  }
+
+
+  viewAllTopicWithType(chapter: ChapterSetupDetail, contentType: string) {
+    this.contentMgmntService.getTopicListForChapterForSubjectAndClassWithContentType(chapter.classId, chapter.subjectId, chapter.id, contentType).subscribe((tdata: TopicDetail[]) => {
+      if ('VIDEO' == contentType) {
+        this.animationtopicList = tdata;
+      }
+      else if ('PPT' == contentType) {
+        this.ppttopicList = tdata;
+      }
+      else if ('PDF' == contentType) {
+        this.pdftopicList = tdata;
+      }
+      //  this.topicList = tdata;
+      this.displayView = 'TOPIC';
+      this.contentMgmntService.changeDisplayView(this.displayView);
+    });
 
   }
 
@@ -225,100 +270,21 @@ export class TopicComponent implements OnInit {
     this.onChapterChange(value);
     this.displayView = 'TOPIC';
   }
-  viewQuestionsForChapter(chapter: ChapterSetupDetail) {
-    this.buildQuestionPathForChapter(chapter);
-    chapter.questionPath = this.questionPath;
-    this.contentMgmntService.changeChapterSetupDetail(chapter);
-    this.contentMgmntService.changeQuestionView('CHAPTER');
-    this.router.navigate(['/home/teacher/question']);
-  }
-
-  viewQuestionsForSubject(subject: SubjectSetupDetail) {
-    this.buildQuestionPathForSubject(subject);
-    subject.questionPath = this.questionPath;
-    this.contentMgmntService.changeSubjectDetail(subject);
-    this.contentMgmntService.changeQuestionView('SUBJECT');
-    this.router.navigate(['/home/teacher/question']);
-
-  }
-
-  private buildQuestionPathForChapter(chpater: ChapterSetupDetail) {
-    this.questionPath = '';
-    this.questionPath = 'assets/question';
-    var className = this.classSetup.displayName.replace(/\s/g, "");
-    var subjectName = this.subjectSetup.displayName.replace(/\s/g, "");
-    var chapterName = chpater.displayName.replace(/\s/g, "");
-    this.questionPath = this.questionPath + "/" + className + "/" + subjectName + "/" + chapterName;
-  }
 
 
-  private buildQuestionPathForSubject(subject: SubjectSetupDetail) {
-    this.questionPath = '';
-    this.questionPath = 'assets/question';
-    var className = this.classSetup.displayName.replace(/\s/g, "");
-    var subjectName = subject.displayName.replace(/\s/g, "");
-    this.questionPath = this.questionPath + "/" + className + "/" + subjectName;
-  }
-
-  viewQuestions(topic: TopicDetail) {
-    this.buildQuestionPathForTopic(topic);
-    topic.questionPath = this.questionPath;
-    this.contentMgmntService.changeTopic(topic);
-    this.contentMgmntService.changeQuestionView('TOPIC');
-    this.router.navigate(['/home/teacher/question']);
-  }
-
-
-
-  private buildQuestionPathForTopic(topic: TopicDetail) {
-    this.questionPath = '';
-    this.questionPath = 'assets/question';
-    var className = this.classSetup.displayName.replace(/\s/g, "");
-    var subjectName = this.subjectSetup.displayName.replace(/\s/g, "");
-    var chapterName = this.chapter.displayName.replace(/\s/g, "");
-    var topicName = topic.displayName.replace(/\s/g, "");
-    this.questionPath = this.questionPath + "/" + className + "/" +
-      subjectName + "/" + chapterName + "/" + topicName;
-  }
-
-
-
-  viewEBookForChapter(chapter: ChapterSetupDetail) {
-    this.buildEBookPathForChapter(chapter);
-    this.contentMgmntService.getEbookDetails(chapter.displayName, this.questionPath).subscribe((ebookLink: PdfDetail) => {
-      this.contentMgmntService.changePdfData(ebookLink);
-      this.router.navigate(['/home/teacher/pdf']);
-    });
-  }
-
-
-  viewEBookForSubject(subject: SubjectSetupDetail) {
-    this.buildEBookPathForSubject(subject);
-    this.contentMgmntService.getEbookDetails(subject.displayName, this.questionPath).subscribe((ebookLink: PdfDetail) => {
-      this.contentMgmntService.changePdfData(ebookLink);
-      this.router.navigate(['/home/teacher/pdf']);
+  viewMCQForChapters(chapter: ChapterSetupDetail) {
+    this.contentMgmntService.getMCQQuestionForChapter(chapter).subscribe((questions: QuestionDetails[]) => {
+      this.mcqQuestions = questions;
+      this.displayView = 'MCQ';
+      this.contentMgmntService.changeDisplayView(this.displayView);
+      this.examResult.totalQuestionCount=this.mcqQuestions.length;
     });
 
   }
 
-
-
-  private buildEBookPathForChapter(chpater: ChapterSetupDetail) {
-    this.questionPath = '';
-    this.questionPath = 'assets/question';
-    var className = this.classSetup.displayName.replace(/\s/g, "");
-    var subjectName = this.subjectSetup.displayName.replace(/\s/g, "");
-    var chapterName = chpater.displayName.replace(/\s/g, "");
-    this.questionPath = this.questionPath + "/" + className + "/" + subjectName + "/" + chapterName;
-  }
-
-
-  private buildEBookPathForSubject(subject: SubjectSetupDetail) {
-    this.questionPath = '';
-    this.questionPath = 'assets/question';
-    var className = this.classSetup.displayName.replace(/\s/g, "");
-    var subjectName = subject.displayName.replace(/\s/g, "");
-    this.questionPath = this.questionPath + "/" + className + "/" + subjectName;
+  playQuestionAudio(question: QuestionDetails) {
+    var speakString = question.question + " your  options  are  " + question.option1 + "    " + question.option2 + "    " + question.option3 + "    " + question.option4;
+    responsiveVoice.speak(speakString);
   }
 
 
@@ -345,22 +311,42 @@ export class TopicComponent implements OnInit {
 
 
   playLessonForTopic(topic: TopicDetail) {
-    this.contentMgmntService.playLesson(topic).subscribe((data) => {
-      let file = new Blob([data], { type: 'video/mp4' });
-      if (file.size > 0) {
-        const dialogRef = this.dialog.open(VideoDialog, {
-          width: '600px',
-          hasBackdrop: false,
-          data: {
-            url: URL.createObjectURL(file),
-            topic: topic
-          }
-        });
-      } else {
-        this.openErrorSnackBar("No Video exist with content.", "CLOSE");
-      }
+    if ('VIDEO' == topic.contentType) {
+      this.contentMgmntService.playLesson(topic).subscribe((data) => {
+        let file = new Blob([data], { type: 'video/mp4' });
+        if (file.size > 0) {
+          const dialogRef = this.dialog.open(VideoDialog, {
+            width: '600px',
+            hasBackdrop: false,
+            data: {
+              url: URL.createObjectURL(file),
+              topic: topic
+            }
+          });
+        } else {
+          this.openErrorSnackBar("No Video exist with content.", "CLOSE");
+        }
 
-    });
+      });
+    }
+    if ('PPT' == topic.contentType || 'PDF' == topic.contentType) {
+      this.contentMgmntService.playLesson(topic).subscribe((data) => {
+        let file = new Blob([data], { type: 'application/pdf' });
+        if (file.size > 0) {
+          const dialogRef = this.dialog.open(PPTDialog, {
+            width: '600px',
+            hasBackdrop: false,
+            data: {
+              url: URL.createObjectURL(file),
+              topic: topic
+            }
+          });
+        } else {
+          this.openErrorSnackBar("No PDF exist with content.", "CLOSE");
+        }
+
+      });
+    }
   }
 
   closePlayVideo() {
@@ -551,6 +537,22 @@ export class TopicComponent implements OnInit {
         this.snackBar.open(" Topic Added Sucessfully. ", "CLOSE");
         this.contentMgmntService.getTopicListForChapterForSubjectAndClass(topicDetail.classId, topicDetail.subjectId, topicDetail.chapterId).subscribe((topics: TopicDetail[]) => {
           this.topicList = topics;
+          this.animationtopicList = [];
+          this.ppttopicList = [];
+          this.pdftopicList = [];
+
+          this.topicList.forEach((topic: TopicDetail) => {
+            if ("VIDEO" == topic.contentType) {
+              this.animationtopicList.push(topic);
+            }
+            if ("PPT" == topic.contentType) {
+              this.ppttopicList.push(topic);
+            }
+            if ("PDF" == topic.contentType) {
+              this.pdftopicList.push(topic);
+            }
+
+          });
         });
 
       });
@@ -572,6 +574,22 @@ export class TopicComponent implements OnInit {
         this.snackBar.open(" Topic Edited Sucessfully. ", "CLOSE");
         this.contentMgmntService.getTopicListForChapterForSubjectAndClass(topicDetail.classId, topicDetail.subjectId, topicDetail.chapterId).subscribe((topics: TopicDetail[]) => {
           this.topicList = topics;
+          this.animationtopicList = [];
+          this.ppttopicList = [];
+          this.pdftopicList = [];
+
+          this.topicList.forEach((topic: TopicDetail) => {
+            if ("VIDEO" == topic.contentType) {
+              this.animationtopicList.push(topic);
+            }
+            if ("PPT" == topic.contentType) {
+              this.ppttopicList.push(topic);
+            }
+            if ("PDF" == topic.contentType) {
+              this.pdftopicList.push(topic);
+            }
+
+          });
         });
       });
     });
@@ -593,6 +611,22 @@ export class TopicComponent implements OnInit {
         this.snackBar.open(" Topic Deleted Sucessfully. ", "CLOSE");
         this.contentMgmntService.getTopicListForChapterForSubjectAndClass(topicDetail.classId, topicDetail.subjectId, topicDetail.chapterId).subscribe((topics: TopicDetail[]) => {
           this.topicList = topics;
+          this.animationtopicList = [];
+          this.ppttopicList = [];
+          this.pdftopicList = [];
+
+          this.topicList.forEach((topic: TopicDetail) => {
+            if ("VIDEO" == topic.contentType) {
+              this.animationtopicList.push(topic);
+            }
+            if ("PPT" == topic.contentType) {
+              this.ppttopicList.push(topic);
+            }
+            if ("PDF" == topic.contentType) {
+              this.pdftopicList.push(topic);
+            }
+
+          });
         });
       });
     });
@@ -863,6 +897,42 @@ export class VideoDialog {
   topic: TopicDetail = new TopicDetail();
   constructor(public dialogRef: MatDialogRef<VideoDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private _sanitizer: DomSanitizer, public snackBar: MatSnackBar, private contentMgmntService: ContentMgmntService) {
     this.videoURL = this._sanitizer.bypassSecurityTrustUrl(data.url);
+    this.topic = data.topic;
+    this.contentMgmntService.startSession(this.topic).subscribe((message: any) => {
+      this.openErrorSnackBar("Session Started..", "CLOSE");
+    });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+    this.contentMgmntService.endSession(this.topic).subscribe((message: any) => {
+      this.openErrorSnackBar("Session Closed..", "CLOSE");
+    });
+  }
+
+  openErrorSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 10000
+    });
+  }
+
+
+}
+
+
+
+
+
+@Component({
+  selector: 'ppt-play-dialog',
+  templateUrl: 'ppt-dialog.html',
+  styleUrls: ['./topic.scss']
+})
+export class PPTDialog {
+  fileURL: any;
+  topic: TopicDetail = new TopicDetail();
+  constructor(public dialogRef: MatDialogRef<PPTDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private _sanitizer: DomSanitizer, public snackBar: MatSnackBar, private contentMgmntService: ContentMgmntService) {
+    this.fileURL = this._sanitizer.bypassSecurityTrustResourceUrl(data.url + "#toolbar=0");
     this.topic = data.topic;
     this.contentMgmntService.startSession(this.topic).subscribe((message: any) => {
       this.openErrorSnackBar("Session Started..", "CLOSE");

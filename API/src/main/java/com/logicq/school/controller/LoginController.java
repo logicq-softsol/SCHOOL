@@ -351,15 +351,15 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SucessMessage> startSessionTracker(@PathVariable Long classId, @PathVariable Long subjectId,
-			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
+	public ResponseEntity<SucessMessage> startSessionTracker(@PathVariable String classId, @PathVariable String subjectId,
+			@PathVariable String chapterId, @PathVariable String topicId) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId,
 				topicId);
 		ClassDetails classDetails = classesDetailsRepo.findOne(classId);
 		SubjectDetails subject = subjectDetailsRepo.findByClassIdAndId(classId, subjectId);
 		ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId);
-		if (null != topic && !StringUtils.isEmpty(topic.getPlayFileURL())) {
+		if (null != topic ) {
 			SessionTracker sessionTracker = new SessionTracker();
 			sessionTracker.setClassId(classId);
 			sessionTracker.setSubjectId(subjectId);
@@ -371,7 +371,7 @@ public class LoginController {
 			sessionTracker.setTopicName(topic.getDisplayName());
 			sessionTracker.setUserName(loginDetail.getUserName());
 			sessionTracker.setStartTime(schoolDateUtils.currentDate());
-			sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
+		//	sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
 			sessionTracker.setEndTime(sessionTracker.getStartTime());
 			sessionTracker.setStatus("PENDING");
 			sessionTrackerRepo.save(sessionTracker);

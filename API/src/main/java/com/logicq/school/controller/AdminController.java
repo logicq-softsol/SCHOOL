@@ -4,20 +4,15 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.env.Environment;
@@ -37,23 +32,30 @@ import com.logicq.school.model.ChapterDetails;
 import com.logicq.school.model.ClassDetails;
 import com.logicq.school.model.Favorites;
 import com.logicq.school.model.LoginDetails;
+import com.logicq.school.model.QuestionDetails;
 import com.logicq.school.model.SubjectDetails;
 import com.logicq.school.model.TopicDetails;
 import com.logicq.school.model.UserWorkSpace;
 import com.logicq.school.repository.ChapterDetailsRepo;
 import com.logicq.school.repository.ClassesDetailsRepo;
 import com.logicq.school.repository.ProductActivationRepo;
+import com.logicq.school.repository.QuestionDetailsRepo;
+import com.logicq.school.repository.SchoolDetailsRepo;
 import com.logicq.school.repository.SubjectDetailsRepo;
 import com.logicq.school.repository.TopicDetailsRepo;
 import com.logicq.school.repository.UserFavortiesRepo;
 import com.logicq.school.repository.WorkSpaceDetailsRepo;
 import com.logicq.school.utils.LogicQEncryptionAndDecryption;
+import com.logicq.school.utils.SchoolHelperUtils;
 import com.logicq.school.utils.SchoolSecurityUtils;
+import com.logicq.school.vo.SchoolVO;
 
 @RestController
 @EnableAutoConfiguration
 @RequestMapping("/api/admin")
 public class AdminController {
+
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
 	@Autowired
 	ClassesDetailsRepo classesDetailsRepo;
@@ -85,8 +87,78 @@ public class AdminController {
 	@Autowired
 	LogicQEncryptionAndDecryption logicQEncryptionAndDecryption;
 
+	@Autowired
+	SchoolDetailsRepo schoolDetailsRepo;
+
+	@Autowired
+	SchoolHelperUtils schoolHelperUtils;
+
+	@Autowired
+	QuestionDetailsRepo questionDetailsRepo;
+
+	@RequestMapping(value = "/schoo", method = RequestMethod.GET)
+	public ResponseEntity<SchoolVO> getSchoolDetails() throws Exception {
+		SchoolVO schoolVO = new SchoolVO();
+		schoolDetailsRepo.findAll();
+		return new ResponseEntity<SchoolVO>(schoolVO, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/questions/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
+	public ResponseEntity<List<QuestionDetails>> getQuestionsChapterDetailsForClassAndSubjectAndContentType(
+			@PathVariable String classId, @PathVariable String subjectId, @PathVariable String chapterId) {
+		return new ResponseEntity<List<QuestionDetails>>(
+				questionDetailsRepo.findByClassIdAndSubjectIdAndChapterId(classId, subjectId, chapterId),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/day0/questionsetup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<QuestionDetails>> setupDayZeroForQuestion() throws Exception {
+		List<QuestionDetails> questionList = new ArrayList<>();
+		File file = ResourceUtils.getFile("classpath:question.txt");
+		Files.lines(Paths.get(file.getAbsolutePath())).skip(1).forEach(lin -> {
+			String[] wordList = lin.split("#");
+			System.out.println(lin);
+			ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
+			SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
+					wordList[1].toLowerCase().trim());
+			ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndName(classDetails.getId(),
+					subejctDetail.getId(), wordList[2].toLowerCase().trim());
+
+			QuestionDetails question = new QuestionDetails();
+			question.setClassId(chapter.getClassId());
+			question.setSubjectId(chapter.getSubjectId());
+			question.setChapterId(chapter.getId());
+			question.setOption1(wordList[4]);
+			question.setOption2(wordList[5]);
+			question.setOption3(wordList[6]);
+			question.setOption4(wordList[7]);
+			question.setQuestion(wordList[3]);
+			question.setApplicableFor("CHAPTER");
+			if ("OPTION1".equalsIgnoreCase(wordList[8])) {
+				question.setCorrectAns(question.getOption1());
+			}
+			if ("OPTION2".equalsIgnoreCase(wordList[8])) {
+				question.setCorrectAns(question.getOption2());
+			}
+			if ("OPTION3".equalsIgnoreCase(wordList[8])) {
+				question.setCorrectAns(question.getOption3());
+			}
+			if ("OPTION4".equalsIgnoreCase(wordList[8])) {
+				question.setCorrectAns(question.getOption4());
+			}
+			question.setType(wordList[9].toUpperCase());
+			questionList.add(question);
+		});
+
+		if (!questionList.isEmpty()) {
+			questionDetailsRepo.save(questionList);
+		}
+
+		return new ResponseEntity<List<QuestionDetails>>(questionList, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/day0/setup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TopicDetails>> setupDayZeroForTopic() throws Exception {
+	public ResponseEntity<List<TopicDetails>> setupDayZeroForSchool() throws Exception {
 		List<TopicDetails> allTopicDetail = new ArrayList<>();
 		File file = ResourceUtils.getFile("classpath:topic.txt");
 		List<String> classList = new ArrayList<>();
@@ -98,11 +170,11 @@ public class AdminController {
 			String[] wordList = lin.split("#");
 			classList.add(wordList[0]);
 			subjectList.add(wordList[0] + "#" + wordList[1]);
-			chapterList.add(wordList[0] + "#" + wordList[1] + "#" + wordList[2]);
-			topicList.add(lin);
+			chapterList.add(wordList[0] + "#" + wordList[1] + "#" + wordList[2] + "#" + wordList[6] + "#" + wordList[7]
+					+ "#" + wordList[8] + "#" + wordList[9] + "#" + wordList[10] + "#" + wordList[11]);
+			topicList.add(wordList[0] + "#" + wordList[1] + "#" + wordList[2] + "#" + wordList[3] + "#" + wordList[4]
+					+ "#" + wordList[12]);
 		});
-		;
-
 		topicDetailsRepo.deleteAll();
 		chapterDetailsRepo.deleteAll();
 		subjectDetailsRepo.deleteAll();
@@ -116,6 +188,7 @@ public class AdminController {
 				classresult.setName(classresult.getDisplayName().toLowerCase().trim());
 				classresult.setDescription("About class " + classresult.getDisplayName());
 				classresult.setType("CLASS");
+				classresult.setId(RandomStringUtils.randomAlphanumeric(2));
 				allClass.add(classresult);
 			});
 			if (!allClass.isEmpty())
@@ -134,6 +207,7 @@ public class AdminController {
 						subejctDetail.setDescription("About Subject" + subejctDetail.getDisplayName() + " for "
 								+ classDetails.getDisplayName());
 						subejctDetail.setType("SUBJECT");
+						subejctDetail.setId(RandomStringUtils.randomAlphanumeric(3));
 						allSubject.add(subejctDetail);
 					}
 				});
@@ -158,6 +232,43 @@ public class AdminController {
 									+ classDetails.getDisplayName());
 							chapterDetails.setSubjectId(subejctDetail.getId());
 							chapterDetails.setType("CHAPTER");
+							chapterDetails.setId(RandomStringUtils.randomAlphanumeric(4));
+							if (1 == Integer.valueOf(wordList[3])) {
+								chapterDetails.setIsVideo(Boolean.TRUE);
+							} else {
+								chapterDetails.setIsVideo(Boolean.FALSE);
+							}
+
+							if (1 == Integer.valueOf(wordList[4])) {
+								chapterDetails.setIsPPt(Boolean.TRUE);
+							} else {
+								chapterDetails.setIsPPt(Boolean.FALSE);
+							}
+
+							if (1 == Integer.valueOf(wordList[5])) {
+								chapterDetails.setIsPDF(Boolean.TRUE);
+							} else {
+								chapterDetails.setIsPDF(Boolean.FALSE);
+							}
+
+							if (1 == Integer.valueOf(wordList[6])) {
+								chapterDetails.setIsMCQ(Boolean.TRUE);
+							} else {
+								chapterDetails.setIsMCQ(Boolean.FALSE);
+							}
+
+							if (1 == Integer.valueOf(wordList[7])) {
+								chapterDetails.setIsSampleQuest(Boolean.TRUE);
+							} else {
+								chapterDetails.setIsSampleQuest(Boolean.FALSE);
+							}
+
+							if (1 == Integer.valueOf(wordList[8])) {
+								chapterDetails.setIsExamQuest(Boolean.TRUE);
+							} else {
+								chapterDetails.setIsExamQuest(Boolean.FALSE);
+							}
+
 							allChapter.add(chapterDetails);
 						}
 
@@ -187,25 +298,18 @@ public class AdminController {
 							+ subejctDetail.getDisplayName() + " of class " + classDetails.getDisplayName());
 					topicDetails.setSubjectId(subejctDetail.getId());
 					topicDetails.setChapterId(chapter.getId());
-					topicDetails.setPlayFileType("mp4");
-					topicDetails.setPlayFileURL(wordList[4]);
-					if (!StringUtils.isEmpty(wordList[5]))
-						topicDetails.setPlayFileTime(Long.valueOf(wordList[5]));
-					else
-						topicDetails.setPlayFileTime(1l);
-
+					topicDetails.setId(RandomStringUtils.randomAlphanumeric(5));
 					topicDetails.setType("TOPIC");
+					topicDetails.setContentType(wordList[5].trim());
+					topicDetails.setContentURL(wordList[4].trim());
 					allTopicDetail.add(topicDetails);
-					chapter.setTimeRequired(Math.addExact(chapter.getTimeRequired(), topicDetails.getPlayFileTime()));
-					subejctDetail.setTimeRequired(
-							Math.addExact(subejctDetail.getTimeRequired(), topicDetails.getPlayFileTime()));
-					chapterDetailsRepo.save(chapter);
-					subjectDetailsRepo.save(subejctDetail);
 				}
 
 			});
-			if (!allTopicDetail.isEmpty())
+			if (!allTopicDetail.isEmpty()) {
 				topicDetailsRepo.save(allTopicDetail);
+			}
+
 		}
 
 		return new ResponseEntity<List<TopicDetails>>(allTopicDetail, HttpStatus.OK);
@@ -213,21 +317,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/classes", method = RequestMethod.GET)
 	public ResponseEntity<List<ClassDetails>> getClassDetails() throws Exception {
-		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
-		List<ClassDetails> classesList = classesDetailsRepo.findAll();
-		if (!classesList.isEmpty()) {
-			classesList.forEach(classes -> {
-				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "CLASS",
-						classes.getId());
-				if (null != fav) {
-					classes.setType("FAVORTIE");
-				} else {
-					classes.setType("NOT_FAVORTIE");
-				}
-			});
-		}
-
-		return new ResponseEntity<List<ClassDetails>>(classesList, HttpStatus.OK);
+		return new ResponseEntity<List<ClassDetails>>(classesDetailsRepo.findAll(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/classes", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -243,79 +333,40 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/classes/{classId}", method = RequestMethod.DELETE)
-	public ResponseEntity<ClassDetails> deleteClassDetails(@PathVariable Long classId) throws Exception {
+	public ResponseEntity<ClassDetails> deleteClassDetails(@PathVariable String classId) throws Exception {
 		classesDetailsRepo.delete(classId);
 		return new ResponseEntity<ClassDetails>(new ClassDetails(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/classes/{classId}", method = RequestMethod.GET)
-	public ResponseEntity<ClassDetails> getClassDetail(@PathVariable Long classId) throws Exception {
+	public ResponseEntity<ClassDetails> getClassDetail(@PathVariable String classId) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		ClassDetails classDetail = classesDetailsRepo.findOne(classId);
-		if (null != classDetail) {
-			Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "CLASS",
-					classDetail.getId());
-			if (null != fav)
-				classDetail.setType("FAVORTIE");
-		}
+//		if (null != classDetail) {
+//			Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "CLASS",
+//					classDetail.getId());
+//			if (null != fav)
+//				classDetail.setType("FAVORTIE");
+//		}
 		return new ResponseEntity<ClassDetails>(classDetail, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/subjects", method = RequestMethod.GET)
 	public ResponseEntity<List<SubjectDetails>> getSubjectDetails() throws Exception {
-		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
-		List<SubjectDetails> subjectList = subjectDetailsRepo.findAll();
-		if (!subjectList.isEmpty()) {
-			subjectList.forEach(subj -> {
-				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(),
-						"SUBJECT", subj.getId());
-				if (null != fav) {
-					subj.setType("FAVORTIE");
-				} else {
-					subj.setType("NOT_FAVORTIE");
-				}
-			});
-		}
-
-		return new ResponseEntity<List<SubjectDetails>>(subjectList, HttpStatus.OK);
+		return new ResponseEntity<List<SubjectDetails>>(subjectDetailsRepo.findAll(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/subjects/{classId}", method = RequestMethod.GET)
-	public ResponseEntity<List<SubjectDetails>> getSubjectDetailsForClasses(@PathVariable Long classId)
+	public ResponseEntity<List<SubjectDetails>> getSubjectDetailsForClasses(@PathVariable String classId)
 			throws Exception {
-		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
-		List<SubjectDetails> subjectList = subjectDetailsRepo.findByClassId(classId);
-		if (!subjectList.isEmpty()) {
-			subjectList.forEach(subj -> {
-				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(),
-						"SUBJECT", subj.getId());
-				if (null != fav) {
-					subj.setType("FAVORTIE");
-				} else {
-					subj.setType("NOT_FAVORTIE");
-				}
-			});
-		}
-
-		return new ResponseEntity<List<SubjectDetails>>(subjectList, HttpStatus.OK);
+		return new ResponseEntity<List<SubjectDetails>>(subjectDetailsRepo.findByClassId(classId), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/subjects/{classId}/{subjectId}", method = RequestMethod.GET)
-	public ResponseEntity<SubjectDetails> getSubjectDetailForClasses(@PathVariable Long classId,
-			@PathVariable Long subjectId) throws Exception {
-		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
-		SubjectDetails subject = subjectDetailsRepo.findByClassIdAndId(classId, subjectId);
-		if (null != subject) {
-			Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "SUBJECT",
-					subject.getId());
-			if (null != fav) {
-				subject.setType("FAVORTIE");
-			} else {
-				subject.setType("NOT_FAVORTIE");
-			}
-		}
-
-		return new ResponseEntity<SubjectDetails>(subject, HttpStatus.OK);
+	public ResponseEntity<SubjectDetails> getSubjectDetailForClasses(@PathVariable String classId,
+			@PathVariable String subjectId) throws Exception {
+		return new ResponseEntity<SubjectDetails>(subjectDetailsRepo.findByClassIdAndId(classId, subjectId),
+				HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/subjects", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -331,8 +382,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/subjects/{classId}/{subjectid}", method = RequestMethod.DELETE)
-	public ResponseEntity<SubjectDetails> deleteSubjectDetails(@PathVariable Long classId, @PathVariable Long subjectId)
-			throws Exception {
+	public ResponseEntity<SubjectDetails> deleteSubjectDetails(@PathVariable String classId,
+			@PathVariable String subjectId) throws Exception {
 		subjectDetailsRepo.delete(subjectId);
 		return new ResponseEntity<SubjectDetails>(new SubjectDetails(), HttpStatus.OK);
 	}
@@ -343,28 +394,15 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/chapters/{classId}/{subjectId}", method = RequestMethod.GET)
-	public ResponseEntity<List<ChapterDetails>> getChapterDetailsForClassAndSubject(@PathVariable Long classId,
-			@PathVariable Long subjectId) throws Exception {
-		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
-		List<ChapterDetails> chapterList = chapterDetailsRepo.findByClassIdAndSubjectId(classId, subjectId);
-		if (!chapterList.isEmpty()) {
-			chapterList.forEach(chapter -> {
-				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(),
-						"CHAPTER", chapter.getId());
-				if (null != fav) {
-					chapter.setType("FAVORTIE");
-				} else {
-					chapter.setType("NOT_FAVORTIE");
-				}
-			});
-		}
-
-		return new ResponseEntity<List<ChapterDetails>>(chapterList, HttpStatus.OK);
+	public ResponseEntity<List<ChapterDetails>> getChapterDetailsForClassAndSubject(@PathVariable String classId,
+			@PathVariable String subjectId) throws Exception {
+		return new ResponseEntity<List<ChapterDetails>>(
+				chapterDetailsRepo.findByClassIdAndSubjectId(classId, subjectId), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/chapters/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
-	public ResponseEntity<ChapterDetails> getChapterDetailsForClassAndSubject(@PathVariable Long classId,
-			@PathVariable Long subjectId, @PathVariable Long chapterId) {
+	public ResponseEntity<ChapterDetails> getChapterDetailsForClassAndSubject(@PathVariable String classId,
+			@PathVariable String subjectId, @PathVariable String chapterId) {
 		return new ResponseEntity<ChapterDetails>(
 				chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId), HttpStatus.OK);
 	}
@@ -382,38 +420,35 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/chapters/{classId}/{subjectId}/{chapterId}", method = RequestMethod.DELETE)
-	public ResponseEntity<ChapterDetails> deleteChapter(@PathVariable Long classId, @PathVariable Long subjectId,
-			@PathVariable Long chapterId) throws Exception {
+	public ResponseEntity<ChapterDetails> deleteChapter(@PathVariable String classId, @PathVariable String subjectId,
+			@PathVariable String chapterId) throws Exception {
 		ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId);
 		chapterDetailsRepo.delete(chapter);
 		return new ResponseEntity<ChapterDetails>(chapter, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/topic/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
-	public ResponseEntity<List<TopicDetails>> getTopicForChapterDetailsForClassAndSubject(@PathVariable Long classId,
-			@PathVariable Long subjectId, @PathVariable Long chapterId) throws Exception {
-		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+	public ResponseEntity<List<TopicDetails>> getTopicForChapterDetailsForClassAndSubject(@PathVariable String classId,
+			@PathVariable String subjectId, @PathVariable String chapterId) throws Exception {
 		List<TopicDetails> topicList = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterId(classId, subjectId,
 				chapterId);
-		if (!topicList.isEmpty()) {
-			topicList.forEach(topic -> {
-				Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "TOPIC",
-						topic.getId());
-				if (null != fav) {
-					topic.setType("FAVORTIE");
-				} else {
-					topic.setType("NOT_FAVORTIE");
-				}
-			});
-		}
 		return new ResponseEntity<List<TopicDetails>>(topicList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/topic/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.GET)
-	public ResponseEntity<TopicDetails> getChapterDetailsForClassAndSubjectAndTopic(@PathVariable Long classId,
-			@PathVariable Long subjectId, @PathVariable Long chapterId, @PathVariable Long topicId) {
+	public ResponseEntity<TopicDetails> getChapterDetailsForClassAndSubjectAndTopic(@PathVariable String classId,
+			@PathVariable String subjectId, @PathVariable String chapterId, @PathVariable String topicId) {
 		return new ResponseEntity<TopicDetails>(
 				topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId, topicId),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/topics/{classId}/{subjectId}/{chapterId}/{contentType}", method = RequestMethod.GET)
+	public ResponseEntity<List<TopicDetails>> getChapterDetailsForClassAndSubjectAndContentType(
+			@PathVariable String classId, @PathVariable String subjectId, @PathVariable String chapterId,
+			@PathVariable String contentType) {
+		return new ResponseEntity<List<TopicDetails>>(topicDetailsRepo
+				.findByClassIdAndSubjectIdAndChapterIdAndContentType(classId, subjectId, chapterId, contentType),
 				HttpStatus.OK);
 	}
 
@@ -435,8 +470,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/topic/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.DELETE)
-	public ResponseEntity<TopicDetails> deleteTopic(@PathVariable Long classId, @PathVariable Long subjectId,
-			@PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
+	public ResponseEntity<TopicDetails> deleteTopic(@PathVariable String classId, @PathVariable String subjectId,
+			@PathVariable String chapterId, @PathVariable String topicId) throws Exception {
 		TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId,
 				topicId);
 		topicDetailsRepo.delete(topic);
@@ -444,8 +479,9 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/workspace/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.GET)
-	public ResponseEntity<List<UserWorkSpace>> getUserWorkSpace(@PathVariable Long classId,
-			@PathVariable Long subjectId, @PathVariable Long chapterId, @PathVariable Long topicId) throws Exception {
+	public ResponseEntity<List<UserWorkSpace>> getUserWorkSpace(@PathVariable String classId,
+			@PathVariable String subjectId, @PathVariable String chapterId, @PathVariable String topicId)
+			throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		List<UserWorkSpace> workspaceList = workSpaceDetailsRepo
 				.findByClassIdAndSubjectIdAndChapterIdAndUserNameAndTopicId(classId, subjectId, chapterId,
@@ -454,8 +490,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/workspace/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
-	public ResponseEntity<List<UserWorkSpace>> getUserWorkSpaceForChapters(@PathVariable Long classId,
-			@PathVariable Long subjectId, @PathVariable Long chapterId) throws Exception {
+	public ResponseEntity<List<UserWorkSpace>> getUserWorkSpaceForChapters(@PathVariable String classId,
+			@PathVariable String subjectId, @PathVariable String chapterId) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		List<UserWorkSpace> workspaceList = workSpaceDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndUserName(
 				classId, subjectId, chapterId, loginDetail.getUserName());
@@ -505,16 +541,24 @@ public class AdminController {
 
 	@GetMapping("/playlesson/{topicId}")
 	public void playLessonForTopic(@PathVariable String topicId, HttpServletResponse response) throws Exception {
-		TopicDetails topic = topicDetailsRepo.findOne(Long.valueOf(topicId));
+		TopicDetails topic = topicDetailsRepo.findOne(topicId);
 		if (null != topic) {
 			String hostName = schoolSecurityUtils.getTokenHostName();
 			ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
-			byte[] readData = logicQEncryptionAndDecryption.readFileAndDecryptFile(new File(topic.getPlayFileURL()),
+			byte[] readData = logicQEncryptionAndDecryption.readFileAndDecryptFile(new File(topic.getContentURL()),
 					activationDetails.getActivationToken());
 			if (readData.length > 0) {
 				response.getOutputStream().write(readData);
-				response.setContentType("video/mp4");
-				response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
+				if("VIDEO"==topic.getContentType()) {
+					response.setContentType("video/mp4");
+					response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
+				}
+				if("PPT".equalsIgnoreCase(topic.getContentType()) || "PDF".equalsIgnoreCase(topic.getContentType())) {
+					response.setContentType("application/pdf");
+					response.setHeader("Content-Disposition", "attachment; filename=\"xyz.pdf\"");
+				}
+				
+			
 				response.getOutputStream().flush();
 			}
 

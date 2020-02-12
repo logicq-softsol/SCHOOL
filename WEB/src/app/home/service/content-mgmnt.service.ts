@@ -8,7 +8,6 @@ import { SubjectSetupDetail } from '../../public/model/subject-setup-detail';
 import { ChapterSetupDetail } from '../../public/model/chapter-setup-detail';
 import { ReplaySubject } from 'rxjs';
 import { TopicDetail } from 'src/app/public/model/topic-detail';
-import { PdfDetail } from '../content-mgmnt/questions/pdf-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,7 @@ export class ContentMgmntService {
   public contentDisplayView = new ReplaySubject<any>(1);
   public topic = new ReplaySubject<TopicDetail>(1);
   public questionView = new ReplaySubject<string>(1);
-  public pdfData = new ReplaySubject<PdfDetail>(1);
+
 
   public schoolType = new ReplaySubject<string>(1);
 
@@ -44,15 +43,6 @@ export class ContentMgmntService {
     return this.schoolType.asObservable();
   }
 
-
-
-  getPdfData() {
-    return this.pdfData.asObservable();
-  }
-
-  public changePdfData(pdfData: PdfDetail) {
-    this.pdfData.next(pdfData);
-  }
 
 
 
@@ -257,6 +247,11 @@ export class ContentMgmntService {
   }
 
 
+  getTopicListForChapterForSubjectAndClassWithContentType(classId: number, subjectId: number, chapterId: number,contentType:string) {
+    return this.http.get(environment.baseUrl + 'api/admin/topics/' + classId + "/" + subjectId + "/" + chapterId+"/"+contentType);
+  }
+
+
   getWorkSpaceDetailForTopic(topic: TopicDetail) {
     return this.http.get(environment.baseUrl + 'api/admin/workspace/' + topic.classId + "/" + topic.subjectId + "/" + topic.chapterId + "/" + topic.id);
   }
@@ -332,7 +327,14 @@ export class ContentMgmntService {
 
   }
 
+  setupMCQQuestionForSchool(){
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Access-Control-Allow-Origin', '*');
+    let httpOptions = { headers: headers };
+    return this.http.post(environment.baseUrl + 'api/admin/day0/questionsetup', httpOptions);
 
+  }
 
   setupDayZeroForSchool() {
     let headers = new HttpHeaders();
@@ -388,43 +390,15 @@ export class ContentMgmntService {
   }
 
 
-  getQuestionList(topic: TopicDetail) {
-    var name = topic.displayName.replace(/\s/g, "");;
-    return this.http.get(topic.questionPath + "/mcq/" + name + ".json");
-  }
-  getPdfList(topic: TopicDetail) {
-    var name = topic.displayName.replace(/\s/g, "");;
-    return this.http.get(topic.questionPath + "/pdf/" + name + ".json");
-  }
-
-  getQuestionForSubject(subject: SubjectSetupDetail) {
-    var name = subject.displayName.replace(/\s/g, "");;
-    return this.http.get(subject.questionPath + "/mcq/" + name + ".json");
-  }
-  getPdfListForSubject(subject: SubjectSetupDetail) {
-    var name = subject.displayName.replace(/\s/g, "");;
-    return this.http.get(subject.questionPath + "/pdf/" + name + ".json");
-  }
-
-
-  getQuestionForChapter(chapter: ChapterSetupDetail) {
-    var name = chapter.displayName.replace(/\s/g, "");;
-    return this.http.get(chapter.questionPath + "/mcq/" + name + ".json");
-  }
-  getPdfListForChapter(chapter: ChapterSetupDetail) {
-    var name = chapter.displayName.replace(/\s/g, "");;
-    return this.http.get(chapter.questionPath + "/pdf/" + name + ".json");
-  }
 
   loadSchoolType() {
     return this.http.get("assets/config/school_type.json");
   }
 
 
-  getEbookDetails(name: string,eBookPath:string) {
-    var name = name.replace(/\s/g, "");;
-    return this.http.get(eBookPath + "/ebook/" + name + ".json");
+
+
+  getMCQQuestionForChapter(chapter:ChapterSetupDetail) {
+    return this.http.get(environment.baseUrl + 'api/admin/questions/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id);
   }
-
-
 }

@@ -4,53 +4,57 @@
             <div class="col-lg-12 " style="margin-top: 25px;">
                 <a class="logo" (click)="navigateHome()"><img src="assets/images/logo-edusure1.png" alt=""></a>
                 <div class="search-box col-md-6 form-group">
-                        <input type="text" placeholder="Type any key Words" class="form-control"  list="topicList" 
-                        [(ngModel)]="topicDisplayName" (change)="onTopicChange(topicDisplayName)"/>  
-                        <i *ngIf="topicDisplayName == null" class="fas fa-search search-icon"></i>
-                        <i *ngIf="topicDisplayName != null" class="fas fa-times search-icon" (click)="clear()"></i>
-                        <datalist id="topicList">
-                            <option *ngFor="let topic of topicList" [value]="topic.displayName" ><strong>{{topic?.displayName  | uppercase }}</strong></option>
-                          </datalist>
-                      </div> 
+                    <input type="text" placeholder="Type any key Words" class="form-control" list="topicList"
+                        [(ngModel)]="topicDisplayName" (change)="onTopicChange(topicDisplayName)" />
+                    <i *ngIf="topicDisplayName == null" class="fas fa-search search-icon"></i>
+                    <i *ngIf="topicDisplayName != null" class="fas fa-times search-icon" (click)="clear()"></i>
+                    <datalist id="topicList">
+                        <option *ngFor="let topic of topicList" [value]="topic.displayName"><strong>{{topic?.displayName
+                                | uppercase }}</strong></option>
+                    </datalist>
+                </div>
                 <ul class="login-info">
-                        <li>  <button mat-stroked-button color="accent" *ngIf="user.role=='ADMIN'">{{schoolType}}}</button></li>
-                      <li>  <button type="button" class="btn" *ngIf="user.role=='ADMIN'" (click)="setupDayZero()">DAYZERO</button></li>
-                    <li>Last login: {{ today | date:'fullDate' }} {{today | date:'shortTime'}}</li>
+                      
+                    <!--li><button mat-stroked-button color="accent" *ngIf="user.role=='ADMIN'">{{schoolType}}</button></li-->
+                   <li> <button type="button" class="btn" *ngIf="user.role=='ADMIN'" (click)="setupMCQQuestion()">MCQ SETUP</button></li>
+                    <li> <button type="button" class="btn" *ngIf="user.role=='ADMIN'" (click)="setupDayZero()">DAYZERO</button></li>
+                 
                     <li><a class="info" [matMenuTriggerFor]="info" (click)="setupRemainTime()"><i class="fas fa-info-circle"></i></a></li>
                     <li><a class="user" [matMenuTriggerFor]="menu"><i class="fas fa-user"></i></a></li>
                 </ul>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="viewProfile()">
-                    <i class="fa fa-user drop-icon" aria-hidden="true"></i>
-                      <span>View Profile</span>
+                        <i class="fa fa-user drop-icon" aria-hidden="true"></i>
+                        <span>View Profile</span>
                     </button>
                     <button mat-menu-item (click)="viewSessionReport()">
-                     <i class="fa fa-calendar drop-icon" aria-hidden="true"></i>
-                      <span>View Favorites</span>
+                        <i class="fa fa-calendar drop-icon" aria-hidden="true"></i>
+                        <span>View Favorites</span>
                     </button>
                     <button mat-menu-item (click)="logout()">
-                      <i class="fa fa-sign-out drop-icon" aria-hidden="true"></i>
-                      <span>Logout</span>
+                        <i class="fa fa-sign-out drop-icon" aria-hidden="true"></i>
+                        <span>Logout</span>
                     </button>
-                  </mat-menu>
-                  <mat-menu #info="matMenu">
-                      <div class="timer-container">
-                            <img class="timer-icon" src="assets/images/blue-hourglass.gif" alt="">
-                       <p class="timer">{{timeLeft}} days remaining</p>
-                      </div>
-                  </mat-menu>
+                </mat-menu>
+                <mat-menu #info="matMenu">
+                        <p class="timer">Last login: {{ today | date:'fullDate' }} {{today | date:'shortTime'}}</p>
+                    <div class="timer-container">
+                        <img class="timer-icon" src="assets/images/blue-hourglass.gif" alt="">
+                        <p class="timer">{{timeLeft}} days remaining</p>
+                    </div>
+                </mat-menu>
             </div>
         </div>
     </div>
 </header>
 
 <router-outlet></router-outlet>
- <footer class="footer-container">
-        <div class="container-fluid">
-            <div class="row clearfix">
-                <div class="col-md-12 text-center">
-                    <p>Copyright, 2019  EduSure Rights Reserved, <a href="#">Terms and conditions</a></p>
-                </div>
+<footer class="footer-container">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-md-12 text-center">
+                <p>Copyright, 2019 EduSure Rights Reserved, <a href="#">Terms and conditions</a></p>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>

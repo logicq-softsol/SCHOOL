@@ -7,9 +7,10 @@ export class ChapterSetupDetail {
     public classId: number;
     public subjectId: number;
     public icon: string;
-    public playFileURL: string;
-    public playFileType: string;
-    public hasSubChapter: boolean = false;
-    public questionPath:string;
-    public isEBookAvilable:boolean=false;
+    public isVideo:Boolean;
+    public isPPt:Boolean;
+    public isPDF:Boolean;
+    public isMCQ:Boolean;
+    public isSampleQuest:Boolean;
+    public isExamQuest:Boolean;
 }

@@ -146,16 +146,6 @@ export class ContentMgmntComponent implements OnInit {
       this.contentMgmntService.changeSubjectDetail(subject);
       this.contentMgmntService.changeChapterList(data);
       this.contentMgmntService.changeDisplayView('CHAPTER');
-      this.contentMgmntService.getSchoolType().subscribe(sType => {
-        this.chapterList.forEach(chapter => {
-          if ("ICSE" == sType) {
-            chapter.isEBookAvilable = false;
-          } else {
-            chapter.isEBookAvilable = true;
-          }
-        });
-      });
-
       this.topicList = [];
     });
   }
@@ -193,15 +183,6 @@ export class ContentMgmntComponent implements OnInit {
   viewChapterList(subject: SubjectSetupDetail) {
     this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((chapters: ChapterSetupDetail[]) => {
       this.chapterList = chapters;
-      this.contentMgmntService.getSchoolType().subscribe(sType => {
-        this.chapterList.forEach(chapter => {
-          if ("ICSE" == sType) {
-            chapter.isEBookAvilable = false;
-          } else {
-            chapter.isEBookAvilable = true;
-          }
-        });
-      });
       this.contentMgmntService.changeChapterSetupDetail(this.chapter);
       this.showTopicList(this.chapter);
     });

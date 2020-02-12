@@ -8,13 +8,13 @@ import org.springframework.stereotype.Repository;
 import com.logicq.school.model.ChapterDetails;
 
 @Repository
-public interface ChapterDetailsRepo extends JpaRepository<ChapterDetails, Long> {
+public interface ChapterDetailsRepo extends JpaRepository<ChapterDetails, String> {
 
-	List<ChapterDetails> findByClassId(Long classId);
+	List<ChapterDetails> findByClassId(String classId);
 
-	List<ChapterDetails> findByClassIdAndSubjectId(Long classId, Long subjectId);
+	List<ChapterDetails> findByClassIdAndSubjectId(String classId, String subjectId);
 
-	ChapterDetails findByClassIdAndSubjectIdAndId(Long classId, Long subjectId, Long chapterId);
+	ChapterDetails findByClassIdAndSubjectIdAndId(String classId, String subjectId, String chapterId);
 	
-	ChapterDetails findByClassIdAndSubjectIdAndName(Long classId, Long subjectId, String name);
+	ChapterDetails findByClassIdAndSubjectIdAndName(String classId, String subjectId, String name);
 }

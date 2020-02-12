@@ -23,70 +23,54 @@ public class SubjectDetails extends AttributeDetails {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	@Column(name = "CLASS_ID")
-	private Long classId;
+	private String classId;
 
 	@Column(name = "IMAGE_URL")
-	private String icon;
+	private String imgURL;
 
-	@Column(name = "PLAY_FILE_URL")
-	private String playFileURL;
-
-	@Column(name = "PLAY_FILE_TYPE")
-	private String playFileType;
-
-	@Column(name = "TIME_REQUIRED")
-	private Long timeRequired = 0l;
-
-	public Long getId() {
+	/**
+	 * @return the id
+	 */
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getClassId() {
+	/**
+	 * @return the classId
+	 */
+	public String getClassId() {
 		return classId;
 	}
 
-	public void setClassId(Long classId) {
+	/**
+	 * @param classId the classId to set
+	 */
+	public void setClassId(String classId) {
 		this.classId = classId;
 	}
 
-	public String getIcon() {
-		return icon;
+	/**
+	 * @return the imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
 	}
 
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
-	public String getPlayFileURL() {
-		return playFileURL;
-	}
-
-	public void setPlayFileURL(String playFileURL) {
-		this.playFileURL = playFileURL;
-	}
-
-	public String getPlayFileType() {
-		return playFileType;
-	}
-
-	public void setPlayFileType(String playFileType) {
-		this.playFileType = playFileType;
-	}
-
-	public Long getTimeRequired() {
-		return timeRequired;
-	}
-
-	public void setTimeRequired(Long timeRequired) {
-		this.timeRequired = timeRequired;
+	/**
+	 * @param imgURL the imgURL to set
+	 */
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
 	}
 
 }

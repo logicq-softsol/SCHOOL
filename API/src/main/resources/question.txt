@@ -1,8 +1,5 @@
-﻿CLASS#Nursery#F:\EDUSURE\CONTENT\Nursery\question\Nursery.lq#PDF
-CLASS#Nursery#F:\EDUSURE\CONTENT\Nursery\question\Nursery1.lq#PDF
-SUBJECT#Nursery#Moral Stories in English#F:\EDUSURE\CONTENT\Nursery\question\MoralStoriesinEnglish\MoralStoriesinEnglish.lq#PDF
-SUBJECT#Nursery#Moral Stories in English#F:\EDUSURE\CONTENT\Nursery\question\MoralStoriesinEnglish\MoralStoriesinEnglish1.lq#PDF
-CHAPTER#Nursery#Moral Stories in English#Moral Stories#F:\EDUSURE\CONTENT\Nursery\MoralStoriesinEnglish\MoralStories\MoralStories.lq#PDF
-CHAPTER#Nursery#Moral Stories in English#Moral Stories#F:\EDUSURE\CONTENT\Nursery\MoralStoriesinEnglish\MoralStories\MoralStories1.lq#PDF
-TOPIC#Nursery#Moral Stories in English#Moral Stories#BIRBAL STORY#F:\EDUSURE\CONTENT\Nursery\MoralStoriesinEnglish\MoralStories\BIRBALSTORY\BIRBAL STORY.lq#PDF
-TOPIC#Nursery#Moral Stories in English#Moral Stories#BIRBAL STORY#F:\EDUSURE\CONTENT\Nursery\MoralStoriesinEnglish\MoralStories\BIRBALSTORY\BIRBAL STORY1.lq#PDF
+﻿CLASS#SUBJECT#CHAPTER#QUESTION#OPTION1#OPTION2#OPTION3#OPTION4#CORRECT#MCQ
+STD-I#Environmental Science#Good Habits#How many days does the earth take to complete on Revulation ?#366 days#364 days#365 days#367 days#OPTION3#MCQ
+STD-I#Environmental Science#Good Habits#What is Sun ?#Planet#Star#Sub Planet#none of these#OPTION2#MCQ
+STD-I#Mathematics#Addition#What comes after 4 ?#5#8#6#3#OPTION1#MCQ
+STD-I#Mathematics#Addition#What comes before 8 ?#6#7#8#9#OPTION4#MCQ

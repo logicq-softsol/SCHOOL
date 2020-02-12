@@ -8,12 +8,10 @@ import { LogicQIntercept } from '../core/logicqInterceptor';
 import { ContentMgmntComponent } from './content-mgmnt/content-mgmnt.component';
 import { CustomMaterialModule } from '../core/material.module';
 import { ImageCropperModule } from "ngx-image-cropper";
-import { TopicComponent, TopicDetailDialog, ChapterDetailDialog, SubjectDetailDialog, ClassSetupDialog, VideoDialog } from './content-mgmnt/topics/topic.component';
-import { QuestionComponent, CorrectAnswerDialog } from './content-mgmnt/questions/question';
+import { TopicComponent, TopicDetailDialog, ChapterDetailDialog, SubjectDetailDialog, ClassSetupDialog, VideoDialog, PPTDialog } from './content-mgmnt/topics/topic.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { PDFViewComponent } from './content-mgmnt/pdfview/pdf-view.component';
 
 
 @NgModule({
@@ -21,8 +19,8 @@ import { PDFViewComponent } from './content-mgmnt/pdfview/pdf-view.component';
     ImageCropperModule,
     MatExpansionModule,
     MatRadioModule, NgxExtendedPdfViewerModule],
-  declarations: [ContentMgmntComponent, HomeComponent, TopicComponent, PDFViewComponent, ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, QuestionComponent, CorrectAnswerDialog],
-  entryComponents: [ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog, CorrectAnswerDialog],
+  declarations: [ContentMgmntComponent, HomeComponent, TopicComponent, ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog,PPTDialog],
+  entryComponents: [ClassSetupDialog, SubjectDetailDialog, ChapterDetailDialog, TopicDetailDialog, VideoDialog,PPTDialog],
   providers: [
     homeRoutingProviders,
     {

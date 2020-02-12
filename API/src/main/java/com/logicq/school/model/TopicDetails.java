@@ -1,15 +1,8 @@
 package com.logicq.school.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,99 +16,122 @@ public class TopicDetails extends AttributeDetails {
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	@Column(name = "CLASS_ID")
-	private Long classId;
+	private String classId;
 
 	@Column(name = "SUBJECT_ID")
-	private Long subjectId;
+	private String subjectId;
 
 	@Column(name = "CHAPTER_ID")
-	private Long chapterId;
+	private String chapterId;
 
 	@Column(name = "IMAGE_URL")
-	private String icon;
+	private String imgURL;
 
-	@Column(name = "PLAY_FILE_URL")
-	private String playFileURL;
+	@Column(name = "CONTENT_TYPE")
+	private String contentType;
 
-	@Column(name = "PLAY_FILE_TYPE")
-	private String playFileType;
+	@Column(name = "CONTENT_URL")
+	private String contentURL;
 
-	@Column(name = "PLAY_FILE_TIME")
-	private Long playFileTime;
-
-	public Long getId() {
+	/**
+	 * @return the id
+	 */
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getClassId() {
+	/**
+	 * @return the classId
+	 */
+	public String getClassId() {
 		return classId;
 	}
 
-	public void setClassId(Long classId) {
+	/**
+	 * @param classId the classId to set
+	 */
+	public void setClassId(String classId) {
 		this.classId = classId;
 	}
 
-	public Long getSubjectId() {
+	/**
+	 * @return the subjectId
+	 */
+	public String getSubjectId() {
 		return subjectId;
 	}
 
-	public void setSubjectId(Long subjectId) {
+	/**
+	 * @param subjectId the subjectId to set
+	 */
+	public void setSubjectId(String subjectId) {
 		this.subjectId = subjectId;
 	}
 
-	public Long getChapterId() {
+	/**
+	 * @return the chapterId
+	 */
+	public String getChapterId() {
 		return chapterId;
 	}
 
-	public void setChapterId(Long chapterId) {
+	/**
+	 * @param chapterId the chapterId to set
+	 */
+	public void setChapterId(String chapterId) {
 		this.chapterId = chapterId;
 	}
 
-	public String getIcon() {
-		return icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
-	public String getPlayFileURL() {
-		return playFileURL;
-	}
-
-	public void setPlayFileURL(String playFileURL) {
-		this.playFileURL = playFileURL;
-	}
-
-	public String getPlayFileType() {
-		return playFileType;
-	}
-
-	public void setPlayFileType(String playFileType) {
-		this.playFileType = playFileType;
+	/**
+	 * @return the imgURL
+	 */
+	public String getImgURL() {
+		return imgURL;
 	}
 
 	/**
-	 * @return the playFileTime
+	 * @param imgURL the imgURL to set
 	 */
-	public Long getPlayFileTime() {
-		return playFileTime;
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
 	}
 
 	/**
-	 * @param playFileTime
-	 *            the playFileTime to set
+	 * @return the contentType
 	 */
-	public void setPlayFileTime(Long playFileTime) {
-		this.playFileTime = playFileTime;
+	public String getContentType() {
+		return contentType;
+	}
+
+	/**
+	 * @param contentType the contentType to set
+	 */
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	/**
+	 * @return the contentURL
+	 */
+	public String getContentURL() {
+		return contentURL;
+	}
+
+	/**
+	 * @param contentURL the contentURL to set
+	 */
+	public void setContentURL(String contentURL) {
+		this.contentURL = contentURL;
 	}
 
 }

@@ -139,11 +139,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "schoolweb:serve"
+            "devServerTarget": "edusure:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "schoolweb:serve:production"
+              "devServerTarget": "edusure:serve:production"
             }
           }
         },
@@ -159,5 +159,5 @@
       }
     }
   },
-  "defaultProject": "schoolweb"
+  "defaultProject": "edusure"
 }

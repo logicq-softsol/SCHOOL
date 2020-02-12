@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.logicq.school.model.SubjectDetails;
 
 @Repository
-public interface SubjectDetailsRepo extends JpaRepository<SubjectDetails, Long> {
+public interface SubjectDetailsRepo extends JpaRepository<SubjectDetails, String> {
 
-	List<SubjectDetails> findByClassId(Long classId);
+	List<SubjectDetails> findByClassId(String classId);
 
-	SubjectDetails findByClassIdAndId(Long classId, Long subjectId);
-	SubjectDetails findByClassIdAndName(Long classId, String subjectName);
+	SubjectDetails findByClassIdAndId(String classId, String subjectId);
+	SubjectDetails findByClassIdAndName(String classId, String subjectName);
 }

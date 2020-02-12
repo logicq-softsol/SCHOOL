@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, BehaviorSubject } from "rxjs";
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from "../../environments/environment";
 import { TokenStorage } from '../core/token.storage';
 import { Activation } from '../public/model/product-detail';

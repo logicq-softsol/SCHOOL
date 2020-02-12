@@ -11,6 +11,9 @@ import com.logicq.encryption.util.LogicQEncryptionAndDecryption;
 public class FindLicenseKey {
 
 	public static void main(String[] args) throws Exception {
+		EncryptionRestClient enRest=new EncryptionRestClient();
+		enRest.getLicenseForHostName("");
+		
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter file to get license key : ");
 		String filePath = scanner.nextLine();
