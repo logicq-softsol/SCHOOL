@@ -1,5 +1,29 @@
-﻿CLASS#SUBJECT#CHAPTER#QUESTION#OPTION1#OPTION2#OPTION3#OPTION4#CORRECT#MCQ
-STD-I#Environmental Science#Good Habits#How many days does the earth take to complete on Revulation ?#366 days#364 days#365 days#367 days#OPTION3#MCQ
-STD-I#Environmental Science#Good Habits#What is Sun ?#Planet#Star#Sub Planet#none of these#OPTION2#MCQ
-STD-I#Mathematics#Addition#What comes after 4 ?#5#8#6#3#OPTION1#MCQ
-STD-I#Mathematics#Addition#What comes before 8 ?#6#7#8#9#OPTION4#MCQ
+﻿TYPE#CLASS#SUBJECT#CHAPTER#QUESTION#OPTION1#OPTION2#OPTION3#OPTION4#CORRECT
+MCQ#STD-I#English#Unit-1#How many days does the earth take to complete on Revulation 1?#366 days#364 days#365 days#367 days#OPTION3
+MCQ#STD-I#English#Unit-1#What is Sun ?#Planet#Star#Sub Planet#none of these#OPTION2
+MCQ#STD-I#English#Unit-1#What comes after 4 ?#5#8#6#3#OPTION1
+MCQ#STD-I#English#Unit-1#What comes before 8 ?#6#7#8#9#OPTION4
+MCQ#STD-I#English#Unit-1#How many days does the earth take to complete on Revulation 2?#366 days#364 days#365 days#367 days#OPTION3
+MCQ#STD-I#English#Unit-1#What is Sun ?#Planet#Star#Sub Planet#none of these#OPTION2
+MCQ#STD-I#English#Unit-1#What comes after 4 ?#5#8#6#3#OPTION1
+MCQ#STD-I#English#Unit-1#What comes before 8 ?#6#7#8#9#OPTION4
+MCQ#STD-I#English#Unit-1#How many days does the earth take to complete on Revulation 3?#366 days#364 days#365 days#367 days#OPTION3
+MCQ#STD-I#English#Unit-1#What is Sun ?#Planet#Star#Sub Planet#none of these#OPTION2
+MCQ#STD-I#English#Unit-1#What comes after 4 ?#5#8#6#3#OPTION1
+MCQ#STD-I#English#Unit-1#What comes before 8 ?#6#7#8#9#OPTION4
+MCQ#STD-I#English#Unit-1#How many days does the earth take to complete on Revulation 4?#366 days#364 days#365 days#367 days#OPTION3
+MCQ#STD-I#English#Unit-1#What is Sun ?#Planet#Star#Sub Planet#none of these#OPTION2
+MCQ#STD-I#English#Unit-1#What comes after 4 ?#5#8#6#3#OPTION1
+MCQ#STD-I#English#Unit-1#What comes before 8 ?#6#7#8#9#OPTION4
+MCQ#STD-I#English#Unit-1#How many days does the earth take to complete on Revulation 5?#366 days#364 days#365 days#367 days#OPTION3
+MCQ#STD-I#English#Unit-1#What is Sun ?#Planet#Star#Sub Planet#none of these#OPTION2
+MCQ#STD-I#English#Unit-1#What comes after 4 ?#5#8#6#3#OPTION1
+MCQ#STD-I#English#Unit-1#What comes before 8 ?#6#7#8#9#OPTION4
+MCQ#STD-I#English#Unit-1#How many days does the earth take to complete on Revulation 6?#366 days#364 days#365 days#367 days#OPTION3
+MCQ#STD-I#English#Unit-1#What is Sun ?#Planet#Star#Sub Planet#none of these#OPTION2
+MCQ#STD-I#English#Unit-1#What comes after 4 ?#5#8#6#3#OPTION1
+MCQ#STD-I#English#Unit-1#What comes before 8 ?#6#7#8#9#OPTION4
+SAMPLE#STD-I#English#Unit-1#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\question\sample\question1.lq#question1
+SAMPLE#STD-I#English#Unit-1#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\question\sample\question2.lq#question2
+BEXAM#STD-I#English#Unit-1#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\question\board\question1.lq#question3
+BEXAM#STD-I#English#Unit-1#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\question\board\question2.lq#question4
