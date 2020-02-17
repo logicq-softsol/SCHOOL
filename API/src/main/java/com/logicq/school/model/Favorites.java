@@ -1,7 +1,5 @@
 package com.logicq.school.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER_FAV")
-public class Favorites  {
+public class Favorites extends AttributeDetails {
 
 	/**
 	 * 
@@ -27,117 +25,54 @@ public class Favorites  {
 	private String userName;
 
 	@Column(name = "TYPE_VALUE")
-	private String typeValue;
+	private Long typeValue;
+	
+	@Column(name = "URL")
+	private String url;
+	
+	@Column(name = "ICON")
+	private String icon;
 
-	@Column(name = "CLASS_ID")
-	private String classId;
-
-	@Column(name = "SUBJECT_ID")
-	private String subjectId;
-
-	@Column(name = "CHAPTER_ID")
-	private String chapterId;
-
-	@Column(name = "TOPIC_ID")
-	private String topicId;
-
-	/**
-	 * @return the id
-	 */
 	public Long getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return the userName
-	 */
 	public String getUserName() {
 		return userName;
 	}
 
-	/**
-	 * @param userName the userName to set
-	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	/**
-	 * @return the typeValue
-	 */
-	public String getTypeValue() {
+	public Long getTypeValue() {
 		return typeValue;
 	}
 
-	/**
-	 * @param typeValue the typeValue to set
-	 */
-	public void setTypeValue(String typeValue) {
+	public void setTypeValue(Long typeValue) {
 		this.typeValue = typeValue;
 	}
 
-	/**
-	 * @return the classId
-	 */
-	public String getClassId() {
-		return classId;
+	public String getUrl() {
+		return url;
 	}
 
-	/**
-	 * @param classId the classId to set
-	 */
-	public void setClassId(String classId) {
-		this.classId = classId;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	/**
-	 * @return the subjectId
-	 */
-	public String getSubjectId() {
-		return subjectId;
+	public String getIcon() {
+		return icon;
 	}
 
-	/**
-	 * @param subjectId the subjectId to set
-	 */
-	public void setSubjectId(String subjectId) {
-		this.subjectId = subjectId;
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
-
-	/**
-	 * @return the chapterId
-	 */
-	public String getChapterId() {
-		return chapterId;
-	}
-
-	/**
-	 * @param chapterId the chapterId to set
-	 */
-	public void setChapterId(String chapterId) {
-		this.chapterId = chapterId;
-	}
-
-	/**
-	 * @return the topicId
-	 */
-	public String getTopicId() {
-		return topicId;
-	}
-
-	/**
-	 * @param topicId the topicId to set
-	 */
-	public void setTopicId(String topicId) {
-		this.topicId = topicId;
-	}
-
 	
+	
+
 }

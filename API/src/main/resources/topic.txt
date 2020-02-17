@@ -1,14 +1,136 @@
-﻿STD-I#English#Unit-1#Unit-1#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen101.lq#0#1#1#1#1#1#1#PDF
-STD-I#English#Unit-2#Unit-2#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen102.lq#0#1#1#1#1#1#1#PDF
-STD-I#English#Unit-3#Unit-3#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen103.lq#0#0#0#1#1#1#1#PDF
-STD-I#English#Unit-4#Unit-4#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen104.lq#0#0#0#1#1#1#1#PDF
-STD-I#English#Unit-5#Unit-5#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen105.lq#0#0#0#1#1#1#1#PDF
-STD-I#English#Unit-6#Unit-6#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen106.lq#0#0#0#1#1#1#1#PDF
-STD-I#English#Unit-7#Unit-7#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen107.lq#0#0#0#1#1#1#1#PDF
-STD-I#English#Unit-8#Unit-8#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen108.lq#0#0#0#1#1#1#1#PDF
-STD-I#English#Unit-9#Unit-9#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen109.lq#0#0#0#1#1#1#1#PDF
-STD-I#English#Unit-10#Unit-10#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen110.lq#0#0#0#1#1#1#1#PDF
-STD-I#English#Unit-1#Unit-1#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\test_1.lq#0#1#1#1#1#1#1#VIDEO
-STD-I#English#Unit-2#Unit-2#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\test_2.lq#0#1#1#1#1#1#1#VIDEO
-STD-I#English#Unit-1#Unit-1#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\teaching_slid1.lq#0#1#1#1#1#1#1#PPT
-STD-I#English#Unit-2#Unit-2#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\teaching_slid2.lq#0#1#1#1#1#1#1#PPT
+﻿@@CLASS@@SUBJECT@@CHAPTER@@TOPIC@@PATH@@TIME@@video@@ppt@@pdf@@mcq@@sample@@boardexam@@content_type
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-1).lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-2).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-3)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-3).lq#1#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-4)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-4).lq#1#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-5)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-5).lq#1#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-6)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-6).lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-7)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-7).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-8)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-8).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-9)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-9).lq#5#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-10)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-10).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-11)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-11).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learn Numbers and Counting 1 to 10#Learn Numbers and Counting 1 to 10(Part-12)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learn Numbers and Counting 1 to 10\Learn Numbers and Counting 1 to 10(Part-12).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learning Numbers,Toddlers,Count 123,1to10#Learning Numbers, Toddlers, Count 123, 1 to 10(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learning Numbers,Toddlers, Count 123, 1 to 10\Learning Numbers, Toddlers, Count 123, 1 to 10(Part-1).lq#1#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learning Numbers,Toddlers,Count 123,1to10#Learning Numbers, Toddlers, Count 123, 1 to 10 (Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learning Numbers,Toddlers, Count 123, 1 to 10\Learning Numbers, Toddlers, Count 123, 1 to 10 (Part-2).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learning Numbers,Toddlers,Count 123,1to10#Learning Numbers, Toddlers, Count 123, 1 to 10 (Part-3)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learning Numbers,Toddlers, Count 123, 1 to 10\Learning Numbers, Toddlers, Count 123, 1 to 10 (Part-3).lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learning Numbers,Toddlers,Count 123,1to10#Learning Numbers, Toddlers, Count 123, 1 to 10 (Part-4)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learning Numbers,Toddlers, Count 123, 1 to 10\Learning Numbers, Toddlers, Count 123, 1 to 10 (Part-4).lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Learning Numbers,Toddlers,Count 123,1to10#Learning Numbers, Toddlers, Count 123, 1 to 10 (Part-5)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\Learning Numbers,Toddlers, Count 123, 1 to 10\Learning Numbers, Toddlers, Count 123, 1 to 10 (Part-5).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#The Numbers Song#Number Rhymes(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\The Numbers Song - Learn To Count from 1 to 10 - Number Rhymes\The Numbers Song - Learn To Count from 1 to 10 - Number Rhymes(Part-1).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#The Numbers Song#Number Rhymes(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\The Numbers Song - Learn To Count from 1 to 10 - Number Rhymes\The Numbers Song - Learn To Count from 1 to 10 - Number Rhymes(Part-2).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#The Numbers Song#Number Rhymes(Part-3)#F:\EDUSURE\CONTENT\STD-I\Mathematics\About10\The Numbers Song - Learn To Count from 1 to 10 - Number Rhymes\The Numbers Song - Learn To Count from 1 to 10 - Number Rhymes(Part-3).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Basic Addition#Basic Addition#F:\EDUSURE\CONTENT\STD-I\Mathematics\Addition\Basic Addition\Basic Addition.lq#6#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Addition#Addition(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Addition\Addition(Part-1)\Addition(Part-1).lq#4#1#0#0#1#0#0#VIDEO
+STD-I#Mathematics#Addition#Addition(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Addition\Addition(Part-2)\Addition(Part-2).lq#3#1#0#0#1#0#0#VIDEO
+STD-I#Mathematics#About Zero#About Zero Addition Tables(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\AdditionTables\About Zero\About Zero Addition Tables(Part-1).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#About Zero#About Zero Addition Tables(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\AdditionTables\About Zero\About Zero Addition Tables(Part-2).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Addition table#Addition(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\AdditionTables\Addition table\Addition(Part-1).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Addition table#Addition(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\AdditionTables\Addition table\Addition(Part-2).lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Ascending Descending Orders#Ascending#F:\EDUSURE\CONTENT\STD-I\Mathematics\AscendingDescendingOrders\Ascending\Ascending.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Ascending Descending Orders#Ascending and Descending Order#F:\EDUSURE\CONTENT\STD-I\Mathematics\AscendingDescendingOrders\Ascending and Descending Order\Ascending and Descending Order.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Before,After,Between#Before After In Between#F:\EDUSURE\CONTENT\STD-I\Mathematics\BeforeAfterBetween\Before After In Between.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Before,After,Between#Before, After, In Between Numbers(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\BeforeAfterBetween\Before, After, In Between Numbers(Part-1).lq#6#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Before,After,Between#Before, After, In Between Numbers(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\BeforeAfterBetween\Before, After, In Between Numbers(Part-2).lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Classifying object#Dinosaur Colors Song#F:\EDUSURE\CONTENT\STD-I\Mathematics\Classifyingobject\Dinosaur Colors Song.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Classifying object#Fruits and Vegetables Colors#F:\EDUSURE\CONTENT\STD-I\Mathematics\Classifyingobject\Fruits and Vegetables Colors.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Data Handling#Data Handling(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\DataHandling\Data Handling(Part-1).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Data Handling#Data Handling(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\DataHandling\Data Handling(Part-2).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Geometry-Shapes#2D and 3D geometrical shape#F:\EDUSURE\CONTENT\STD-I\Mathematics\Geometry-Shapes\Geometrical shape\2D and 3D geometrical shape.lq#6#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Geometry-Shapes#Geometric Shapes#F:\EDUSURE\CONTENT\STD-I\Mathematics\Geometry-Shapes\Geometrical shape\Geometric Shapes.lq#10#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Measurement#Measurement length volume mass#F:\EDUSURE\CONTENT\STD-I\Mathematics\Measurement\Measurement length volume mass.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Measurement#Measurement of length(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Measurement\Measurement of length(Part-1).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Measurement#Measurement of length(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Measurement\Measurement of length(Part-2).lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Money#About Money(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Money\About Money(Part-1).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Money#About money(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Money\About money(Part-2).lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Money#Money, rupees Paisa#F:\EDUSURE\CONTENT\STD-I\Mathematics\Money\Money, rupees Paisa.lq#8#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Multiplication Table Rhymes-1to20#Multiplication Table Rhymes - 1 To 20(Part -1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\MultiplicationTables\Multiplication Table Rhymes - 1 to 20\Multiplication Table Rhymes - 1 To 20(Part -1).lq#11#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Multiplication Table Rhymes-1to20#Multiplication Table Rhymes - 1 To 20(Part -2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\MultiplicationTables\Multiplication Table Rhymes - 1 to 20\Multiplication Table Rhymes - 1 To 20(Part -2).lq#10#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Multiplication Table Rhymes-1to20#Multiplication Table Rhymes - 1 To 20(Part -3)#F:\EDUSURE\CONTENT\STD-I\Mathematics\MultiplicationTables\Multiplication Table Rhymes - 1 to 20\Multiplication Table Rhymes - 1 To 20(Part -3).lq#9#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Multiplication Table Rhymes-1to20#Multiplication Table Rhymes - 1 To 20(Part -4)#F:\EDUSURE\CONTENT\STD-I\Mathematics\MultiplicationTables\Multiplication Table Rhymes - 1 to 20\Multiplication Table Rhymes - 1 To 20(Part -4).lq#9#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Multiplication Tables For Children 2to20#Multiplication Tables 2 To 20(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\MultiplicationTables\Multiplication Tables For Children 2 to 20\Multiplication Tables 2 To 20(Part-1).lq#6#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Multiplication Tables For Children 2to20#Multiplication Tables 2 To 20(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\MultiplicationTables\Multiplication Tables For Children 2 to 20\Multiplication Tables 2 To 20(Part-2).lq#5#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Multiplication Tables For Children 2to20#Multiplication Tables 2 To 20(Part-3)#F:\EDUSURE\CONTENT\STD-I\Mathematics\MultiplicationTables\Multiplication Tables For Children 2 to 20\Multiplication Tables 2 To 20(Part-3).lq#5#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Multiplication Tables For Children 2to20#Multiplication Tables 2 To 20(Part-4)#F:\EDUSURE\CONTENT\STD-I\Mathematics\MultiplicationTables\Multiplication Tables For Children 2 to 20\Multiplication Tables 2 To 20(Part-4).lq#5#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Number patterns#Number patterns(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Numberpatterns\Number patterns(Part-1).lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Number patterns#Number patterns(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Numberpatterns\Number patterns(Part-2).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Number patterns#Number patterns(Part-3)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Numberpatterns\Number patterns(Part-3).lq#6#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Numbers#Counting Numbers#F:\EDUSURE\CONTENT\STD-I\Mathematics\Numbers\Counting Numbers.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Numbers and number names#Numbers and number names(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Numbersandnumbernames\Numbers and number names(Part-1).lq#7#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Numbers and number names#Numbers and number names(Part-2)#F:\EDUSURE\CONTENT\STD-I\Mathematics\Numbersandnumbernames\Numbers and number names(Part-2).lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Ordinal Numbers#Ordinal Numbers(Part-1)#F:\EDUSURE\CONTENT\STD-I\Mathematics\OrdinalNumbers\Ordinal Numbers(Part-1).lq#6#1#0#0#0#0#0#VIDEO
+STD-I#Mathematics#Subtraction#Subtraction#F:\EDUSURE\CONTENT\STD-I\Mathematics\Subtraction\Subtraction.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Computer#The Computer#A MACHINE- COMPUTE#F:\EDUSURE\CONTENT\STD-I\Computer\The Computer\A MACHINE- COMPUTE.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Computer#Do’s and Don’ts of using a Computer#Do’s and Don’ts of using a Computer#F:\EDUSURE\CONTENT\STD-I\Computer\Do’s and Don’ts of using a Computer\Do’s and Don’ts of using a Computer.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Computer#Parts Of Computer#Parts Of Computer#F:\EDUSURE\CONTENT\STD-I\Computer\Parts Of Computer\Parts Of Computer.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#Computer#The Keyboard#The Keyboard and  its Keys#F:\EDUSURE\CONTENT\STD-I\Computer\The Keyboard\The Keyboard and  its Keys.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#Computer#The Mouse#Computer Mouse#F:\EDUSURE\CONTENT\STD-I\Computer\The Mouse\Computer Mouse.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Computer#The Storage Device#Storage Devices#F:\EDUSURE\CONTENT\STD-I\Computer\The Storage Device\Storage Devices.lq#6#1#0#0#0#0#0#VIDEO
+STD-I#English#Action Word#Action Or Doing Words#F:\EDUSURE\CONTENT\STD-I\English\Action Word\Action Or Doing Words.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#Adjective#Describing Words Adjectives#F:\EDUSURE\CONTENT\STD-I\English\Adjective\Describing Words Adjectives.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#Article#Articles A, An And The#F:\EDUSURE\CONTENT\STD-I\English\Article\Articles A, An And The.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#English#Naming word#Naming Words#F:\EDUSURE\CONTENT\STD-I\English\Naming word\Naming Words.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#Pronoun#Pronouns#F:\EDUSURE\CONTENT\STD-I\English\Pronoun\Pronouns.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#Use of Has and Have#Understanding The Use Of Has And Have#F:\EDUSURE\CONTENT\STD-I\English\Use of Has and Have\Understanding The Use Of Has And Have.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#Use of This - These, That - Those#Using This - These - That - Those#F:\EDUSURE\CONTENT\STD-I\English\Use of This - These, That - Those\Using This - These - That - Those.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#Environmental Science#Good Habits#Good Habits#F:\EDUSURE\CONTENT\STD-I\Environmental Science\Good Habits\Good Habits.lq#3#1#0#0#1#0#0#VIDEO
+STD-I#Environmental Science#My Family and Neighbourhood#My Family and Neighbourhood#F:\EDUSURE\CONTENT\STD-I\Environmental Science\My Family and Neighbourhood\My Family and Neighbourhood.lq#6#1#0#0#1#0#0#VIDEO
+STD-I#Environmental Science#Our clothes#Our Clothes#F:\EDUSURE\CONTENT\STD-I\Environmental Science\Our clothes\Our Clothes.lq#3#1#0#0#1#0#0#VIDEO
+STD-I#Environmental Science#Trafic Light#Traffic Lights#F:\EDUSURE\CONTENT\STD-I\Environmental Science\Trafic Light\Traffic Lights.lq#3#1#0#0#1#0#0#VIDEO
+STD-I#English#A Happy child - 3D#A Happy child - 3D#F:\EDUSURE\CONTENT\STD-I\English\A Happy child - 3D.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#Animals and Their Babies#Animals and Their Babies#F:\EDUSURE\CONTENT\STD-I\English\Animals And Their Babies.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#English#Articles A, An and The#Articles A, An and The#F:\EDUSURE\CONTENT\STD-I\English\Articles A, An And The.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#English#Conjunctions#Conjunctions#F:\EDUSURE\CONTENT\STD-I\English\Conjunctions.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#Diwali#Diwali#F:\EDUSURE\CONTENT\STD-I\English\Diwali.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#Doing Words#Doing Words#F:\EDUSURE\CONTENT\STD-I\English\Doing Words.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#Interjections#Interjections#F:\EDUSURE\CONTENT\STD-I\English\Interjections.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#My Day#My Day#F:\EDUSURE\CONTENT\STD-I\English\My Day.lq#5#1#0#0#0#0#0#VIDEO
+STD-I#English#My Teacher#My Teacher#F:\EDUSURE\CONTENT\STD-I\English\My Teacher.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#English#Name Of Places#Name Of Places#F:\EDUSURE\CONTENT\STD-I\English\Name Of Places.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#Names Of Animals#Names Of Animals#F:\EDUSURE\CONTENT\STD-I\English\Names Of Animals.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#English#Names Of Workers#Names Of Workers#F:\EDUSURE\CONTENT\STD-I\English\Names Of Workers.lq#14#1#0#0#0#0#0#VIDEO
+STD-I#English#Naming Words Nouns#Naming Words Nouns#F:\EDUSURE\CONTENT\STD-I\English\Naming Words Nouns.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#One And More Than One#One And More Than One#F:\EDUSURE\CONTENT\STD-I\English\One And More Than One.lq#6#1#0#0#0#0#0#VIDEO
+STD-I#English#Pair of words#Pair of words#F:\EDUSURE\CONTENT\STD-I\English\Pair of words.lq#4#1#0#0#0#0#0#VIDEO
+STD-I#English#Prepositions#Prepositions#F:\EDUSURE\CONTENT\STD-I\English\Prepositions.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#Pronouns#Pronouns#F:\EDUSURE\CONTENT\STD-I\English\Pronouns.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#The Alphabet#The Alphabet#F:\EDUSURE\CONTENT\STD-I\English\The Alphabet.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#The Ant And The Grasshopper#The Ant And The Grasshopper#F:\EDUSURE\CONTENT\STD-I\English\The Ant And The Grasshopper.lq#7#1#0#0#0#0#0#VIDEO
+STD-I#English#This That#This That#F:\EDUSURE\CONTENT\STD-I\English\This That.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#Use Of Am, Is, Are#Use Of Am, Is, Are#F:\EDUSURE\CONTENT\STD-I\English\Use Of Am, Is, Are.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#Use of Has Have Had#Use of Has Have Had#F:\EDUSURE\CONTENT\STD-I\English\Use of Has Have Had.lq#1#1#0#0#0#0#0#VIDEO
+STD-I#English#Name of Persons#Name of Persons#F:\EDUSURE\CONTENT\STD-I\English\Name of Persons.lq#2#1#0#0#0#0#0#VIDEO
+STD-I#English#The Sentence#The Sentence#F:\EDUSURE\CONTENT\STD-I\English\The Sentence.lq#1#1#0#0#0#0#0#VIDEO
+STD-I#English#Vowels and Consonants#Vowels and Consonants#F:\EDUSURE\CONTENT\STD-I\English\Vowels and Consonants.lq#3#1#0#0#0#0#0#VIDEO
+STD-I#English#Unit-1#Unit-1#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen101.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-2#Unit-2#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen102.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-3#Unit-3#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen103.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-4#Unit-4#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen104.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-5#Unit-5#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen105.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-6#Unit-6#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen106.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-7#Unit-7#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen107.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-8#Unit-8#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen108.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-9#Unit-9#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen109.lq#0#0#0#1#0#0#0#PDF
+STD-I#English#Unit-10#Unit-10#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\English\Marigold\aeen110.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Jhula#Jhula#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn101.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Aam Ki Kahani#Aam Ki Kahani#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn102.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Aam Ki Tokri#Aam Ki Tokri#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn103.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Patte Hi Patte#Patte Hi Patte#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn104.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Pokodi#Pokodi#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn105.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Chuk Chuk Gadi#Chuk Chuk Gadi#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhimahhn106.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Rosoyighar#Rosoyighar#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhimahhn107.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Chuho! Meaw So Rehi Hai#Chuho! Meaw So Rehi Hai#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn108.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Bandar Aur Gilhari#Bandar Aur Gilhari#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn109.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Pagdi#Pagdi#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn110.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Patang#Patang#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn111.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Gand Aur Balla#Gand Aur Balla#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn112.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Bandar Geta Khet Me Bhag#Bandar Geta Khet Me Bhag#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn113.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Ek Budhiya#Ek Budhiya#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn114.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Main Bhi#Main Bhi#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn115.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Lalu Aur Pilu#Lalu Aur Pilu#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn116.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Chokoi Se Chokdum#Chokoi Se Chokdum#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn117.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Choti Ka Kamal#Choti Ka Kamal#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn118.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Char Chane#Char Chane#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn119.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Bhagdar#Bhagdar#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn120.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Halim Chala Chand par#Halim Chala Chand par#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn121.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Hathi Challam Challam#Hathi Challam Challam#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn122.lq#0#0#0#1#0#0#0#PDF
+STD-I#Hindi#Sat Punch Ka Pura#Sat Punch Ka Pura#E:\WORK_SPACE\SCHOOL_CONTENT\Sample_Data\STD-I\Hindi\Rimjhim\ahhn123.lq#0#0#0#1#0#0#0#PDF

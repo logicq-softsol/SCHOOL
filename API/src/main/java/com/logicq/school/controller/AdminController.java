@@ -4,7 +4,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,10 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.logicq.school.exception.SucessMessage;
 import com.logicq.school.model.ActivationDetails;
 import com.logicq.school.model.ChapterDetails;
 import com.logicq.school.model.ClassDetails;
@@ -53,9 +46,8 @@ import com.logicq.school.repository.TopicDetailsRepo;
 import com.logicq.school.repository.UserFavortiesRepo;
 import com.logicq.school.repository.WorkSpaceDetailsRepo;
 import com.logicq.school.utils.LogicQEncryptionAndDecryption;
-import com.logicq.school.utils.SchoolDateUtils;
+import com.logicq.school.utils.SchoolHelperUtils;
 import com.logicq.school.utils.SchoolSecurityUtils;
-import com.logicq.school.vo.FavoritesVO;
 import com.logicq.school.vo.SchoolVO;
 
 @RestController
@@ -99,10 +91,10 @@ public class AdminController {
 	SchoolDetailsRepo schoolDetailsRepo;
 
 	@Autowired
-	QuestionDetailsRepo questionDetailsRepo;
+	SchoolHelperUtils schoolHelperUtils;
 
 	@Autowired
-	SchoolDateUtils schoolDateUtils;
+	QuestionDetailsRepo questionDetailsRepo;
 
 	@RequestMapping(value = "/schoo", method = RequestMethod.GET)
 	public ResponseEntity<SchoolVO> getSchoolDetails() throws Exception {
@@ -111,27 +103,12 @@ public class AdminController {
 		return new ResponseEntity<SchoolVO>(schoolVO, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/questions/count/{classId}/{subjectId}/{chapterId}/{type}", method = RequestMethod.GET)
-	public ResponseEntity<SucessMessage> recordCount(@PathVariable String classId, @PathVariable String subjectId,
-			@PathVariable String chapterId, @PathVariable String type) {
-		long recordCount = questionDetailsRepo.countByClassIdAndSubjectIdAndChapterIdAndType(classId, subjectId,
-				chapterId, type);
-		return new ResponseEntity<SucessMessage>(
-				new SucessMessage(new Date(), "Question Record Count", String.valueOf(recordCount)), HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/questions/{classId}/{subjectId}/{chapterId}/{type}", method = RequestMethod.GET)
+	@RequestMapping(value = "/questions/{classId}/{subjectId}/{chapterId}", method = RequestMethod.GET)
 	public ResponseEntity<List<QuestionDetails>> getQuestionsChapterDetailsForClassAndSubjectAndContentType(
-			@PathVariable String classId, @PathVariable String subjectId, @PathVariable String chapterId,
-			@PathVariable String type, @RequestParam Integer pageNo,
-			@RequestParam Integer pageSize) {
-		Pageable pageable = new PageRequest(pageNo, pageSize);
-		Page<QuestionDetails> questionList = questionDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndType(classId,
-				subjectId, chapterId, type,pageable);
-		if(questionList.hasContent()) {
-			return new ResponseEntity<List<QuestionDetails>>(questionList.getContent(), HttpStatus.OK);
-		}
-		return new ResponseEntity<List<QuestionDetails>>(new ArrayList<>(), HttpStatus.OK);
+			@PathVariable String classId, @PathVariable String subjectId, @PathVariable String chapterId) {
+		return new ResponseEntity<List<QuestionDetails>>(
+				questionDetailsRepo.findByClassIdAndSubjectIdAndChapterId(classId, subjectId, chapterId),
+				HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/day0/questionsetup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -140,50 +117,39 @@ public class AdminController {
 		File file = ResourceUtils.getFile("classpath:question.txt");
 		Files.lines(Paths.get(file.getAbsolutePath())).skip(1).forEach(lin -> {
 			String[] wordList = lin.split("#");
-			ClassDetails classDetails = classesDetailsRepo.findByName(wordList[1].toLowerCase().trim());
+			System.out.println(lin);
+			ClassDetails classDetails = classesDetailsRepo.findByName(wordList[0].toLowerCase().trim());
 			SubjectDetails subejctDetail = subjectDetailsRepo.findByClassIdAndName(classDetails.getId(),
-					wordList[2].toLowerCase().trim());
+					wordList[1].toLowerCase().trim());
 			ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndName(classDetails.getId(),
-					subejctDetail.getId(), wordList[3].toLowerCase().trim());
-			if ("MCQ".equalsIgnoreCase(wordList[0].trim())) {
-				QuestionDetails question = new QuestionDetails();
-				question.setClassId(chapter.getClassId());
-				question.setSubjectId(chapter.getSubjectId());
-				question.setChapterId(chapter.getId());
-				question.setOption1(wordList[5]);
-				question.setOption2(wordList[6]);
-				question.setOption3(wordList[7]);
-				question.setOption4(wordList[8]);
-				question.setQuestion(wordList[4]);
-				question.setApplicableFor("CHAPTER");
-				if ("OPTION1".equalsIgnoreCase(wordList[9])) {
-					question.setCorrectAns(question.getOption1());
-				}
-				if ("OPTION2".equalsIgnoreCase(wordList[9])) {
-					question.setCorrectAns(question.getOption2());
-				}
-				if ("OPTION3".equalsIgnoreCase(wordList[9])) {
-					question.setCorrectAns(question.getOption3());
-				}
-				if ("OPTION4".equalsIgnoreCase(wordList[9])) {
-					question.setCorrectAns(question.getOption4());
-				}
-				question.setType(wordList[0].toUpperCase());
-				questionList.add(question);
+					subejctDetail.getId(), wordList[2].toLowerCase().trim());
+
+			QuestionDetails question = new QuestionDetails();
+			question.setClassId(chapter.getClassId());
+			question.setSubjectId(chapter.getSubjectId());
+			question.setChapterId(chapter.getId());
+			question.setOption1(wordList[4]);
+			question.setOption2(wordList[5]);
+			question.setOption3(wordList[6]);
+			question.setOption4(wordList[7]);
+			question.setQuestion(wordList[3]);
+			question.setApplicableFor("CHAPTER");
+			if ("OPTION1".equalsIgnoreCase(wordList[8])) {
+				question.setCorrectAns(question.getOption1());
 			}
-			if ("SAMPLE".equalsIgnoreCase(wordList[0].trim()) || "BEXAM".equalsIgnoreCase(wordList[0].trim())) {
-				QuestionDetails question = new QuestionDetails();
-				question.setClassId(chapter.getClassId());
-				question.setSubjectId(chapter.getSubjectId());
-				question.setChapterId(chapter.getId());
-				question.setQuestion(wordList[4]);
-				question.setOption1(wordList[5]);
-				question.setType(wordList[0].toUpperCase());
-				questionList.add(question);
+			if ("OPTION2".equalsIgnoreCase(wordList[8])) {
+				question.setCorrectAns(question.getOption2());
 			}
+			if ("OPTION3".equalsIgnoreCase(wordList[8])) {
+				question.setCorrectAns(question.getOption3());
+			}
+			if ("OPTION4".equalsIgnoreCase(wordList[8])) {
+				question.setCorrectAns(question.getOption4());
+			}
+			question.setType(wordList[9].toUpperCase());
+			questionList.add(question);
 		});
-		// Delete all Question
-		questionDetailsRepo.deleteAll();
+
 		if (!questionList.isEmpty()) {
 			questionDetailsRepo.save(questionList);
 		}
@@ -550,28 +516,10 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/favorties", method = RequestMethod.GET)
-	public ResponseEntity<List<FavoritesVO>> getFavorties() throws Exception {
+	public ResponseEntity<List<Favorites>> getFavorties() throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
-		List<FavoritesVO> favoriteVOs = new ArrayList<>();
-		List<Favorites> favorites = userFavortiesRepo.findByUserName(loginDetail.getUserName());
-		if (null != favorites && !favorites.isEmpty()) {
-			favorites.forEach(fav -> {
-				FavoritesVO favVO = new FavoritesVO();
-				favVO.setClassId(fav.getClassId());
-				favVO.setSubjectId(fav.getSubjectId());
-				favVO.setChapterId(fav.getChapterId());
-				favVO.setTopicId(fav.getTopicId());
-				favVO.setId(fav.getId());
-				favVO.setTypeValue(fav.getTypeValue());
-				if ("TOPIC".equalsIgnoreCase(fav.getTypeValue())) {
-					TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(fav.getClassId(),
-							fav.getSubjectId(), fav.getChapterId(), fav.getTopicId());
-					favVO.setTopicDetails(topic);
-				}
-				favoriteVOs.add(favVO);
-			});
-		}
-		return new ResponseEntity<List<FavoritesVO>>(favoriteVOs, HttpStatus.OK);
+		return new ResponseEntity<List<Favorites>>(userFavortiesRepo.findByUserName(loginDetail.getUserName()),
+				HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/favortie", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -582,12 +530,13 @@ public class AdminController {
 		return new ResponseEntity<Favorites>(favorites, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/favortie/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<SucessMessage> removeFavorites(@PathVariable Long id) throws Exception {
-		userFavortiesRepo.delete(id);
-		return new ResponseEntity<SucessMessage>(
-				new SucessMessage(schoolDateUtils.currentDate(), "From your favorite remove successfully", "SUCESS"),
-				HttpStatus.OK);
+	@RequestMapping(value = "/favortie/{type}/{typeId}", method = RequestMethod.DELETE)
+	public ResponseEntity<Favorites> removeFavorites(@PathVariable String type, @PathVariable Long typeId)
+			throws Exception {
+		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
+		Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), type, typeId);
+		userFavortiesRepo.delete(fav);
+		return new ResponseEntity<Favorites>(fav, HttpStatus.OK);
 	}
 
 	@GetMapping("/playlesson/{topicId}")
@@ -600,33 +549,16 @@ public class AdminController {
 					activationDetails.getActivationToken());
 			if (readData.length > 0) {
 				response.getOutputStream().write(readData);
-				if ("VIDEO" == topic.getContentType()) {
+				if("VIDEO"==topic.getContentType()) {
 					response.setContentType("video/mp4");
 					response.setHeader("Content-Disposition", "attachment; filename=\"xyz.mp4\"");
 				}
-				if ("PPT".equalsIgnoreCase(topic.getContentType()) || "PDF".equalsIgnoreCase(topic.getContentType())) {
+				if("PPT".equalsIgnoreCase(topic.getContentType()) || "PDF".equalsIgnoreCase(topic.getContentType())) {
 					response.setContentType("application/pdf");
 					response.setHeader("Content-Disposition", "attachment; filename=\"xyz.pdf\"");
 				}
-
-				response.getOutputStream().flush();
-			}
-
-		}
-	}
-
-	@GetMapping("/readQuestion/{questionId}")
-	public void readQuestionForChapter(@PathVariable Long questionId, HttpServletResponse response) throws Exception {
-		QuestionDetails question = questionDetailsRepo.findOne(questionId);
-		if (null != question) {
-			String hostName = schoolSecurityUtils.getTokenHostName();
-			ActivationDetails activationDetails = productActivationRepo.findByActivationFor(hostName);
-			byte[] readData = logicQEncryptionAndDecryption.readFileAndDecryptFile(new File(question.getQuestion()),
-					activationDetails.getActivationToken());
-			if (readData.length > 0) {
-				response.getOutputStream().write(readData);
-				response.setContentType("application/pdf");
-				response.setHeader("Content-Disposition", "attachment; filename=\"xyz.pdf\"");
+				
+			
 				response.getOutputStream().flush();
 			}
 

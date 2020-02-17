@@ -317,11 +317,9 @@ video {
     background-size: cover;
   }
   .mat-card{
-    background: #fff;
-    color: #4c0340;
+    background: #dddddd3d;
+    color:#28a745;
     padding: 5px;
-    border: 1px solid #00000054;
-    margin-bottom: 10px;
   }
 
   //learn practice test
@@ -464,22 +462,3 @@ video {
   padding: 0 40px;
   font-weight: bold;
  }
-
- .clickable-card {
-   &:hover {
-     background: #e0a08b;
-   }
- }
-
- .centered {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
- }
-
- .my-full-screen-dialog .mat-dialog-container {
-  max-width: none;
-  width: 100vw;
-  height: 100vh;
-  }

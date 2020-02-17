@@ -1,4 +1,4 @@
-package com.logicq.school.vo;
+package com.logicq.school.model;
 
 import java.io.Serializable;
 import java.util.Date;

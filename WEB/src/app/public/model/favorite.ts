@@ -1,13 +1,11 @@
-import { TopicDetail } from './topic-detail';
-
 export class Favorites {
-    public classId: string;
-    public subjectId: string;
-    public chapterId: string;
+    public name: string;
+    public displayName: string;
+    public type: string;
     public description: string;
     public id: number;
     public userName: string;
-    public typeValue: string;
-    public topicId:string;
-    public topicDetails:TopicDetail;
+    public typeValue: number;
+    public url:string;
+    public icon:string;
 }

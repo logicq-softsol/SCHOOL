@@ -9,7 +9,7 @@ import { ClassSetupDetail } from 'src/app/public/model/class-setup-detail';
 import { SubjectSetupDetail } from 'src/app/public/model/subject-setup-detail';
 import { ChapterSetupDetail } from 'src/app/public/model/chapter-setup-detail';
 import { Favorites } from '../public/model/favorite';
-import { VideoDialog, PPTDialog } from './content-mgmnt/topics/topic.component';
+import { VideoDialog } from './content-mgmnt/topics/topic.component';
 
 
 @Component({
@@ -31,6 +31,10 @@ export class HomeComponent implements OnInit {
     if (this.authService.isAuthenticate) {
       this.authService.getUserDetail().subscribe((user: UserDetail) => {
         this.user = user;
+        this.contentMgmntService.loadSchoolType().subscribe(typeData => {
+          this.schoolType = typeData['type'];
+          this.contentMgmntService.changeSchoolType(this.schoolType);
+        });
         this.router.navigate(['/home/teacher']);
         this.contentMgmntService.changeContentDisplayView('SEARCH');
       });
@@ -69,7 +73,7 @@ export class HomeComponent implements OnInit {
   }
   viewSessionReport() {
     this.contentMgmntService.changeContentDisplayView('SESSION');
-    this.router.navigate(['/home/teacher']);
+    this.router.navigate(['/home/teacher/session']);
   }
 
 
@@ -86,7 +90,6 @@ export class HomeComponent implements OnInit {
     let topic: TopicDetail = this.topicList.find(x => x.displayName == topicDisplayName);
     const dialogRef = this.dialog.open(TopicDisplayDialog, {
       width: '600px',
-      panelClass: 'no-padding',
       data: {
         topic: topic
       }
@@ -95,11 +98,12 @@ export class HomeComponent implements OnInit {
     dialogRef.componentInstance.topicEVentEmitter.subscribe((topic: TopicDetail) => {
       if (null != topic) {
         let favorite: Favorites = new Favorites();
-        favorite.classId = topic.classId;
-        favorite.subjectId = topic.subjectId;
-        favorite.chapterId = topic.chapterId;
-        favorite.topicId = topic.id;
-        favorite.typeValue = 'TOPIC';
+        favorite.type = "TOPIC";
+        favorite.typeValue = topic.id;
+        favorite.displayName = topic.displayName;
+        favorite.description = topic.description;
+        favorite.url = topic.playFileURL;
+        favorite.icon = topic.icon;
 
         this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
           this.openSnackBar("Topic " + topic.displayName + " marked favorite.", "CLOSE");
@@ -121,7 +125,11 @@ export class HomeComponent implements OnInit {
   }
 
   setupRemainTime() {
+    var oneDay = 24 * 60 * 60 * 1000;
     this.contentMgmntService.getRemaingLicenseDays().subscribe((data: any) => {
+      //   var firstDate = new Date(data.activationDate);
+      // var secondDate = new Date(data.expiryDate);
+      // var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
       this.timeLeft = data.remaningDays;
     });
 
@@ -171,44 +179,22 @@ export class TopicDisplayDialog {
 
   playLessonForTopic(topic: TopicDetail) {
     this.dialogRef.close();
-      if ('VIDEO' == topic.contentType) {
-        this.contentMgmntService.playLesson(topic).subscribe((data) => {
-          let file = new Blob([data], { type: 'video/mp4' });
-          if (file.size > 0) {
-            const dialogRef = this.dialog.open(VideoDialog, {
-              width: '600px',
-              hasBackdrop: false,
-              data: {
-                url: URL.createObjectURL(file),
-                topic: topic
-              }
-            });
-          } else {
-            this.openErrorSnackBar("No Video exist with content.", "CLOSE");
+    this.contentMgmntService.playLesson(topic).subscribe((data) => {
+      let file = new Blob([data], { type: 'video/mp4' });
+      if (file.size > 0) {
+        const dialogRef = this.dialog.open(VideoDialog, {
+          width: '600px',
+          hasBackdrop: false,
+          data: {
+            url: URL.createObjectURL(file),
+            topic: topic
           }
-  
         });
+      } else {
+        this.openErrorSnackBar("No Video exist with content.", "CLOSE");
       }
-      if ('PPT' == topic.contentType || 'PDF' == topic.contentType) {
-        this.contentMgmntService.playLesson(topic).subscribe((data) => {
-          let file = new Blob([data], { type: 'application/pdf' });
-          if (file.size > 0) {
-            const dialogRef = this.dialog.open(PPTDialog, {
-              width: '600px',
-              hasBackdrop: false,
-              data: {
-                url: URL.createObjectURL(file),
-                topic: topic
-              }
-            });
-          } else {
-            this.openErrorSnackBar("No PDF exist with content.", "CLOSE");
-          }
-  
-        });
-      }
-    
-  
+
+    });
   }
 
   openErrorSnackBar(message: string, action: string) {

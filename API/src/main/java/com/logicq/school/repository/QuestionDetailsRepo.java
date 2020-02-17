@@ -1,18 +1,16 @@
 package com.logicq.school.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.logicq.school.model.ChapterDetails;
 import com.logicq.school.model.QuestionDetails;
 
 @Repository
-public interface QuestionDetailsRepo extends JpaRepository<QuestionDetails, Long> {
+public interface QuestionDetailsRepo extends JpaRepository<QuestionDetails, String> {
 
-	Page<QuestionDetails> findByClassIdAndSubjectIdAndChapterIdAndType(String classId, String subjectId, String chapterId,String type, Pageable paging );
-	
-	long  countByClassIdAndSubjectIdAndChapterIdAndType(String classId, String subjectId, String chapterId,String type);
-
+	List<QuestionDetails> findByClassIdAndSubjectIdAndChapterId(String classId, String subjectId, String chapterId);
 
 }

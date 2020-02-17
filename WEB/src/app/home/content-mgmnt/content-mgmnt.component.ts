@@ -15,7 +15,7 @@ import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Favorites } from '../../public/model/favorite';
 import { TopicDetail } from '../../public/model/topic-detail';
-import { VideoDialog, PPTDialog } from './topics/topic.component';
+import { VideoDialog } from './topics/topic.component';
 declare var jsPDF: any;
 
 @Component({
@@ -97,6 +97,16 @@ export class ContentMgmntComponent implements OnInit {
     let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == classdisplayName);
     this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
       this.classSubjectList = data;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        this.classSubjectList.forEach(subject => {
+          if ("ICSE" == sType) {
+            subject.isEBookAvilable = false;
+          } else {
+            subject.isEBookAvilable = true;
+          }
+        });
+      });
+
       this.contentMgmntService.changeClassSetupDetail(classDetail);
       this.contentMgmntService.changeSubjectList(data);
       this.contentMgmntService.changeDisplayView('SUBJECT');
@@ -156,6 +166,15 @@ export class ContentMgmntComponent implements OnInit {
   showClassSubjectList(classSetup: ClassSetupDetail) {
     this.contentMgmntService.getSubjectListForClass(classSetup.id).subscribe((subjectList: SubjectSetupDetail[]) => {
       this.classSubjectList = subjectList;
+      this.contentMgmntService.getSchoolType().subscribe(sType => {
+        this.classSubjectList.forEach(subject => {
+          if ("ICSE" == sType) {
+            subject.isEBookAvilable = false;
+          } else {
+            subject.isEBookAvilable = true;
+          }
+        });
+      });
       this.contentMgmntService.changeSubjectDetail(this.subjectSetup);
       this.viewChapterList(this.subjectSetup);
     });
@@ -183,60 +202,40 @@ export class ContentMgmntComponent implements OnInit {
 
 
   playLessonForTopic(fave: Favorites) {
-    if ('VIDEO' == fave.topicDetails.contentType) {
-      this.contentMgmntService.playLesson(fave.topicDetails).subscribe((data) => {
-        let file = new Blob([data], { type: 'video/mp4' });
-        if (file.size > 0) {
-          const dialogRef = this.dialog.open(VideoDialog, {
-            width: '600px',
-            hasBackdrop: false,
-            data: {
-              url: URL.createObjectURL(file),
-              topic: fave.topicDetails
-            }
-          });
-        } else {
-          this.openErrorSnackBar("No Video exist with content.", "CLOSE");
-        }
-
-      });
-    }
-    if ('PPT' == fave.topicDetails.contentType || 'PDF' == fave.topicDetails.contentType) {
-      this.contentMgmntService.playLesson(fave.topicDetails).subscribe((data) => {
-        let file = new Blob([data], { type: 'application/pdf' });
-        if (file.size > 0) {
-          const dialogRef = this.dialog.open(PPTDialog, {
-            width: '600px',
-            hasBackdrop: false,
-            data: {
-              url: URL.createObjectURL(file),
-              topic: fave.topicDetails
-            }
-          });
-        } else {
-          this.openErrorSnackBar("No PDF exist with content.", "CLOSE");
-        }
-
-      });
-    }
+    let topic: TopicDetail = new TopicDetail();
+    topic.id = fave.typeValue
+    this.contentMgmntService.playLesson(topic).subscribe((data) => {
+      let file = new Blob([data], { type: 'video/mp4' });
+      if (file.size > 0) {
+        topic.displayName = fave.displayName;
+        topic.description = fave.description;
+        const dialogRef = this.dialog.open(VideoDialog, {
+          width: '600px',
+          hasBackdrop: false,
+          data: {
+            url: URL.createObjectURL(file),
+            topic: topic
+          }
+        });
+      } else {
+        this.openErrorSnackBar("No Video exist with content.", "CLOSE");
+      }
+    });
   }
 
-  markFavorites(topic: TopicDetail) {
+  markFavorites(classDet: ClassSetupDetail) {
     let favorite: Favorites = new Favorites();
-    favorite.classId=topic.classId;
-    favorite.subjectId=topic.subjectId;
-    favorite.chapterId=topic.chapterId;
-    favorite.topicId=topic.id;
-    favorite.typeValue='TOPIC';
+    favorite.type = "CLASS";
+    favorite.typeValue = classDet.id;
     this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
-      this.openErrorSnackBar("Mark Favorties for  " + topic.displayName + " sucessfully.", "CLOSE");
+      this.openErrorSnackBar("Class " + classDet.displayName + " mark favorite.", "CLOSE");
     });
   }
 
 
 
   removeFavorites(fav: Favorites) {
-    this.contentMgmntService.removeFavorites(fav.id).subscribe((fav: Favorites) => {
+    this.contentMgmntService.removeFavorites(fav.type, fav.typeValue).subscribe((fav: Favorites) => {
       this.openErrorSnackBar("Topic  remove from your favorite.", "CLOSE");
       this.contentMgmntService.getFavorites().subscribe((favorites: Favorites[]) => {
         this.favorites = favorites;

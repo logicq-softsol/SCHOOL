@@ -3,9 +3,9 @@ export class ChapterSetupDetail {
     public displayName: string;
     public type: string;
     public description: string;
-    public id: string;
-    public classId: string;
-    public subjectId: string;
+    public id: number;
+    public classId: number;
+    public subjectId: number;
     public icon: string;
     public isVideo:Boolean;
     public isPPt:Boolean;

@@ -14,6 +14,9 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 import { QuestionDetails } from '../../../public/model/question-detail';
 import { ExamResult } from '../../../public/model/exam-result';
 
+
+declare const responsiveVoice: any;
+
 @Component({
   selector: 'app-content-topic',
   templateUrl: './topic.html',
@@ -49,18 +52,13 @@ export class TopicComponent implements OnInit {
   subjectdisplayName: any;
   chapterdisplayName: any;
   displayView: any;
-  topicdisplayView: any;
 
-  questions: QuestionDetails[] = [];
-  question: QuestionDetails = new QuestionDetails();
-
+  mcqQuestions: QuestionDetails[] = [];
+  
   mcqStepperButtonText: any = "NEXT";
   correctAudio = new Audio();
   wrongAudio = new Audio();
   examResult: ExamResult = new ExamResult();
-  pagesize: number = 1;
-  pageNo: number = 1;
-
 
   constructor(
     private contentMgmntService: ContentMgmntService,
@@ -134,41 +132,34 @@ export class TopicComponent implements OnInit {
 
   }
 
-  viewNextQuestion(question: QuestionDetails) {
-
-    if (this.mcqStepperButtonText == 'CLOSE') {
-      this.examResult = new ExamResult();
-      this.mcqStepperButtonText = 'NEXT';
+  viewNextQuestion( index,question:QuestionDetails) {
+    var lindex = index + 2;
+     if( this.mcqStepperButtonText==  'CLOSE' ){
       this.onSubjectChange(this.subjectdisplayName);
-    }
+      this.examResult=new ExamResult();
+     }
 
-    this.question = new QuestionDetails();
-    this.pageNo = this.pageNo + 1;
-    this.contentMgmntService.getQuestionForChapterAccordigToType(this.chapter, 'MCQ', this.pageNo, this.pagesize).subscribe((questions: QuestionDetails[]) => {
-      this.question = questions[0];
-    });
-
-    if (this.pageNo == this.examResult.totalQuestionCount) {
+    if (lindex == this.mcqQuestions.length) {
       this.mcqStepperButtonText = 'CLOSE';
+    } else {
+      this.mcqStepperButtonText = 'NEXT';
     }
-
-
   }
 
   onOptionSelection(event, question: QuestionDetails) {
     if (null != question) {
       question.isDisable = true;
-      question.isViewAnsDisable = false;
+      question.isViewAnsDisable=false;
       if (event.value == question.correctAns) {
         this.correctAudio.src = "assets/mp3/correct.mp3";
         this.correctAudio.load();
         this.correctAudio.play();
-        this.examResult.totalCorrectCount = this.examResult.totalCorrectCount + 1;
+        this.examResult.totalCorrectCount=this.examResult.totalCorrectCount+1;
       } else {
         this.wrongAudio.src = "assets/mp3/wrong.mp3";
         this.wrongAudio.load();
         this.wrongAudio.play();
-        this.examResult.totalWrongCount = this.examResult.totalWrongCount + 1;
+        this.examResult.totalWrongCount=this.examResult.totalWrongCount+1;
       }
 
     }
@@ -177,9 +168,6 @@ export class TopicComponent implements OnInit {
 
 
   viewAllTopicWithType(chapter: ChapterSetupDetail, contentType: string) {
-    this.chapterdisplayName = chapter.displayName;
-    this.chapter = chapter;
-    this.contentMgmntService.changeChapterSetupDetail(chapter);
     this.contentMgmntService.getTopicListForChapterForSubjectAndClassWithContentType(chapter.classId, chapter.subjectId, chapter.id, contentType).subscribe((tdata: TopicDetail[]) => {
       if ('VIDEO' == contentType) {
         this.animationtopicList = tdata;
@@ -191,7 +179,6 @@ export class TopicComponent implements OnInit {
         this.pdftopicList = tdata;
       }
       //  this.topicList = tdata;
-      this.topicdisplayView = 'TOPIC#' + contentType;
       this.displayView = 'TOPIC';
       this.contentMgmntService.changeDisplayView(this.displayView);
     });
@@ -210,11 +197,6 @@ export class TopicComponent implements OnInit {
 
   onClassChange(classdisplayName) {
     this.classdisplayName = classdisplayName;
-    this.subjectdisplayName = null;
-    this.classSubjectList = [];
-    this.chapterdisplayName = null;
-    this.chapterList = [];
-    this.topicList = [];
     if (this.classdisplayName.length > 1) {
       let classDetail: ClassSetupDetail = this.classList.find(x => x.displayName == classdisplayName);
       this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
@@ -227,38 +209,9 @@ export class TopicComponent implements OnInit {
     }
   }
 
-  onClassChangeDisplaySubjectList(classDetail: ClassSetupDetail) {
-    this.classSetup = classDetail;
-    this.classdisplayName = classDetail.displayName;
-    this.contentMgmntService.getSubjectListForClass(classDetail.id).subscribe((data: SubjectSetupDetail[]) => {
-      classDetail.subjectList = data;
-      this.contentMgmntService.changeClassSetupDetail(classDetail);
-      this.contentMgmntService.changeSubjectList(data);
-    });
-  }
-
-  onSubjectChangeDisplayChapterList(subjectDet: SubjectSetupDetail) {
-    this.subjectdisplayName = subjectDet.displayName;
-    this.subjectSetup = subjectDet;
-    this.contentMgmntService.getChapterListForSubjectAndClass(subjectDet.classId, subjectDet.id).subscribe((data: ChapterSetupDetail[]) => {
-      this.subjectSetup.chapterList = data;
-      this.contentMgmntService.changeSubjectDetail(subjectDet);
-      this.contentMgmntService.changeChapterList(data)
-    });
-
-  }
-  onChapterSelectForSubject(subchpater: ChapterSetupDetail) {
-    this.chapter = subchpater;
-    this.chapter.displayName = subchpater.displayName;
-    this.topicList = [];
-    this.onChapterChange(subchpater.displayName);
-  }
 
   onSubjectChange(subjectdisplayName) {
     this.subjectdisplayName = subjectdisplayName;
-    this.chapterdisplayName = null;
-    this.chapterList = [];
-    this.topicList = [];
     if (this.subjectdisplayName.length > 1) {
       let subject: SubjectSetupDetail = this.classSubjectList.find(x => x.displayName == subjectdisplayName);
       this.contentMgmntService.getChapterListForSubjectAndClass(subject.classId, subject.id).subscribe((data: ChapterSetupDetail[]) => {
@@ -271,52 +224,16 @@ export class TopicComponent implements OnInit {
     }
   }
 
-
-
-  onSubjectSelectForClass(subject: SubjectSetupDetail) {
-    this.subjectSetup = subject;
-    this.subjectdisplayName = subject.displayName;
-    this.chapterdisplayName = null;
-    this.chapterList = [];
-    this.onSubjectChange(subject.displayName);
-  }
-
   onChapterChange(chapterdisplayName) {
-    this.topicList = [];
     this.chapterdisplayName = chapterdisplayName;
     if (this.chapterdisplayName.length > 1) {
       let chapter: ChapterSetupDetail = this.chapterList.find(x => x.displayName == chapterdisplayName);
+      this.contentMgmntService.changeChapterSetupDetail(chapter);
       this.chapter = chapter;
       this.contentMgmntService.changeChapterSetupDetail(chapter);
       this.contentMgmntService.getTopicListForChapterForSubjectAndClass(this.chapter.classId, this.chapter.subjectId, this.chapter.id).subscribe((tdata: TopicDetail[]) => {
         this.topicList = tdata;
         this.displayView = 'TOPIC';
-        this.contentMgmntService.changeDisplayView(this.displayView);
-        if (this.topicList.length > 0) {
-          this.animationtopicList = [];
-          this.ppttopicList = [];
-          this.pdftopicList = [];
-          this.topicList.forEach(topic => {
-            if ('VIDEO' == topic.contentType) {
-              this.animationtopicList.push(topic);
-            }
-            else if ('PPT' == topic.contentType) {
-              this.ppttopicList.push(topic);
-            }
-            else if ('PDF' == topic.contentType) {
-              this.pdftopicList.push(topic);
-            }
-          });
-          if (this.animationtopicList.length > 0) {
-            this.topicdisplayView = 'TOPIC#VIDEO';
-          } else if (this.ppttopicList.length > 0) {
-            this.topicdisplayView = 'TOPIC#PPT';
-          } else if (this.pdftopicList.length > 0) {
-            this.topicdisplayView = 'TOPIC#PDF';
-          } else {
-            this.topicdisplayView = 'TOPIC#VIDEO';
-          }
-        }
         this.contentMgmntService.changeDisplayView(this.displayView);
       });
     }
@@ -331,17 +248,10 @@ export class TopicComponent implements OnInit {
     //   this.topicList = tdata;
     // });
     if (null != this.chapterdisplayName && this.chapterdisplayName.length > 1) {
-      this.topicList = [];
       this.onChapterChange(this.chapterdisplayName);
     } else if (null != this.subjectdisplayName && this.subjectdisplayName.length > 1) {
-      this.chapterList = [];
-      this.chapterdisplayName = null;
       this.onSubjectChange(this.subjectdisplayName);
     } else if (null != this.classdisplayName && this.classdisplayName.length > 1) {
-      this.chapterList = [];
-      this.classSubjectList = [];
-      this.chapterdisplayName = null;
-      this.subjectdisplayName = null;
       this.onClassChange(this.classdisplayName);
     }
   }
@@ -362,94 +272,40 @@ export class TopicComponent implements OnInit {
   }
 
 
-  viewQuestionsForChapters(chapter: ChapterSetupDetail, type: string) {
-
-    this.questions = [];
-    this.examResult = new ExamResult();
-    this.pagesize = 10;
-    this.pageNo = 0;
-    this.chapter = chapter;
-    this.displayView = type;
-    this.contentMgmntService.changeDisplayView(this.displayView);
-    if ('MCQ' == type) {
-      this.pagesize = 1;
-      this.pageNo = 0;
-      this.contentMgmntService.getQuestionForChapterAccordigToType(chapter, type, this.pageNo, this.pagesize).subscribe((questions: QuestionDetails[]) => {
-        this.question = questions[0];
-        if (0 == this.examResult.totalQuestionCount) {
-          this.contentMgmntService.getQuestionCountForChapterAccordigToType(chapter, type).subscribe((count: any) => {
-            this.examResult.totalQuestionCount = count.messageCode;
-          });
-        }
-      });
-    } else {
-      this.contentMgmntService.getQuestionForChapterAccordigToType(chapter, type, this.pageNo, this.pagesize).subscribe((questions: QuestionDetails[]) => {
-        this.questions = questions;
-      });
-    }
-
-
-  }
-  openQuestionDetails(question: QuestionDetails) {
-    this.contentMgmntService.readQuestionForChpaterTopic(question).subscribe((data) => {
-      let file = new Blob([data], { type: 'application/pdf' });
-      if (file.size > 0) {
-        const dialogRef = this.dialog.open(PPTDialog, {
-          maxWidth: '100vw',
-          maxHeight: '100vh',
-          height: '100%',
-          width: '100%',
-          hasBackdrop: true,
-          data: {
-            url: URL.createObjectURL(file),
-            topic: null,
-            type: question.type,
-            question: question
-          }
-        });
-      } else {
-        this.openErrorSnackBar("No PDF exist with content.", "CLOSE");
-      }
-
+  viewMCQForChapters(chapter: ChapterSetupDetail) {
+    this.contentMgmntService.getMCQQuestionForChapter(chapter).subscribe((questions: QuestionDetails[]) => {
+      this.mcqQuestions = questions;
+      this.displayView = 'MCQ';
+      this.contentMgmntService.changeDisplayView(this.displayView);
+      this.examResult.totalQuestionCount=this.mcqQuestions.length;
     });
-  }
 
+  }
 
   playQuestionAudio(question: QuestionDetails) {
-    var speakString = question.question + " your options are  " + question.option1 + " " + question.option2 + " " + question.option3 + " " + question.option4;
-
-    var msg = new SpeechSynthesisUtterance();
-    var voices = window.speechSynthesis.getVoices();
-    msg.voice = voices[10];
-    msg.volume = 1;
-    msg.rate = 0.3;
-    msg.pitch = 1.5;
-    msg.text = speakString;
-    msg.lang = 'en-US';
-    speechSynthesis.speak(msg);
+    var speakString = question.question + " your  options  are  " + question.option1 + "    " + question.option2 + "    " + question.option3 + "    " + question.option4;
+    responsiveVoice.speak(speakString);
   }
 
 
   markFavorites(topic: TopicDetail) {
     let favorite: Favorites = new Favorites();
-    favorite.classId = topic.classId;
-    favorite.subjectId = topic.subjectId;
-    favorite.chapterId = topic.chapterId;
-    favorite.topicId = topic.id;
-    favorite.typeValue = 'TOPIC';
+    favorite.type = "TOPIC";
+    favorite.typeValue = topic.id;
+    favorite.displayName = topic.displayName;
+    favorite.description = topic.description;
+    favorite.url = topic.playFileURL;
+    favorite.icon = topic.icon;
+
     this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
-      this.openErrorSnackBar("Mark Favorties for  " + topic.displayName + " sucessfully.", "CLOSE");
+      this.openErrorSnackBar("Topic " + topic.displayName + " marked favorite.", "CLOSE");
     });
   }
 
 
-
   removeFavorites(fav: Favorites) {
-    this.contentMgmntService.removeFavorites(fav.id).subscribe((fav: Favorites) => {
+    this.contentMgmntService.removeFavorites(fav.type, fav.typeValue).subscribe((fav: Favorites) => {
       this.openErrorSnackBar("Topic  remove from your favorite.", "CLOSE");
-      this.contentMgmntService.getFavorites().subscribe((favorites: Favorites[]) => {
-        this.favorites = favorites;
-      });
     });
   }
 
@@ -478,16 +334,11 @@ export class TopicComponent implements OnInit {
         let file = new Blob([data], { type: 'application/pdf' });
         if (file.size > 0) {
           const dialogRef = this.dialog.open(PPTDialog, {
-            maxWidth: '100vw',
-            maxHeight: '100vh',
-            height: '100%',
-            width: '100%',
-            hasBackdrop: true,
+            width: '600px',
+            hasBackdrop: false,
             data: {
               url: URL.createObjectURL(file),
-              topic: topic,
-              type: 'TOPIC',
-              question: null
+              topic: topic
             }
           });
         } else {
@@ -1080,28 +931,19 @@ export class VideoDialog {
 export class PPTDialog {
   fileURL: any;
   topic: TopicDetail = new TopicDetail();
-  question: QuestionDetails = new QuestionDetails();
-  type: string = 'TOPIC';
   constructor(public dialogRef: MatDialogRef<PPTDialog>, @Inject(MAT_DIALOG_DATA) private data: any, private _sanitizer: DomSanitizer, public snackBar: MatSnackBar, private contentMgmntService: ContentMgmntService) {
     this.fileURL = this._sanitizer.bypassSecurityTrustResourceUrl(data.url + "#toolbar=0");
-    this.type = data.type;
     this.topic = data.topic;
-    this.question = data.question;
-    if (null != this.topic && this.type == 'TOPIC') {
-      this.contentMgmntService.startSession(this.topic).subscribe((message: any) => {
-        this.openErrorSnackBar("Session Started..", "CLOSE");
-      });
-    }
-
+    this.contentMgmntService.startSession(this.topic).subscribe((message: any) => {
+      this.openErrorSnackBar("Session Started..", "CLOSE");
+    });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
-    if (null != this.topic) {
-      this.contentMgmntService.endSession(this.topic).subscribe((message: any) => {
-        this.openErrorSnackBar("Session Closed..", "CLOSE");
-      });
-    }
+    this.contentMgmntService.endSession(this.topic).subscribe((message: any) => {
+      this.openErrorSnackBar("Session Closed..", "CLOSE");
+    });
   }
 
   openErrorSnackBar(message: string, action: string) {
@@ -1109,12 +951,7 @@ export class PPTDialog {
       duration: 10000
     });
   }
-  openPdfFullScreen() {
-    // window.open(this.fileURL,'_blank', 'fullscreen=yes');
-    var win = window.open();
-    win.document.write('<iframe style="width:100%; display: block;" ngx-document [src]=' + this.fileURL + '></iframe>')
-    this.dialogRef.close();
-  }
+
 
 }
 

@@ -1,40 +1,21 @@
-
-<div class="class-box class-box-no-margin">
-    <button type="button" class="close" (click)="onNoClick()">&times;</button>
-    <div class="box-title" *ngIf="'VIDEO' == topic?.contentType">
-        <p class="no-margin">Animation</p>
-      </div>
-      <div class="box-title" *ngIf="'PPT' == topic?.contentType">
-        <p class="no-margin">Teacher Slide</p>
-      </div>
-      <div class="box-title" *ngIf="'PDF' == topic?.contentType">
-        <p class="no-margin">E-BOOK</p>
-      </div>
-  <p class="video-text"><a (click)="playLessonForTopic(topic)" style="cursor:pointer">
+<button type="button" class="close" (click)="onNoClick()">&times;</button>
+<div class="class-box">
+  <p class="video-text"><a (click)="playLessonForTopic(topic)" style="cursor:pointer"><i class="fas fa-video"></i>
       {{topic.displayName}}</a></p>
   <ul class="class-edit">
     <div class="card-body">
       <ul>
-        <li> <Strong>Class Name  </Strong>
+        <li> <Strong>Class Name : </Strong>
           <p class="card-text">{{classSetupDetail.displayName}}</p>
         </li>
-        <li> <Strong>Subject Name </Strong>
+        <li> <Strong>Subject Name : </Strong>
           <p class="card-text">{{subjectDetail.displayName}}</p>
         </li>
-        <li> <Strong>Chapter Name </Strong>
+        <li> <Strong>Chapter Name : </Strong>
           <p class="card-text">{{ChapterSetupDetail.displayName}}</p>
         </li>
       </ul>
     </div>
-    <div class="row">
-      <div class="col-md-6" style="padding-right: 0; border-right: 1px solid #0000005c">
-        <button mat-button type="button" class="btn custom-btn" (click)="playLessonForTopic(topic)" style="font-weight: 700">Start
-          Lesson</button>
-      </div>
-      <div class="col-md-6" style="padding-left: 0">
-        <button mat-button type="button" class="btn custom-btn" (click)="markFavorites(topic)" style="font-weight: 700">Mark
-          Favorite</button>
-      </div>
-    </div>
+    <li><a (click)="markFavorites(topic)"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
   </ul>
 </div>

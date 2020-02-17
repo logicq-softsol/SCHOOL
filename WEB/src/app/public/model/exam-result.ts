@@ -5,7 +5,6 @@ export class ExamResult {
     public totalQuestionCount:number=0;
     public totalCorrectCount:number=0;
     public totalWrongCount:number=0;
-    public attemptCount:number=0;
 
 
 }

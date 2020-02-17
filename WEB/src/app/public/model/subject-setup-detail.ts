@@ -1,12 +1,13 @@
-import { ChapterSetupDetail } from './chapter-setup-detail';
-
 export class SubjectSetupDetail {
     public name: string;
     public displayName: string;
     public type: string;
     public description: string;
-    public id: string;
-    public classId: string;
+    public id: number;
+    public classId: number;
     public icon: string;
-    public chapterList:ChapterSetupDetail[]=[];
+    public playFileURL: string;
+    public playFileType: string;
+    public questionPath:string;
+    public isEBookAvilable:boolean=false;
 }

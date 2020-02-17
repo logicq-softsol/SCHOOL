@@ -16,6 +16,7 @@ import com.logicq.school.vo.FileStorageProperties;
 @SpringBootApplication
 @EnableConfigurationProperties({ FileStorageProperties.class })
 @EnableAsync
+@EnableScheduling
 public class SchoolApplication extends SpringBootServletInitializer {
 
 	@Override
@@ -27,9 +28,9 @@ public class SchoolApplication extends SpringBootServletInitializer {
 		SpringApplication.run(SchoolApplication.class, args);
 	}
 
-//	@Bean
-//	public TaskScheduler taskScheduler() {
-//		return new ConcurrentTaskScheduler();
-//	}
+	@Bean
+	public TaskScheduler taskScheduler() {
+		return new ConcurrentTaskScheduler();
+	}
 
 }
