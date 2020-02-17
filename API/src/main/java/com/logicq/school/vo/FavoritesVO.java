@@ -1,45 +1,34 @@
-package com.logicq.school.model;
+package com.logicq.school.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.logicq.school.model.TopicDetails;
 
-@Entity
-@Table(name = "USER_FAV")
-public class Favorites  {
+public class FavoritesVO implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7113551475978978085L;
+	private static final long serialVersionUID = -6247436624995875508L;
 
-	@Id
-	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "USER_NAME")
 	private String userName;
 
-	@Column(name = "TYPE_VALUE")
 	private String typeValue;
 
-	@Column(name = "CLASS_ID")
 	private String classId;
 
-	@Column(name = "SUBJECT_ID")
 	private String subjectId;
 
-	@Column(name = "CHAPTER_ID")
 	private String chapterId;
 
-	@Column(name = "TOPIC_ID")
 	private String topicId;
+
+	private Date markDate;
+
+	private TopicDetails topicDetails;
 
 	/**
 	 * @return the id
@@ -139,5 +128,32 @@ public class Favorites  {
 		this.topicId = topicId;
 	}
 
-	
+	/**
+	 * @return the markDate
+	 */
+	public Date getMarkDate() {
+		return markDate;
+	}
+
+	/**
+	 * @param markDate the markDate to set
+	 */
+	public void setMarkDate(Date markDate) {
+		this.markDate = markDate;
+	}
+
+	/**
+	 * @return the topicDetails
+	 */
+	public TopicDetails getTopicDetails() {
+		return topicDetails;
+	}
+
+	/**
+	 * @param topicDetails the topicDetails to set
+	 */
+	public void setTopicDetails(TopicDetails topicDetails) {
+		this.topicDetails = topicDetails;
+	}
+
 }

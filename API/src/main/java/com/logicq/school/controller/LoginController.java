@@ -29,7 +29,6 @@ import com.logicq.school.model.ActivationDetails;
 import com.logicq.school.model.ChapterDetails;
 import com.logicq.school.model.ClassDetails;
 import com.logicq.school.model.LoginDetails;
-import com.logicq.school.model.Message;
 import com.logicq.school.model.SessionTracker;
 import com.logicq.school.model.SubjectDetails;
 import com.logicq.school.model.TopicDetails;
@@ -45,15 +44,16 @@ import com.logicq.school.repository.UserDetailsRepo;
 import com.logicq.school.security.JwtTokenProvider;
 import com.logicq.school.security.UserPrincipal;
 import com.logicq.school.utils.LogicQEncryptionAndDecryption;
+import com.logicq.school.utils.LogicQLicenseUpdateUtils;
 import com.logicq.school.utils.SchoolDateUtils;
 import com.logicq.school.utils.SchoolRestClient;
 import com.logicq.school.utils.SchoolSecurityUtils;
 import com.logicq.school.utils.SucessHandlerUtils;
-import com.logicq.school.vo.ActivateKey;
 import com.logicq.school.vo.ActivationVO;
 import com.logicq.school.vo.LicenseDetails;
 import com.logicq.school.vo.LicenseKey;
 import com.logicq.school.vo.LoginVO;
+import com.logicq.school.vo.Message;
 
 @RestController
 @EnableAutoConfiguration
@@ -113,6 +113,9 @@ public class LoginController {
 
 	@Autowired
 	ChapterDetailsRepo chapterDetailsRepo;
+
+	@Autowired
+	LogicQLicenseUpdateUtils logicQLicenseUpdateUtils;
 
 	@RequestMapping(value = "/activateProduct", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SucessMessage> activateProductForClient(@RequestBody LicenseKey licnkey) throws Exception {
@@ -176,6 +179,7 @@ public class LoginController {
 								loginDetails.setLoginStatus("ACTIVE");
 								loginDetailsRepo.save(loginDetails);
 							}
+							logicQLicenseUpdateUtils.updateLicense(hostName, activationDeatils);
 							return new ResponseEntity<SucessMessage>(
 									new SucessMessage(schoolDateUtils.currentDate(), jwt, "acess_token"),
 									HttpStatus.OK);
@@ -351,15 +355,16 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/session/{classId}/{subjectId}/{chapterId}/{topicId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SucessMessage> startSessionTracker(@PathVariable String classId, @PathVariable String subjectId,
-			@PathVariable String chapterId, @PathVariable String topicId) throws Exception {
+	public ResponseEntity<SucessMessage> startSessionTracker(@PathVariable String classId,
+			@PathVariable String subjectId, @PathVariable String chapterId, @PathVariable String topicId)
+			throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		TopicDetails topic = topicDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndId(classId, subjectId, chapterId,
 				topicId);
 		ClassDetails classDetails = classesDetailsRepo.findOne(classId);
 		SubjectDetails subject = subjectDetailsRepo.findByClassIdAndId(classId, subjectId);
 		ChapterDetails chapter = chapterDetailsRepo.findByClassIdAndSubjectIdAndId(classId, subjectId, chapterId);
-		if (null != topic ) {
+		if (null != topic) {
 			SessionTracker sessionTracker = new SessionTracker();
 			sessionTracker.setClassId(classId);
 			sessionTracker.setSubjectId(subjectId);
@@ -371,7 +376,7 @@ public class LoginController {
 			sessionTracker.setTopicName(topic.getDisplayName());
 			sessionTracker.setUserName(loginDetail.getUserName());
 			sessionTracker.setStartTime(schoolDateUtils.currentDate());
-		//	sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
+			// sessionTracker.setTopicRequiredTime(topic.getPlayFileTime());
 			sessionTracker.setEndTime(sessionTracker.getStartTime());
 			sessionTracker.setStatus("PENDING");
 			sessionTrackerRepo.save(sessionTracker);

@@ -12,9 +12,6 @@ public interface UserFavortiesRepo extends JpaRepository<Favorites, Long> {
 
 	List<Favorites> findByUserName(String userName);
 
-	List<Favorites> findByUserNameAndType(String userName, String type);
-
 	Favorites findByUserNameAndId(String userName, Long id);
 
-	Favorites findByUserNameAndTypeAndTypeValue(String userName, String type, Long typeValue);
 }

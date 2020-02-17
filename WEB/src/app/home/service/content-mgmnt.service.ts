@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import "rxjs";
 import { environment } from "../../../environments/environment";
@@ -8,6 +8,8 @@ import { SubjectSetupDetail } from '../../public/model/subject-setup-detail';
 import { ChapterSetupDetail } from '../../public/model/chapter-setup-detail';
 import { ReplaySubject } from 'rxjs';
 import { TopicDetail } from 'src/app/public/model/topic-detail';
+import { Type } from '@angular/compiler';
+import { QuestionDetails } from 'src/app/public/model/question-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -233,21 +235,21 @@ export class ContentMgmntService {
   }
 
 
-  getSubjectListForClass(classId: number) {
+  getSubjectListForClass(classId: string) {
     return this.http.get(environment.baseUrl + 'api/admin/subjects/' + classId);
   }
 
 
-  getChapterListForSubjectAndClass(classId: number, subjectId: number) {
+  getChapterListForSubjectAndClass(classId: string, subjectId: string) {
     return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId);
   }
 
-  getTopicListForChapterForSubjectAndClass(classId: number, subjectId: number, chapterId: number) {
+  getTopicListForChapterForSubjectAndClass(classId: string, subjectId: string, chapterId: string) {
     return this.http.get(environment.baseUrl + 'api/admin/topic/' + classId + "/" + subjectId + "/" + chapterId);
   }
 
 
-  getTopicListForChapterForSubjectAndClassWithContentType(classId: number, subjectId: number, chapterId: number,contentType:string) {
+  getTopicListForChapterForSubjectAndClassWithContentType(classId: string, subjectId: string, chapterId: string,contentType:string) {
     return this.http.get(environment.baseUrl + 'api/admin/topics/' + classId + "/" + subjectId + "/" + chapterId+"/"+contentType);
   }
 
@@ -304,12 +306,12 @@ export class ContentMgmntService {
   }
 
 
-  removeFavorites(type: string, typeId: number) {
+  removeFavorites(id: number) {
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
     let httpOptions = { headers: headers };
-    return this.http.delete(environment.baseUrl + 'api/admin/favortie/' + type + "/" + typeId, httpOptions);
+    return this.http.delete(environment.baseUrl + 'api/admin/favortie/' + id, httpOptions);
   }
 
   loadVideoFile() {
@@ -324,6 +326,15 @@ export class ContentMgmntService {
       'responseType': 'arraybuffer' as 'json'
     };
     return this.http.get<any>(environment.baseUrl + 'api/admin/playlesson/' + topic.id, httpOptions);
+
+  }
+
+  
+  readQuestionForChpaterTopic(question:QuestionDetails) {
+    const httpOptions = {
+      'responseType': 'arraybuffer' as 'json'
+    };
+    return this.http.get<any>(environment.baseUrl + 'api/admin/readQuestion/' + question.id, httpOptions);
 
   }
 
@@ -354,12 +365,12 @@ export class ContentMgmntService {
   }
 
 
-  getSubjectAndClass(classId: number, subjectId: number) {
+  getSubjectAndClass(classId: string, subjectId: string) {
     return this.http.get(environment.baseUrl + 'api/admin/subjects/' + classId + "/" + subjectId);
   }
 
 
-  getChapterForClassAndSubject(classId: number, subjectId: number, chapter: number) {
+  getChapterForClassAndSubject(classId: string, subjectId: string, chapter: string) {
     return this.http.get(environment.baseUrl + 'api/admin/chapters/' + classId + "/" + subjectId + "/" + chapter);
   }
 
@@ -390,15 +401,16 @@ export class ContentMgmntService {
   }
 
 
-
-  loadSchoolType() {
-    return this.http.get("assets/config/school_type.json");
+  getQuestionForChapterAccordigToType(chapter:ChapterSetupDetail,type:string,pageNo:any,pageSize:any) {
+    let params = new HttpParams()
+                .set('pageNo', pageNo)
+                .set('pageSize', pageSize);
+   
+    return this.http.get(environment.baseUrl + 'api/admin/questions/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id+"/"+type, {params});
   }
 
 
-
-
-  getMCQQuestionForChapter(chapter:ChapterSetupDetail) {
-    return this.http.get(environment.baseUrl + 'api/admin/questions/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id);
+  getQuestionCountForChapterAccordigToType(chapter:ChapterSetupDetail,type:string) {
+    return this.http.get(environment.baseUrl + 'api/admin/questions/count/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id+"/"+type);
   }
 }

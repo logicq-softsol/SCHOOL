@@ -10,7 +10,7 @@
               <div class="col-md-3 form-group">
                 <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
                   [(ngModel)]="classdisplayName" (change)="onClassChange(classdisplayName)" />
-                  <i *ngIf="classdisplayName != null" class="fas fa-times search-icon" (click)="classClear()"></i>
+                <i *ngIf="classdisplayName != null" class="fas fa-times search-icon" (click)="classClear()"></i>
                 <datalist id="classList">
                   <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
                       | uppercase }}</strong></option>
@@ -19,7 +19,7 @@
               <div class="col-md-3 form-group">
                 <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
                   [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
-                  <i *ngIf="subjectdisplayName != null" class="fas fa-times search-icon" (click)="subjectClear()"></i>
+                <i *ngIf="subjectdisplayName != null" class="fas fa-times search-icon" (click)="subjectClear()"></i>
                 <datalist id="classSubjectList">
                   <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
                       | uppercase }}</strong></option>
@@ -28,7 +28,7 @@
               <div class="col-md-6 form-group">
                 <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
                   [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
-                  <i *ngIf="chapterdisplayName != null" class="fas fa-times search-icon" (click)="chapterClear()"></i>
+                <i *ngIf="chapterdisplayName != null" class="fas fa-times search-icon" (click)="chapterClear()"></i>
                 <datalist id="chapterList">
                   <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
                       | uppercase }}</strong></option>
@@ -46,72 +46,72 @@
 <section class="search-container d-flex align-items-center" style="background: whitesmoke;" *ngIf="displayView=='PROFILE'">
   <div class="container">
     <div class="row clearfix">
-        <div class="col-md-5">
-            <div class="user-details p-3" style="margin-bottom: 20px;">
-              <a class="edit-info d-flex align-items-center justify-content-center"><i class="fas fa-pencil-alt"></i></a>
-              <div class="row">
-                <div class="col-md-4">
-                    <span class="user-av d-flex align-items-center justify-content-center"><img src="assets/images/user.png" alt=""></span>
-                </div>
-                <div class="col-md-8" style="padding-left: 0;">
-                    <strong>{{user.firstname | uppercase }} {{user.lastname | uppercase}}</strong>
-                    <p class="email">{{user.email}}</p>
-                   <p class="contact">{{user.mobileno}}</p>
-                    <small class="role-head">Role:</small>
-                    <p class="role">{{user.role}}</p>
-                </div>
-              </div>
-              
+      <div class="col-md-5">
+        <div class="user-details p-3" style="margin-bottom: 20px;">
+          <a class="edit-info d-flex align-items-center justify-content-center"><i class="fas fa-pencil-alt"></i></a>
+          <div class="row">
+            <div class="col-md-4">
+              <span class="user-av d-flex align-items-center justify-content-center"><img src="assets/images/user.png"
+                  alt=""></span>
             </div>
-            <div class="user-details p-3 text-center">
-                <div class="p-home-search pt-3 text-center">
-                  <div class="form-group mb-4">
-                    <input type="text" placeholder="Select or type a class" class="form-control" list="classList"
-                     [(ngModel)]="classdisplayName"
-                      (change)="onClassChange(classdisplayName)" />
-                      <i *ngIf="classdisplayName != null" class="fas fa-times p-close-icon" (click)="classClear()"></i>
-                    <datalist id="classList">
-                      <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
-                          | uppercase }}</strong></option>
-                    </datalist>
-                  </div>
-                  <div class="form-group mb-4">
-                    <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
-                      [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
-                      <i *ngIf="subjectdisplayName != null" class="fas fa-times p-close-icon" (click)="subjectClear()"></i>
-                    <datalist id="classSubjectList">
-                      <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
-                          | uppercase }}</strong></option>
-                    </datalist>
-                  </div>
-                  <div class="form-group mb-4">
-                    <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
-                      [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
-                      <i *ngIf="chapterdisplayName != null" class="fas fa-times p-close-icon" (click)="chapterClear()"></i>
-                    <datalist id="chapterList">
-                      <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
-                          | uppercase }}</strong></option>
-                    </datalist>
-                  </div>
-                  <button type="submit" class="btn p-btn-search" (click)="searchTopicDetails()">Search</button>
-                </div>
-              </div>
+            <div class="col-md-8" style="padding-left: 0;">
+              <strong>{{user.firstname | uppercase }} {{user.lastname | uppercase}}</strong>
+              <p class="email">{{user.email}}</p>
+              <p class="contact">{{user.mobileno}}</p>
+              <small class="role-head">Role:</small>
+              <p class="role">{{user.role}}</p>
+            </div>
           </div>
+
+        </div>
+        <div class="user-details p-3 text-center">
+          <div class="p-home-search pt-3 text-center">
+            <div class="form-group mb-4">
+              <input type="text" placeholder="Select or type a class" class="form-control" list="classList" [(ngModel)]="classdisplayName"
+                (change)="onClassChange(classdisplayName)" />
+              <i *ngIf="classdisplayName != null" class="fas fa-times p-close-icon" (click)="classClear()"></i>
+              <datalist id="classList">
+                <option *ngFor="let classDetail of classList" [value]="classDetail.displayName"><strong>{{classDetail?.displayName
+                    | uppercase }}</strong></option>
+              </datalist>
+            </div>
+            <div class="form-group mb-4">
+              <input type="text" placeholder="Select or type a subject" class="form-control" list="classSubjectList"
+                [(ngModel)]="subjectdisplayName" (change)="onSubjectChange(subjectdisplayName)" />
+              <i *ngIf="subjectdisplayName != null" class="fas fa-times p-close-icon" (click)="subjectClear()"></i>
+              <datalist id="classSubjectList">
+                <option *ngFor="let classSubject of classSubjectList" [value]="classSubject.displayName"><strong>{{classSubject?.displayName
+                    | uppercase }}</strong></option>
+              </datalist>
+            </div>
+            <div class="form-group mb-4">
+              <input type="text" placeholder="Select or type a Chapter" class="form-control" list="chapterList"
+                [(ngModel)]="chapterdisplayName" (change)="onChapterChange(chapterdisplayName)" />
+              <i *ngIf="chapterdisplayName != null" class="fas fa-times p-close-icon" (click)="chapterClear()"></i>
+              <datalist id="chapterList">
+                <option *ngFor="let chapter of chapterList" [value]="chapter.displayName"><strong>{{chapter?.displayName
+                    | uppercase }}</strong></option>
+              </datalist>
+            </div>
+            <button type="submit" class="btn p-btn-search" (click)="searchTopicDetails()">Search</button>
+          </div>
+        </div>
+      </div>
       <div class="col-md-7">
         <div class="pull-right text-center">
-        <button class="btn period-btn"  (click)="viewReport(7)">Last 7 days</button>
-        <button class="btn period-btn" (click)="viewReport(30)">Last 1 month</button>
-        <button class="btn period-btn" (click)="downloadReport()"><i class="fa fa-download"></i>Download</button>
+          <button class="btn period-btn" (click)="viewReport(7)">Last 7 days</button>
+          <button class="btn period-btn" (click)="viewReport(30)">Last 1 month</button>
+          <button class="btn period-btn" (click)="downloadReport()"><i class="fa fa-download"></i>Download</button>
         </div>
-          <div class="user-details p-3 text-center tabled">
-            <table id="sessionTable" #sessionTable>
-              <thead>
-                <td *ngIf="user.role == 'ADMIN'">User Name</td>
-                <td>Date</td>
-                <td>Topic Name</td>
-                <td>Time</td>
-              </thead>
-              <tbody>
+        <div class="user-details p-3 text-center tabled">
+          <table id="sessionTable" #sessionTable>
+            <thead>
+              <td *ngIf="user.role == 'ADMIN'">User Name</td>
+              <td>Date</td>
+              <td>Topic Name</td>
+              <td>Time</td>
+            </thead>
+            <tbody>
               <tr *ngFor="let session of sessionData">
                 <td *ngIf="user.role == 'ADMIN'">
                   {{session.userName}}
@@ -122,9 +122,9 @@
                 </td>
                 <td>{{session.startTime | date:"HH:mm"}} - {{session.endTime | date:"HH:mm"}}</td>
               </tr>
-              </tbody>
-            </table>
-          </div>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -135,20 +135,35 @@
   <div class="recent-search  topics mb-5">
     <h3 class="small-title mb-3">Favourite Topics <a style="cursor:pointer" *ngIf="favorites.length>6">(View All)</a></h3>
     <div class="row clearfix" *ngIf="favorites.length>0">
-      <div class="col-md-4" *ngFor="let fav of favorites | slice:0:6">
-        <div class="card mb-15 card-border">
-          <div class="action">
-            <a (click)="removeFavorites(fav)" style="cursor:pointer"><img src="assets/images/favorite-heart-button.png"
-                alt=""></a>
+      <div class="col-md-4" *ngFor="let fav of favorites | slice:0:6" style="margin-bottom: 30px">
+                <div class="class-box">
+                  <span style="justify-content: space-between">
+                    <p class="video-text"><a>{{fav?.topicDetails?.displayName}}</a></p>
+                    <div>
+                      <div class="box" *ngIf="'VIDEO' == fav?.topicDetails?.contentType">
+                        <p class="no-margin">Animation</p>
+                      </div>
+                      <div class="box" *ngIf="'PPT' == fav?.topicDetails?.contentType">
+                        <p class="no-margin">Teacher Slide</p>
+                      </div>
+                      <div class="box" *ngIf="'PDF' == fav?.topicDetails?.contentType">
+                        <p class="no-margin">E-BOOK</p>
+                      </div>
+                    </div>
+
+                  </span>
+                  <div class="row">
+                    <div class="col-md-6" style="padding-right: 0; border-right: 1px solid #0000005c">
+                      <button mat-button type="button" class="btn custom-btn" (click)="playLessonForTopic(fav)" style="font-weight: 700">Start
+                        Lesson</button>
+                    </div>
+                    <div class="col-md-6" style="padding-left: 0">
+                      <button mat-button type="button" class="btn custom-btn" (click)="removeFavorites(fav)" style="font-weight: 700">Remove
+                        Favorite</button>
+                    </div>
+                  </div>
+                </div>
           </div>
-          <div class="card-body">
-            <a (click)="playLessonForTopic(fav)" class="video-text" style="cursor:pointer"><i class="fas fa-video"></i>
-              <h4>{{fav.displayName}}</h4>
-            </a>
-            <p class="card-text">{{fav.description}}</p>
-          </div>
-        </div>
-      </div>
     </div>
     <div *ngIf="favorites.length==0">
       <h5 class="small-title mb-3 text-center">No Favourite Topics Avilable</h5>

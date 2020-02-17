@@ -85,61 +85,60 @@ public class SessionTracker {
 		this.userName = userName;
 	}
 
-	
 	/**
-	 * @return the startTime
+	 * @return the classId
 	 */
-	public Date getStartTime() {
-		return startTime;
+	public String getClassId() {
+		return classId;
 	}
 
 	/**
-	 * @param startTime the startTime to set
+	 * @param classId the classId to set
 	 */
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setClassId(String classId) {
+		this.classId = classId;
 	}
 
 	/**
-	 * @return the endTime
+	 * @return the subjectId
 	 */
-	public Date getEndTime() {
-		return endTime;
+	public String getSubjectId() {
+		return subjectId;
 	}
 
 	/**
-	 * @param endTime the endTime to set
+	 * @param subjectId the subjectId to set
 	 */
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
 	}
 
 	/**
-	 * @return the topicRequiredTime
+	 * @return the chapterId
 	 */
-	public Long getTopicRequiredTime() {
-		return topicRequiredTime;
+	public String getChapterId() {
+		return chapterId;
 	}
 
 	/**
-	 * @param topicRequiredTime the topicRequiredTime to set
+	 * @param chapterId the chapterId to set
 	 */
-	public void setTopicRequiredTime(Long topicRequiredTime) {
-		this.topicRequiredTime = topicRequiredTime;
+	public void setChapterId(String chapterId) {
+		this.chapterId = chapterId;
 	}
 
 	/**
-	 * @return the status
+	 * @return the topicId
 	 */
-	public String getStatus() {
-		return status;
+	public String getTopicId() {
+		return topicId;
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param topicId the topicId to set
 	 */
-	public void setStatus(String status) {
-		this.status = status;
+	public void setTopicId(String topicId) {
+		this.topicId = topicId;
 	}
 
 	/**
@@ -199,59 +198,60 @@ public class SessionTracker {
 	}
 
 	/**
-	 * @return the classId
+	 * @return the startTime
 	 */
-	public String getClassId() {
-		return classId;
+	public Date getStartTime() {
+		return startTime;
 	}
 
 	/**
-	 * @param classId the classId to set
+	 * @param startTime the startTime to set
 	 */
-	public void setClassId(String classId) {
-		this.classId = classId;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 
 	/**
-	 * @return the subjectId
+	 * @return the endTime
 	 */
-	public String getSubjectId() {
-		return subjectId;
+	public Date getEndTime() {
+		return endTime;
 	}
 
 	/**
-	 * @param subjectId the subjectId to set
+	 * @param endTime the endTime to set
 	 */
-	public void setSubjectId(String subjectId) {
-		this.subjectId = subjectId;
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	/**
-	 * @return the chapterId
+	 * @return the topicRequiredTime
 	 */
-	public String getChapterId() {
-		return chapterId;
+	public Long getTopicRequiredTime() {
+		return topicRequiredTime;
 	}
 
 	/**
-	 * @param chapterId the chapterId to set
+	 * @param topicRequiredTime the topicRequiredTime to set
 	 */
-	public void setChapterId(String chapterId) {
-		this.chapterId = chapterId;
+	public void setTopicRequiredTime(Long topicRequiredTime) {
+		this.topicRequiredTime = topicRequiredTime;
 	}
 
 	/**
-	 * @return the topicId
+	 * @return the status
 	 */
-	public String getTopicId() {
-		return topicId;
+	public String getStatus() {
+		return status;
 	}
 
 	/**
-	 * @param topicId the topicId to set
+	 * @param status the status to set
 	 */
-	public void setTopicId(String topicId) {
-		this.topicId = topicId;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
+	
 }
