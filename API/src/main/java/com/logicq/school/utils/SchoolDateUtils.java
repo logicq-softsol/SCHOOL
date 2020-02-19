@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,22 @@ public class SchoolDateUtils {
 	public String currentDateWithString() {
 		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid")));
 		return dtf.format(currentTime);
+	}
+
+	public Date getExpiryDateForExistingLicense(Integer days, Date activationDate) {
+		LocalDateTime activateDate = LocalDateTime.ofInstant(activationDate.toInstant(),
+				ZoneId.of(env.getProperty("school.date.zoneid")));
+		LocalDateTime expiryDate = activateDate.plusDays(days);
+		return Date.from(expiryDate.atZone(ZoneId.of(env.getProperty("school.date.zoneid"))).toInstant());
+	}
+
+	public long calculateRemaningDays( Date expiryDate) {
+		LocalDateTime currentTime = LocalDateTime.now(ZoneId.of(env.getProperty("school.date.zoneid")));
+		LocalDateTime expiryDt = LocalDateTime.ofInstant(expiryDate.toInstant(),
+				ZoneId.of(env.getProperty("school.date.zoneid")));
+
+		long diff = ChronoUnit.DAYS.between(currentTime, expiryDt);
+		return diff;
 	}
 
 	public String getTodayDay() {

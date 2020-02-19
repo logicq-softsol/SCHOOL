@@ -46,11 +46,17 @@ export class ContentMgmntComponent implements OnInit {
   selectImage: File;
   imageUrl: string;
 
+  animationtopicList: TopicDetail[] = [];
+  ppttopicList: TopicDetail[] = [];
+  pdftopicList: TopicDetail[] = [];
+
   classdisplayName: any;
   subjectdisplayName: any;
   chapterdisplayName: any;
   displayView: any;
   sessionData: any[] = [];
+  topicdisplayView: string = "";
+
 
 
   constructor(private homeService: HomeService,
@@ -78,6 +84,12 @@ export class ContentMgmntComponent implements OnInit {
 
     this.contentMgmntService.getContentDisplayView().subscribe((view: any) => {
       this.displayView = view;
+      if ('TOPIC' === this.displayView) {
+        this.contentMgmntService.getTopicdisplayView().subscribe((tview: any) => {
+          this.topicdisplayView = tview;
+        });
+      }
+
     });
 
   }
@@ -172,6 +184,32 @@ export class ContentMgmntComponent implements OnInit {
   showTopicList(chapter: ChapterSetupDetail) {
     this.contentMgmntService.getTopicListForChapterForSubjectAndClass(chapter.classId, chapter.subjectId, chapter.id).subscribe((topics: TopicDetail[]) => {
       this.topicList = topics;
+      if (this.topicList.length > 0) {
+        this.animationtopicList = [];
+        this.ppttopicList = [];
+        this.pdftopicList = [];
+        this.topicList.forEach(topic => {
+          if ('VIDEO' == topic.contentType) {
+            this.animationtopicList.push(topic);
+          }
+          else if ('PPT' == topic.contentType) {
+            this.ppttopicList.push(topic);
+          }
+          else if ('PDF' == topic.contentType) {
+            this.pdftopicList.push(topic);
+          }
+        });
+        if (this.animationtopicList.length > 0) {
+          this.topicdisplayView = 'TOPIC#VIDEO';
+        } else if (this.ppttopicList.length > 0) {
+          this.topicdisplayView = 'TOPIC#PPT';
+        } else if (this.pdftopicList.length > 0) {
+          this.topicdisplayView = 'TOPIC#PDF';
+        } else {
+          this.topicdisplayView = 'TOPIC#VIDEO';
+        }
+      }
+
     });
   }
 
@@ -223,11 +261,11 @@ export class ContentMgmntComponent implements OnInit {
 
   markFavorites(topic: TopicDetail) {
     let favorite: Favorites = new Favorites();
-    favorite.classId=topic.classId;
-    favorite.subjectId=topic.subjectId;
-    favorite.chapterId=topic.chapterId;
-    favorite.topicId=topic.id;
-    favorite.typeValue='TOPIC';
+    favorite.classId = topic.classId;
+    favorite.subjectId = topic.subjectId;
+    favorite.chapterId = topic.chapterId;
+    favorite.topicId = topic.id;
+    favorite.typeValue = 'TOPIC';
     this.contentMgmntService.markFavorites(favorite).subscribe((fav: Favorites) => {
       this.openErrorSnackBar("Mark Favorties for  " + topic.displayName + " sucessfully.", "CLOSE");
     });

@@ -28,11 +28,23 @@ export class ContentMgmntService {
   public contentDisplayView = new ReplaySubject<any>(1);
   public topic = new ReplaySubject<TopicDetail>(1);
   public questionView = new ReplaySubject<string>(1);
-
+  public topicdisplayView = new ReplaySubject<any>(1);
 
   public schoolType = new ReplaySubject<string>(1);
 
   constructor(private http: HttpClient) { }
+
+
+  public changeTopicdisplayView(topicdisplayView: string) {
+    this.topicdisplayView.next(topicdisplayView);
+  }
+
+
+
+  getTopicdisplayView() {
+    return this.topicdisplayView.asObservable();
+  }
+
 
 
   public changeSchoolType(schoolType: string) {
@@ -249,8 +261,8 @@ export class ContentMgmntService {
   }
 
 
-  getTopicListForChapterForSubjectAndClassWithContentType(classId: string, subjectId: string, chapterId: string,contentType:string) {
-    return this.http.get(environment.baseUrl + 'api/admin/topics/' + classId + "/" + subjectId + "/" + chapterId+"/"+contentType);
+  getTopicListForChapterForSubjectAndClassWithContentType(classId: string, subjectId: string, chapterId: string, contentType: string) {
+    return this.http.get(environment.baseUrl + 'api/admin/topics/' + classId + "/" + subjectId + "/" + chapterId + "/" + contentType);
   }
 
 
@@ -329,8 +341,8 @@ export class ContentMgmntService {
 
   }
 
-  
-  readQuestionForChpaterTopic(question:QuestionDetails) {
+
+  readQuestionForChpaterTopic(question: QuestionDetails) {
     const httpOptions = {
       'responseType': 'arraybuffer' as 'json'
     };
@@ -338,7 +350,7 @@ export class ContentMgmntService {
 
   }
 
-  setupMCQQuestionForSchool(){
+  setupMCQQuestionForSchool() {
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     headers.set('Access-Control-Allow-Origin', '*');
@@ -401,16 +413,16 @@ export class ContentMgmntService {
   }
 
 
-  getQuestionForChapterAccordigToType(chapter:ChapterSetupDetail,type:string,pageNo:any,pageSize:any) {
+  getQuestionForChapterAccordigToType(chapter: ChapterSetupDetail, type: string, pageNo: any, pageSize: any) {
     let params = new HttpParams()
-                .set('pageNo', pageNo)
-                .set('pageSize', pageSize);
-   
-    return this.http.get(environment.baseUrl + 'api/admin/questions/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id+"/"+type, {params});
+      .set('pageNo', pageNo)
+      .set('pageSize', pageSize);
+
+    return this.http.get(environment.baseUrl + 'api/admin/questions/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id + "/" + type, { params });
   }
 
 
-  getQuestionCountForChapterAccordigToType(chapter:ChapterSetupDetail,type:string) {
-    return this.http.get(environment.baseUrl + 'api/admin/questions/count/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id+"/"+type);
+  getQuestionCountForChapterAccordigToType(chapter: ChapterSetupDetail, type: string) {
+    return this.http.get(environment.baseUrl + 'api/admin/questions/count/' + chapter.classId + "/" + chapter.subjectId + "/" + chapter.id + "/" + type);
   }
 }

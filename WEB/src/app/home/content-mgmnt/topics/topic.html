@@ -183,6 +183,12 @@
 
   </section>
 
+  <section class="container mt-4" *ngIf="displayView=='SCORE'">
+
+    
+  </section>
+
+
   <section class="container mt-4" *ngIf="displayView=='MCQ'" #tabsection>
     <div class="row">
       <div class="col-md-6" style="display: flex; align-items: center;">
@@ -199,7 +205,10 @@
 
 
     <mat-horizontal-stepper linear #stepper>
-      <mat-step   state="pageNo">
+      <ng-template matStepperIcon="number" let-index="pageNo">
+        {{pageNo+1}}
+      </ng-template>
+      <mat-step>
         <div class="row">
           <div class="col-md-12" style="display: flex; align-items: center;">
             <h6 color="blue"><b>{{question.question}}</b></h6>
@@ -272,7 +281,7 @@
                       <mat-icon class="custom-icon">personal_video</mat-icon>
                     </div>
                     <div class="learn-text-container">
-                      <p class="learn-text">Teacher Slides</p>
+                      <p class="learn-text">Teaching Slides</p>
                     </div>
                   </div>
                   <div class="col-md-4 centered" *ngIf="chapter.isPDF" (click)="viewAllTopicWithType(chapter,'PDF')">

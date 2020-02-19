@@ -123,12 +123,11 @@ public class AdminController {
 	@RequestMapping(value = "/questions/{classId}/{subjectId}/{chapterId}/{type}", method = RequestMethod.GET)
 	public ResponseEntity<List<QuestionDetails>> getQuestionsChapterDetailsForClassAndSubjectAndContentType(
 			@PathVariable String classId, @PathVariable String subjectId, @PathVariable String chapterId,
-			@PathVariable String type, @RequestParam Integer pageNo,
-			@RequestParam Integer pageSize) {
+			@PathVariable String type, @RequestParam Integer pageNo, @RequestParam Integer pageSize) {
 		Pageable pageable = new PageRequest(pageNo, pageSize);
 		Page<QuestionDetails> questionList = questionDetailsRepo.findByClassIdAndSubjectIdAndChapterIdAndType(classId,
-				subjectId, chapterId, type,pageable);
-		if(questionList.hasContent()) {
+				subjectId, chapterId, type, pageable);
+		if (questionList.hasContent()) {
 			return new ResponseEntity<List<QuestionDetails>>(questionList.getContent(), HttpStatus.OK);
 		}
 		return new ResponseEntity<List<QuestionDetails>>(new ArrayList<>(), HttpStatus.OK);
@@ -376,12 +375,6 @@ public class AdminController {
 	public ResponseEntity<ClassDetails> getClassDetail(@PathVariable String classId) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		ClassDetails classDetail = classesDetailsRepo.findOne(classId);
-//		if (null != classDetail) {
-//			Favorites fav = userFavortiesRepo.findByUserNameAndTypeAndTypeValue(loginDetail.getUserName(), "CLASS",
-//					classDetail.getId());
-//			if (null != fav)
-//				classDetail.setType("FAVORTIE");
-//		}
 		return new ResponseEntity<ClassDetails>(classDetail, HttpStatus.OK);
 	}
 
@@ -578,7 +571,13 @@ public class AdminController {
 	public ResponseEntity<Favorites> markFavorites(@RequestBody Favorites favorites) throws Exception {
 		LoginDetails loginDetail = schoolSecurityUtils.getUserFromSecurityContext();
 		favorites.setUserName(loginDetail.getUserName());
-		userFavortiesRepo.save(favorites);
+		Favorites fav = userFavortiesRepo.findByUserNameAndClassIdAndSubjectIdAndChapterIdAndTopicId(
+				loginDetail.getUserName(), favorites.getClassId(), favorites.getSubjectId(), favorites.getChapterId(),
+				favorites.getTopicId());
+		if (null == fav) {
+			userFavortiesRepo.save(favorites);
+		}
+
 		return new ResponseEntity<Favorites>(favorites, HttpStatus.OK);
 	}
 

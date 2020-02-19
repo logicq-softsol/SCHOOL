@@ -14,4 +14,7 @@ public interface UserFavortiesRepo extends JpaRepository<Favorites, Long> {
 
 	Favorites findByUserNameAndId(String userName, Long id);
 
+	Favorites findByUserNameAndClassIdAndSubjectIdAndChapterIdAndTopicId(String userName, String classId,
+			String subjectId, String chapterId, String topicId);
+
 }

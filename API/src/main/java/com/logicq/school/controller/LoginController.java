@@ -122,15 +122,39 @@ public class LoginController {
 		if (!StringUtils.isEmpty(licnkey.getParam1()) && !StringUtils.isEmpty(licnkey.getParam2())
 				&& !StringUtils.isEmpty(licnkey.getParam3()) && !StringUtils.isEmpty(licnkey.getParam4())) {
 			String hostName = schoolSecurityUtils.getSystemHostName();
+			ActivationDetails activationDetail = productActivationRepo.findByActivationFor(hostName);
+
 			LicenseDetails licenseDetails = schoolRestClient.validateLicense(hostName);
-			if (null != licenseDetails) {
+
+			if (null != activationDetail && null != licenseDetails) {
+				String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
+						+ licnkey.getParam4();
+				String licenseKey = logicQEncryptionAndDecryption.decrypt(licenseDetails.getLicenseKey(),
+						env.getProperty("school.key"));
+				if (inputkey.equals(licenseKey)) {
+					activationDetail.setProductStatus("ACTIVE");
+					activationDetail.setExpiryDate(schoolDateUtils.getExpiryDateForExistingLicense(
+							licenseDetails.getValidityDay(), activationDetail.getActivationDate()));
+					long remaingDays = schoolDateUtils.calculateRemaningDays(activationDetail.getExpiryDate());
+					activationDetail.setActivationDays(remaingDays);
+					activationDetail.setActivationLicense(licenseKey);
+					activationDetail.setLastUpdate(schoolDateUtils.findTodayStartDate());
+					productActivationRepo.save(activationDetail);
+					return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+							"Products Activated Sucessfully", "SUCESS"), HttpStatus.OK);
+				} else {
+					return new ResponseEntity<SucessMessage>(new SucessMessage(schoolDateUtils.currentDate(),
+							"Unable to Register Product Check Key", "ERROR"), HttpStatus.EXPECTATION_FAILED);
+				}
+
+			} else if (null != licenseDetails && null == activationDetail) {
 				String inputkey = licnkey.getParam1() + "-" + licnkey.getParam2() + "-" + licnkey.getParam3() + "-"
 						+ licnkey.getParam4();
 				// ActivateKey activateKey = schoolRestClient.getLicenseKey(hostName).getBody();
 				String licenseKey = logicQEncryptionAndDecryption.decrypt(licenseDetails.getLicenseKey(),
 						env.getProperty("school.key"));
 				if (inputkey.equals(licenseKey)) {
-					ActivationDetails activationDetail = new ActivationDetails();
+					activationDetail = new ActivationDetails();
 					activationDetail.setActivationDate(schoolDateUtils.findTodayStartDate());
 					activationDetail.setActivationLicense(licenseKey);
 					activationDetail.setActivationToken(env.getProperty("school.key"));

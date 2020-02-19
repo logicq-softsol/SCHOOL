@@ -27,9 +27,5 @@ public class SchoolApplication extends SpringBootServletInitializer {
 		SpringApplication.run(SchoolApplication.class, args);
 	}
 
-//	@Bean
-//	public TaskScheduler taskScheduler() {
-//		return new ConcurrentTaskScheduler();
-//	}
 
 }

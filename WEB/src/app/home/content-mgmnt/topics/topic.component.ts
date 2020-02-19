@@ -75,6 +75,12 @@ export class TopicComponent implements OnInit {
     this.displayView = 'CLASS';
     this.contentMgmntService.getDisplayView().subscribe((dview: any) => {
       this.displayView = dview;
+      if('TOPIC'===this.displayView){
+        this.contentMgmntService.getTopicdisplayView().subscribe((tview: any) => {
+          this.topicdisplayView = tview;
+        });
+      }
+    
     })
 
     this.authService.getUserDetail().subscribe((user: UserDetail) => {
@@ -142,9 +148,13 @@ export class TopicComponent implements OnInit {
       this.onSubjectChange(this.subjectdisplayName);
     }
 
-    this.question = new QuestionDetails();
+
     this.pageNo = this.pageNo + 1;
     this.contentMgmntService.getQuestionForChapterAccordigToType(this.chapter, 'MCQ', this.pageNo, this.pagesize).subscribe((questions: QuestionDetails[]) => {
+      this.question = new QuestionDetails();
+      this.question.isDisable = false;
+      this.question.isViewAnsDisable = true;
+      this.question.selectedOpt = "";
       this.question = questions[0];
     });
 
@@ -194,6 +204,7 @@ export class TopicComponent implements OnInit {
       this.topicdisplayView = 'TOPIC#' + contentType;
       this.displayView = 'TOPIC';
       this.contentMgmntService.changeDisplayView(this.displayView);
+      this.contentMgmntService.changeTopicdisplayView( this.topicdisplayView);
     });
 
   }
@@ -317,7 +328,6 @@ export class TopicComponent implements OnInit {
             this.topicdisplayView = 'TOPIC#VIDEO';
           }
         }
-        this.contentMgmntService.changeDisplayView(this.displayView);
       });
     }
 
